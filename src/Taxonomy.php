@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * An abstract class for registering taxonomies.
  *
@@ -18,19 +19,16 @@ declare(strict_types=1);
  *
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Modules\Registerables
+ * @package PinkCrab\Registerables
  */
 
 
-namespace PinkCrab\Modules\Registerables;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
+namespace PinkCrab\Registerables;
 
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Interfaces\Registerable;
 use PinkCrab\Core\Services\Registration\Loader;
+
 
 abstract class Taxonomy implements Registerable {
 
@@ -76,9 +74,9 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Which post types should this taxonomy be applied to.
 	 *
-	 * @var array
+	 * @var array<int, mixed>
 	 */
-	public $object_type = array( 'post');
+	public $object_type = array( 'post' );
 
 	/**
 	 * Should this taxonomy have a hierarchy
@@ -184,7 +182,7 @@ abstract class Taxonomy implements Registerable {
 	 * Rewrite the peramlinks structure.
 	 * If set to true will use the default of the slug.
 	 *
-	 * @var array|bool
+	 * @var array<string, mixed>|bool
 	 */
 	public $rewrite = true;
 
@@ -200,14 +198,14 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Array of capabilities for the taxonomy
 	 *
-	 * @var array|null
+	 * @var array<string, mixed>|null
 	 */
 	public $capabilities;
 
 	/**
 	 * Sets the default term for the taxonomy
 	 *
-	 * @var array|null
+	 * @var array<string, mixed>|null
 	 */
 	public $default_term;
 
@@ -222,7 +220,7 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Compiles the labels for a hierarchical taxonomy.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function hierarchical_labels(): array {
 		return array(
@@ -275,9 +273,10 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Registers the taxonomy.
 	 *
-	 * @param \PinkCrab\Core\Services\Registration\Loader $loader
+	 * @param Loader $loader
 	 * @return void
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
 	final public function register( Loader $loader ): void {
 
 		// Run setup
@@ -314,8 +313,8 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Overwriteable filter for the args.
 	 *
-	 * @param array $args
-	 * @return array
+	 * @param array<string, mixed> $args
+	 * @return array<string, mixed>
 	 */
 	public function filter_args( array $args ): array {
 		return $args;
@@ -324,8 +323,8 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Sets the option values, if set in properties.
 	 *
-	 * @param array $args
-	 * @return array
+	 * @param array<string, mixed> $args
+	 * @return array<string, mixed>
 	 */
 	final protected function optional_args( array $args ): array {
 		if ( $this->capabilities ) {
@@ -351,13 +350,13 @@ abstract class Taxonomy implements Registerable {
 	 */
 	final protected function validate() {
 		if ( ! $this->slug ) {
-			trigger_error( 'No slug defined.' );
+			trigger_error( 'No slug defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		}
 		if ( ! $this->singular ) {
-			trigger_error( 'No singular defined.' );
+			trigger_error( 'No singular defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		}
 		if ( ! $this->plural ) {
-			trigger_error( 'No plural defined.' );
+			trigger_error( 'No plural defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		}
 	}
 

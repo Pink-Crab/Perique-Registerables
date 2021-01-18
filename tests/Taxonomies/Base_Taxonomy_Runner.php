@@ -11,15 +11,14 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
+namespace PinkCrab\Registerables\Tests\Taxonomies;
 
 use WP_UnitTestCase;
-use PinkCrab\Modules\Registerables\Taxonomy;
-
 use PinkCrab\Core\Services\Registration\Loader;
 
 
-class Base_Taxonomy_Runner extends \WP_UnitTestCase {
+
+class Base_Taxonomy_Runner extends WP_UnitTestCase {
 
 	/**
 	 * Taxonomy.
@@ -31,7 +30,7 @@ class Base_Taxonomy_Runner extends \WP_UnitTestCase {
 	/**
 	 * GLoabls instance of the wp taxonomies object.
 	 *
-	 * @var [type]
+	 * @var wp_taxonomies
 	 */
 	protected $wp_taxonomies;
 

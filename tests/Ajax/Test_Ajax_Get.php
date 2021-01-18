@@ -11,15 +11,12 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
-
-// Include our fixture.
-require_once \dirname( __FILE__, 3 ) . '/Fixtures/Ajax/Ajax_Get.php';
+namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use PC_Vendor\GuzzleHttp\Psr7\ServerRequest;
+use GuzzleHttp\Psr7\ServerRequest;
 use PinkCrab\Core\Services\Registration\Loader;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\Ajax_Get;
+use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Get;
 
 
 class Test_Ajax_Get extends WP_UnitTestCase {

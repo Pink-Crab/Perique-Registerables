@@ -11,26 +11,32 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
+namespace PinkCrab\Registerables\Tests;
 
-// Include our fixture.
-require_once \dirname( __FILE__, 3 ) . '/Fixtures/Ajax/Ajax_Post_Simple.php';
-
-use DOMDocument;
 use WP_Ajax_UnitTestCase;
-use PC_Vendor\GuzzleHttp\Psr7\ServerRequest;
+use PinkCrab\Registerables\Ajax;
+use GuzzleHttp\Psr7\ServerRequest;
+use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Services\Registration\Loader;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\Ajax_Post_Simple;
+use PinkCrab\Core\Services\ServiceContainer\Container;
+use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Simple;
 
 
 class Test_Ajax_Post_Simple extends  WP_Ajax_UnitTestCase {
 
+	/**
+	 * Holds the instance of the
+	 *
+	 * @var Ajax
+	 */
 	protected static $ajax_instance;
 
+	protected static $app;
+
 	public function setUp() {
-			// header( 'Content-Type: application/x-www-form-urlencoded;' );
-		// header('Content-Type: application/json');
 		parent::setUp();
+
+		
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -69,7 +75,7 @@ class Test_Ajax_Post_Simple extends  WP_Ajax_UnitTestCase {
 		}
 
 		$response = json_decode( $this->_last_response );
-		$this->assertInternalType( 'object', $response );
+		$this->assertIsObject( $response );
 		$this->assertObjectHasAttribute( 'success', $response );
 		$this->assertTrue( $response->success );
 		$this->assertEquals( 'Test_Ajax_Post_Simple', $response->data->ajax_post_simple_data );

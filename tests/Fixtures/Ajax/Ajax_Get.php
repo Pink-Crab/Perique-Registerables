@@ -7,13 +7,13 @@ declare(strict_types=1);
  * @since 0.2.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Modules\Registerables
+ * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Core\Tests\Fixtures\Mock_Objects;
+namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
-use PinkCrab\Modules\Registerables\Ajax;
-use PC_Vendor\Psr\Http\Message\ServerRequestInterface;
+use PinkCrab\Registerables\Ajax;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Ajax_Get extends Ajax {
 
@@ -23,7 +23,7 @@ class Ajax_Get extends Ajax {
 	/**
 	 * Handles the callback.
 	 *
-	 * @param PC_Vendor\Psr\Http\Message\ServerRequestInterface $request
+	 * @param ServerRequestInterface $request
 	 * @return void
 	 */
 	public function callback( ServerRequestInterface $request ): void {

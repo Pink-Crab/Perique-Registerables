@@ -11,14 +11,12 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
+namespace PinkCrab\Registerables\Tests\Fixtures\CPT;
 
-// Include our fixture.
-require_once \dirname( __FILE__, 2 ) . '/Fixtures/Basic_CPT.php';
 
 use WP_UnitTestCase;
+use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Core\Services\Registration\Loader;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\Basic_CPT;
 
 
 class Base_CPT_Case extends WP_UnitTestCase {
@@ -28,7 +26,7 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	/**
 	 * Holds instance of the Post_Type object.
 	 *
-	 * @var \PinkCrab\Modules\Registerables\Post_Type
+	 * @var Post_Type
 	 */
 	protected $cpt;
 
@@ -156,6 +154,7 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_post_type_settings() {
+		dump(get_post_type_object( $this->cpt->key ));
 		foreach ( $this->settings as $property => $expected ) {
 			$this->assertEquals(
 				$expected,
