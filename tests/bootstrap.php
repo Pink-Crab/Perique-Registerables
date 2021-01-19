@@ -1,5 +1,6 @@
 <?php
 
+use PinkCrab\HTTP\HTTP;
 use GuzzleHttp\Psr7\Response;
 use PinkCrab\Registerables\Ajax;
 use GuzzleHttp\Psr7\ServerRequest;
@@ -25,11 +26,11 @@ tests_add_filter(
 		$di  = WP_Dice::constructWith( new Dice() );
 		$di->addRules(
 			array(
-				// Ajax::class => array(
-				// 	'constructParams' => array( ServerRequest::fromGlobals(), new Response() ),
-				// 	'shared'          => true,
-				// 	'inherit'         => true,
-				// ),
+				Ajax::class => array(
+					'constructParams' => array( ( new HTTP() )->request_from_globals() ),
+					'shared'          => true,
+					'inherit'         => true,
+				),
 			)
 		);
 		$app->set( 'di', $di );

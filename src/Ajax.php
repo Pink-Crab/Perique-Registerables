@@ -92,9 +92,9 @@ abstract class Ajax implements Registerable {
 	/**
 	 * Creates an instance of ajax with a blank scripts stack.
 	 */
-	public function __construct() {
+	public function __construct( ServerRequestInterface $request ) {
 		$this->scripts = new Collection();
-		$this->request = ( new HTTP() )->request_from_globals();
+		$this->request = $request;
 	}
 
 	/**
@@ -137,7 +137,6 @@ abstract class Ajax implements Registerable {
 	protected function validate( ServerRequestInterface $request ): bool {
 		// Extract the params from the request (POST or GET)
 		$request_params = $this->extract_request_params( $request );
-
 		// If we have a nonce value to check.
 		if ( ! empty( $this->nonce_handle ) ) {
 			$nonce_value = \array_key_exists( $this->nonce_field, $request_params )
@@ -151,6 +150,7 @@ abstract class Ajax implements Registerable {
 
 			return (bool) wp_verify_nonce( $nonce_value, $this->nonce_handle );
 		}
+
 		return true;
 	}
 
@@ -255,10 +255,11 @@ abstract class Ajax implements Registerable {
 			$response = $this->callback( $http->psr7_response() );
 		} else { // Returns 401 if not validated.
 			$response = $http->psr7_response(
-				wp_json_encode( array( 'error' => 'Request not authenticated' ) ),
+				wp_json_encode( array( 'error' => 'Request not authenticated' ) ) ?: null,
 				401
 			);
 		}
+
 		$http->emit_response( $response );
 	}
 

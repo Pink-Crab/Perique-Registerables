@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
+use Nyholm\Psr7\Stream;
+use PinkCrab\HTTP\HTTP;
 use PinkCrab\Registerables\Ajax;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,7 +30,11 @@ class Ajax_Post_Simple extends Ajax {
 	 * @return void
 	 */
 	public function callback( ResponseInterface $response ): ResponseInterface {
-		return $response;
+		return $response->withBody(
+			( new HTTP() )->create_stream_with_json(
+				array( 'success' => 'Ajax_Post_Simple' )
+			)
+		);
 		// wp_send_json_success( $response->getParsedBody() );
 	}
 }

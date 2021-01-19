@@ -13,16 +13,12 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests;
 
-use WP_Ajax_UnitTestCase;
-use PHPUnit\Framework\Exception;
+use PinkCrab\HTTP\HTTP;
 use PinkCrab\Registerables\Ajax;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PinkCrab\Core\Services\Registration\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Simple;
 
-/**
- * @preserdveGlobalState disabled
- */
 class Test_Ajax_Post_Simple extends  TestCase {
 
 	/**
@@ -32,36 +28,40 @@ class Test_Ajax_Post_Simple extends  TestCase {
 	 */
 	protected static $ajax_instance;
 
-	protected static $app;
+	/**
+	 * Ensure the headers are cleared on each test.
+	 *
+	 * @var bool
+	 */
+	protected $preserveGlobalState = false;
 
 	protected function set_up() {
 		parent::set_up();
 
-		$this->set_post_globals();
-		self::$ajax_instance = new Ajax_Post_Simple();
-		$loader              = new Loader;
-		self::$ajax_instance->register( $loader );
-		$loader->register_hooks();
+		// HTTP helper.
+		$http = new HTTP();
 
-	}
-
-	protected function tare_down() {
-		$this->reset_post_globals();
-	}
-
-	/**
-	 * Sets our fake globals.
-	 *
-	 * @return array
-	 */
-	protected function set_post_globals() {
+		// Mock the request global.s
 		$_SERVER['REQUEST_METHOD']      = 'POST';
 		$_POST['nonce']                 = wp_create_nonce( 'ajax_post_simple' );
 		$_POST['ajax_post_simple_data'] = 'Test_Ajax_Post_Simple';
-	}
 
-	public function reset_post_globals() {
-		$_POST = array();
+		// Body stream
+		$stream = $http->create_stream_with_json(
+			array(
+				'nonce'                 => wp_create_nonce( 'ajax_post_simple' ),
+				'ajax_post_simple_data' => 'Test_Ajax_Post_Simple',
+			)
+		);
+
+		// Request
+		$request = $http->request_from_globals()->withBody( $stream );
+
+		self::$ajax_instance = new Ajax_Post_Simple( $request );
+
+		$loader = new Loader;
+		self::$ajax_instance->register( $loader );
+		$loader->register_hooks();
 	}
 
 	/**
@@ -74,12 +74,6 @@ class Test_Ajax_Post_Simple extends  TestCase {
 
 	}
 
-	/**
-	 * Undocumented variable
-	 *
-	 * @var bool
-	 */
-	protected $preserveGlobalState = false;
 
 	/**
 	 * Check a none logged in user can use.
@@ -88,45 +82,8 @@ class Test_Ajax_Post_Simple extends  TestCase {
 	 * @return void
 	 */
 	public function test_callable_logged_out() {
-
-		// Mock the $_POST global.
-		// $this->set_post_globals();
-		// dump( self::$ajax_instance, $_POST );
-		// $this->expectOutputRegex( '/^(.*?(\bWP_VALUE\b)[^$]*)$/' );
-
-		do_action( 'wp_ajax_' . 'ajax_post_simple', null );
-
-		// try {
-		// } catch ( \WPAjaxDieStopException $th ) {
-		// 	// Ignore the wpdieexception, we dont actually return JSON!
-		// } catch ( \WPAjaxDieContinueException $th ) {
-
-		// }
-		// $this->expectOutputRegex( '/^(.*?(\bWP_VALUE\b)[^$]*)$/' );
-		// $this->expectException( Exception::class );
-		// ini_set( 'implicit_flush', false );
-		// ob_start();
-
-		// try {
-		// 	// do_action( 'admin_init' );
-		// 	// do_action( 'wp_ajax_' . 'ajax_post_simple', null );
-		// } catch ( \Throwable $th ) {
-		// 	dump( $th );
-		// }
-
-		// $buffer = ob_get_clean();
-		// dd( $buffer );
-
-		// // $this->_handleAjax( 'ajax_post_simple' );
-		// // wp_die();
-
-		// dump( $this->_last_response );
-
-		// $response = json_decode( $this->_last_response );
-		// $this->assertIsObject( $response );
-		// $this->assertObjectHasAttribute( 'success', $response );
-		// $this->assertTrue( $response->success );
-		// $this->assertEquals( 'Test_Ajax_Post_Simple', $response->data->ajax_post_simple_data );
+		$this->expectOutputRegex( '/Ajax_Post_Simple/' );
+		do_action( 'wp_ajax_nopriv_ajax_post_simple' );
 	}
 
 	/**
@@ -135,8 +92,6 @@ class Test_Ajax_Post_Simple extends  TestCase {
 	 * @return void
 	 */
 	public function test_nonce_field(): void {
-		// Mock the $_POST global.
-		$this->set_post_globals();
 
 		ob_start();
 		self::$ajax_instance::nonce_field();
@@ -155,9 +110,6 @@ class Test_Ajax_Post_Simple extends  TestCase {
 	 * @return void
 	 */
 	public function test_can_get_nonce_value(): void {
-		// Mock the $_POST global.
-		$this->set_post_globals();
-
 		$this->assertEquals( self::$ajax_instance::nonce_value(), $_POST['nonce'] );
 	}
 

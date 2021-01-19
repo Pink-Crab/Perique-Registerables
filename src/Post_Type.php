@@ -256,19 +256,19 @@ abstract class Post_Type implements Registerable {
 		);
 
 		$args = array(
-			'labels'              => $this->filter_labels( $labels ),
+			'labels'              => $this->filter_labels( $labels ),           // @phpstan-ignore-next-line
 			'hierarchical'        => is_bool( $this->hierarchical ) ? $this->hierarchical : false,
-			'supports'            => $this->supports ?: array(),
-			'public'              => is_bool( $this->public ) ? $this->public : true,
-			'show_ui'             => is_bool( $this->show_ui ) ? $this->show_ui : true,
+			'supports'            => $this->supports,           // @phpstan-ignore-next-line
+			'public'              => is_bool( $this->public ) ? $this->public : true, // @phpstan-ignore-next-line
+			'show_ui'             => is_bool( $this->show_ui ) ? $this->show_ui : true, // @phpstan-ignore-next-line
 			'show_in_menu'        => is_bool( $this->show_in_menu ) ? $this->show_in_menu : true,
 			'menu_position'       => $this->menu_position ?: 60,
 			'menu_icon'           => $this->dashicon ?: 'dashicons-pets',
-			'show_in_nav_menus'   => is_bool( $this->show_in_nav_menus ) ? $this->show_in_nav_menus : true,
-			'publicly_queryable'  => is_bool( $this->publicly_queryable ) ? $this->publicly_queryable : true,
-			'exclude_from_search' => is_bool( $this->exclude_from_search ) ? $this->exclude_from_search : true,
+			'show_in_nav_menus'   => is_bool( $this->show_in_nav_menus ) ? $this->show_in_nav_menus : true, // @phpstan-ignore-next-line
+			'publicly_queryable'  => is_bool( $this->publicly_queryable ) ? $this->publicly_queryable : true, // @phpstan-ignore-next-line
+			'exclude_from_search' => is_bool( $this->exclude_from_search ) ? $this->exclude_from_search : true, // @phpstan-ignore-next-line
 			'has_archive'         => is_bool( $this->has_archive ) ? $this->has_archive : true,
-			'query_var'           => is_bool( $this->query_var ) ? $this->query_var : false,
+			'query_var'           => is_bool( $this->query_var ) ? $this->query_var : false, // @phpstan-ignore-next-line
 			'can_export'          => is_bool( $this->can_export ) ? $this->can_export : true,
 			'rewrite'             => is_bool( $this->rewrite ) ? $this->rewrite : false,
 			'capability_type'     => $this->capability_type ?: 'page',

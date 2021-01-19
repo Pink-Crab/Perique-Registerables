@@ -58,6 +58,29 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 }
 ````
 
+Creates a basic ajax call.
+````php
+use PinkCrab\Registerables\Ajax;
+
+class Simple_Ajax extends Ajax {
+	// None key
+    protected $nonce_handle = 'basic_ajax_get';
+	
+    // WP Ajax action
+    protected $action       = 'basic_ajax_get';
+
+	/**
+	 * Handles the callback.
+	 */
+	public function callback( ResponseInterface $response ): ResponseInterface {
+		$response_array = array( 'result' => $this->request->getQueryParams()['ajax_get_data'] );
+		return $response->withBody(
+			( new HTTP() )->create_stream_with_json( $response_array )
+		);
+	}
+}
+````
+
 ## Testing ##
 
 ### PHP Unit ###

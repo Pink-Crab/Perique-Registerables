@@ -14,13 +14,18 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
+use PinkCrab\HTTP\HTTP;
 use PinkCrab\Enqueue\Enqueue;
-use GuzzleHttp\Psr7\ServerRequest;
+use Nyholm\Psr7\ServerRequest;
 use PinkCrab\PHPUnit_Helpers\Objects;
 use PinkCrab\Core\Services\Registration\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_With_Scripts;
 
 class Test_Ajax_With_Scripts extends WP_UnitTestCase {
+
+	protected function server_request_provider(): ServerRequest {
+		return ( new HTTP() )->request_from_globals();
+	}
 
 	/**
 	 * Ensure that the scripts are registered to the ajax call.
@@ -29,7 +34,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_scripts_on_register(): void {
 
-		$ajax_instance = new Ajax_With_Scripts(  );
+		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 
 		// Just run setup to set the scripts.
 		$ajax_instance->set_up();
@@ -54,7 +59,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_loader_front_end(): void {
 
-		$ajax_instance = new Ajax_With_Scripts(  );
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 
@@ -78,7 +83,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_loader_enqueues_scripts(): void {
 
-		$ajax_instance = new Ajax_With_Scripts(  );
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 		$loader->register_hooks();
@@ -116,7 +121,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function text_optional_conditional_can_be_used(): void {
-		$ajax_instance = new Ajax_With_Scripts(  );
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
 
 		// Set to false (helper property for tests)
 		$ajax_instance->_conditional_value = false;
