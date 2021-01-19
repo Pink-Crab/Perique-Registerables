@@ -28,6 +28,7 @@ use PinkCrab\HTTP\HTTP;
 use InvalidArgumentException;
 use PinkCrab\Enqueue\Enqueue;
 use PinkCrab\Core\Application\App;
+use Psr\Http\Message\ResponseInterface;
 use PinkCrab\Core\Collection\Collection;
 use PinkCrab\Core\Interfaces\Registerable;
 use Psr\Http\Message\ServerRequestInterface;
@@ -122,10 +123,10 @@ abstract class Ajax implements Registerable {
 	/**
 	 * Handles the callback.
 	 *
-	 * @param ServerRequestInterface $request
-	 * @return ServerRequestInterface
+	 * @param ResponseInterface $request
+	 * @return ResponseInterface
 	 */
-	abstract public function callback( ServerRequestInterface $request ): ServerRequestInterface;
+	abstract public function callback( ResponseInterface $request ): ResponseInterface;
 
 	/**
 	 * Validates the nonce
@@ -248,7 +249,8 @@ abstract class Ajax implements Registerable {
 	 */
 	public function entry(): void {
 		if ( $this->validate( $this->request ) ) {
-			( new HTTP() )->emit_response( $this->callback( $this->request ) );
+			$http = new HTTP();
+			$http->emit_response( $this->callback( $http->psr7_response() ) );
 		} else {
 			wp_die();
 		}

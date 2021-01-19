@@ -26,7 +26,7 @@ class Ajax_Get extends Ajax {
 	 * @param ServerRequestInterface $request
 	 * @return void
 	 */
-	public function callback( ServerRequestInterface $request ): void {
+	public function callback( ServerRequestInterface $request ): ServerRequestInterface {
 		print( $request->getQueryParams()['ajax_get_data'] );
 	}
 }
