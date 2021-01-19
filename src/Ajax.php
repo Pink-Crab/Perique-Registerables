@@ -262,7 +262,7 @@ abstract class Ajax implements Registerable {
 				401
 			);
 		}
-
+dump($response);
 		$http->emit_response( $response );
 	}
 
