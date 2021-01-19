@@ -35,16 +35,13 @@
         "phpstan/phpstan": "^0.12.6",
         "szepeviktor/phpstan-wordpress": "^0.7.2",
         "php-stubs/wordpress-stubs": "^5.6.0",
-        "pinkcrab/phpunit-helpers": "dev-master",
-        "phpunit/phpunit-dom-assertions": "~2"
+        "pinkcrab/phpunit-helpers": "dev-master"
     },
     "require": {
         "php": ">=7.1.0",
         "pinkcrab/plugin-framework": "^0.3.2",
-        "psr/http-message": "^1.0",
-        "guzzlehttp/psr7": "^1.7",
-        "pinkcrab/enqueue": "^1.1",
-        "level-2/dice": "^4.0.2"
+        "pinkcrab/http": "0.1.0",
+        "pinkcrab/enqueue": "^1.1"
     },
     "scripts": {
         "test": "phpunit",
