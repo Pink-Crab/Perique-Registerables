@@ -14,6 +14,7 @@ namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
 use PinkCrab\Enqueue\Enqueue;
 use PinkCrab\Registerables\Ajax;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Ajax_With_Scripts extends Ajax {
@@ -62,7 +63,7 @@ class Ajax_With_Scripts extends Ajax {
 	 * @param ServerRequestInterface $request
 	 * @return void
 	 */
-	public function callback( ServerRequestInterface $request ): void {
+	public function callback( ResponseInterface $response ): ResponseInterface {
 		// Does nothing here
 	}
 }

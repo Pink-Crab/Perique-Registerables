@@ -25,11 +25,11 @@ tests_add_filter(
 		$di  = WP_Dice::constructWith( new Dice() );
 		$di->addRules(
 			array(
-				Ajax::class => array(
-					'constructParams' => array( ServerRequest::fromGlobals(), new Response() ),
-					'shared'          => true,
-					'inherit'         => true,
-				),
+				// Ajax::class => array(
+				// 	'constructParams' => array( ServerRequest::fromGlobals(), new Response() ),
+				// 	'shared'          => true,
+				// 	'inherit'         => true,
+				// ),
 			)
 		);
 		$app->set( 'di', $di );

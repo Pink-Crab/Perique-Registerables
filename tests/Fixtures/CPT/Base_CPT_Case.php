@@ -154,7 +154,6 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_post_type_settings() {
-		dump(get_post_type_object( $this->cpt->key ));
 		foreach ( $this->settings as $property => $expected ) {
 			$this->assertEquals(
 				$expected,

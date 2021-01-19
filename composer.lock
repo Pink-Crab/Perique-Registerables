@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d5dd3e24e9021316a82291381fb47d2",
+    "content-hash": "5304cfabe8d1c193298365d007d332a8",
     "packages": [
         {
             "name": "nyholm/psr7",
@@ -245,16 +245,16 @@
         },
         {
             "name": "pinkcrab/http",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pink-Crab/HTTP.git",
-                "reference": "5440e6b3b88ca71ac5cc5549ec5fc5fe1e8149f0"
+                "reference": "70bf35b24b92a71461384af43ddca3c85f9e35ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pink-Crab/HTTP/zipball/5440e6b3b88ca71ac5cc5549ec5fc5fe1e8149f0",
-                "reference": "5440e6b3b88ca71ac5cc5549ec5fc5fe1e8149f0",
+                "url": "https://api.github.com/repos/Pink-Crab/HTTP/zipball/70bf35b24b92a71461384af43ddca3c85f9e35ac",
+                "reference": "70bf35b24b92a71461384af43ddca3c85f9e35ac",
                 "shasum": ""
             },
             "require": {
@@ -295,7 +295,7 @@
             ],
             "description": "Wrapper around Nyholm\\Psr7 library with a few helper methods and a basic emitter. For use in WordPress during ajax calls.",
             "homepage": "https://pinkcrab.co.uk",
-            "time": "2021-01-19T16:03:36+00:00"
+            "time": "2021-01-19T16:38:53+00:00"
         },
         {
             "name": "pinkcrab/plugin-framework",

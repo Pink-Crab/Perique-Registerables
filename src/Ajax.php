@@ -195,14 +195,12 @@ abstract class Ajax implements Registerable {
 		}
 
 		// Register the ajax action using loader.
-		if ( is_admin() ) {
-			$loader->ajax(
-				$this->action,
-				array( $this, 'entry' ),
-				$this->logged_out,
-				$this->logged_in
-			);
-		}
+		$loader->ajax(
+			$this->action,
+			array( $this, 'entry' ),
+			$this->logged_out,
+			$this->logged_in
+		);
 
 		// Add scripts if conditional is passed and scripts is not empty.
 		if ( $this->conditional() && ! $this->scripts->is_empty() ) {
@@ -262,7 +260,6 @@ abstract class Ajax implements Registerable {
 			);
 		}
 		$http->emit_response( $response );
-		exit;
 	}
 
 	/**

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use GuzzleHttp\Psr7\ServerRequest;
+use Nyholm\Psr7\ServerRequest;
 use PinkCrab\Core\Services\Registration\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Get;
 
@@ -29,14 +29,14 @@ class Test_Ajax_Get extends WP_UnitTestCase {
 		if ( empty( $_GET['nonce'] ) ) {
 
 			// Set as admin.
-			set_current_screen( 'edit-post' );
-
+			// set_current_screen( 'edit-post' );
+set_current_screen( 'edit.php' );
 			// Mock the GET
 			$_GET['nonce']         = wp_create_nonce( 'basic_ajax_get' );
 			$_GET['ajax_get_data'] = 'Test_Ajax_Get';
 
 			// Register ajax.
-			$ajax_instance = new Ajax_Get( ServerRequest::fromGlobals() );
+			$ajax_instance = new Ajax_Get();
 			$loader        = new Loader;
 			$ajax_instance->register( $loader );
 			$loader->register_hooks();

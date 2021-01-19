@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
 use PinkCrab\Registerables\Ajax;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Ajax_Post_Simple extends Ajax {
@@ -26,7 +27,8 @@ class Ajax_Post_Simple extends Ajax {
 	 * @param ServerRequestInterface $request
 	 * @return void
 	 */
-	public function callback( ServerRequestInterface $request ): void {
-		wp_send_json_success( $request->getParsedBody() );
+	public function callback( ResponseInterface $response ): ResponseInterface {
+		return $response;
+		// wp_send_json_success( $response->getParsedBody() );
 	}
 }

@@ -29,7 +29,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_scripts_on_register(): void {
 
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts(  );
 
 		// Just run setup to set the scripts.
 		$ajax_instance->set_up();
@@ -54,7 +54,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_loader_front_end(): void {
 
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts(  );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 
@@ -78,7 +78,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_loader_enqueues_scripts(): void {
 
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts(  );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 		$loader->register_hooks();
@@ -116,7 +116,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function text_optional_conditional_can_be_used(): void {
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts(  );
 
 		// Set to false (helper property for tests)
 		$ajax_instance->_conditional_value = false;
