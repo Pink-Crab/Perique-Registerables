@@ -253,17 +253,16 @@ abstract class Ajax implements Registerable {
 		$http = new HTTP();
 
 		// If we have a nonce key to validate, check
-		// Returns 401 if not validated.
 		if ( $this->validate( $this->request ) ) {
 			$response = $this->callback( $http->psr7_response() );
-		} else {
+		} else { // Returns 401 if not validated.
 			$response = $http->psr7_response(
 				wp_json_encode( array( 'error' => 'Request not authenticated' ) ),
 				401
 			);
 		}
-dump($response);
 		$http->emit_response( $response );
+		exit;
 	}
 
 	/**
