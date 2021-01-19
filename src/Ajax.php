@@ -248,12 +248,22 @@ abstract class Ajax implements Registerable {
 	 * @return void
 	 */
 	public function entry(): void {
+
+		// Helper HTTP.
+		$http = new HTTP();
+
+		// If we have a nonce key to validate, check
+		// Returns 401 if not validated.
 		if ( $this->validate( $this->request ) ) {
-			$http = new HTTP();
-			$http->emit_response( $this->callback( $http->psr7_response() ) );
+			$response = $this->callback( $http->psr7_response() );
 		} else {
-			wp_die();
+			$response = $http->psr7_response(
+				wp_json_encode( array( 'error' => 'Request not authenticated' ) ),
+				401
+			);
 		}
+
+		$http->emit_response( $response );
 	}
 
 	/**
