@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
+use PinkCrab\HTTP\HTTP;
 use InvalidArgumentException;
 use PinkCrab\Enqueue\Enqueue;
 use PinkCrab\Core\Application\App;
@@ -31,7 +32,6 @@ use PinkCrab\Core\Collection\Collection;
 use PinkCrab\Core\Interfaces\Registerable;
 use Psr\Http\Message\ServerRequestInterface;
 use PinkCrab\Core\Services\Registration\Loader;
-
 
 abstract class Ajax implements Registerable {
 
@@ -91,9 +91,9 @@ abstract class Ajax implements Registerable {
 	/**
 	 * Creates an instance of ajax with a blank scripts stack.
 	 */
-	public function __construct( ServerRequestInterface $request ) {
+	public function __construct() {
 		$this->scripts = new Collection();
-		$this->request = $request;
+		$this->request = ( new HTTP() )->request_from_globals();
 	}
 
 	/**
@@ -123,9 +123,9 @@ abstract class Ajax implements Registerable {
 	 * Handles the callback.
 	 *
 	 * @param ServerRequestInterface $request
-	 * @return void
+	 * @return ServerRequestInterface
 	 */
-	abstract public function callback( ServerRequestInterface $request ): void;
+	abstract public function callback( ServerRequestInterface $request ): ServerRequestInterface;
 
 	/**
 	 * Validates the nonce
@@ -242,20 +242,22 @@ abstract class Ajax implements Registerable {
 	/**
 	 * The entry point for the ajax call.
 	 *
-	 * Populates the request and creates the respince.
+	 * Populates the callback with the request and emits the response.
 	 *
 	 * @return void
 	 */
 	public function entry(): void {
 		if ( $this->validate( $this->request ) ) {
-			$this->callback( $this->request );
+			( new HTTP() )->emit_response( $this->callback( $this->request ) );
+		} else {
+			wp_die();
 		}
-		wp_die();
 	}
 
 	/**
 	 * Return as Json.
 	 *
+	 * @deprecated 0.2.0
 	 * @param array<string, mixed> $data
 	 * @param int $status
 	 * @param array<string, mixed> $headers
