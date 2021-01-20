@@ -11,14 +11,11 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
-
-// Include our fixture.
-require_once \dirname( __FILE__, 2 ) . '/Fixtures/MetaBox_CPT.php';
+namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
 use PinkCrab\Core\Services\Registration\Loader;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\MetaBox_CPT;
+use PinkCrab\Registerables\Tests\Fixtures\CPT\MetaBox_CPT;
 
 
 class Test_MetaBox_CPT extends WP_UnitTestCase {
@@ -28,7 +25,7 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 	/**
 	 * Holds instance of the Post_Type object.
 	 *
-	 * @var \PinkCrab\Modules\Registerables\Post_Type
+	 * @var \PinkCrab\Registerables\Post_Type
 	 */
 	protected $cpt;
 

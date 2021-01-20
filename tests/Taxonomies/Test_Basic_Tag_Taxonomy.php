@@ -11,14 +11,12 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
+namespace PinkCrab\Registerables\Tests\Taxonomies;
 
-// Include our fixtures.
-require_once __DIR__ . '/Base_Taxonomy_Runner.php';
-require_once \dirname( __FILE__, 3 ) . '/Fixtures/Taxonomies/Basic_Tag_Taxonomy.php';
+use PinkCrab\Registerables\Tests\Taxonomies\Base_Taxonomy_Runner;
+use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
 
-use PinkCrab\Modules\Registerables\Tests\Base_Taxonomy_Runner;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\Basic_Tag_Taxonomy;
+
 
 class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 
