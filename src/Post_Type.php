@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * An abstract class for resitering custom post types.
  *
@@ -18,20 +19,14 @@ declare(strict_types=1);
  *
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Modules\Registerables
+ * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Modules\Registerables;
+namespace PinkCrab\Registerables;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
-
-use PinkCrab\Core\Interfaces\Registerable;
 use PinkCrab\Core\Application\App;
-
+use PinkCrab\Core\Interfaces\Registerable;
 use PinkCrab\Core\Services\Registration\Loader;
-
 
 abstract class Post_Type implements Registerable {
 
@@ -84,7 +79,7 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Array of meta boxes for the wp-edit screen.
 	 *
-	 * @var array[MetaBox]
+	 * @var array<int, MetaBox>
 	 */
 	protected $metaboxes = array();
 
@@ -162,35 +157,35 @@ abstract class Post_Type implements Registerable {
 	 * Triggers the handling of rewrites for this post type.
 	 * If false uses slug as base for permalinks.
 	 *
-	 * @var bool|array|null
+	 * @var bool|array<string, mixed>|null
 	 */
 	public $rewrite = null;
 
 	/**
 	 * Defines the cabailities of the post type.
 	 *
-	 * @var string|array
+	 * @var string|array<int, string>
 	 */
 	public $capability_type = 'post';
 
 	/**
 	 * Array of capabilities for the post type.
 	 *
-	 * @var array
+	 * @var array<int, string>
 	 */
 	public $capabilities = array();
 
 	/**
 	 * Which features are included with the post type (editor, author etc)
 	 *
-	 * @var array
+	 * @var array<int, string>
 	 */
 	public $supports = array();
 
 	/**
 	 * Which taxonomies should be included with this post types.
 	 *
-	 * @var array
+	 * @var array<int, string>
 	 */
 	public $taxonmies = array();
 
@@ -225,18 +220,21 @@ abstract class Post_Type implements Registerable {
 	 */
 	private function validate() {
 		if ( ! $this->key ) {
-			trigger_error( 'No key defined.' );
+			trigger_error( 'No key defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		}
 		if ( ! $this->singular ) {
-			trigger_error( 'No singular defined.' );
+			trigger_error( 'No singular defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		}
 		if ( ! $this->plural ) {
-			trigger_error( 'No plural defined.' );
+			trigger_error( 'No plural defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		}
 	}
 
 	/**
 	 * Register the post type using defined variables within the
+	 *
+	 * @param Loader $loader
+	 * @return void
 	 */
 	public function register( Loader $loader ): void {
 
@@ -259,24 +257,24 @@ abstract class Post_Type implements Registerable {
 		);
 
 		$args = array(
-			'labels'              => $this->filter_labels( $labels ),
-			'hierarchical'        => $this->hierarchical ?? false,
-			'supports'            => $this->supports ?? array(),
-			'public'              => $this->public ?? true,
-			'show_ui'             => $this->show_ui ?? true,
-			'show_in_menu'        => $this->show_in_menu ?? true,
-			'menu_position'       => $this->menu_position ?? 60,
-			'menu_icon'           => $this->dashicon ?? 'dashicons-pets',
-			'show_in_nav_menus'   => $this->show_in_nav_menus ?? true,
-			'publicly_queryable'  => $this->publicly_queryable ?? true,
-			'exclude_from_search' => $this->exclude_from_search ?? true,
-			'has_archive'         => $this->has_archive ?? true,
-			'query_var'           => $this->query_var ?? false,
-			'can_export'          => $this->can_export ?? true,
-			'rewrite'             => $this->rewrite ?? false,
-			'capability_type'     => $this->capability_type ?? 'page',
-			'capabilities'        => $this->capabilities ?? array(),
-			'taxonomies'          => $this->taxonmies ?? array(),
+			'labels'              => $this->filter_labels( $labels ),           // @phpstan-ignore-next-line
+			'hierarchical'        => is_bool( $this->hierarchical ) ? $this->hierarchical : false,
+			'supports'            => $this->supports,           // @phpstan-ignore-next-line
+			'public'              => is_bool( $this->public ) ? $this->public : true, // @phpstan-ignore-next-line
+			'show_ui'             => is_bool( $this->show_ui ) ? $this->show_ui : true, // @phpstan-ignore-next-line
+			'show_in_menu'        => is_bool( $this->show_in_menu ) ? $this->show_in_menu : true,
+			'menu_position'       => $this->menu_position ?: 60,
+			'menu_icon'           => $this->dashicon ?: 'dashicons-pets',
+			'show_in_nav_menus'   => is_bool( $this->show_in_nav_menus ) ? $this->show_in_nav_menus : true, // @phpstan-ignore-next-line
+			'publicly_queryable'  => is_bool( $this->publicly_queryable ) ? $this->publicly_queryable : true, // @phpstan-ignore-next-line
+			'exclude_from_search' => is_bool( $this->exclude_from_search ) ? $this->exclude_from_search : true, // @phpstan-ignore-next-line
+			'has_archive'         => is_bool( $this->has_archive ) ? $this->has_archive : true,
+			'query_var'           => is_bool( $this->query_var ) ? $this->query_var : false, // @phpstan-ignore-next-line
+			'can_export'          => is_bool( $this->can_export ) ? $this->can_export : true,
+			'rewrite'             => is_bool( $this->rewrite ) ? $this->rewrite : false,
+			'capability_type'     => $this->capability_type ?: 'page',
+			'capabilities'        => $this->capabilities ?: array(),
+			'taxonomies'          => $this->taxonmies ?: array(),
 		);
 		register_post_type( $this->key, $this->filter_args( $args ) );
 
@@ -300,8 +298,8 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Filters the labels through child class.
 	 *
-	 * @param array $labels
-	 * @return array
+	 * @param array<string, mixed> $labels
+	 * @return array<string, mixed>
 	 */
 	public function filter_labels( array $labels ): array {
 		return $labels;
@@ -310,8 +308,8 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Filters the args used to register the CPT.
 	 *
-	 * @param array $args
-	 * @return array
+	 * @param array<string, mixed> $args
+	 * @return array<string, mixed>
 	 */
 	private function filter_args( array $args ): array {
 		return $args;

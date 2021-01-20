@@ -1,4 +1,7 @@
-<?php declare( strict_types=1 );
+<?php
+
+declare( strict_types=1 );
+
 /**
  * A simple wrapper for getting and sanitizing all http requests.
  *
@@ -16,16 +19,12 @@
  *
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Modules\Registerables
+ * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Modules\Registerables;
+namespace PinkCrab\Registerables;
 
 use PinkCrab\Core\Services\Registration\Loader;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
 
 class MetaBox {
 
@@ -53,14 +52,14 @@ class MetaBox {
 	/**
 	 * The view args passed to view.
 	 *
-	 * @var array
+	 * @var array<string, mixed>
 	 */
 	public $view_vars = array();
 
 	/**
 	 * Screens to display metabox.
 	 *
-	 * @var array
+	 * @var array<int, string>
 	 */
 	public $screen = array();
 
@@ -81,7 +80,7 @@ class MetaBox {
 	/**
 	 * Define any hooks that should fire with the metabox.
 	 *
-	 * @var array
+	 * @var array<string, array>
 	 */
 	public $actions = array();
 
@@ -91,7 +90,7 @@ class MetaBox {
 	 * @param string $key
 	 */
 	final public function __construct( string $key ) {
-		$this->key     = $key;
+		$this->key = $key;
 	}
 
 	/**
@@ -147,7 +146,7 @@ class MetaBox {
 	/**
 	 * Sets the screens this metabox will be loaded.
 	 *
-	 * @param string|array|\WP_Screen $screen
+	 * @param string|array<mixed>|\WP_Screen $screen
 	 * @return self
 	 */
 	public function screen( $screen ): self {
@@ -198,7 +197,7 @@ class MetaBox {
 	/**
 	 * Registers the meta box.
 	 *
-	 * @param \PinkCrab\Core\Services\Registration\Loader $loader
+	 * @param Loader $loader
 	 * @return void
 	 */
 	public function register( Loader $loader ): void {

@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * An inheritable ajax loader.
  *
@@ -16,23 +19,20 @@
  *
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Modules\Registerables
+ * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Modules\Registerables;
+namespace PinkCrab\Registerables;
 
-
+use PinkCrab\HTTP\HTTP;
 use InvalidArgumentException;
+use PinkCrab\Enqueue\Enqueue;
 use PinkCrab\Core\Application\App;
-use PinkCrab\Modules\Enqueue\Enqueue;
+use Psr\Http\Message\ResponseInterface;
 use PinkCrab\Core\Collection\Collection;
 use PinkCrab\Core\Interfaces\Registerable;
+use Psr\Http\Message\ServerRequestInterface;
 use PinkCrab\Core\Services\Registration\Loader;
-use PC_Vendor\Psr\Http\Message\ServerRequestInterface;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
 
 abstract class Ajax implements Registerable {
 
@@ -71,14 +71,14 @@ abstract class Ajax implements Registerable {
 	/**
 	 * The field name/id for the nonce field.
 	 *
-	 * @return void
+	 * @var string
 	 */
 	protected $nonce_field = 'nonce';
 
 	/**
 	 * Collection of Equeue objects
 	 *
-	 * @var \PinkCrab\Core\Collection\Collection
+	 * @var Collection
 	 */
 	protected $scripts;
 
@@ -123,21 +123,20 @@ abstract class Ajax implements Registerable {
 	/**
 	 * Handles the callback.
 	 *
-	 * @param \PC_Vendor\Psr\Http\Message\ServerRequestInterface $request
-	 * @return void
+	 * @param ResponseInterface $request
+	 * @return ResponseInterface
 	 */
-	abstract public function callback( ServerRequestInterface $request ): void;
+	abstract public function callback( ResponseInterface $request ): ResponseInterface;
 
 	/**
 	 * Validates the nonce
 	 *
-	 * @param \PC_Vendor\Psr\Http\Message\ServerRequestInterface $request
+	 * @param ServerRequestInterface $request
 	 * @return bool
 	 */
 	protected function validate( ServerRequestInterface $request ): bool {
 		// Extract the params from the request (POST or GET)
 		$request_params = $this->extract_request_params( $request );
-
 		// If we have a nonce value to check.
 		if ( ! empty( $this->nonce_handle ) ) {
 			$nonce_value = \array_key_exists( $this->nonce_field, $request_params )
@@ -151,14 +150,15 @@ abstract class Ajax implements Registerable {
 
 			return (bool) wp_verify_nonce( $nonce_value, $this->nonce_handle );
 		}
+
 		return true;
 	}
 
 	/**
 	 * Based on the request the request type, either extract the body or params.
 	 *
-	 * @param \PC_Vendor\Psr\Http\Message\ServerRequestInterface $request
-	 * @return array
+	 * @param ServerRequestInterface $request
+	 * @return array<string, string>
 	 */
 	protected function extract_request_params( ServerRequestInterface $request ): array {
 		switch ( $request->getMethod() ) {
@@ -195,14 +195,12 @@ abstract class Ajax implements Registerable {
 		}
 
 		// Register the ajax action using loader.
-		if ( is_admin() ) {
-			$loader->ajax(
-				$this->action,
-				array( $this, 'entry' ),
-				$this->logged_out,
-				$this->logged_in
-			);
-		}
+		$loader->ajax(
+			$this->action,
+			array( $this, 'entry' ),
+			$this->logged_out,
+			$this->logged_in
+		);
 
 		// Add scripts if conditional is passed and scripts is not empty.
 		if ( $this->conditional() && ! $this->scripts->is_empty() ) {
@@ -210,7 +208,7 @@ abstract class Ajax implements Registerable {
 			if ( ! is_admin() ) {
 				do {
 					$script = $this->scripts->pop();
-					if ( $script instanceof Enqueue && $script->is_front() ) {
+					if ( $script instanceof Enqueue ) {
 						$loader->front_action(
 							'wp_enqueue_scripts',
 							function() use ( $script ) {
@@ -225,7 +223,7 @@ abstract class Ajax implements Registerable {
 			if ( is_admin() ) {
 				do {
 					$script = $this->scripts->pop();
-					if ( $script instanceof Enqueue && $script->is_admin() ) {
+					if ( $script instanceof Enqueue ) {
 						$loader->admin_action(
 							'admin_enqueue_scripts',
 							function( string $hook ) use ( $script ) {
@@ -243,23 +241,35 @@ abstract class Ajax implements Registerable {
 	/**
 	 * The entry point for the ajax call.
 	 *
-	 * Populates the request and creates the respince.
+	 * Populates the callback with the request and emits the response.
 	 *
 	 * @return void
 	 */
 	public function entry(): void {
+
+		// Helper HTTP.
+		$http = new HTTP();
+
+		// If we have a nonce key to validate, check
 		if ( $this->validate( $this->request ) ) {
-			$this->callback( $this->request );
+			$response = $this->callback( $http->psr7_response() );
+		} else { // Returns 401 if not validated.
+			$response = $http->psr7_response(
+				wp_json_encode( array( 'error' => 'Request not authenticated' ) ) ?: null,
+				401
+			);
 		}
-		wp_die();
+
+		$http->emit_response( $response );
 	}
 
 	/**
 	 * Return as Json.
 	 *
-	 * @param array $data
+	 * @deprecated 0.2.0
+	 * @param array<string, mixed> $data
 	 * @param int $status
-	 * @param array $headers
+	 * @param array<string, mixed> $headers
 	 * @return void
 	 */
 	protected function returnAsJson( array $data = array(), ?int $status = null, array $headers = array() ): void {
@@ -275,7 +285,7 @@ abstract class Ajax implements Registerable {
 		$instance = App::make( static::class );
 		if ( $instance->nonce_handle ) {
 			$nonce = wp_create_nonce( $instance->nonce_handle );
-			print( "<input type='hidden' name='{$instance->nonce_field}' id='{$instance->nonce_field}' value='{$nonce}'>" );
+			print( "<input type='hidden' name='{$instance->nonce_field}' id='{$instance->nonce_field}' value='{$nonce}'>" ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

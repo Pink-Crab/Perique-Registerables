@@ -11,18 +11,21 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
-
-// Include our fixture.
-require_once \dirname( __FILE__, 3 ) . '/Fixtures/Ajax/Ajax_With_Scripts.php';
+namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use PinkCrab\Modules\Enqueue\Enqueue;
-use PC_Vendor\GuzzleHttp\Psr7\ServerRequest;
+use PinkCrab\HTTP\HTTP;
+use PinkCrab\Enqueue\Enqueue;
+use Nyholm\Psr7\ServerRequest;
+use PinkCrab\PHPUnit_Helpers\Objects;
 use PinkCrab\Core\Services\Registration\Loader;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\Ajax_With_Scripts;
+use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_With_Scripts;
 
 class Test_Ajax_With_Scripts extends WP_UnitTestCase {
+
+	protected function server_request_provider(): ServerRequest {
+		return ( new HTTP() )->request_from_globals();
+	}
 
 	/**
 	 * Ensure that the scripts are registered to the ajax call.
@@ -31,22 +34,22 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_scripts_on_register(): void {
 
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 
 		// Just run setup to set the scripts.
 		$ajax_instance->set_up();
 		// Extract scripts as an array.
-		$scripts = _getPrivateProperty( $ajax_instance, 'scripts' )->to_array();
+		$scripts = Objects::get_private_property( $ajax_instance, 'scripts' )->to_array();
 
 		$this->assertInstanceOf( Enqueue::class, $scripts[0] );
-		$this->assertEquals( 'ajax_with_scripts_one', _getPrivateProperty( $scripts[0], 'handle' ) );
-		$this->assertEquals( 'script', _getPrivateProperty( $scripts[0], 'type' ) );
-		$this->assertEquals( 'http://www.url.tld/file.js', _getPrivateProperty( $scripts[0], 'src' ) );
+		$this->assertEquals( 'ajax_with_scripts_one', Objects::get_private_property( $scripts[0], 'handle' ) );
+		$this->assertEquals( 'script', Objects::get_private_property( $scripts[0], 'type' ) );
+		$this->assertEquals( 'http://www.url.tld/file.js', Objects::get_private_property( $scripts[0], 'src' ) );
 
 		$this->assertInstanceOf( Enqueue::class, $scripts[1] );
-		$this->assertEquals( 'ajax_with_scripts_two', _getPrivateProperty( $scripts[1], 'handle' ) );
-		$this->assertEquals( 'script', _getPrivateProperty( $scripts[1], 'type' ) );
-		$this->assertGreaterThan( 0, strpos( _getPrivateProperty( $scripts[1], 'src' ), 'Ajax/file.js' ) );
+		$this->assertEquals( 'ajax_with_scripts_two', Objects::get_private_property( $scripts[1], 'handle' ) );
+		$this->assertEquals( 'script', Objects::get_private_property( $scripts[1], 'type' ) );
+		$this->assertGreaterThan( 0, strpos( Objects::get_private_property( $scripts[1], 'src' ), 'Ajax/file.js' ) );
 	}
 
 	/**
@@ -56,11 +59,11 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_loader_front_end(): void {
 
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 
-		$scripts = _getPrivateProperty( $loader, 'front' )->to_array();
+		$scripts = Objects::get_private_property( $loader, 'front' )->to_array();
 
 		// Check we have 2 front facing and all values are expected.
 		$this->assertCount( 2, $scripts );
@@ -80,14 +83,14 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_loader_enqueues_scripts(): void {
 
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 		$loader->register_hooks();
 
 		// Trigger the scripts being added to enqueue list.
 		do_action( 'wp_enqueue_scripts' );
-		$registered_scripts = _getPrivateProperty( $GLOBALS['wp_scripts'], 'registered' );
+		$registered_scripts = Objects::get_private_property( $GLOBALS['wp_scripts'], 'registered' );
 
 		// Check first script.
 		$script_one = $registered_scripts['ajax_with_scripts_one'];
@@ -118,7 +121,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function text_optional_conditional_can_be_used(): void {
-		$ajax_instance = new Ajax_With_Scripts( ServerRequest::fromGlobals() );
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
 
 		// Set to false (helper property for tests)
 		$ajax_instance->_conditional_value = false;

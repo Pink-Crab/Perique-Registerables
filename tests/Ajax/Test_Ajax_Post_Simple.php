@@ -11,34 +11,55 @@ declare(strict_types=1);
  * @package PinkCrab\Core
  */
 
-namespace PinkCrab\Modules\Registerables\Tests;
+namespace PinkCrab\Registerables\Tests;
 
-// Include our fixture.
-require_once \dirname( __FILE__, 3 ) . '/Fixtures/Ajax/Ajax_Post_Simple.php';
-
-use DOMDocument;
-use WP_Ajax_UnitTestCase;
-use PC_Vendor\GuzzleHttp\Psr7\ServerRequest;
+use PinkCrab\HTTP\HTTP;
+use PinkCrab\Registerables\Ajax;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PinkCrab\Core\Services\Registration\Loader;
-use PinkCrab\Core\Tests\Fixtures\Mock_Objects\Ajax_Post_Simple;
+use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Simple;
 
+class Test_Ajax_Post_Simple extends  TestCase {
 
-class Test_Ajax_Post_Simple extends  WP_Ajax_UnitTestCase {
-
+	/**
+	 * Holds the instance of the
+	 *
+	 * @var Ajax
+	 */
 	protected static $ajax_instance;
 
-	public function setUp() {
-			// header( 'Content-Type: application/x-www-form-urlencoded;' );
-		// header('Content-Type: application/json');
-		parent::setUp();
+	/**
+	 * Ensure the headers are cleared on each test.
+	 *
+	 * @var bool
+	 */
+	protected $preserveGlobalState = false;
 
-		$_SERVER['REQUEST_METHOD'] = 'POST';
+	protected function set_up() {
+		parent::set_up();
 
+		// HTTP helper.
+		$http = new HTTP();
+
+		// Mock the request global.s
+		$_SERVER['REQUEST_METHOD']      = 'POST';
 		$_POST['nonce']                 = wp_create_nonce( 'ajax_post_simple' );
 		$_POST['ajax_post_simple_data'] = 'Test_Ajax_Post_Simple';
 
-		self::$ajax_instance = new Ajax_Post_Simple( ServerRequest::fromGlobals()->withHeader( 'Content-Type', 'application/x-www-form-urlencoded;' ) );
-		$loader              = new Loader;
+		// Body stream
+		$stream = $http->create_stream_with_json(
+			array(
+				'nonce'                 => wp_create_nonce( 'ajax_post_simple' ),
+				'ajax_post_simple_data' => 'Test_Ajax_Post_Simple',
+			)
+		);
+
+		// Request
+		$request = $http->request_from_globals()->withBody( $stream );
+
+		self::$ajax_instance = new Ajax_Post_Simple( $request );
+
+		$loader = new Loader;
 		self::$ajax_instance->register( $loader );
 		$loader->register_hooks();
 	}
@@ -53,26 +74,16 @@ class Test_Ajax_Post_Simple extends  WP_Ajax_UnitTestCase {
 
 	}
 
+
 	/**
 	 * Check a none logged in user can use.
 	 *
+	 * @runInSeparateProcess
 	 * @return void
 	 */
 	public function test_callable_logged_out() {
-
-		try {
-			$this->_handleAjax( 'ajax_post_simple' );
-		} catch ( \WPAjaxDieStopException $th ) {
-			// Ignore the wpdieexception, we dont actually return JSON!
-		} catch ( \WPAjaxDieContinueException $th ) {
-
-		}
-
-		$response = json_decode( $this->_last_response );
-		$this->assertInternalType( 'object', $response );
-		$this->assertObjectHasAttribute( 'success', $response );
-		$this->assertTrue( $response->success );
-		$this->assertEquals( 'Test_Ajax_Post_Simple', $response->data->ajax_post_simple_data );
+		$this->expectOutputRegex( '/Ajax_Post_Simple/' );
+		do_action( 'wp_ajax_nopriv_ajax_post_simple' );
 	}
 
 	/**
@@ -81,6 +92,7 @@ class Test_Ajax_Post_Simple extends  WP_Ajax_UnitTestCase {
 	 * @return void
 	 */
 	public function test_nonce_field(): void {
+
 		ob_start();
 		self::$ajax_instance::nonce_field();
 		$nonce_field = ob_get_contents();
