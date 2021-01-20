@@ -7,7 +7,7 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * WP_Ajax Call
 
 
-![alt text](https://img.shields.io/badge/Current_Version-0.1.0-yellow.svg?style=flat " ") 
+![alt text](https://img.shields.io/badge/Current_Version-0.3.0-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 
 ![alt text](https://img.shields.io/badge/PHPStan-level%208-brightgreen.svg?style=flat " ") 
@@ -20,13 +20,36 @@ https://app.gitbook.com/@glynn-quelch/s/pinkcrab/
 
 
 ## Version ##
-**Release 0.1.0**
+**Release 0.3.0**
 
 
 ## Why? ##
 Creating many of WordPress's internal fixtures can sometimes be very verbose with large arrays of values which do not throw errors if incorrect. 
 
 The PinkCrab Registerables module provides a small selection of Abstract Classes which can be extended and added to the registration system.  
+
+## Setup ##
+
+````bash 
+$ composer require pinkcrab/registerables
+````
+
+If you are planning on using the Ajax abstracts, you will need to ensure that a valid PS7 ServerRequest is injected into your Ajax class. By default the nyholm PS7 library is included and we have a helper method in our HTTP helper class. Just copy the example below into your dependencies file.
+
+Alternatively you can use Guzzle or any other HTTP library, so long as the isntance passed in implements the PS7 ServerRequestInterface.
+
+````php
+// file config/dependencies.php
+
+// Ajax Request Injection.
+Ajax::class       => array(
+    'constructParams' => array( ( new HTTP() )->request_from_globals() ),
+    'shared'          => true,
+    'inherit'         => true,
+),
+````
+
+## Dependencies ##
 
 ## Example ##
 
@@ -108,4 +131,4 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
-0.1.0 - Moved to composer.
+0.2.beta - Moved to composer, removed Guzzle for nyholm ps7 in its place. Uses HTTP helper for PS7 responses and tests now include form-urlend requests.

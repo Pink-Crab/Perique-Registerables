@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * An abstract class for resitering custom post types.
  *
