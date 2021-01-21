@@ -123,10 +123,10 @@ abstract class Ajax implements Registerable {
 	/**
 	 * Handles the callback.
 	 *
-	 * @param ResponseInterface $request
+	 * @param ResponseInterface $response
 	 * @return ResponseInterface
 	 */
-	abstract public function callback( ResponseInterface $request ): ResponseInterface;
+	abstract public function callback( ResponseInterface $response ): ResponseInterface;
 
 	/**
 	 * Validates the nonce
@@ -186,6 +186,7 @@ abstract class Ajax implements Registerable {
 	 * @return void
 	 */
 	public function register( Loader $loader ): void {
+		
 		// Run any setup before registering.
 		$this->set_up();
 		// Ensure we have a valid action.

@@ -98,7 +98,7 @@ class Simple_Ajax extends Ajax {
 	public function callback( ResponseInterface $response ): ResponseInterface {
 		$response_array = array( 'result' => $this->request->getQueryParams()['ajax_get_data'] );
 		return $response->withBody(
-			( new HTTP() )->create_stream_with_json( $response_array )
+			HTTP_Helper::stream_from_scalar( $response_array )
 		);
 	}
 }

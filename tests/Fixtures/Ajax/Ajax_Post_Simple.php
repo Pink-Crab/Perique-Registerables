@@ -31,7 +31,7 @@ class Ajax_Post_Simple extends Ajax {
 	 */
 	public function callback( ResponseInterface $response ): ResponseInterface {
 		return $response->withBody(
-			( new HTTP() )->create_stream_with_json(
+			HTTP_Helper::stream_from_scalar(
 				array( 'success' => 'Ajax_Post_Simple' )
 			)
 		);
