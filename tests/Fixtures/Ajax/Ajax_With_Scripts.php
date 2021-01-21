@@ -61,7 +61,7 @@ class Ajax_With_Scripts extends Ajax {
 	 * Handles the callback.
 	 *
 	 * @param ServerRequestInterface $request
-	 * @return void
+	 * @return ServerRequestInterface
 	 */
 	public function callback( ResponseInterface $response ): ResponseInterface {
 		// Does nothing here

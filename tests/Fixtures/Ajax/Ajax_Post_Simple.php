@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
-use Nyholm\Psr7\Stream;
-use PinkCrab\HTTP\HTTP;
+use PinkCrab\HTTP\HTTP_Helper;
 use PinkCrab\Registerables\Ajax;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,7 +30,7 @@ class Ajax_Post_Simple extends Ajax {
 	 */
 	public function callback( ResponseInterface $response ): ResponseInterface {
 		return $response->withBody(
-			( new HTTP() )->create_stream_with_json(
+			HTTP_Helper::stream_from_scalar(
 				array( 'success' => 'Ajax_Post_Simple' )
 			)
 		);

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
-use PinkCrab\HTTP\HTTP;
+use PinkCrab\HTTP\HTTP_Helper;
 use PinkCrab\Registerables\Ajax;
 use Psr\Http\Message\ResponseInterface;
 
@@ -22,15 +22,14 @@ class Ajax_Get extends Ajax {
 	protected $action       = 'basic_ajax_get';
 
 	/**
-	 * Handles the callback.
-	 *
-	 * @param ResponseInterface $request
-	 * @return void
+
+	 * @param ResponseInterface $response New response instance
+	 * @return ResponseInterface
 	 */
 	public function callback( ResponseInterface $response ): ResponseInterface {
 		$response_array = array( 'result' => $this->request->getQueryParams()['ajax_get_data'] );
 		return $response->withBody(
-			( new HTTP() )->create_stream_with_json( $response_array )
+			HTTP_Helper::stream_from_scalar( $response_array )
 		);
 	}
 }
