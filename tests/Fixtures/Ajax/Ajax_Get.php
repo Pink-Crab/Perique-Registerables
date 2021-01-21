@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Fixtures\Ajax;
 
-use PinkCrab\HTTP\HTTP;
+use PinkCrab\HTTP\HTTP_Helper;
 use PinkCrab\Registerables\Ajax;
 use Psr\Http\Message\ResponseInterface;
 
