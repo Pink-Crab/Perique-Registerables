@@ -285,7 +285,7 @@ abstract class Ajax implements Registerable {
 	 */
 	public static function nonce_field(): void {
 		$instance = App::make( static::class );
-		if ( $instance->nonce_handle ) {
+		if ( $instance || $instance->nonce_handle ) {
 			$nonce = wp_create_nonce( $instance->nonce_handle );
 			print( "<input type='hidden' name='{$instance->nonce_field}' id='{$instance->nonce_field}' value='{$nonce}'>" ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
@@ -298,7 +298,7 @@ abstract class Ajax implements Registerable {
 	 */
 	public static function nonce_value(): string {
 		$instance = App::make( static::class );
-		if ( ! $instance->nonce_handle ) {
+		if ( ! $instance || ! $instance->nonce_handle ) {
 			return '';
 		}
 		return wp_create_nonce( $instance->nonce_handle );
@@ -311,7 +311,7 @@ abstract class Ajax implements Registerable {
 	 */
 	public static function action(): string {
 		$instance = App::make( static::class );
-		if ( ! $instance->action ) {
+		if ( ! $instance || ! $instance->action ) {
 			return '';
 		}
 		return $instance->action;
