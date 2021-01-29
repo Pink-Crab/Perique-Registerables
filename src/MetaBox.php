@@ -234,7 +234,7 @@ class MetaBox {
 	 */
 	protected function is_active(): bool {
 		$current_screen = get_current_screen();
-		return ! empty( $current_screen->post_type ) && in_array( $current_screen->post_type, $this->screen );
+		return ! empty( $current_screen->post_type ) && in_array( $current_screen->post_type, $this->screen, true );
 	}
 }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /**
- * Basic Ajax Call using GET
+ * Ajax call with missing nonce and action
  *
  * @since 0.2.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
@@ -16,10 +16,10 @@ use PinkCrab\HTTP\HTTP_Helper;
 use PinkCrab\Registerables\Ajax;
 use Psr\Http\Message\ResponseInterface;
 
-class Ajax_Get extends Ajax {
+class Ajax_Missing_Nonce_And_Action extends Ajax {
 
-	protected $nonce_handle = 'basic_ajax_get';
-	protected $action       = 'basic_ajax_get';
+	protected $nonce_handle = null;
+	protected $action       = null;
 
 	/**
 
@@ -27,9 +27,6 @@ class Ajax_Get extends Ajax {
 	 * @return ResponseInterface
 	 */
 	public function callback( ResponseInterface $response ): ResponseInterface {
-		$response_array = array( 'result' => $this->request->getQueryParams()['ajax_get_data'] );
-		return $response->withBody(
-			HTTP_Helper::stream_from_scalar( $response_array )
-		);
+		//NO OP
 	}
 }

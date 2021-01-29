@@ -131,4 +131,38 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 		$ajax_instance->_conditional_value = true;
 		$this->assertTrue( $ajax_instance->conditional() );
 	}
+
+	public function test_admin_scripts_loaded_in_admin(): void
+	{
+		set_current_screen('edit.php');
+		
+		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
+		$loader        = new Loader();
+		$ajax_instance->register( $loader );
+		$loader->register_hooks();
+
+		// Trigger the scripts being added to enqueue list.
+		do_action( 'admin_enqueue_scripts' );
+		$registered_scripts = Objects::get_private_property( $GLOBALS['wp_scripts'], 'registered' );
+
+		// Check first script.
+		$script_one = $registered_scripts['ajax_with_scripts_one'];
+		$this->assertArrayHasKey( 'ajax_with_scripts_one', $registered_scripts );
+		$this->assertInstanceOf( \_WP_Dependency::class, $script_one );
+		$this->assertEquals( 'ajax_with_scripts_one', $script_one->handle );
+		$this->assertEquals( 'http://www.url.tld/file.js', $script_one->src );
+		$this->assertEquals( '1.2.3', $script_one->ver );
+		$this->assertCount( 1, $script_one->deps );
+		$this->assertContains( 'jquery', $script_one->deps );
+
+		// Second script.
+		$script_two = $registered_scripts['ajax_with_scripts_two'];
+		$this->assertArrayHasKey( 'ajax_with_scripts_two', $registered_scripts );
+		$this->assertInstanceOf( \_WP_Dependency::class, $script_two );
+		$this->assertEquals( 'ajax_with_scripts_two', $script_two->handle );
+		$this->assertGreaterThan( 0, strpos( $script_two->src, 'Ajax/file.js' ) );
+		$this->assertEquals( '0.1.2', $script_two->ver );
+		$this->assertCount( 1, $script_two->deps );
+		$this->assertContains( 'angular', $script_two->deps );
+	}
 }

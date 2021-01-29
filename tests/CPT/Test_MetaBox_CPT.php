@@ -147,4 +147,13 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 		return $output;
 	}
 
+	/**
+	 * Tests the ::get_slug() method creates its own instnace of the CPT internally.
+	 *
+	 * @return void
+	 */
+	public function test_can_get_slug_statically(): void {
+		$this->assertEquals( 'metabox_cpt', MetaBox_CPT::get_slug() );
+	}
+
 }

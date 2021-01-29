@@ -39,7 +39,7 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 	 *
 	 * @var array
 	 */
-	protected $terms = [];
+	protected $terms = array();
 
 	/** Defined values in children classes. */
 	protected $taxonomy_class;
@@ -126,16 +126,31 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 
 		$wp_taxonomy = \get_taxonomy( $this->taxonomy->slug );
 		foreach ( $this->settings as $property => $expected ) {
-			$this->assertEquals(
-				$expected,
-				$wp_taxonomy->{$property},
-				sprintf(
-					'Failed asserting setting that %s was %s for %s',
-					$property,
-					$expected ? 'TRUE' : 'FALSE',
-					$this->taxonomy->slug
-				)
-			);
+			// Check permalinks in array, else matching
+			if ( $property === 'rewrite' ) {
+				$this->assertEquals(
+					$expected,
+					$wp_taxonomy->{$property}['slug'],
+					sprintf(
+						'Failed asserting setting that %s was %s for %s (rewrite, so looking at slug property',
+						$property,
+						$expected ? 'TRUE' : 'FALSE',
+						$this->taxonomy->slug
+					)
+				);
+			} else {
+				// Match all other proprerties.
+				$this->assertEquals(
+					$expected,
+					$wp_taxonomy->{$property},
+					sprintf(
+						'Failed asserting setting that %s was %s for %s',
+						$property,
+						$expected ? 'TRUE' : 'FALSE',
+						$this->taxonomy->slug
+					)
+				);
+			}
 		}
 	}
 }

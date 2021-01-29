@@ -25,6 +25,8 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\Core\Application\App;
+use InvalidArgumentException;
+
 use PinkCrab\Core\Interfaces\Registerable;
 use PinkCrab\Core\Services\Registration\Loader;
 
@@ -220,13 +222,13 @@ abstract class Post_Type implements Registerable {
 	 */
 	private function validate() {
 		if ( ! $this->key ) {
-			trigger_error( 'No key defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			throw new InvalidArgumentException( 'No key defined.' );
 		}
 		if ( ! $this->singular ) {
-			trigger_error( 'No singular defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			throw new InvalidArgumentException( 'No singular defined.' );
 		}
 		if ( ! $this->plural ) {
-			trigger_error( 'No plural defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			throw new InvalidArgumentException( 'No plural defined.' );
 		}
 	}
 
@@ -322,7 +324,9 @@ abstract class Post_Type implements Registerable {
 	 */
 	public static function get_slug(): string {
 		$cpt = App::make( static::class );
-		return $cpt->slug();
+		return $cpt && is_a( $cpt, static::class )
+			? $cpt->slug() ?? ''
+			: '';
 	}
 
 	/**
