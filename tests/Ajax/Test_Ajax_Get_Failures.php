@@ -125,22 +125,26 @@ class Test_Ajax_Get_Failures extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests returns a blank string i 
+	 * Tests returns a blank string i
 	 *
 	 * @return void
 	 */
 	public function test_returns_blank_string_for_nonce_value_if_unset(): void {
+
 		$ajax_instance = new Ajax_Missing_Nonce_And_Action( HTTP_Helper::global_server_request() );
 		$this->assertEquals( '', $ajax_instance::nonce_value() );
 	}
 
 	/**
-	 * Tests returns a blank string i 
+	 * Tests returns a blank string i
 	 *
 	 * @return void
 	 */
 	public function test_returns_blank_string_for_action_if_unset(): void {
-		$ajax_instance = new Ajax_Missing_Nonce_And_Action( HTTP_Helper::global_server_request() );
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_GET['nonce']             = 'fail';
+		$_GET['ajax_get_data']     = 'Test_Ajax_Get';
+		$ajax_instance             = new Ajax_Missing_Nonce_And_Action( HTTP_Helper::global_server_request() );
 		$this->assertEquals( '', $ajax_instance::action() );
 	}
 

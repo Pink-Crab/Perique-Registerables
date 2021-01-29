@@ -324,7 +324,9 @@ abstract class Post_Type implements Registerable {
 	 */
 	public static function get_slug(): string {
 		$cpt = App::make( static::class );
-		return $cpt->slug();
+		return $cpt && is_a( $cpt, static::class )
+			? $cpt->slug() ?? ''
+			: '';
 	}
 
 	/**

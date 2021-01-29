@@ -368,7 +368,9 @@ abstract class Taxonomy implements Registerable {
 	 * @return string
 	 */
 	public static function get_slug(): string {
-		return App::make( static::class )->slug;
+		$tax = App::make( static::class );
+		return $tax && is_a( $tax, static::class )
+			? $tax->slug
+			: '';
 	}
-
 }

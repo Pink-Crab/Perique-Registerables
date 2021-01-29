@@ -27,6 +27,7 @@ namespace PinkCrab\Registerables;
 use PinkCrab\HTTP\HTTP;
 use InvalidArgumentException;
 use PinkCrab\Enqueue\Enqueue;
+use PinkCrab\Registerables\Ajax;
 use PinkCrab\Core\Application\App;
 use Psr\Http\Message\ResponseInterface;
 use PinkCrab\Core\Collection\Collection;
@@ -39,14 +40,14 @@ abstract class Ajax implements Registerable {
 	/**
 	 * The ajax calls nonce handle.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $nonce_handle;
 
 	/**
 	 * Define the action to call.
 	 *
-	 * @var string
+	 * @var string|null
 	 * @required
 	 */
 	protected $action;
@@ -227,7 +228,7 @@ abstract class Ajax implements Registerable {
 					if ( $script instanceof Enqueue ) {
 						$loader->admin_action(
 							'admin_enqueue_scripts',
-							function( string $hook ) use ( $script ) {
+							function( string $hook ) use ( $script ) {  // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
 								$script->register();
 							}
 						);
@@ -274,6 +275,7 @@ abstract class Ajax implements Registerable {
 	 * @param array<string, mixed> $headers
 	 * @return void
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterfaceAfterLastUsed
 	protected function returnAsJson( array $data = array(), ?int $status = null, array $headers = array() ): void {
 		wp_send_json( $data, $status );
 	}
@@ -284,8 +286,16 @@ abstract class Ajax implements Registerable {
 	 * @return void
 	 */
 	public static function nonce_field(): void {
+
+		// $instance is Ajax
 		$instance = App::make( static::class );
-		if ( $instance || $instance->nonce_handle ) {
+
+		// Check we have a valid Ajax instance.
+		if ( is_object( $instance )
+			&& is_a( $instance, static::class )
+			&& property_exists( $instance, 'nonce_handle' )
+			&& is_string( $instance->nonce_handle )
+		) {
 			$nonce = wp_create_nonce( $instance->nonce_handle );
 			print( "<input type='hidden' name='{$instance->nonce_field}' id='{$instance->nonce_field}' value='{$nonce}'>" ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
@@ -297,11 +307,20 @@ abstract class Ajax implements Registerable {
 	 * @return string
 	 */
 	public static function nonce_value(): string {
+
+		// $instance is Ajax
 		$instance = App::make( static::class );
-		if ( ! $instance || ! $instance->nonce_handle ) {
-			return '';
+
+		// Check we have a valid Ajax instance.
+		if ( is_object( $instance )
+		&& is_a( $instance, static::class )
+		&& property_exists( $instance, 'nonce_handle' )
+		&& is_string( $instance->nonce_handle ) ) {
+			return wp_create_nonce( $instance->nonce_handle );
 		}
-		return wp_create_nonce( $instance->nonce_handle );
+
+		return '';
+
 	}
 
 	/**
@@ -310,10 +329,18 @@ abstract class Ajax implements Registerable {
 	 * @return string
 	 */
 	public static function action(): string {
+
+		// $instance is Ajax
 		$instance = App::make( static::class );
-		if ( ! $instance || ! $instance->action ) {
-			return '';
+
+		// Check we have a valid Ajax instance.
+		if ( is_object( $instance )
+		&& is_a( $instance, static::class )
+		&& property_exists( $instance, 'action' )
+		&& is_string( $instance->nonce_handle ) ) {
+			return $instance->action ?? '';
 		}
-		return $instance->action;
+
+		return '';
 	}
 }
