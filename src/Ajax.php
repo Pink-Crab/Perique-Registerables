@@ -275,8 +275,7 @@ abstract class Ajax implements Registerable {
 	 * @param array<string, mixed> $headers
 	 * @return void
 	 */
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterfaceAfterLastUsed
-	protected function returnAsJson( array $data = array(), ?int $status = null, array $headers = array() ): void {
+	protected function returnAsJson( array $data = array(), ?int $status = null, array $headers = array() ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterfaceAfterLastUsed		
 		wp_send_json( $data, $status );
 	}
 
