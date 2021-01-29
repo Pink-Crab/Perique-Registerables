@@ -30,11 +30,13 @@
         "phpunit/phpunit": "^7.0",
         "roots/wordpress": "^5.5",
         "wp-phpunit/wp-phpunit": "^5.0",
-        "yoast/phpunit-polyfills": "^0.1.0",
-        "symfony/var-dumper": "^5.0",
+        "symfony/var-dumper": "4.*",
         "phpstan/phpstan": "^0.12.6",
         "szepeviktor/phpstan-wordpress": "^0.7.2",
         "php-stubs/wordpress-stubs": "^5.6.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "wp-coding-standards/wpcs": "*",
+        "object-calisthenics/phpcs-calisthenics-rules": "*",
         "pinkcrab/phpunit-helpers": "dev-master"
     },
     "require": {

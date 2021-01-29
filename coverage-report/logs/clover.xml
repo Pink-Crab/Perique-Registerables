@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1611930403">
-  <project timestamp="1611930403">
+<coverage generated="1611930770">
+  <project timestamp="1611930770">
     <package name="PinkCrab\Registerables">
       <file name="/shared/httpd/php/htdocs/pc_modules/Module__Registerables/src/Ajax.php">
         <class name="PinkCrab\Registerables\Ajax" namespace="PinkCrab\Registerables">
