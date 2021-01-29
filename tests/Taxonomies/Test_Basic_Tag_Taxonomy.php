@@ -66,7 +66,7 @@ class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 	/** Additional Tests */
 
 	public function test_permalinks() {
-		$this->assertRegexp( '/=basic_tag_tax/', get_term_link( $this->terms[0] ) );
+		$this->assertRegexp( '/basic_tag_tax/', get_term_link( $this->terms[0] ) );
 	}
 
 	public function test_static_get_slug() {
