@@ -144,7 +144,7 @@ abstract class Ajax implements Registerable {
 				: null;
 
 			// If no nonce, fail.
-			if ( is_null( $nonce_value ) ) {
+			if ( is_null( $nonce_value ) || empty( $nonce_value ) ) {
 				return false;
 			}
 
@@ -186,7 +186,7 @@ abstract class Ajax implements Registerable {
 	 * @return void
 	 */
 	public function register( Loader $loader ): void {
-		
+
 		// Run any setup before registering.
 		$this->set_up();
 		// Ensure we have a valid action.
@@ -268,6 +268,7 @@ abstract class Ajax implements Registerable {
 	 * Return as Json.
 	 *
 	 * @deprecated 0.2.0
+	 * @codeCoverageIgnore
 	 * @param array<string, mixed> $data
 	 * @param int $status
 	 * @param array<string, mixed> $headers

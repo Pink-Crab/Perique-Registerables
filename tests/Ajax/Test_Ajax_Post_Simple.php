@@ -47,7 +47,7 @@ class Test_Ajax_Post_Simple extends  TestCase {
 		$_POST['ajax_post_simple_data'] = 'Test_Ajax_Post_Simple';
 
 		// Body stream
-		$stream = $http->create_stream_with_json(
+		$stream = $http->stream_from_scalar(
 			array(
 				'nonce'                 => wp_create_nonce( 'ajax_post_simple' ),
 				'ajax_post_simple_data' => 'Test_Ajax_Post_Simple',

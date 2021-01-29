@@ -44,7 +44,10 @@
         "pinkcrab/enqueue": "^1.1.0"
     },
     "scripts": {
-        "test": "phpunit",
-        "analyse": "vendor/bin/phpstan analyse src -l8"
+        "test": "phpunit --coverage-clover coverage.xml",
+        "coverage": "phpunit --coverage-html coverage-report",
+        "analyse": "vendor/bin/phpstan analyse src -l8",
+        "sniff": "./vendor/bin/phpcs src/ -v",
+        "all": "composer test && composer analyse && composer sniff"
     }
 }

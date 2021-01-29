@@ -1,12 +1,12 @@
 <?php
 
 use PinkCrab\HTTP\HTTP;
+use Dice\Dice; //@TODO!!!
 use GuzzleHttp\Psr7\Response;
 use PinkCrab\Registerables\Ajax;
 use GuzzleHttp\Psr7\ServerRequest;
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Services\Dice\WP_Dice;
-use PinkCrab\Core\Services\Dice\Dice; //@TODO!!!
 use PinkCrab\Core\Services\ServiceContainer\Container;
 
 /**

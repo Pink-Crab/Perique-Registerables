@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
+use InvalidArgumentException;
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Interfaces\Registerable;
 use PinkCrab\Core\Services\Registration\Loader;
@@ -344,19 +345,20 @@ abstract class Taxonomy implements Registerable {
 	}
 
 	/**
-	 * Check we have valid
+	 * Check we have valid properties
 	 *
 	 * @return void
+	 * @throws InvalidArgumentException
 	 */
 	final protected function validate() {
 		if ( ! $this->slug ) {
-			trigger_error( 'No slug defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			throw new InvalidArgumentException( 'No slug defined.' );
 		}
 		if ( ! $this->singular ) {
-			trigger_error( 'No singular defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			throw new InvalidArgumentException( 'No singular defined.' );
 		}
 		if ( ! $this->plural ) {
-			trigger_error( 'No plural defined.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			throw new InvalidArgumentException( 'No plural defined.' );
 		}
 	}
 
