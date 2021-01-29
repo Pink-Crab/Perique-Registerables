@@ -37,7 +37,8 @@
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
         "object-calisthenics/phpcs-calisthenics-rules": "*",
-        "pinkcrab/phpunit-helpers": "dev-master"
+        "pinkcrab/phpunit-helpers": "dev-master",
+        "yoast/phpunit-polyfills": "^0.2.0"
     },
     "require": {
         "php": ">=7.1.0",
