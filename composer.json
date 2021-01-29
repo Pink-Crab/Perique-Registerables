@@ -23,7 +23,7 @@
         }
     },
     "repositories": [{
-        "url": "https://github.com/Pink-Crab/PHP_Unigt_Helpers.git",
+        "url": "https://github.com/Pink-Crab/PHP_Unit_Helpers.git",
         "type": "git"
     }],
     "require-dev": {
