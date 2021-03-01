@@ -42,7 +42,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "pinkcrab/plugin-framework": "^0.3.2",
+        "pinkcrab/plugin-framework": "0.3.*",
         "pinkcrab/http": "^0.2.0",
         "pinkcrab/enqueue": "^1.1.0"
     },
