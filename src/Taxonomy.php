@@ -300,6 +300,7 @@ abstract class Taxonomy implements Registerable {
 			'rewrite'               => $this->slug,
 			'label'                 => $this->label ?? $this->plural,
 			'query_var'             => $this->query_var,
+			'hierarchical'          => $this->hierarchical,
 		);
 
 		// Add optional fields & args.
