@@ -47,6 +47,7 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 			// Create the CPT and Loader instances.
 			$this->cpt = new MetaBox_CPT;
 			$loader    = new Loader;
+		
 
 			// Run registration.
 			$this->cpt->register( $loader );

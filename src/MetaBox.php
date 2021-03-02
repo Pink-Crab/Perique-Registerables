@@ -99,8 +99,8 @@ class MetaBox {
 	 * @return void
 	 */
 	private function set_screen(): void {
-		if ( \is_admin() && \function_exists( 'get_current_screen' ) ) {
-			$current_screen = \get_current_screen();
+		$current_screen = $this->get_current_screen();
+		if ( \is_admin() && \is_object( $current_screen ) ) {
 			if ( ! empty( $current_screen->post_type ) ) {
 				array_push( $this->screen, $current_screen->post_type );
 			}
@@ -235,6 +235,22 @@ class MetaBox {
 	protected function is_active(): bool {
 		$current_screen = get_current_screen();
 		return ! empty( $current_screen->post_type ) && in_array( $current_screen->post_type, $this->screen, true );
+	}
+
+	/**
+	 * Pollyfill for get current screen.
+	 *
+	 * @since 0.3.3
+	 * @return \WP_Screen|null
+	 */
+	protected function get_current_screen(): ?\WP_Screen {
+		global $current_screen;
+
+		if ( ! isset( $current_screen ) ) {
+			return null;
+		}
+
+		return $current_screen;
 	}
 }
 
