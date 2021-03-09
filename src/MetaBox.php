@@ -24,7 +24,9 @@ declare( strict_types=1 );
 
 namespace PinkCrab\Registerables;
 
+use Exception;
 use PinkCrab\Loader\Loader;
+use PinkCrab\Core\Interfaces\Renderable;
 
 class MetaBox {
 
@@ -85,12 +87,62 @@ class MetaBox {
 	public $actions = array();
 
 	/**
+	 * Instance of renderable class
+	 *
+	 * @var Renderable|null
+	 */
+	protected $renderable;
+
+	/**
 	 * Creates a MetaBox with a defined key.
 	 *
 	 * @param string $key
 	 */
 	final public function __construct( string $key ) {
 		$this->key = $key;
+	}
+
+	/**
+	 * Sets a renderable engine for use with templates.
+	 *
+	 * @param Renderable $renderable
+	 * @return self
+	 */
+	public function set_renderable( Renderable $renderable ):self {
+		$this->renderable = $renderable;
+		return $this;
+	}
+
+	/**
+	 * Checks renderable engined has been set.
+	 *
+	 * @return bool
+	 */
+	public function has_renderable(): bool {
+		return ! is_null( $this->renderable );
+	}
+
+	/**
+	 * Allows the setting of a renderable tempalte.
+	 * Please note this will overwrite any view() callback passed
+	 * and can be overwritten calling view() afterwards.
+	 *
+	 * @param string $template
+	 * @return self
+	 */
+	public function render( string $template ): self {
+		if ( is_null( $this->renderable ) || ! is_a( $this->renderable, Renderable::class ) ) {
+			throw new Exception( 'Renderable has not been set to this metabox' );
+		}
+
+		$this->view(
+			function( \WP_Post $post, array $args ) use ( $template ) {
+				$args['post'] = $post;
+				$this->renderable->render( $template, $args ); /* @phpstan-ignore-line Already type checked above*/
+			}
+		);
+
+		return $this;
 	}
 
 	/**

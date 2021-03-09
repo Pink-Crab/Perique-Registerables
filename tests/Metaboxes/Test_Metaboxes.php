@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Metaboxes;
 
+use Exception;
+use PinkCrab\Core\Services\View\PHP_Engine;
+use PinkCrab\Core\Services\View\View;
 use PinkCrab\Loader\Loader;
 use PinkCrab\PHPUnit_Helpers\Reflection;
 use PinkCrab\Registerables\MetaBox;
@@ -59,9 +62,12 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$actions = Reflection::get_private_property( $actions, 'hooks' );
 
 		// Extract our options.
-		$extracted_action = array_filter($actions, function($e){
-			return $e['handle'] === 'test';
-		});
+		$extracted_action = array_filter(
+			$actions,
+			function( $e ) {
+				return $e['handle'] === 'test';
+			}
+		);
 
 		// Ensure we have our hook
 		$this->assertNotEmpty( $extracted_action );
@@ -96,5 +102,45 @@ class Test_Metaboxes extends WP_UnitTestCase {
 
 		// Set screen to admin dashboard
 		set_current_screen( 'dashboard' );
+	}
+
+	/**
+	 * Test can set a renderable engine and use tempaltes
+	 * Example uses php engine, but can be used with Blades etc.
+	 *
+	 * @return void
+	 */
+	public function test_can_use_renderable() {
+		$metabox = MetaBox::normal( 'renderable' )
+			->screen( 'post' )
+			->set_renderable( new PHP_Engine( dirname( __DIR__, 1 ) . '/Fixtures/Views/' ) )
+			->render( 'template.php' )
+			->view_vars( array( 'key' => 'value' ) );
+
+		$loader = new Loader();
+		$metabox->register( $loader );
+		$loader->register_hooks();
+		do_action( 'add_meta_boxes' );
+
+		$test_value = 'MB Test';
+
+		$rendered_metabox = \MetaboxHelper::render_metabox(
+			$metabox,
+			\get_post( $this->factory->post->create( array( 'post_title' => $test_value ) ) )
+		);
+
+		$this->assertEquals( $test_value, $rendered_metabox );
+	}
+
+	/**
+	 * Ensure exception throws if tryign to use render without setitng
+	 * a renderable engine.
+	 *
+	 * @return void
+	 */
+	public function test_must_set_renderable_to_use_render(): void {
+		$this->expectException( Exception::class );
+		$metabox = MetaBox::normal( 'renderable' )
+			->render( 'template.php' );
 	}
 }
