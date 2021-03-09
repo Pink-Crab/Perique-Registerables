@@ -15,8 +15,8 @@ namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
 use PinkCrab\HTTP\HTTP;
+use PinkCrab\Loader\Loader;
 use Nyholm\Psr7\ServerRequest;
-use PinkCrab\Core\Services\Registration\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Get;
 
 
@@ -57,7 +57,7 @@ class Test_Ajax_Get extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'wp_ajax_nopriv_basic_ajax_get', $GLOBALS['wp_filter'] );
 	}
 	/**
-	 * Undocumented function
+	 * Test output for none logged in call.
 	 *
 	 * @runInSeparateProcess
 	 * @return void
@@ -68,7 +68,7 @@ class Test_Ajax_Get extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Undocumented function
+	 * Test output for logged in call.
 	 *
 	 * @runInSeparateProcess
 	 * @return void

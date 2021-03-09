@@ -25,10 +25,10 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\Core\Application\App;
-use InvalidArgumentException;
+use PinkCrab\Loader\Loader;
 
+use InvalidArgumentException;
 use PinkCrab\Core\Interfaces\Registerable;
-use PinkCrab\Core\Services\Registration\Loader;
 
 abstract class Post_Type implements Registerable {
 

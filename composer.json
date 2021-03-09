@@ -42,12 +42,12 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "pinkcrab/plugin-framework": "0.3.*",
-        "pinkcrab/http": "^0.2.0",
-        "pinkcrab/enqueue": "^1.1.0"
+        "pinkcrab/plugin-framework": "~0.3.9",
+        "pinkcrab/http": "~0.2.0",
+        "pinkcrab/enqueue": "~1.1.0"
     },
     "scripts": {
-        "test": "phpunit --coverage-clover coverage.xml",
+        "test": "phpunit --coverage-clover clover.xml",
         "coverage": "phpunit --coverage-html coverage-report",
         "analyse": "vendor/bin/phpstan analyse src -l8",
         "sniff": "./vendor/bin/phpcs src/ -v",

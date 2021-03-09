@@ -33,7 +33,7 @@ use Psr\Http\Message\ResponseInterface;
 use PinkCrab\Core\Collection\Collection;
 use PinkCrab\Core\Interfaces\Registerable;
 use Psr\Http\Message\ServerRequestInterface;
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 
 abstract class Ajax implements Registerable {
 

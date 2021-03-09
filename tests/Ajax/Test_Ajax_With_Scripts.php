@@ -15,10 +15,10 @@ namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
 use PinkCrab\HTTP\HTTP;
+use PinkCrab\Loader\Loader;
 use PinkCrab\Enqueue\Enqueue;
 use Nyholm\Psr7\ServerRequest;
 use PinkCrab\PHPUnit_Helpers\Objects;
-use PinkCrab\Core\Services\Registration\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_With_Scripts;
 
 class Test_Ajax_With_Scripts extends WP_UnitTestCase {
@@ -63,7 +63,11 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 
-		$scripts = Objects::get_private_property( $loader, 'front' )->to_array();
+		// Extract $loader->front->hooks array
+		$scripts = Objects::get_private_property( $loader, 'front' );
+		$scripts = Objects::get_private_property( $scripts, 'hooks' );
+
+		
 
 		// Check we have 2 front facing and all values are expected.
 		$this->assertCount( 2, $scripts );

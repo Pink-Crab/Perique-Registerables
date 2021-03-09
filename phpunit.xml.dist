@@ -24,6 +24,6 @@
     </php>
 
     <logging>
-        <log type="coverage-clover" target="coverage-report/logs/clover.xml"/>
+        <log type="coverage-clover" target="clover.xml"/>
     </logging>
 </phpunit>

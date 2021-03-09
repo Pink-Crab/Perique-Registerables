@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\MetaBox_CPT;
 
 
