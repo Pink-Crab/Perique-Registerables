@@ -24,7 +24,7 @@ declare( strict_types=1 );
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 
 class MetaBox {
 

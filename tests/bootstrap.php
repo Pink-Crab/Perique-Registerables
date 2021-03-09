@@ -1,7 +1,7 @@
 <?php
 
+use Dice\Dice;
 use PinkCrab\HTTP\HTTP;
-use Dice\Dice; //@TODO!!!
 use PinkCrab\Registerables\Ajax;
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Services\Dice\WP_Dice;

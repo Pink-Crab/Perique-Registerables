@@ -19,7 +19,7 @@ use InvalidArgumentException;
 use Nyholm\Psr7\ServerRequest;
 use PinkCrab\HTTP\HTTP_Helper;
 use PinkCrab\PHPUnit_Helpers\Reflection;
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Get;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Missing_Nonce_And_Action;
 

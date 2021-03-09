@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Metaboxes;
 
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 use PinkCrab\PHPUnit_Helpers\Reflection;
 use PinkCrab\Registerables\MetaBox;
 use WP_UnitTestCase;
@@ -54,14 +54,14 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$loader = new Loader();
 		$metabox->register( $loader );
 
+		// Extract all global hooks.
 		$actions = Reflection::get_private_property( $loader, 'global' );
+		$actions = Reflection::get_private_property( $actions, 'hooks' );
 
 		// Extract our options.
-		$extracted_action = $actions->filter(
-			function( $e ) {
-				return $e['handle'] === 'test';
-			}
-		);
+		$extracted_action = array_filter($actions, function($e){
+			return $e['handle'] === 'test';
+		});
 
 		// Ensure we have our hook
 		$this->assertNotEmpty( $extracted_action );

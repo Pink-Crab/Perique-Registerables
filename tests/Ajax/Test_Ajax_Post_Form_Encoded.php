@@ -16,7 +16,7 @@ namespace PinkCrab\Registerables\Tests;
 use PinkCrab\HTTP\HTTP;
 use PinkCrab\Registerables\Ajax;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Simple;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Form_Encoded;
 

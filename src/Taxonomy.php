@@ -28,7 +28,7 @@ namespace PinkCrab\Registerables;
 use InvalidArgumentException;
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Interfaces\Registerable;
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 
 
 abstract class Taxonomy implements Registerable {

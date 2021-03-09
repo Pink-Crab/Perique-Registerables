@@ -16,7 +16,7 @@ namespace PinkCrab\Registerables\Tests\Fixtures\CPT;
 
 use WP_UnitTestCase;
 use PinkCrab\Registerables\Post_Type;
-use PinkCrab\Core\Services\Registration\Loader;
+use PinkCrab\Loader\Loader;
 
 
 class Base_CPT_Case extends WP_UnitTestCase {
