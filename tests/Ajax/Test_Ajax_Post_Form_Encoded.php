@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use PinkCrab\HTTP\HTTP;
+use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\Ajax;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PinkCrab\Loader\Loader;
-use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Simple;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Form_Encoded;
 
 class Test_Ajax_Post_Form_Encoded extends TestCase {
@@ -42,7 +41,7 @@ class Test_Ajax_Post_Form_Encoded extends TestCase {
 		// Request
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 
-		$request = ( new HTTP() )->request_from_globals()
+		$request             = ( new HTTP() )->request_from_globals()
 			->withParsedBody(
 				array( 'ajax_post_form_endcoded' => 'Test_Ajax_Post_Simple' )
 			)

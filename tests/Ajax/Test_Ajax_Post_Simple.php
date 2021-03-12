@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use PinkCrab\HTTP\HTTP;
+use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\Ajax;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Post_Simple;
 
 class Test_Ajax_Post_Simple extends  TestCase {

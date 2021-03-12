@@ -14,10 +14,11 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Metaboxes;
 
 use Exception;
+use Gin0115\WPUnit_Helpers\Objects;
+use Gin0115\WPUnit_Helpers\Output;
+use Gin0115\WPUnit_Helpers\WP\Meta_Box_Inspector;
 use PinkCrab\Core\Services\View\PHP_Engine;
-use PinkCrab\Core\Services\View\View;
 use PinkCrab\Loader\Loader;
-use PinkCrab\PHPUnit_Helpers\Reflection;
 use PinkCrab\Registerables\MetaBox;
 use WP_UnitTestCase;
 
@@ -31,13 +32,8 @@ class Test_Metaboxes extends WP_UnitTestCase {
 	 */
 	public function test_can_add_actions(): void {
 		$metabox = MetaBox::normal( 'test' );
-		$metabox->add_action(
-			'test',
-			function() {
-
-			}
-		);
-		$this->assertNotEmpty( Reflection::get_private_property( $metabox, 'actions' ) );
+		$metabox->add_action( 'test', function() {} );
+		$this->assertNotEmpty( Objects::get_property( $metabox, 'actions' ) );
 	}
 
 	/**
@@ -47,19 +43,14 @@ class Test_Metaboxes extends WP_UnitTestCase {
 	 */
 	public function test_registers_actions(): void {
 		$metabox = MetaBox::normal( 'test' );
-		$metabox->add_action(
-			'test',
-			function() {
-
-			}
-		);
+		$metabox->add_action( 'test', function() {} );
 
 		$loader = new Loader();
 		$metabox->register( $loader );
 
 		// Extract all global hooks.
-		$actions = Reflection::get_private_property( $loader, 'global' );
-		$actions = Reflection::get_private_property( $actions, 'hooks' );
+		$actions = Objects::get_property( $loader, 'global' );
+		$actions = Objects::get_property( $actions, 'hooks' );
 
 		// Extract our options.
 		$extracted_action = array_filter(
@@ -86,9 +77,7 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$metabox->screen( 'post' );
 
 		// test not currently active.
-		$this->assertFalse(
-			Reflection::invoke_private_method( $metabox, 'is_active', array() )
-		);
+		$this->assertFalse( Objects::invoke_method( $metabox, 'is_active', array() ) );
 
 		// Mock the current screen to edit post.
 		set_current_screen( 'edit.php' );
@@ -96,9 +85,7 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$screen->post_type = 'post';
 
 		// Should now be active.
-		$this->assertTrue(
-			Reflection::invoke_private_method( $metabox, 'is_active', array() )
-		);
+		$this->assertTrue( Objects::invoke_method( $metabox, 'is_active', array() ) );
 
 		// Set screen to admin dashboard
 		set_current_screen( 'dashboard' );
@@ -122,14 +109,20 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$loader->register_hooks();
 		do_action( 'add_meta_boxes' );
 
-		$test_value = 'MB Test';
+		// Ensure Metabox is rendered using stub template.(prints title)
+		$inspector          = Meta_Box_Inspector::initialise();
+		$registered_metabox = $inspector->find( 'renderable' );
+		$mock_post_title    = 'TEST';
 
-		$rendered_metabox = \MetaboxHelper::render_metabox(
-			$metabox,
-			\get_post( $this->factory->post->create( array( 'post_title' => $test_value ) ) )
+		$output = Output::buffer(
+			function() use ( $inspector, $mock_post_title, $registered_metabox ) {
+				$inspector->render_meta_box(
+					$registered_metabox,
+					\get_post( $this->factory->post->create( array( 'post_title' => $mock_post_title ) ) )
+				);
+			}
 		);
-
-		$this->assertEquals( $test_value, $rendered_metabox );
+		$this->assertEquals( $mock_post_title, $output );
 	}
 
 	/**
@@ -143,4 +136,5 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$metabox = MetaBox::normal( 'renderable' )
 			->render( 'template.php' );
 	}
+
 }
