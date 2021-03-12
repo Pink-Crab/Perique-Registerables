@@ -15,6 +15,8 @@ namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
 use PinkCrab\Loader\Loader;
+use Gin0115\WPUnit_Helpers\Output;
+use Gin0115\WPUnit_Helpers\WP\Meta_Box_Inspector;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\MetaBox_CPT;
 
 
@@ -36,6 +38,13 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 	 */
 	protected $wp_meta_boxes;
 
+	/**
+	 * Holds the instance of the meta box inspector.
+	 *
+	 * @var Meta_Box_Inspector
+	 */
+	protected $meta_box_inspector;
+
 
 
 	/** THE SETUP */
@@ -47,7 +56,6 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 			// Create the CPT and Loader instances.
 			$this->cpt = new MetaBox_CPT;
 			$loader    = new Loader;
-		
 
 			// Run registration.
 			$this->cpt->register( $loader );
@@ -57,6 +65,9 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 			do_action( 'add_meta_boxes' );
 			global $wp_meta_boxes;
 			$this->wp_meta_boxes = $wp_meta_boxes;
+
+			// Build inspector.
+			$this->meta_box_inspector = Meta_Box_Inspector::initialise();
 		}
 	}
 
@@ -67,32 +78,26 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 	 */
 	public function test_normal_metabox_registered(): void {
 		// Check metabox exists.
-		$this->assertArrayHasKey(
-			'metabox_cpt_normal',
-			$this->wp_meta_boxes['metabox_cpt']['normal']['default']
-		);
+		$box = $this->meta_box_inspector->find( 'metabox_cpt_normal' );
+		$this->assertNotNull( $box );
 
-		// Grab the view contents.
-		$view_output = $this->render_metabox(
-			$this->wp_meta_boxes['metabox_cpt']['normal']['default']['metabox_cpt_normal']['callback']
+		// Test renders view (based on post title)
+		$view_output = Output::buffer(
+			function() use ( $box ) {
+				$this->meta_box_inspector->render_meta_box(
+					$box,
+					\get_post( $this->factory->post->create( array( 'post_type' => $this->cpt->key ) ) )
+				);
+			}
 		);
 		$this->assertEquals( 'metabox_cpt_normal VIEW', $view_output );
 
 		// Check title.
-		$this->assertEquals(
-			'metabox_cpt_normal TITLE',
-			$this->wp_meta_boxes['metabox_cpt']['normal']['default']['metabox_cpt_normal']['title']
-		);
+		$this->assertEquals( 'metabox_cpt_normal TITLE', $box->title );
 
 		// Check view vars.
-		$this->assertArrayHasKey(
-			'key1',
-			$this->wp_meta_boxes['metabox_cpt']['normal']['default']['metabox_cpt_normal']['args']
-		);
-		$this->assertEquals(
-			1,
-			$this->wp_meta_boxes['metabox_cpt']['normal']['default']['metabox_cpt_normal']['args']['key1']
-		);
+		$this->assertArrayHasKey( 'key1', $box->args );
+		$this->assertEquals( 1, $box->args['key1'] );
 	}
 
 	/**
@@ -101,51 +106,27 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_side_metabox_registered(): void {
-
 		// Check metabox exists.
-		$this->assertArrayHasKey(
-			'metabox_cpt_side',
-			$this->wp_meta_boxes['metabox_cpt']['side']['default']
-		);
+		$box = $this->meta_box_inspector->find( 'metabox_cpt_side' );
+		$this->assertNotNull( $box );
 
 		// Grab the view contents.
-		$view_output = $this->render_metabox(
-			$this->wp_meta_boxes['metabox_cpt']['side']['default']['metabox_cpt_side']['callback']
+		$view_output = Output::buffer(
+			function() use ( $box ) {
+				$this->meta_box_inspector->render_meta_box(
+					$box,
+					\get_post( $this->factory->post->create( array( 'post_type' => $this->cpt->key ) ) )
+				);
+			}
 		);
 		$this->assertEquals( 'metabox_cpt_side VIEW', $view_output );
 
 		// Check title.
-		$this->assertEquals(
-			'metabox_cpt_side TITLE',
-			$this->wp_meta_boxes['metabox_cpt']['side']['default']['metabox_cpt_side']['title']
-		);
+		$this->assertEquals( 'metabox_cpt_side TITLE', $box->title );
 
 		// Check view vars.
-		$this->assertArrayHasKey(
-			'key2',
-			$this->wp_meta_boxes['metabox_cpt']['side']['default']['metabox_cpt_side']['args']
-		);
-		$this->assertEquals(
-			2,
-			$this->wp_meta_boxes['metabox_cpt']['side']['default']['metabox_cpt_side']['args']['key2']
-		);
-	}
-
-	/**
-	 * Renders and returns the contents of a metabox.
-	 *
-	 * @param callable $metabox_view
-	 * @return string
-	 */
-	protected function render_metabox( callable $metabox_view ): string {
-		ob_start();
-		$metabox_view(
-			\get_post( $this->factory->post->create( array( 'post_type' => $this->cpt->key ) ) ),
-			array()
-		);
-		$output = ob_get_contents();
-		ob_end_clean();
-		return $output;
+		$this->assertArrayHasKey( 'key2', $box->args );
+		$this->assertEquals( 2, $box->args['key2'] );
 	}
 
 	/**

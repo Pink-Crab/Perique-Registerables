@@ -15,7 +15,7 @@ namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
 use InvalidArgumentException;
-use PinkCrab\PHPUnit_Helpers\Reflection;
+use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Invlaid_CPT;
 
@@ -29,10 +29,10 @@ class Test_CPT_Failures extends WP_UnitTestCase {
 	 */
 	public function test_throws_exception_no_slug() {
 		$cpt = new Basic_CPT();
-		Reflection::set_private_property( $cpt, 'key', null );
+		Objects::set_property( $cpt, 'key', null );
 
 		$this->expectException( InvalidArgumentException::class );
-		Reflection::invoke_private_method( $cpt, 'validate', array() );
+		Objects::invoke_method( $cpt, 'validate', array() );
 	}
 
 	/**
@@ -42,10 +42,10 @@ class Test_CPT_Failures extends WP_UnitTestCase {
 	 */
 	public function test_throws_exception_no_singular() {
 		$cpt = new Basic_CPT();
-		Reflection::set_private_property( $cpt, 'singular', false );
+		Objects::set_property( $cpt, 'singular', false );
 
 		$this->expectException( InvalidArgumentException::class );
-		Reflection::invoke_private_method( $cpt, 'validate', array() );
+		Objects::invoke_method( $cpt, 'validate', array() );
 	}
 
 	/**
@@ -55,9 +55,9 @@ class Test_CPT_Failures extends WP_UnitTestCase {
 	 */
 	public function test_throws_exception_no_plural() {
 		$cpt = new Basic_CPT();
-		Reflection::set_private_property( $cpt, 'plural', false );
+		Objects::set_property( $cpt, 'plural', false );
 
 		$this->expectException( InvalidArgumentException::class );
-		Reflection::invoke_private_method( $cpt, 'validate', array() );
+		Objects::invoke_method( $cpt, 'validate', array() );
 	}
 }
