@@ -6,6 +6,7 @@ use PinkCrab\Registerables\Ajax;
 use PinkCrab\Core\Application\App;
 use PinkCrab\PHPUnit_Helpers\Output;
 use PinkCrab\Core\Services\Dice\WP_Dice;
+use Gin0115\WPUnit_Helpers\WP\WP_Dependencies;
 use PinkCrab\Core\Services\ServiceContainer\Container;
 
 /**
@@ -18,9 +19,19 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 // Give access to tests_add_filter() function.
 require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';
 
+$wp_install_path = dirname( __FILE__, 2 ) . '/wordpress';
+define( 'TEST_WP_ROOT', $wp_install_path );
+
 tests_add_filter(
 	'muplugins_loaded',
 	function() {
+
+		// WP_Dependencies::install_remote_plugin_from_zip(
+		// 	// 'https://downloads.wordpress.org/plugin/woocommerce.4.9.2.zip',
+		// 	'https://github.com/wp-premium/advanced-custom-fields-pro/archive/5.8.7.zip',
+		// 	TEST_WP_ROOT
+		// );
+
 		$app = App::init( new Container() );
 		$di  = WP_Dice::constructWith( new Dice() );
 		$di->addRules(

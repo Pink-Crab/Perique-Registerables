@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Metaboxes;
 
 use Exception;
+use Gin0115\WPUnit_Helpers\WP\WP_Metabox;
 use PinkCrab\Core\Services\View\PHP_Engine;
 use PinkCrab\Core\Services\View\View;
 use PinkCrab\Loader\Loader;
@@ -142,5 +143,12 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$this->expectException( Exception::class );
 		$metabox = MetaBox::normal( 'renderable' )
 			->render( 'template.php' );
+	}
+
+	public function test_f() {
+		$mb = new WP_Metabox();
+		$mb->maybe_register();
+		$mb->set_meta_boxes();
+		dump($mb->find('renderable'));
 	}
 }

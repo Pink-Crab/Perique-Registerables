@@ -13,7 +13,8 @@
     }],
     "autoload": {
         "psr-4": {
-            "PinkCrab\\Registerables\\": "src"
+            "PinkCrab\\Registerables\\": "src",
+            "Gin0115\\WPUnit_Helpers\\": "WPUnit_Helpers"
         },
         "files": []
     },
@@ -38,7 +39,8 @@
         "wp-coding-standards/wpcs": "*",
         "object-calisthenics/phpcs-calisthenics-rules": "*",
         "pinkcrab/phpunit-helpers": "dev-master",
-        "yoast/phpunit-polyfills": "^0.2.0"
+        "yoast/phpunit-polyfills": "^0.2.0",
+        "gin0115/wpunit-helpers": "^1.0"
     },
     "require": {
         "php": ">=7.1.0",
