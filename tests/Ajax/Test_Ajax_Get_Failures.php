@@ -14,19 +14,28 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use PinkCrab\HTTP\HTTP;
-use InvalidArgumentException;
-use Nyholm\Psr7\ServerRequest;
-use PinkCrab\HTTP\HTTP_Helper;
-use PinkCrab\PHPUnit_Helpers\Reflection;
 use PinkCrab\Loader\Loader;
+use InvalidArgumentException;
+use PinkCrab\HTTP\HTTP_Helper;
+use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Get;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_Missing_Nonce_And_Action;
 
 
 class Test_Ajax_Get_Failures extends WP_UnitTestCase {
 
+	/**
+	 * The ajax class isntnace
+	 *
+	 * @var Ajax
+	 */
 	protected static $ajax_instance;
+
+	/**
+	 * User isntance
+	 *
+	 * @var \WP_User
+	 */
 	protected static $user;
 
 	/**
@@ -59,7 +68,7 @@ class Test_Ajax_Get_Failures extends WP_UnitTestCase {
 	public function test_fails_validation() {
 		unset( $_GET['nonce'] );
 		$this->assertFalse(
-			Reflection::invoke_private_method(
+			Objects::invoke_method(
 				static::$ajax_instance,
 				'validate',
 				array( HTTP_Helper::global_server_request() )
@@ -76,7 +85,7 @@ class Test_Ajax_Get_Failures extends WP_UnitTestCase {
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 		$this->assertSame(
 			array(),
-			Reflection::invoke_private_method(
+			Objects::invoke_method(
 				static::$ajax_instance,
 				'extract_request_params',
 				array( HTTP_Helper::global_server_request() )
@@ -91,11 +100,7 @@ class Test_Ajax_Get_Failures extends WP_UnitTestCase {
 	 */
 	public function test_exception_thrown_if_no_action() {
 		$ajax_instance = new Ajax_Get( HTTP_Helper::global_server_request() );
-		Reflection::set_private_property(
-			$ajax_instance,
-			'action',
-			null
-		);
+		Objects::set_property( $ajax_instance, 'action', null );
 
 		$this->expectException( InvalidArgumentException::class );
 		$ajax_instance->register( new Loader() );
