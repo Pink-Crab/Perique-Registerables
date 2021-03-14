@@ -25,6 +25,8 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\Core\Application\App;
+use PinkCrab\Registerables\Meta_Data;
+
 use PinkCrab\Loader\Loader;
 
 use InvalidArgumentException;
@@ -191,6 +193,13 @@ abstract class Post_Type implements Registerable {
 	 */
 	public $taxonmies = array();
 
+	/**
+	 * Associated meta fields.
+	 *
+	 * @var array<Meta_Data>
+	 */
+	public $meta_data = array();
+
 
 	/**
 	 * Creates an instance of the
@@ -214,6 +223,12 @@ abstract class Post_Type implements Registerable {
 	 */
 	public function metaboxes(): void {}
 
+	/**
+	 * Used to regiser meta_data.
+	 *
+	 * @return void
+	 */
+	public function meta_data(): void {}
 
 	/**
 	 * Check we have valid
@@ -278,6 +293,13 @@ abstract class Post_Type implements Registerable {
 			'capabilities'        => $this->capabilities ?: array(),
 			'taxonomies'          => $this->taxonmies ?: array(),
 		);
+
+		// If we have any metaboxes, register them.
+		$this->meta_data();
+		if ( ! empty( $this->meta_data ) ) {
+			$this->register_meta_data( $loader );
+		}
+
 		register_post_type( $this->key, $this->filter_args( $args ) );
 
 		// If we have any metaboxes, register them.
@@ -339,6 +361,33 @@ abstract class Post_Type implements Registerable {
 		foreach ( $this->metaboxes as $metabox ) {
 			$metabox->screen( $this->key ); // Add this post type to the screen list.
 			$metabox->register( $loader ); // Pass loader into the MetaBoxes for registration.
+		}
+	}
+
+	/**
+	 * Registers all defined
+	 *
+	 * @param Loader $loader
+	 * @return void
+	 */
+	public function register_meta_data( Loader $loader ): void {
+
+		$meta_fields = array_filter(
+			function( $e ): bool {
+				return is_a( $e, Meta_Data::class );
+			},
+			$this->meta_data
+		);
+
+		if ( count( $meta_fields ) > 0
+		&& ! array_key_exists( 'custom-fields', $this->supports ) ) {
+			$this->supports[] = 'custom-fields';
+		}
+
+		foreach ( $meta_fields as $meta ) {
+			$meta->object_subtype( $this->key );
+			$meta->meta_type( 'post' );
+			$meta->register( $loader );
 		}
 	}
 
