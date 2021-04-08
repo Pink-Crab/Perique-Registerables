@@ -7,7 +7,7 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * Metaboxes
 * WP_Ajax Call
 
-![alt text](https://img.shields.io/badge/Current_Version-0.4.0-yellow.svg?style=flat " ")
+![alt text](https://img.shields.io/badge/Current_Version-0.4.1-yellow.svg?style=flat " ")
 
  
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
@@ -20,7 +20,7 @@ https://app.gitbook.com/@glynn-quelch/s/pinkcrab/
 
 ## Version ##
 
-**Release 0.4.0**
+**Release 0.4.1**
 
 ## Why? ##
 
