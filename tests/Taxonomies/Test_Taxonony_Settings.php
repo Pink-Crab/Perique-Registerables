@@ -15,7 +15,7 @@ namespace PinkCrab\Registerables\Tests\Taxonomies;
 
 use WP_UnitTestCase;
 use InvalidArgumentException;
-use PinkCrab\PHPUnit_Helpers\Reflection;
+use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
 
 
@@ -27,17 +27,13 @@ class Test_Taxonony_Settings extends WP_UnitTestCase {
 		$taxonomy = new Basic_Tag_Taxonomy();
 
 		// Set the options values.
-		Reflection::set_private_property( $taxonomy, 'capabilities', array( 'capabilities' ) );
-		Reflection::set_private_property( $taxonomy, 'update_count_callback', 'update_count_callback' );
-		Reflection::set_private_property( $taxonomy, 'meta_box_cb', array( 'meta_box_cb' ) );
-		Reflection::set_private_property( $taxonomy, 'default_term', array( 'default_term' ) );
+		Objects::set_property( $taxonomy, 'capabilities', array( 'capabilities' ) );
+		Objects::set_property( $taxonomy, 'update_count_callback', 'update_count_callback' );
+		Objects::set_property( $taxonomy, 'meta_box_cb', array( 'meta_box_cb' ) );
+		Objects::set_property( $taxonomy, 'default_term', array( 'default_term' ) );
 
 		// Run though optional args.
-		$properties = Reflection::invoke_private_method(
-			$taxonomy,
-			'optional_args',
-			array( array() )
-		);
+		$properties = Objects::invoke_method( $taxonomy, 'optional_args', array( array() ) );
 
 		// Test the args have been added to the array.
 		$this->assertArrayHasKey( 'capabilities', $properties );
@@ -47,42 +43,42 @@ class Test_Taxonony_Settings extends WP_UnitTestCase {
 
 	}
 
-    /**
-     * Test exception thrown if no slug
-     *
-     * @return void
-     */
+	/**
+	 * Test exception thrown if no slug
+	 *
+	 * @return void
+	 */
 	public function test_throws_exception_no_slug() {
 		$taxonomy = new Basic_Tag_Taxonomy();
-		Reflection::set_private_property( $taxonomy, 'slug', false );
+		Objects::set_property( $taxonomy, 'slug', false );
 
 		$this->expectException( InvalidArgumentException::class );
-		Reflection::invoke_private_method( $taxonomy, 'validate', array() );
+		Objects::invoke_method( $taxonomy, 'validate', array() );
 	}
 
-    /**
-     * Test exception thrown if no singular
-     *
-     * @return void
-     */
+	/**
+	 * Test exception thrown if no singular
+	 *
+	 * @return void
+	 */
 	public function test_throws_exception_no_singular() {
 		$taxonomy = new Basic_Tag_Taxonomy();
-		Reflection::set_private_property( $taxonomy, 'singular', false );
+		Objects::set_property( $taxonomy, 'singular', false );
 
 		$this->expectException( InvalidArgumentException::class );
-		Reflection::invoke_private_method( $taxonomy, 'validate', array() );
+		Objects::invoke_method( $taxonomy, 'validate', array() );
 	}
 
-    /**
-     * Test exception thrown if no plural
-     *
-     * @return void
-     */
+	/**
+	 * Test exception thrown if no plural
+	 *
+	 * @return void
+	 */
 	public function test_throws_exception_no_plural() {
 		$taxonomy = new Basic_Tag_Taxonomy();
-		Reflection::set_private_property( $taxonomy, 'plural', false );
+		Objects::set_property( $taxonomy, 'plural', false );
 
 		$this->expectException( InvalidArgumentException::class );
-		Reflection::invoke_private_method( $taxonomy, 'validate', array() );
+		Objects::invoke_method( $taxonomy, 'validate', array() );
 	}
 }

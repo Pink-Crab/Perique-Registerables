@@ -18,7 +18,7 @@ use PinkCrab\HTTP\HTTP;
 use PinkCrab\Loader\Loader;
 use PinkCrab\Enqueue\Enqueue;
 use Nyholm\Psr7\ServerRequest;
-use PinkCrab\PHPUnit_Helpers\Objects;
+use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_With_Scripts;
 
 class Test_Ajax_With_Scripts extends WP_UnitTestCase {
@@ -39,17 +39,17 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 		// Just run setup to set the scripts.
 		$ajax_instance->set_up();
 		// Extract scripts as an array.
-		$scripts = Objects::get_private_property( $ajax_instance, 'scripts' )->to_array();
+		$scripts = Objects::get_property( $ajax_instance, 'scripts' )->to_array();
 
 		$this->assertInstanceOf( Enqueue::class, $scripts[0] );
-		$this->assertEquals( 'ajax_with_scripts_one', Objects::get_private_property( $scripts[0], 'handle' ) );
-		$this->assertEquals( 'script', Objects::get_private_property( $scripts[0], 'type' ) );
-		$this->assertEquals( 'http://www.url.tld/file.js', Objects::get_private_property( $scripts[0], 'src' ) );
+		$this->assertEquals( 'ajax_with_scripts_one', Objects::get_property( $scripts[0], 'handle' ) );
+		$this->assertEquals( 'script', Objects::get_property( $scripts[0], 'type' ) );
+		$this->assertEquals( 'http://www.url.tld/file.js', Objects::get_property( $scripts[0], 'src' ) );
 
 		$this->assertInstanceOf( Enqueue::class, $scripts[1] );
-		$this->assertEquals( 'ajax_with_scripts_two', Objects::get_private_property( $scripts[1], 'handle' ) );
-		$this->assertEquals( 'script', Objects::get_private_property( $scripts[1], 'type' ) );
-		$this->assertGreaterThan( 0, strpos( Objects::get_private_property( $scripts[1], 'src' ), 'Ajax/file.js' ) );
+		$this->assertEquals( 'ajax_with_scripts_two', Objects::get_property( $scripts[1], 'handle' ) );
+		$this->assertEquals( 'script', Objects::get_property( $scripts[1], 'type' ) );
+		$this->assertGreaterThan( 0, strpos( Objects::get_property( $scripts[1], 'src' ), 'Ajax/file.js' ) );
 	}
 
 	/**
@@ -59,15 +59,13 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_loader_front_end(): void {
 
-		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
+		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 
 		// Extract $loader->front->hooks array
-		$scripts = Objects::get_private_property( $loader, 'front' );
-		$scripts = Objects::get_private_property( $scripts, 'hooks' );
-
-		
+		$scripts = Objects::get_property( $loader, 'front' );
+		$scripts = Objects::get_property( $scripts, 'hooks' );
 
 		// Check we have 2 front facing and all values are expected.
 		$this->assertCount( 2, $scripts );
@@ -87,14 +85,14 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_loader_enqueues_scripts(): void {
 
-		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
+		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 		$loader->register_hooks();
 
 		// Trigger the scripts being added to enqueue list.
 		do_action( 'wp_enqueue_scripts' );
-		$registered_scripts = Objects::get_private_property( $GLOBALS['wp_scripts'], 'registered' );
+		$registered_scripts = Objects::get_property( $GLOBALS['wp_scripts'], 'registered' );
 
 		// Check first script.
 		$script_one = $registered_scripts['ajax_with_scripts_one'];
@@ -125,7 +123,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function text_optional_conditional_can_be_used(): void {
-		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
+		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 
 		// Set to false (helper property for tests)
 		$ajax_instance->_conditional_value = false;
@@ -136,18 +134,17 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 		$this->assertTrue( $ajax_instance->conditional() );
 	}
 
-	public function test_admin_scripts_loaded_in_admin(): void
-	{
-		set_current_screen('edit.php');
-		
-		$ajax_instance = new Ajax_With_Scripts($this->server_request_provider());
+	public function test_admin_scripts_loaded_in_admin(): void {
+		set_current_screen( 'edit.php' );
+
+		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
 		$loader->register_hooks();
 
 		// Trigger the scripts being added to enqueue list.
 		do_action( 'admin_enqueue_scripts' );
-		$registered_scripts = Objects::get_private_property( $GLOBALS['wp_scripts'], 'registered' );
+		$registered_scripts = Objects::get_property( $GLOBALS['wp_scripts'], 'registered' );
 
 		// Check first script.
 		$script_one = $registered_scripts['ajax_with_scripts_one'];
