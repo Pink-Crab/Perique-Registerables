@@ -6,8 +6,9 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * Taxonomies
 * Metaboxes
 * WP_Ajax Call
+* Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.4.1-yellow.svg?style=flat " ")
+![alt text](https://img.shields.io/badge/Current_Version-0.4.2-yellow.svg?style=flat " ")
 
  
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
@@ -20,7 +21,7 @@ https://app.gitbook.com/@glynn-quelch/s/pinkcrab/
 
 ## Version ##
 
-**Release 0.4.1**
+**Release 0.4.2**
 
 ## Why? ##
 
@@ -140,11 +141,16 @@ http://www.opensource.org/licenses/mit-license.html
 
 ## Change Log ##
 
-* 0.2.beta - Moved to composer, removed Guzzle for nyholm ps7 in its place. Uses HTTP helper for PS7 responses and tests now include form-urlend requests.
-* 0.3.0 - Finalised the move to composer, v2 was skipped as larger internal changes made. External API remained unchanged
-* 0.3.1 - Extended tests for 100 coverage.
-* 0.3.2 - Added in missing 'hierarchical' => $this->hierarchical for taxonomy registration
-* 0.3.3 - Fixed version issue with Core
-* 0.3.4 - Removed the use !function_exists('get_current_screen') as phpscoper cant create a pollyfill due to not being loaded in global wp scope until needed. Now has custom method in metabo class to avoid.
-* 0.3.5 - Updated all code in src and tests to reflect the new Loader setup in core.
+* 0.4.2 - Finalised Meta_Data, can now be added for Term and Post meta's when either CPT or taxonomy definied. Added in missing tests.
+* 0.4.1 - Minor bugfixes
 * 0.4.0 - Bumped inline with core, moved to min requirments of core v0.4.0
+* 0.3.5 - Updated all code in src and tests to reflect the new Loader setup in core.
+* 0.3.4 - Removed the use !function_exists('get_current_screen') as phpscoper cant create a pollyfill due to not being loaded in global wp scope until needed. Now has custom method in metabo class to avoid.
+* 0.3.3 - Fixed version issue with Core
+* 0.3.2 - Added in missing 'hierarchical' => $this->hierarchical for taxonomy registration
+* 0.3.1 - Extended tests for 100 coverage.
+* 0.3.0 - Finalised the move to composer, v2 was skipped as larger internal changes made. External API remained unchanged
+* 0.2.beta - Moved to composer, removed Guzzle for nyholm ps7 in its place. Uses HTTP helper for PS7 responses and tests now include form-urlend requests.
+
+
+

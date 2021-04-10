@@ -25,15 +25,14 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\HTTP\HTTP;
+use PinkCrab\Loader\Loader;
 use InvalidArgumentException;
 use PinkCrab\Enqueue\Enqueue;
-use PinkCrab\Registerables\Ajax;
 use PinkCrab\Core\Application\App;
 use Psr\Http\Message\ResponseInterface;
 use PinkCrab\Core\Collection\Collection;
 use PinkCrab\Core\Interfaces\Registerable;
 use Psr\Http\Message\ServerRequestInterface;
-use PinkCrab\Loader\Loader;
 
 abstract class Ajax implements Registerable {
 
@@ -222,7 +221,7 @@ abstract class Ajax implements Registerable {
 			}
 
 			// Load admin scripts.
-			if ( is_admin() ) {
+			if ( is_admin() ) { /** @phpstan-ignore-line */
 				do {
 					$script = $this->scripts->pop();
 					if ( $script instanceof Enqueue ) {

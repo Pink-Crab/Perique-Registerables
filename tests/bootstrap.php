@@ -5,6 +5,8 @@ use PinkCrab\HTTP\HTTP;
 use PinkCrab\Registerables\Ajax;
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Services\Dice\WP_Dice;
+use PinkCrab\Core\Application\App_Factory;
+use PinkCrab\Core\Interfaces\DI_Container;
 use PinkCrab\Core\Services\ServiceContainer\Container;
 
 /**
@@ -23,10 +25,8 @@ define( 'TEST_WP_ROOT', $wp_install_path );
 tests_add_filter(
 	'muplugins_loaded',
 	function() {
-
-		$app = App::init( new Container() );
-		$di  = WP_Dice::constructWith( new Dice() );
-		$di->addRules(
+		$app = ( new App_Factory )->with_wp_dice( true )
+		->di_rules(
 			array(
 				Ajax::class => array(
 					'constructParams' => array( ( new HTTP() )->request_from_globals() ),
@@ -34,8 +34,7 @@ tests_add_filter(
 					'inherit'         => true,
 				),
 			)
-		);
-		$app->set( 'di', $di );
+		)->boot();
 	}
 );
 

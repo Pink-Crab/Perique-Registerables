@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Metaboxes;
 
 use Exception;
+use PinkCrab\Loader\Loader;
 use Gin0115\WPUnit_Helpers\Objects;
 use Gin0115\WPUnit_Helpers\Output;
 use Gin0115\WPUnit_Helpers\WP\Meta_Box_Inspector;
 use PinkCrab\Core\Services\View\PHP_Engine;
-use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\MetaBox;
 use WP_UnitTestCase;
 
@@ -48,15 +48,14 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$loader = new Loader();
 		$metabox->register( $loader );
 
-		// Extract all global hooks.
-		$actions = Objects::get_property( $loader, 'global' );
-		$actions = Objects::get_property( $actions, 'hooks' );
+		// Extract all hooks as an array
+		$actions = Objects::get_property( $loader, 'hooks' )->export();
 
 		// Extract our options.
 		$extracted_action = array_filter(
 			$actions,
 			function( $e ) {
-				return $e['handle'] === 'test';
+				return $e->get_handle() === 'test';
 			}
 		);
 
@@ -125,6 +124,17 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$this->assertEquals( $mock_post_title, $output );
 	}
 
+	/** @testdox It should be possible to check that a metabox is using renderable (template with array data) */
+	public function test_has_renderable(): void {
+		$metabox = MetaBox::normal( 'renderable' )
+			->screen( 'post' )
+			->set_renderable( new PHP_Engine( dirname( __DIR__, 1 ) . '/Fixtures/Views/' ) )
+			->render( 'template.php' )
+			->view_vars( array( 'key' => 'value' ) );
+
+		$this->assertTrue( $metabox->has_renderable() );
+	}
+
 	/**
 	 * Ensure exception throws if tryign to use render without setitng
 	 * a renderable engine.
@@ -135,6 +145,16 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$this->expectException( Exception::class );
 		$metabox = MetaBox::normal( 'renderable' )
 			->render( 'template.php' );
+	}
+
+	public function test_get_current_screen() {
+		 $metabox = MetaBox::normal( 'screen_test' )
+			->screen( 'post' );
+
+		global $current_screen;
+		$current_screen = null;
+
+		$this->assertNull( Objects::invoke_method( $metabox, 'get_current_screen' ) );
 	}
 
 }
