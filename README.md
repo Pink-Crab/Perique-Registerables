@@ -8,11 +8,8 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * WP_Ajax Call
 * Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.4.2-yellow.svg?style=flat " ")
-
- 
+![alt text](https://img.shields.io/badge/Current_Version-0.4.2-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
-
 ![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
 [![codecov](https://codecov.io/gh/Pink-Crab/Module__Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Module__Registerables)
 

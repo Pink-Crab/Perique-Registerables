@@ -147,6 +147,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	public function test_admin_scripts_loaded_in_admin(): void {
 		set_current_screen( 'edit.php' );
 
+		/** @var Ajax */
 		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );
