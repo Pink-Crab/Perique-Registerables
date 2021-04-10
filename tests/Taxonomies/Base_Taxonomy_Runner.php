@@ -130,7 +130,7 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 			if ( $property === 'rewrite' ) {
 				$this->assertEquals(
 					$expected,
-					$wp_taxonomy->{$property}['slug'],
+					$wp_taxonomy->{$property},
 					sprintf(
 						'Failed asserting setting that %s was %s for %s (rewrite, so looking at slug property',
 						$property,

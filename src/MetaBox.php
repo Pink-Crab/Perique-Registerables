@@ -285,7 +285,7 @@ class MetaBox {
 	 * @return boolean
 	 */
 	protected function is_active(): bool {
-		$current_screen = get_current_screen();
+		$current_screen = $this->get_current_screen();
 		return ! empty( $current_screen->post_type ) && in_array( $current_screen->post_type, $this->screen, true );
 	}
 

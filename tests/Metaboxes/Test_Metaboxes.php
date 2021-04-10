@@ -124,6 +124,17 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$this->assertEquals( $mock_post_title, $output );
 	}
 
+	/** @testdox It should be possible to check that a metabox is using renderable (template with array data) */
+	public function test_has_renderable(): void {
+		$metabox = MetaBox::normal( 'renderable' )
+			->screen( 'post' )
+			->set_renderable( new PHP_Engine( dirname( __DIR__, 1 ) . '/Fixtures/Views/' ) )
+			->render( 'template.php' )
+			->view_vars( array( 'key' => 'value' ) );
+
+		$this->assertTrue( $metabox->has_renderable() );
+	}
+
 	/**
 	 * Ensure exception throws if tryign to use render without setitng
 	 * a renderable engine.
@@ -134,6 +145,16 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$this->expectException( Exception::class );
 		$metabox = MetaBox::normal( 'renderable' )
 			->render( 'template.php' );
+	}
+
+	public function test_get_current_screen() {
+		 $metabox = MetaBox::normal( 'screen_test' )
+			->screen( 'post' );
+
+		global $current_screen;
+		$current_screen = null;
+
+		$this->assertNull( Objects::invoke_method( $metabox, 'get_current_screen' ) );
 	}
 
 }

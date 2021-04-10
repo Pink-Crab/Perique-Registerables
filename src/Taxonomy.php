@@ -26,6 +26,8 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use InvalidArgumentException;
+use PinkCrab\Registerables\Meta_Data;
+
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Interfaces\Registerable;
 use PinkCrab\Loader\Loader;
@@ -211,12 +213,25 @@ abstract class Taxonomy implements Registerable {
 	public $default_term;
 
 	/**
+	 * Array of all pre determined term meta.
+	 *
+	 * @var array<Meta_Data>
+	 */
+	public $meta_data = array();
+
+	/**
 	 * Runs prior to registration.
 	 *
 	 * @return void
 	 */
-	public function set_up(): void {
-	}
+	public function set_up(): void {}
+
+	/**
+	 * Used to regiser meta_data.
+	 *
+	 * @return void
+	 */
+	public function meta_data(): void {}
 
 	/**
 	 * Compiles the labels for a hierarchical taxonomy.
@@ -309,6 +324,13 @@ abstract class Taxonomy implements Registerable {
 
 		// Validate and maybe register.
 		$this->validate();
+
+		// If we have any metaboxes, register them.
+		$this->meta_data();
+		if ( ! empty( $this->meta_data ) ) {
+			$this->register_meta_data( $loader );
+		}
+
 		register_taxonomy( $this->slug, $this->object_type, $this->filter_args( $args ) );
 	}
 
@@ -360,6 +382,28 @@ abstract class Taxonomy implements Registerable {
 		}
 		if ( ! $this->plural ) {
 			throw new InvalidArgumentException( 'No plural defined.' );
+		}
+	}
+
+	/**
+	 * Registers all defined
+	 *
+	 * @param Loader $loader
+	 * @return void
+	 */
+	public function register_meta_data( Loader $loader ): void {
+
+		$meta_fields = array_filter(
+			$this->meta_data,
+			function( $e ): bool {
+				return is_a( $e, Meta_Data::class );
+			}
+		);
+
+		foreach ( $meta_fields as $meta ) {
+			$meta->object_subtype( $this->slug );
+			$meta->meta_type( 'term' );
+			$meta->register( $loader );
 		}
 	}
 
