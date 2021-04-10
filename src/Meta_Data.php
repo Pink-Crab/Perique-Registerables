@@ -141,6 +141,30 @@ class Meta_Data implements Registerable {
 	}
 
 	/**
+	 * Sets the meta type as POST and defined the post type (object_subtype)
+	 *
+	 * @param string $post_type
+	 * @return self
+	 */
+	public function post_type( string $post_type ): self {
+		$this->meta_type( 'post' );
+		$this->object_subtype( $post_type );
+		return $this;
+	}
+
+	/**
+	 * Sets the meta type as TERM and defined the taxonomy (object_subtype)
+	 *
+	 * @param string $taxonomy
+	 * @return self
+	 */
+	public function taxonomy( string $taxonomy ): self {
+		$this->meta_type( 'term' );
+		$this->object_subtype( $taxonomy );
+		return $this;
+	}
+
+	/**
 	 * Set meta desctiption
 	 *
 	 * @param string $description  Meta desctiption

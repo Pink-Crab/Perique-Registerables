@@ -111,4 +111,20 @@ class Test_Meta_Data extends WP_UnitTestCase {
 		$this->assertTrue( $callable( 'upper' ) );
 		$this->assertFalse( $callable( 123 ) );
 	}
+
+    /** @testdox It should be possible to define the meta type as post and the post type in a single expression */
+	public function test_post_type_wrapper() {
+		$meta = new Meta_Data( 'meta_key' );
+		$meta->post_type( 'cpt_test' );
+		$this->assertEquals( 'post', Objects::get_property( $meta, 'meta_type' ) );
+		$this->assertEquals( 'cpt_test', $meta->parse_args()['object_subtype'] );
+	}
+
+     /** @testdox It should be possible to define the meta type as term and the taxonomy in a single expression */
+	public function test_taxonomy_wrapper() {
+		$meta = new Meta_Data( 'meta_key' );
+		$meta->taxonomy( 'tax_test' );
+		$this->assertEquals( 'term', Objects::get_property( $meta, 'meta_type' ) );
+		$this->assertEquals( 'tax_test', $meta->parse_args()['object_subtype'] );
+	}
 }
