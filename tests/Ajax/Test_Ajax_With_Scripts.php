@@ -15,9 +15,11 @@ namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
 use PinkCrab\HTTP\HTTP;
+use PinkCrab\Loader\Hook;
 use PinkCrab\Loader\Loader;
 use PinkCrab\Enqueue\Enqueue;
 use Nyholm\Psr7\ServerRequest;
+use PinkCrab\Registerables\Ajax;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Tests\Fixtures\Ajax\Ajax_With_Scripts;
 
@@ -59,22 +61,29 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_scripts_added_to_loader_front_end(): void {
 
+		/** @var Ajax */
 		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 		$loader        = new Loader();
+	
 		$ajax_instance->register( $loader );
 
-		// Extract $loader->front->hooks array
-		$scripts = Objects::get_property( $loader, 'front' );
-		$scripts = Objects::get_property( $scripts, 'hooks' );
+		// Extract all actions
+		$scripts = Objects::get_property( $loader, 'hooks' );
+		$scripts = array_filter(
+			$scripts->export(),
+			function( Hook $hook ) {
+				return $hook->get_type() === Hook::ACTION;
+			}
+		);
+
 
 		// Check we have 2 front facing and all values are expected.
 		$this->assertCount( 2, $scripts );
 		foreach ( $scripts as $script ) {
-			$this->assertEquals( 'action', $script['type'] );
-			$this->assertEquals( 'wp_enqueue_scripts', $script['handle'] );
-			$this->assertTrue( is_callable( $script['method'] ) );
-			$this->assertEquals( 10, $script['priority'] );
-			$this->assertEquals( 1, $script['args'] );
+			$this->assertEquals( 'wp_enqueue_scripts', $script->get_handle() );
+			$this->assertTrue( is_callable( $script->get_callback() ) );
+			$this->assertEquals( 10, $script->get_priority() );
+			$this->assertEquals( 1, $script->args_count() );
 		}
 	}
 
@@ -85,6 +94,7 @@ class Test_Ajax_With_Scripts extends WP_UnitTestCase {
 	 */
 	public function test_loader_enqueues_scripts(): void {
 
+		/** @var Ajax */
 		$ajax_instance = new Ajax_With_Scripts( $this->server_request_provider() );
 		$loader        = new Loader();
 		$ajax_instance->register( $loader );

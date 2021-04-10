@@ -123,8 +123,8 @@ class Meta_Data implements Registerable {
 	 * @param string|null $object_subtype  Holds a secondary object type, used for post type and taxonomy.
 	 * @return self
 	 */
-	public function object_subtype( string $object_subtype ): self {
-		$this->object_subtype = $object_subtype;
+	public function object_subtype( ?string $object_subtype ): self {
+		$this->object_subtype = $object_subtype ?? '';
 		return $this;
 	}
 
@@ -177,7 +177,7 @@ class Meta_Data implements Registerable {
 	/**
 	 * Set the santization callback for setitng values.
 	 *
-	 * @param callable
+	 * @param callable $callback
 	 * @return self
 	 */
 	public function sanitize( callable $callback ): self {
@@ -188,7 +188,7 @@ class Meta_Data implements Registerable {
 	/**
 	 * Set the persmission callback for setitng/getting values.
 	 *
-	 * @param callable
+	 * @param callable $callback
 	 * @return self
 	 */
 	public function permissions( callable $callback ): self {
@@ -210,7 +210,7 @@ class Meta_Data implements Registerable {
 	/**
 	 * Builds the args array for registering metadata
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function parse_args(): array {
 		$args = array(
@@ -239,5 +239,14 @@ class Meta_Data implements Registerable {
 	 */
 	public function register( Loader $loader ): void {
 		register_meta( $this->meta_type, $this->meta_key, $this->parse_args() );
+	}
+
+	/**
+	 * Get meta key
+	 *
+	 * @return string
+	 */
+	public function get_meta_key(): string {
+		return $this->meta_key;
 	}
 }

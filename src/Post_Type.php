@@ -373,14 +373,14 @@ abstract class Post_Type implements Registerable {
 	public function register_meta_data( Loader $loader ): void {
 
 		$meta_fields = array_filter(
+			$this->meta_data,
 			function( $e ): bool {
 				return is_a( $e, Meta_Data::class );
-			},
-			$this->meta_data
+			}
 		);
 
 		if ( count( $meta_fields ) > 0
-		&& ! array_key_exists( 'custom-fields', $this->supports ) ) {
+		&& ! array_key_exists( 'custom-fields', $this->supports ) ) { /** @phpstan-ignore-line */
 			$this->supports[] = 'custom-fields';
 		}
 
