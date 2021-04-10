@@ -177,7 +177,7 @@ class Meta_Data implements Registerable {
 	/**
 	 * Set the santization callback for setitng values.
 	 *
-	 * @param callable $callback
+	 * @param callable(mixed):mixed $callback
 	 * @return self
 	 */
 	public function sanitize( callable $callback ): self {

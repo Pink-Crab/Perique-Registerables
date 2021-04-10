@@ -111,9 +111,4 @@ class Test_Meta_Data extends WP_UnitTestCase {
 		$this->assertTrue( $callable( 'upper' ) );
 		$this->assertFalse( $callable( 123 ) );
 	}
-
-	public function test_can() {
-		# code...
-	}
-
 }

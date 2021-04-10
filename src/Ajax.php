@@ -28,7 +28,6 @@ use PinkCrab\HTTP\HTTP;
 use PinkCrab\Loader\Loader;
 use InvalidArgumentException;
 use PinkCrab\Enqueue\Enqueue;
-use PinkCrab\Registerables\Ajax;
 use PinkCrab\Core\Application\App;
 use Psr\Http\Message\ResponseInterface;
 use PinkCrab\Core\Collection\Collection;
