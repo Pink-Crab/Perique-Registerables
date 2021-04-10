@@ -186,7 +186,7 @@ class Meta_Data implements Registerable {
 	}
 
 	/**
-	 * Set the persmission callback for setitng/getting values.
+	 * Set the persmission callback for setitng/getting values
 	 *
 	 * @param callable $callback
 	 * @return self
@@ -236,7 +236,6 @@ class Meta_Data implements Registerable {
 	 *
 	 * @param Loader $loader
 	 * @return void
-	 * 
 	 */
 	public function register( Loader $loader ): void { // phpcs:ignore
 		register_meta( $this->meta_type, $this->meta_key, $this->parse_args() );
