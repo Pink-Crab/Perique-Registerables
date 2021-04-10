@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Metaboxes;
 
 use Exception;
+use PinkCrab\Loader\Loader;
 use Gin0115\WPUnit_Helpers\Objects;
 use Gin0115\WPUnit_Helpers\Output;
 use Gin0115\WPUnit_Helpers\WP\Meta_Box_Inspector;
 use PinkCrab\Core\Services\View\PHP_Engine;
-use PinkCrab\Loader\Loader;
 use PinkCrab\Registerables\MetaBox;
 use WP_UnitTestCase;
 
@@ -48,15 +48,14 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$loader = new Loader();
 		$metabox->register( $loader );
 
-		// Extract all global hooks.
-		$actions = Objects::get_property( $loader, 'global' );
-		$actions = Objects::get_property( $actions, 'hooks' );
+		// Extract all hooks as an array
+		$actions = Objects::get_property( $loader, 'hooks' )->export();
 
 		// Extract our options.
 		$extracted_action = array_filter(
 			$actions,
 			function( $e ) {
-				return $e['handle'] === 'test';
+				return $e->get_handle() === 'test';
 			}
 		);
 

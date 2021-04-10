@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Loader tests.
+ * Post Type with Metabox Intergration tests.
  *
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
