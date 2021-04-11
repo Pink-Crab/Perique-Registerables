@@ -28,7 +28,7 @@ $meta->register();
 
 All public methods which can be used to define the post meta.
 
-### meta_type
+### meta_type(string): self
 
 Meta Data can be set against Post, Term, User and Custom (see WP Docs for more details)
 
@@ -42,7 +42,7 @@ $meta->meta_type('custom');
 
 ```
 
-### object_subtype
+### object_subtype(string): self
 
 Post, Term and Custom meta all make use of a subtype, to apply them to post types, taxonomies etc.
 
@@ -57,7 +57,7 @@ $term_meta->object_subtype('custom_tax');
 
 ```
 
-### post_type & taxonomy
+### post_type(string): self & taxonomy(string): self
 
 Post and Term meta are by far the most commonly used through most WordPress sites, to prevent the need to declare both meta_type and object_subtype. We have 2 useful shortcut methods, for defining either in a single expression.
 
@@ -77,7 +77,7 @@ $term_meta->taxonomy('custom_tax');
 // $term_meta->object_subtype('custom_tax');
 ```
 
-### type
+### type(string): self
 
 Defines the scalar type for the value saved to the meta key
 accepts 'string', 'boolean', 'integer', 'number', 'array', and 'object'
@@ -87,7 +87,7 @@ $meta = new Meta_Data('post_meta');
 $meta->type('string');
 ```
 
-### description
+### description(string): self
 
 A description can be set for this meta key
 
@@ -96,7 +96,7 @@ $meta = new Meta_Data('post_meta');
 $meta->description('represents something about something');
 ```
 
-### single
+### single(bool): self
 
 Is the meta a single value or should it stored as an indexed array
 > *Defaults to false*
@@ -108,7 +108,7 @@ $meta->single(true);
 $meta->single(false);
 ```
 
-### default
+### default(mixed): self
 
 Allows the setting of a default value if not meta has been set for the item (post, term, user etc). Should match the type defined using ```type()```
 
@@ -118,7 +118,7 @@ $meta->type(string);
 $meta->default('Not set'); 
 ```
 
-### sanitize
+### sanitize(callable): self
 
 A sanitisation function can be passed which the value will be passed through before setting.
 
@@ -134,7 +134,7 @@ $meta->sanitize(static function($val){
 });
 ```
 
-### permissions
+### permissions(callable): self
 
 A sanitisation function can be passed which the value will be passed through before setting.
 
@@ -146,7 +146,7 @@ $meta->permissions(static function( bool $allowed, string $meta_key, int $post_I
 });
 ```
 
-### rest_schema
+### rest_schema(array): self
 
 A custom schema can be defined for the meta data.
 
@@ -162,7 +162,7 @@ $meta->rest_schema( array(
 ));
 ```
 
-### parse_args
+### parse_args(): array
 
 The args array used to register the meta_data can be recalled with this. Mostly used internally, but useful for testing and debugging.
 
@@ -180,7 +180,7 @@ var_dump($meta->parse_args());
 
 ```
 
-### get_meta_key
+### get_meta_key(): string
 
 Returns the defined meta key for the meta data.
 
@@ -189,7 +189,7 @@ $meta = new Meta_Data('post_meta');
 var_dump($meta->get_meta_key()); // 'post_meta'
 ```
 
-### register
+### register(?Loader): void
 
 When you are ready to register your meta data, you can just call the ```register()``` method. Unlike many of the abstract classes in this package, an instance of the Hook_Loader doesnt need to be passed. Although it recommended to call this as early as possible, but using a controller (or CPT/Taxonomy) that implements the Registerable interface and calling through its ```register(Loader $loader)```
 
