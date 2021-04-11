@@ -64,6 +64,7 @@ class Meta_Data_CPT extends Post_Type {
 			->single( self::META_2['single'] )
 			->sanitize( self::META_2['sanitize_callback'] )
 			->permissions( self::META_2['auth_callback'] );
+
 	}
 
 }

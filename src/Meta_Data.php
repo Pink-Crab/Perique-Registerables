@@ -25,13 +25,10 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Core\Application\App;
 use PinkCrab\Loader\Loader;
 
-use InvalidArgumentException;
-use PinkCrab\Core\Interfaces\Registerable;
 
-class Meta_Data implements Registerable {
+class Meta_Data {
 
 	/**
 	 * Object type meta applies to
@@ -258,10 +255,10 @@ class Meta_Data implements Registerable {
 	 * Register the meta field with the regular registation cylce.
 	 * Even though loader isnt used, we can still add to the registration.php as normal.
 	 *
-	 * @param Loader $loader
+	 * @param Loader|null $loader
 	 * @return void
 	 */
-	public function register( Loader $loader ): void { // phpcs:ignore
+	public function register( ?Loader $loader = null ): void { // phpcs:ignore
 		register_meta( $this->meta_type, $this->meta_key, $this->parse_args() );
 	}
 
