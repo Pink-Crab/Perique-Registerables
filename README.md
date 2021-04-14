@@ -138,7 +138,7 @@ http://www.opensource.org/licenses/mit-license.html
 
 ## Change Log ##
 
-* 0.4.3 - Added in post_type() and taxonomy() helpers to Meta_Data
+* 0.4.3 - Fixed merge issue with metabox view data.
 * 0.4.2 - Finalised Meta_Data, can now be added for Term and Post meta's when either CPT or taxonomy definied. Added in missing tests.
 * 0.4.1 - Minor bugfixes
 * 0.4.0 - Bumped inline with core, moved to min requirments of core v0.4.0
