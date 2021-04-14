@@ -100,8 +100,8 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$metabox = MetaBox::normal( 'renderable' )
 			->screen( 'post' )
 			->set_renderable( new PHP_Engine( dirname( __DIR__, 1 ) . '/Fixtures/Views/' ) )
-			->render( 'template.php' )
-			->view_vars( array( 'key' => 'value' ) );
+			->view_vars( array( 'key' => 'value' ) )
+			->render( 'template.php' );
 
 		$loader = new Loader();
 		$metabox->register( $loader );
@@ -129,8 +129,8 @@ class Test_Metaboxes extends WP_UnitTestCase {
 		$metabox = MetaBox::normal( 'renderable' )
 			->screen( 'post' )
 			->set_renderable( new PHP_Engine( dirname( __DIR__, 1 ) . '/Fixtures/Views/' ) )
-			->render( 'template.php' )
-			->view_vars( array( 'key' => 'value' ) );
+			->view_vars( array( 'key' => 'value' ) )
+			->render( 'template.php' );
 
 		$this->assertTrue( $metabox->has_renderable() );
 	}
