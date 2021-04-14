@@ -130,18 +130,16 @@ class MetaBox {
 	 * @param string $template
 	 * @return self
 	 */
-	public function render( string $template ): self {
-		if ( is_null( $this->renderable ) || ! is_a( $this->renderable, Renderable::class ) ) {
-			throw new Exception( 'Renderable has not been set to this metabox' );
+	public function render( string $template ) : self {
+		if ( \is_null( $this->renderable ) || ! \is_a( $this->renderable, Renderable::class ) ) {
+			throw new \Exception( 'Renderable has not been set to this metabox' );
 		}
-
 		$this->view(
-			function( \WP_Post $post, array $args ) use ( $template ) {
-				$args['post'] = $post;
-				$this->renderable->render( $template, $args ); /* @phpstan-ignore-line Already type checked above*/
+			function ( \WP_Post $post, array $args ) use ( $template ) {
+				$args['args']['post'] = $post;
+				$this->renderable->render( $template, $args['args'] ); /* @phpstan-ignore-line Already type checked above*/
 			}
 		);
-
 		return $this;
 	}
 

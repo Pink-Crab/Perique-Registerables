@@ -8,7 +8,7 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * WP_Ajax Call
 * Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.4.2-yellow.svg?style=flat " ") 
+![alt text](https://img.shields.io/badge/Current_Version-0.4.3-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 ![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
 [![codecov](https://codecov.io/gh/Pink-Crab/Module__Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Module__Registerables)
@@ -18,7 +18,7 @@ https://app.gitbook.com/@glynn-quelch/s/pinkcrab/
 
 ## Version ##
 
-**Release 0.4.2**
+**Release 0.4.3**
 
 ## Why? ##
 
@@ -138,6 +138,7 @@ http://www.opensource.org/licenses/mit-license.html
 
 ## Change Log ##
 
+* 0.4.3 - Fixed merge issue with metabox view data.
 * 0.4.2 - Finalised Meta_Data, can now be added for Term and Post meta's when either CPT or taxonomy definied. Added in missing tests.
 * 0.4.1 - Minor bugfixes
 * 0.4.0 - Bumped inline with core, moved to min requirments of core v0.4.0
