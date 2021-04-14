@@ -137,9 +137,7 @@ class MetaBox {
 		$this->view(
 			function ( \WP_Post $post, array $args ) use ( $template ) {
 				$args['args']['post'] = $post;
-
-				$this->renderable->render( $template, $args['args'] );
-				/* @phpstan-ignore-line Already type checked above*/
+				$this->renderable->render( $template, $args['args'] ); /* @phpstan-ignore-line Already type checked above*/
 			}
 		);
 		return $this;
