@@ -262,6 +262,7 @@ abstract class Ajax implements Registerable {
 		}
 
 		$http->emit_response( $response );
+		wp_die();
 	}
 
 	/**
