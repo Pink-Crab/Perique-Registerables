@@ -32,19 +32,6 @@ $ composer require pinkcrab/registerables
 
 ``` 
 
-```php
-// file config/dependencies.php
-
-// Ajax Request Injection.
-Ajax::class       => array(
-    'constructParams' => array( HTTP_Helper::global_server_request() ),
-    'shared'          => true,
-    'inherit'         => true,
-),
-```
-
-## Dependencies ##
-
 ## Example ##
 
 Creates a simple post type.
