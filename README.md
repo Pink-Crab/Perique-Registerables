@@ -5,10 +5,9 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * Post Types
 * Taxonomies
 * Metaboxes
-* WP_Ajax Call
 * Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.4.4-yellow.svg?style=flat " ") 
+![alt text](https://img.shields.io/badge/Current_Version-0.5.0-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 ![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
 [![codecov](https://codecov.io/gh/Pink-Crab/Module__Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Module__Registerables)
@@ -18,7 +17,7 @@ https://app.gitbook.com/@glynn-quelch/s/pinkcrab/
 
 ## Version ##
 
-**Release 0.4.4**
+**Release 0.5.0**
 
 ## Why? ##
 
@@ -32,10 +31,6 @@ The PinkCrab Registerables module provides a small selection of Abstract Classes
 $ composer require pinkcrab/registerables
 
 ``` 
-
-If you are planning on using the Ajax abstracts, you will need to ensure that a valid PS7 ServerRequest is injected into your Ajax class. By default the nyholm PS7 library is included and we have a helper method in our HTTP helper class. Just copy the example below into your dependencies file.
-
-Alternatively you can use Guzzle or any other HTTP library, so long as the isntance passed in implements the PS7 ServerRequestInterface.
 
 ```php
 // file config/dependencies.php
@@ -80,30 +75,6 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 }
 ```
 
-Creates a basic ajax call.
-
-``` php
-use PinkCrab\Registerables\Ajax;
-
-class Simple_Ajax extends Ajax {
-	// None key
-    protected $nonce_handle = 'basic_ajax_get';
-	
-    // WP Ajax action
-    protected $action       = 'basic_ajax_get';
-
-	/**
-	 * Handles the callback.
-	 */
-	public function callback( ResponseInterface $response ): ResponseInterface {
-		$response_array = array( 'result' => $this->request->getQueryParams()['ajax_get_data'] );
-		return $response->withBody(
-			HTTP_Helper::stream_from_scalar( $response_array )
-		);
-	}
-}
-```
-
 ## Testing ##
 
 ### PHP Unit ###
@@ -137,13 +108,15 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
-
+* 0.5.0 - 
+  * Updated to reflect Perique (Plugin Framework) 0.5.0
+  * Remove Ajax from registerables
 * 0.4.4 - Added wp_die() after emitting psr7 response in ajax.
 * 0.4.3 - Fixed merge issue with metabox view data.
 * 0.4.2 - Finalised Meta_Data, can now be added for Term and Post meta's when either CPT or taxonomy definied. Added in missing tests.
 * 0.4.1 - Minor bugfixes
 * 0.4.0 - Bumped inline with core, moved to min requirments of core v0.4.0
-* 0.3.5 - Updated all code in src and tests to reflect the new Loader setup in core.
+* 0.3.5 - Updated all code in src and tests to reflect the new Hook_Loader setup in core.
 * 0.3.4 - Removed the use !function_exists('get_current_screen') as phpscoper cant create a pollyfill due to not being loaded in global wp scope until needed. Now has custom method in metabo class to avoid.
 * 0.3.3 - Fixed version issue with Core
 * 0.3.2 - Added in missing 'hierarchical' => $this->hierarchical for taxonomy registration

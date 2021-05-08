@@ -26,15 +26,8 @@ tests_add_filter(
 	'muplugins_loaded',
 	function() {
 		$app = ( new App_Factory )->with_wp_dice( true )
-		->di_rules(
-			array(
-				Ajax::class => array(
-					'constructParams' => array( ( new HTTP() )->request_from_globals() ),
-					'shared'          => true,
-					'inherit'         => true,
-				),
-			)
-		)->boot();
+		->di_rules(array())
+		->boot();
 	}
 );
 

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Taxonomies;
 
 use WP_UnitTestCase;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 
 
 
@@ -52,7 +52,7 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 		if ( ! $this->taxonomy ) {
 			// Create the CPT and Loader instances.
 			$this->taxonomy = new $this->taxonomy_class;
-			$loader         = new Loader();
+			$loader         = new Hook_Loader();
 
 			// Run registration.
 			$this->taxonomy->register( $loader );

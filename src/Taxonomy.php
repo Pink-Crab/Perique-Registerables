@@ -30,7 +30,7 @@ use PinkCrab\Registerables\Meta_Data;
 
 use PinkCrab\Core\Application\App;
 use PinkCrab\Core\Interfaces\Registerable;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 
 
 abstract class Taxonomy implements Registerable {
@@ -289,11 +289,11 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Registers the taxonomy.
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
 	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
-	final public function register( Loader $loader ): void {
+	final public function register( Hook_Loader $loader ): void {
 
 		// Run setup
 		$this->set_up();
@@ -388,10 +388,10 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Registers all defined
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
-	public function register_meta_data( Loader $loader ): void {
+	public function register_meta_data( Hook_Loader $loader ): void {
 
 		$meta_fields = array_filter(
 			$this->meta_data,
