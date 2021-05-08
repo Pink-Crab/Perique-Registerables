@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 use Gin0115\WPUnit_Helpers\WP\Meta_Data_Inspector;
 use Gin0115\WPUnit_Helpers\WP\Entities\Meta_Data_Entity;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Meta_Data_CPT;
@@ -53,7 +53,7 @@ class Test_Meta_Data_CPT extends WP_UnitTestCase {
 		parent::setup();
 		// Create the CPT and Loader instances.
 		$this->cpt = new Meta_Data_CPT;
-		$loader    = new Loader;
+		$loader    = new Hook_Loader;
 
 		// Run registration.
 		$this->cpt->register( $loader );

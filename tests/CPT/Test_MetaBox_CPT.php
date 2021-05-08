@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use WP_UnitTestCase;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 use Gin0115\WPUnit_Helpers\Output;
 use Gin0115\WPUnit_Helpers\WP\Meta_Box_Inspector;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\MetaBox_CPT;
@@ -55,7 +55,7 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 		if ( ! $this->cpt ) {
 			// Create the CPT and Loader instances.
 			$this->cpt = new MetaBox_CPT;
-			$loader    = new Loader;
+			$loader    = new Hook_Loader;
 
 			// Run registration.
 			$this->cpt->register( $loader );

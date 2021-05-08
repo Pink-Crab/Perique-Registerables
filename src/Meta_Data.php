@@ -26,7 +26,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\Core\Application\App;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 
 use InvalidArgumentException;
 use PinkCrab\Core\Interfaces\Registerable;
@@ -258,10 +258,10 @@ class Meta_Data implements Registerable {
 	 * Register the meta field with the regular registation cylce.
 	 * Even though loader isnt used, we can still add to the registration.php as normal.
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
-	public function register( Loader $loader ): void { // phpcs:ignore
+	public function register( Hook_Loader $loader ): void { // phpcs:ignore
 		register_meta( $this->meta_type, $this->meta_key, $this->parse_args() );
 	}
 
