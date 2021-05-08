@@ -26,7 +26,7 @@ namespace PinkCrab\Registerables;
 
 use Exception;
 use PinkCrab\Loader\Hook_Loader;
-use PinkCrab\Core\Interfaces\Renderable;
+use PinkCrab\Perique\Interfaces\Renderable;
 
 class MetaBox {
 

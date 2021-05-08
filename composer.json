@@ -39,7 +39,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "pinkcrab/perqiue-core": "0.5.*"
+        "pinkcrab/perique-core": "0.5.*"
     },
     "scripts": {
         "test": "phpunit --coverage-clover clover.xml --testdox",

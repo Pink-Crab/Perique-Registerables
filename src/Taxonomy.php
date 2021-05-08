@@ -28,8 +28,8 @@ namespace PinkCrab\Registerables;
 use InvalidArgumentException;
 use PinkCrab\Registerables\Meta_Data;
 
-use PinkCrab\Core\Application\App;
-use PinkCrab\Core\Interfaces\Registerable;
+use PinkCrab\Perique\Application\App;
+use PinkCrab\Perique\Interfaces\Registerable;
 use PinkCrab\Loader\Hook_Loader;
 
 

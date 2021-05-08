@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Core
+ * @package PinkCrab\Perique
  */
 
 namespace PinkCrab\Registerables\Tests\Metaboxes;
@@ -18,7 +18,7 @@ use PinkCrab\Loader\Hook_Loader;
 use Gin0115\WPUnit_Helpers\Objects;
 use Gin0115\WPUnit_Helpers\Output;
 use Gin0115\WPUnit_Helpers\WP\Meta_Box_Inspector;
-use PinkCrab\Core\Services\View\PHP_Engine;
+use PinkCrab\Perique\Services\View\PHP_Engine;
 use PinkCrab\Registerables\MetaBox;
 use WP_UnitTestCase;
 

@@ -24,13 +24,13 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Core\Application\App;
+use PinkCrab\Perique\Application\App;
 use PinkCrab\Registerables\Meta_Data;
 
 use PinkCrab\Loader\Hook_Loader;
 
 use InvalidArgumentException;
-use PinkCrab\Core\Interfaces\Registerable;
+use PinkCrab\Perique\Interfaces\Registerable;
 
 abstract class Post_Type implements Registerable {
 
