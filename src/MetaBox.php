@@ -25,8 +25,8 @@ declare( strict_types=1 );
 namespace PinkCrab\Registerables;
 
 use Exception;
-use PinkCrab\Loader\Loader;
-use PinkCrab\Core\Interfaces\Renderable;
+use PinkCrab\Loader\Hook_Loader;
+use PinkCrab\Perique\Interfaces\Renderable;
 
 class MetaBox {
 
@@ -247,10 +247,10 @@ class MetaBox {
 	/**
 	 * Registers the meta box.
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
-	public function register( Loader $loader ): void {
+	public function register( Hook_Loader $loader ): void {
 
 		// Register the metabox.
 		$loader->action(

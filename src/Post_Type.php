@@ -24,13 +24,13 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Core\Application\App;
+use PinkCrab\Perique\Application\App;
 use PinkCrab\Registerables\Meta_Data;
 
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 
 use InvalidArgumentException;
-use PinkCrab\Core\Interfaces\Registerable;
+use PinkCrab\Perique\Interfaces\Registerable;
 
 abstract class Post_Type implements Registerable {
 
@@ -250,10 +250,10 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Register the post type using defined variables within the
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
-	public function register( Loader $loader ): void {
+	public function register( Hook_Loader $loader ): void {
 
 		// Ensure we have all essential values.
 		$this->validate();
@@ -354,10 +354,10 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Registers the metaboxes.
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
-	private function register_metaboxes( Loader $loader ): void {
+	private function register_metaboxes( Hook_Loader $loader ): void {
 		foreach ( $this->metaboxes as $metabox ) {
 			$metabox->screen( $this->key ); // Add this post type to the screen list.
 			$metabox->register( $loader ); // Pass loader into the MetaBoxes for registration.
@@ -367,10 +367,10 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Registers all defined
 	 *
-	 * @param Loader $loader
+	 * @param Hook_Loader $loader
 	 * @return void
 	 */
-	public function register_meta_data( Loader $loader ): void {
+	public function register_meta_data( Hook_Loader $loader ): void {
 
 		$meta_fields = array_filter(
 			$this->meta_data,

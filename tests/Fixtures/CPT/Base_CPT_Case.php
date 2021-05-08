@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Core
+ * @package PinkCrab\Perique
  */
 
 namespace PinkCrab\Registerables\Tests\Fixtures\CPT;
@@ -16,7 +16,7 @@ namespace PinkCrab\Registerables\Tests\Fixtures\CPT;
 
 use WP_UnitTestCase;
 use PinkCrab\Registerables\Post_Type;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 
 
 class Base_CPT_Case extends WP_UnitTestCase {
@@ -63,7 +63,7 @@ class Base_CPT_Case extends WP_UnitTestCase {
 		if ( ! $this->cpt ) {
 			// Create the CPT and Loader instances.
 			$this->cpt = new $this->cpt_type;
-			$loader    = new Loader();
+			$loader    = new Hook_Loader();
 
 			// Run registration.
 			$this->cpt->register( $loader );

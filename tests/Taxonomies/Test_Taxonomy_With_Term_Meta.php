@@ -8,13 +8,13 @@ declare(strict_types=1);
  * @since 0.4.1
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Core
+ * @package PinkCrab\Perique
  */
 
 namespace PinkCrab\Registerables\Tests\Taxonomies;
 
 use WP_UnitTestCase;
-use PinkCrab\Loader\Loader;
+use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Tag_With_Meta_Taxonomy;
 
 class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
@@ -24,7 +24,7 @@ class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 
 	public function setUp(): void {
 		$this->taxonomy = new Tag_With_Meta_Taxonomy();
-		$this->taxonomy->register( new Loader() );
+		$this->taxonomy->register( new Hook_Loader() );
 	}
 
     /** @return array<\WP_Term> */

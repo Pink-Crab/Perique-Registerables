@@ -39,9 +39,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "pinkcrab/plugin-framework": "0.4.*",
-        "pinkcrab/http": "0.2.*",
-        "pinkcrab/enqueue": "1.*"
+        "pinkcrab/perique-core": "0.5.*"
     },
     "scripts": {
         "test": "phpunit --coverage-clover clover.xml --testdox",

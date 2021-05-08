@@ -3,11 +3,11 @@
 use Dice\Dice;
 use PinkCrab\HTTP\HTTP;
 use PinkCrab\Registerables\Ajax;
-use PinkCrab\Core\Application\App;
-use PinkCrab\Core\Services\Dice\WP_Dice;
-use PinkCrab\Core\Application\App_Factory;
-use PinkCrab\Core\Interfaces\DI_Container;
-use PinkCrab\Core\Services\ServiceContainer\Container;
+use PinkCrab\Perique\Application\App;
+use PinkCrab\Perique\Services\Dice\WP_Dice;
+use PinkCrab\Perique\Application\App_Factory;
+use PinkCrab\Perique\Interfaces\DI_Container;
+use PinkCrab\Perique\Services\ServiceContainer\Container;
 
 /**
  * PHPUnit bootstrap file
@@ -26,15 +26,8 @@ tests_add_filter(
 	'muplugins_loaded',
 	function() {
 		$app = ( new App_Factory )->with_wp_dice( true )
-		->di_rules(
-			array(
-				Ajax::class => array(
-					'constructParams' => array( ( new HTTP() )->request_from_globals() ),
-					'shared'          => true,
-					'inherit'         => true,
-				),
-			)
-		)->boot();
+		->di_rules(array())
+		->boot();
 	}
 );
 
