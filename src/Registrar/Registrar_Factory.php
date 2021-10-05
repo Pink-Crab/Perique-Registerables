@@ -22,15 +22,15 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Registerables\Dispatcher;
+namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
 use PinkCrab\Registerables\Post_Type;
+use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
-use PinkCrab\Registerables\Dispatcher\Post_Type_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
-class Dispatcher_Factory {
+class Registrar_Factory {
 
 	/**
 	 * Returns an instance of the factory.
@@ -48,7 +48,7 @@ class Dispatcher_Factory {
 	 * @return \PinkCrab\Registerables\Dispatcher\Post_Type_Registrar
 	 * @throws Exception If not valid registerable type passed.
 	 */
-	public function create_dispatcher( Registerable $registerable ): Registrar {
+	public function create_from_registerable( Registerable $registerable ): Registrar {
 		switch ( true ) {
 			case is_a( $registerable, Post_Type::class ):
 				return $this->post_type_registrar();
@@ -63,7 +63,7 @@ class Dispatcher_Factory {
 	 *
 	 * @return \PinkCrab\Registerables\Dispatcher\Post_Type_Registrar
 	 */
-	public function post_type_registrar(): Post_Type_Registrar {
+	private function post_type_registrar(): Post_Type_Registrar {
 		return new Post_Type_Registrar( new Post_Type_Validator() );
 	}
 }

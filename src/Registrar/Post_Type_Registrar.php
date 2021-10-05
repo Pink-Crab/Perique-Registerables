@@ -22,12 +22,12 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Registerables\Dispatcher;
+namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registerable_Hooks;
-use PinkCrab\Registerables\Dispatcher\Registrar;
+use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 

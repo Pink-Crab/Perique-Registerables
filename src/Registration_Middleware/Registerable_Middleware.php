@@ -29,7 +29,7 @@ use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Perique\Interfaces\Registration_Middleware;
-use PinkCrab\Registerables\Dispatcher\Dispatcher_Factory;
+use PinkCrab\Registerables\Registrar\Registrar_Factory;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Registerable_Middleware implements Registration_Middleware {
@@ -77,8 +77,8 @@ class Registerable_Middleware implements Registration_Middleware {
 		$this->loader->action(
 			'init',
 			static function() use ( $class ) {
-				Dispatcher_Factory::new()
-					->create_dispatcher( $class )
+				Registrar_Factory::new()
+					->create_from_registerable( $class )
 					->register( $class );
 			}
 		);

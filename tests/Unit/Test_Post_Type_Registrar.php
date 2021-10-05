@@ -21,7 +21,7 @@ use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
-use PinkCrab\Registerables\Dispatcher\Post_Type_Registrar;
+use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Test_Post_Type_Registrar extends TestCase {

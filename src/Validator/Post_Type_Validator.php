@@ -63,9 +63,10 @@ class Post_Type_Validator extends Abstract_Validator {
 	 */
 	protected function has_required_fields( Post_Type $post_type ): void {
 		foreach ( self::REQUIRED_FIELDS as $field ) {
-			if ( \mb_strlen( $post_type->{$field} ) === 0
-			&& ! is_string( $post_type->{$field} ) ) {
-				$this->add_error( sprintf( '%s is not set on %s Post Type Model', $field, $post_type->key ) );
+			if ( ! is_string( $post_type->{$field} )
+			|| \mb_strlen( $post_type->{$field} ) === 0
+			) {
+				$this->add_error( sprintf( '%s is not set on %s Post Type Model', $field, get_class( $post_type ) ) );
 			}
 		}
 	}

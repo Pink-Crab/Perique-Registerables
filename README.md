@@ -16,7 +16,10 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 
 **Release 0.6.0**
 
-> PLEASE NOTE REGISTERABLES V0.6.0 ONWARDS IS INTENDED FOR PINKCRAB PERIQUE FRAMEWORK 1.*.* AND ABOVE. For older versions of the PinkCrab Plugin Framework please use Registerables V0.5.*
+> PLEASE NOTE REGISTERABLES V0.6.0 ONWARDS IS INTENDED FOR PINKCRAB PERIQUE FRAMEWORK 1.\*.\* AND ABOVE.   
+
+***
+> For older versions of the PinkCrab Plugin Framework please use Registerables V0.5.\*
 
 ## Why? ##
 
