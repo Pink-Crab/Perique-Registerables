@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * An abstract class for registering custom taxonomies.
+ * Validates a Post Type model.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -19,32 +19,66 @@ declare(strict_types=1);
  *
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Registerables
+ * @package PinkCrab\Registerables\Validator
  */
 
-namespace PinkCrab\Registerables;
+namespace PinkCrab\Registerables\Validator;
 
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
-abstract class Taxonomy implements Registerable {
+abstract class Abstract_Validator {
 
 	/**
-	 * Filters the labels through child class.
+	 * All errors found during validation
 	 *
-	 * @param array<string, mixed> $labels
-	 * @return array<string, mixed>
+	 * @var string[]
 	 */
-	public function filter_labels( array $labels ): array {
-		return $labels;
+	protected $errors = array();
+
+	/**
+	 * Checks if errors set.
+	 *
+	 * @return bool
+	 */
+	public function has_errors(): bool {
+		return count( $this->errors ) >= 1;
 	}
 
 	/**
-	 * Filters the args used to register the CPT.
+	 * Returns all errors.
 	 *
-	 * @param array<string, mixed> $args
-	 * @return array<string, mixed>
+	 * @return string[]
 	 */
-	public function filter_args( array $args ): array {
-		return $args;
+	public function get_errors(): array {
+		return $this->errors;
 	}
+
+	/**
+	 * Adds an error to the collection.
+	 *
+	 * @param string $error
+	 * @return self
+	 */
+	public function add_error( string $error ): self {
+		$this->errors[] = $error;
+		return $this;
+	}
+
+	/**
+	 * Reset the error collection
+	 *
+	 * @return self
+	 */
+	public function reset_errors(): self {
+		$this->errors = array();
+		return $this;
+	}
+
+	/**
+	 * Validates the class passed.
+	 *
+	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $object
+	 * @return bool
+	 */
+	abstract public function validate( Registerable $object ): bool;
 }

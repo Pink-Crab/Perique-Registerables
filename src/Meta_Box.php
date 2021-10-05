@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * An abstract class for registering custom taxonomies.
+ * An abstract class for registering custom Metabox.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,25 +26,6 @@ namespace PinkCrab\Registerables;
 
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
-abstract class Taxonomy implements Registerable {
+abstract class Meta_Box implements Registerable {
 
-	/**
-	 * Filters the labels through child class.
-	 *
-	 * @param array<string, mixed> $labels
-	 * @return array<string, mixed>
-	 */
-	public function filter_labels( array $labels ): array {
-		return $labels;
-	}
-
-	/**
-	 * Filters the args used to register the CPT.
-	 *
-	 * @param array<string, mixed> $args
-	 * @return array<string, mixed>
-	 */
-	public function filter_args( array $args ): array {
-		return $args;
-	}
 }

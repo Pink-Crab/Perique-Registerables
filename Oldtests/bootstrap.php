@@ -1,13 +1,6 @@
 <?php
 
-use Dice\Dice;
-use PinkCrab\HTTP\HTTP;
-use PinkCrab\Registerables\Ajax;
-use PinkCrab\Perique\Application\App;
-use PinkCrab\Perique\Services\Dice\WP_Dice;
-use PinkCrab\Perique\Application\App_Factory;
-use PinkCrab\Perique\Interfaces\DI_Container;
-use PinkCrab\Perique\Services\ServiceContainer\Container;
+use PinkCrab\Core\Application\App_Factory;
 
 /**
  * PHPUnit bootstrap file
@@ -25,9 +18,9 @@ define( 'TEST_WP_ROOT', $wp_install_path );
 tests_add_filter(
 	'muplugins_loaded',
 	function() {
-		// $app = ( new App_Factory )->with_wp_dice( true )
-		// ->di_rules(array())
-		// ->boot();
+		$app = ( new App_Factory )->with_wp_dice( true )
+		->di_rules(array())
+		->boot();
 	}
 );
 
