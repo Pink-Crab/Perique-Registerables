@@ -4,3 +4,5 @@ composer.lock
 coverage-report
 coverage.xml
 clover.xml
+src/Previous
+Oldtests
