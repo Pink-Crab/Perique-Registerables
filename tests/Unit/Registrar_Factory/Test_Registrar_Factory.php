@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 /**
- * UNIT tests for the Dispatcher Factory
+ * UNIT tests for the Registrar Factory
  *
- * @since 0.1.0
+ * @since 0.6.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Perique
+ * @package PinkCrab\Registerables
  */
 
 namespace PinkCrab\Registerables\Tests\Unit\Registrar_Factory;

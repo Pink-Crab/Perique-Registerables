@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @since 0.6.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Perique-Registerables
+ * @package PinkCrab\Registerables-Registerables
  */
 
 namespace PinkCrab\Registerables\Tests\Application\Registration_Middleware;

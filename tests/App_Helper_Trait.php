@@ -9,7 +9,7 @@ declare(strict_types=1);
  * @since 0.4.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Perique
+ * @package PinkCrab\Registerables
  */
 
 namespace PinkCrab\Registerables\Tests;

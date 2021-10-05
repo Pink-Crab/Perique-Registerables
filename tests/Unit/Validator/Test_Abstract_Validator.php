@@ -3,14 +3,12 @@
 declare(strict_types=1);
 
 /**
- * Test Runner for CPT Application Tests.
- *
- * All test cases are extended from here, with just arrays of expected values
+ * UNIT tests for the Abstract Validators shared functionality
  *
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @package PinkCrab\Perique
+ * @package PinkCrab\Registerables
  */
 
 namespace PinkCrab\Registerables\Tests\Unit\Validator;
