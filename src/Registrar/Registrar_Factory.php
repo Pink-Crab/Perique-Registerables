@@ -45,7 +45,7 @@ class Registrar_Factory {
 	 * Creates the dispatcher based on the registerable passed.
 	 *
 	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
-	 * @return \PinkCrab\Registerables\Dispatcher\Post_Type_Registrar
+	 * @return Registrar
 	 * @throws Exception If not valid registerable type passed.
 	 */
 	public function create_from_registerable( Registerable $registerable ): Registrar {
@@ -61,7 +61,7 @@ class Registrar_Factory {
 	/**
 	 * Create post type dispatcher.
 	 *
-	 * @return \PinkCrab\Registerables\Dispatcher\Post_Type_Registrar
+	 * @return \PinkCrab\Registerables\Registrar\Post_Type_Registrar
 	 */
 	private function post_type_registrar(): Post_Type_Registrar {
 		return new Post_Type_Registrar( new Post_Type_Validator() );

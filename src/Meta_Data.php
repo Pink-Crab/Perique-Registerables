@@ -26,6 +26,7 @@ namespace PinkCrab\Registerables;
 
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
+
 abstract class Meta_Data implements Registerable {
 
 }

@@ -10,7 +10,7 @@ parameters:
         - %currentWorkingDirectory%/src/
     excludes_analyse:
         - %currentWorkingDirectory%/tests/*
-        - %currentWorkingDirectory%/src/OLD/*
+        - %currentWorkingDirectory%/src/Previous/*
         - %currentWorkingDirectory%/Oldtests/*
     bootstrapFiles:
         - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
