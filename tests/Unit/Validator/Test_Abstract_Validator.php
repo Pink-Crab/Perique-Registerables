@@ -3,9 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Test Runner for CPT Application Tests.
- *
- * All test cases are extended from here, with just arrays of expected values
+ * UNIT tests for the Abstract Validators shared functionality
  *
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
