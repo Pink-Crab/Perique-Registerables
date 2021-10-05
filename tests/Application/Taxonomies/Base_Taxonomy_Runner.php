@@ -11,15 +11,16 @@ declare(strict_types=1);
  * @package PinkCrab\Perique
  */
 
-namespace PinkCrab\Registerables\Tests\Taxonomies;
+namespace PinkCrab\Registerables\Tests\Application\Taxonomies;
 
 use WP_UnitTestCase;
+use PinkCrab\Registerables\Tests\App_Helper_Trait;
 use PinkCrab\Loader\Hook_Loader;
-
-
 
 class Base_Taxonomy_Runner extends WP_UnitTestCase {
 
+	use App_Helper_Trait;
+	
 	/**
 	 * Taxonomy.
 	 *
@@ -47,16 +48,23 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 	protected $labels     = array();
 	protected $post_types = array();
 
+	/**
+	 * Reset the app data after each test.
+	 *
+	 * @return void
+	 */
+	public function tearDown(): void {
+		self::unset_app_instance();
+	}
+
 	public function setUp(): void {
 		parent::setup();
 		if ( ! $this->taxonomy ) {
 			// Create the CPT and Loader instances.
 			$this->taxonomy = new $this->taxonomy_class;
-			$loader         = new Hook_Loader();
 
-			// Run registration.
-			$this->taxonomy->register( $loader );
-			$loader->register_hooks();
+			self::create_with_registerables( $this->taxonomy_class )->boot();
+			do_action( 'init' );
 
 			// Set the rewrite rules.
 			\flush_rewrite_rules();
@@ -101,7 +109,7 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 			if ( ! array_key_exists( $key, $this->labels ) ) {
 				continue;
 			}
-			$this->assertEquals( $value, $this->labels[ $key ], sprintf( '%s from defined not found', $value ) );
+			$this->assertEquals( $value, $this->labels[ $key ], sprintf( '%s => %s from labels', $key, $value ) );
 		}
 	}
 
@@ -130,7 +138,7 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 			if ( $property === 'rewrite' ) {
 				$this->assertEquals(
 					$expected,
-					$wp_taxonomy->{$property},
+					$wp_taxonomy->{$property}['slug'],
 					sprintf(
 						'Failed asserting setting that %s was %s for %s (rewrite, so looking at slug property',
 						$property,

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @package PinkCrab\Perique
  */
 
-namespace PinkCrab\Registerables\Tests\Taxonomies;
+namespace PinkCrab\Registerables\Tests\Application\Taxonomies;
 
 use WP_UnitTestCase;
 use PinkCrab\Loader\Hook_Loader;

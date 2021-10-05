@@ -11,11 +11,10 @@ declare(strict_types=1);
  * @package PinkCrab\Perique
  */
 
-namespace PinkCrab\Registerables\Tests\Taxonomies;
+namespace PinkCrab\Registerables\Tests\Application\Taxonomies;
 
-use PinkCrab\Registerables\Tests\Taxonomies\Base_Taxonomy_Runner;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
-
+use PinkCrab\Registerables\Tests\Application\Taxonomies\Base_Taxonomy_Runner;
 
 
 class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
@@ -39,7 +38,7 @@ class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 		'show_admin_column'     => true,
 		'rewrite'               => 'basic_tag_tax',
 		'query_var'             => false,
-		'update_count_callback' => null,
+		'update_count_callback' => '_update_post_term_count',
 		'show_in_rest'          => false,
 		'rest_base'             => 'basic_tag_tax',
 		'rest_controller_class' => 'WP_REST_Terms_Controller',
@@ -56,7 +55,7 @@ class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 		'edit_item'         => 'Edit Basic Tag Taxonomy',
 		'update_item'       => 'Update Basic Tag Taxonomy',
 		'add_new_item'      => 'Add New Basic Tag Taxonomy',
-		'new_item_name'     => 'New Basic Tag Taxonomy Name',
+		'new_item_name'     => 'New Basic Tag Taxonomy',
 		'view_item'         => 'View Basic Tag Taxonomy',
 		'menu_name'         => 'Basic Tag Taxonomies',
 		'popular_items'     => 'Popular Basic Tag Taxonomies',
@@ -68,9 +67,4 @@ class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 	public function test_permalinks() {
 		$this->assertRegexp( '/basic_tag_tax/', get_term_link( $this->terms[0] ) );
 	}
-
-	public function test_static_get_slug() {
-		$this->assertEquals( 'basic_tag_tax', $this->taxonomy_class::get_slug() );
-	}
-
 }

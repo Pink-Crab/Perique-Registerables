@@ -28,7 +28,7 @@ use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 abstract class Taxonomy implements Registerable {
 
-		/**
+	/**
 	 * The singular label
 	 *
 	 * @var string
@@ -208,7 +208,7 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Array of all pre determined term meta.
 	 *
-	 * @var Meta_Data::class[]
+	 * @var Meta_Data[]
 	 */
 	public $meta_data = array();
 
