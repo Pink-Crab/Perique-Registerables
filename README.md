@@ -7,17 +7,16 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 * Metaboxes
 * Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.5.0-yellow.svg?style=flat " ") 
+![alt text](https://img.shields.io/badge/Current_Version-0.6.0-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 ![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
-[![codecov](https://codecov.io/gh/Pink-Crab/Module__Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Module__Registerables)
-
-For more details please visit our docs.
-https://app.gitbook.com/@glynn-quelch/s/pinkcrab/
+[![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
 
 ## Version ##
 
-**Release 0.5.0**
+**Release 0.6.0**
+
+> PLEASE NOTE REGISTERABLES V0.6.0 ONWARDS IS INTENDED FOR PINKCRAB PERIQUE FRAMEWORK 1.*.* AND ABOVE. For older versions of the PinkCrab Plugin Framework please use Registerables V0.5.*
 
 ## Why? ##
 
