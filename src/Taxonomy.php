@@ -28,6 +28,190 @@ use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 abstract class Taxonomy implements Registerable {
 
+		/**
+	 * The singular label
+	 *
+	 * @var string
+	 * @required
+	 */
+	public $singular;
+
+	/**
+	 * Plural label
+	 *
+	 * @var string
+	 * @required
+	 */
+	public $plural;
+
+	/**
+	 * Taxonomy slug
+	 *
+	 * @var string
+	 * @required
+	 */
+	public $slug;
+
+	/**
+	 * The taxonomies label.
+	 * Uses plural if not set.
+	 *
+	 * @var string|null
+	 */
+	public $label;
+
+	/**
+	 * The taxonomy description.
+	 *
+	 * @var string
+	 */
+	public $description = '';
+
+	/**
+	 * Which post types should this taxonomy be applied to.
+	 *
+	 * @var string[]
+	 */
+	public $object_type = array( 'post' );
+
+	/**
+	 * Should this taxonomy have a hierarchy
+	 *
+	 * @var bool
+	 */
+	public $hierarchical = false;
+
+	/**
+	 * Render WP_Admin UI
+	 *
+	 * @var bool
+	 */
+	public $show_ui = true;
+
+	/**
+	 * Show in WP_Admin menu list.
+	 *
+	 * @var bool
+	 */
+	public $show_in_menu = true;
+
+	/**
+	 * Undocumented variable
+	 *
+	 * @var bool
+	 */
+	public $show_admin_column = true;
+
+	/**
+	 * Include in the tag cloud.
+	 *
+	 * @var bool
+	 */
+	public $show_tagcloud = false;
+
+	/**
+	 * Inlcude in quick edit.
+	 *
+	 * @var bool
+	 */
+	public $show_in_quick_edit = true;
+
+	/**
+	 * Should terms remain in the order added
+	 * if false will be alphabetical.
+	 *
+	 * @var bool
+	 */
+	public $sort = true;
+
+	/**
+	 * Render wp meta box.
+	 *
+	 * @var callable|null
+	 */
+	public $meta_box_cb;
+
+	/**
+	 * Include in rest
+	 *
+	 * @var bool
+	 */
+	public $show_in_rest = false;
+
+	/**
+	 * Base rest path.
+	 * If not set, will use taxonomy slug
+	 *
+	 * @var string|null
+	 */
+	public $rest_base;
+
+	/**
+	 * Rest base controller.
+	 *
+	 * @var string
+	 */
+	public $rest_controller_class = 'WP_REST_Terms_Controller';
+
+	/**
+	 * Is this Taxonomy to be used frontend wise
+	 *
+	 * @var bool
+	 */
+	public $public = true;
+
+	/**
+	 * Whether the taxonomy is publicly queryable.
+	 *
+	 * @var bool
+	 */
+	public $publicly_queryable = true;
+
+	/**
+	 * Define a custom query var, if false with use $this->slug
+	 *
+	 * @var bool|string
+	 */
+	public $query_var = false;
+
+	/**
+	 * Rewrite the peramlinks structure.
+	 * If set to true will use the default of the slug.
+	 *
+	 * @var array<string, mixed>|bool
+	 */
+	public $rewrite = true;
+
+	/**
+	 * String of function name used for counting.
+	 * If blank string will use the internal counting functions.
+	 * Must be a string and not an inline callable.
+	 *
+	 * @var string|null
+	 */
+	public $update_count_callback;
+
+	/**
+	 * Array of capabilities for the taxonomy
+	 *
+	 * @var array<string, mixed>|null
+	 */
+	public $capabilities;
+
+	/**
+	 * Sets the default term for the taxonomy
+	 *
+	 * @var array<string, mixed>|null
+	 */
+	public $default_term;
+
+	/**
+	 * Array of all pre determined term meta.
+	 *
+	 * @var Meta_Data::class[]
+	 */
+	public $meta_data = array();
+
 	/**
 	 * Filters the labels through child class.
 	 *
