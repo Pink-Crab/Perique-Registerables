@@ -40,4 +40,14 @@ class Registerable_Hooks {
 	 * Filter handle for post type labels
 	 */
 	public const POST_TYPE_LABELS = self::HOOK_PREFIX . 'post_type_labels';
+
+    /**
+	 * Filter handle for post type args
+	 */
+	public const TAXONOMY_ARGS = self::HOOK_PREFIX . 'taxonomy_args';
+
+	/**
+	 * Filter handle for post type labels
+	 */
+	public const TAXONOMY_LABELS = self::HOOK_PREFIX . 'taxonomy_labels';
 }

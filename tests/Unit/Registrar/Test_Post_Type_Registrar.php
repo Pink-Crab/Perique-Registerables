@@ -3,9 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Test Runner for CPT Application Tests.
- *
- * All test cases are extended from here, with just arrays of expected values
+ * Unit tests for the Post Type registrar
  *
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
@@ -13,15 +11,15 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Registerables\Tests\Unit;
+namespace PinkCrab\Registerables\Tests\Unit\Registrar;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
-use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
+use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Test_Post_Type_Registrar extends TestCase {

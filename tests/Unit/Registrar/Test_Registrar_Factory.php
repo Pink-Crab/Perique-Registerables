@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Registerables\Tests\Unit\Registrar_Factory;
+namespace PinkCrab\Registerables\Tests\Unit\Registrar;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

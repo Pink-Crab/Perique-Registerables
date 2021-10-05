@@ -31,7 +31,7 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * The singular label
 	 *
-	 * @var string
+	 * @var string|null
 	 * @required
 	 */
 	public $singular;
@@ -39,7 +39,7 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Plural label
 	 *
-	 * @var string
+	 * @var string|null
 	 * @required
 	 */
 	public $plural;

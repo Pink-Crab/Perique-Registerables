@@ -85,53 +85,54 @@ class Taxonomy_Registrar implements Registrar {
 		$base_labels = array(
 			'name'                  => $taxonomy->plural,
 			'singular_name'         => $taxonomy->singular,
+			'menu_name'             => \ucfirst( \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'search_items'          => wp_sprintf( _x( 'Search %s', 'Label for searching plural items. Default is ‘Search {taxonomy plural name}’.', 'pinkcrab' ), $taxonomy->plural ),
+			'search_items'          => wp_sprintf( _x( 'Search %s', 'Label for searching plural items. Default is ‘Search {taxonomy plural name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'popular_items'         => wp_sprintf( _x( 'Popular %s', '**', 'pinkcrab' ), $taxonomy->plural ),
+			'popular_items'         => wp_sprintf( _x( 'Popular %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'edit_item'             => wp_sprintf( _x( 'Edit %s', 'Label for editing a singular item. Default is ‘Edit {taxonomy singular name}’.', 'pinkcrab' ), $taxonomy->singular ),
+			'edit_item'             => wp_sprintf( _x( 'Edit %s', 'Label for editing a singular item. Default is ‘Edit {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'view_item'             => wp_sprintf( _x( 'View %s', 'Label for viewing a singular item. Default is ‘View {taxonomy singular name}’.', 'pinkcrab' ), $taxonomy->singular ),
+			'view_item'             => wp_sprintf( _x( 'View %s', 'Label for viewing a singular item. Default is ‘View {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'update_item'           => wp_sprintf( _x( 'Update %s', 'Label for editing a singular item. Default is ‘Edit {taxonomy singular name}’.', 'pinkcrab' ), $taxonomy->singular ),
+			'update_item'           => wp_sprintf( _x( 'Update %s', 'Label for editing a singular item. Default is ‘Edit {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'add_new_item'          => wp_sprintf( _x( 'Add New %s', 'Label for adding a new singular item. Default is ‘Add New {taxonomy singular name}’.', 'pinkcrab' ), $taxonomy->singular ),
+			'add_new_item'          => wp_sprintf( _x( 'Add New %s', 'Label for adding a new singular item. Default is ‘Add New {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'new_item_name'         => wp_sprintf( _x( 'New %s', 'Label for the new item page title. Default is ‘New {taxonomy singular name}’.', 'pinkcrab' ), $taxonomy->singular ),
+			'new_item_name'         => wp_sprintf( _x( 'New %s', 'Label for the new item page title. Default is ‘New {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'not_found'             => wp_sprintf( _x( 'No %s found', 'Label used when no items are found. Default is ‘No {taxonomy plural name} found’.', 'pinkcrab' ), $taxonomy->plural ),
+			'not_found'             => wp_sprintf( _x( 'No %s found', 'Label used when no items are found. Default is ‘No {taxonomy plural name} found’.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'items_list'            => wp_sprintf( _x( '%s list', 'Label for the table hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( $taxonomy->plural ) ),
+			'items_list'            => wp_sprintf( _x( '%s list', 'Label for the table hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( \esc_attr( $taxonomy->plural ?? '' ) ) ),
 			/* translators: %s: Taxonomy plural name */
-			'items_list_navigation' => wp_sprintf( _x( '%s list navigation', 'Label for the pagination hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( $taxonomy->plural ) ),
+			'items_list_navigation' => wp_sprintf( _x( '%s list navigation', 'Label for the pagination hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( \esc_attr( $taxonomy->plural ?? '' ) ) ),
 			/* translators: %s: Taxonomy plural name */
-			'all_items'             => wp_sprintf( _x( 'All %s', 'Label for the pagination hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( $taxonomy->plural ) ),
+			'all_items'             => wp_sprintf( _x( 'All %s', 'Label for the pagination hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( \esc_attr( $taxonomy->plural ?? '' ) ) ),
 			'most_used'             => _x( 'Most Used', 'Title for the Most Used tab. Default \'Most Used\'.', 'pinkcrab' ),
 			/* translators: %s: Taxonomy plural name */
-			'back_to_items'         => wp_sprintf( _x( '← Back to %s', 'Label for the pagination hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( $taxonomy->plural ) ),
+			'back_to_items'         => wp_sprintf( _x( '← Back to %s', 'Label for the pagination hidden heading. Default is ‘{taxonomy plural name} list’.', 'pinkcrab' ), \ucfirst( \esc_attr( $taxonomy->plural ?? '' ) ) ),
 			/* translators: %s: Taxonomy singular name */
-			'item_link'             => wp_sprintf( _x( '%s Link', 'Title for a navigation link block variation. Default is ‘{taxonomy singular name} Link’.', 'pinkcrab' ), \ucfirst( $taxonomy->singular ) ),
+			'item_link'             => wp_sprintf( _x( '%s Link', 'Title for a navigation link block variation. Default is ‘{taxonomy singular name} Link’.', 'pinkcrab' ), \ucfirst( \esc_attr( $taxonomy->singular ?? '' ) ) ),
 			/* translators: %s: Taxonomy singular name */
-			'item_link_description' => wp_sprintf( _x( 'A link to a %s', 'Description for a navigation link block variation. Default is ‘A link to a {taxonomy singular name}’.', 'pinkcrab' ), $taxonomy->singular ),
+			'item_link_description' => wp_sprintf( _x( 'A link to a %s', 'Description for a navigation link block variation. Default is ‘A link to a {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 		);
 
 		$tag_labels = array(
 			/* translators: %s: Taxonomy plural name */
-			'separate_items_with_commas' => wp_sprintf( _x( 'Separate %s with commas', 'This label is only used for non-hierarchical taxonomies. Default \'Separate {taxonomy plural name} with commas\', used in the meta box.’.', 'pinkcrab' ), $taxonomy->plural ),
+			'separate_items_with_commas' => wp_sprintf( _x( 'Separate %s with commas', 'This label is only used for non-hierarchical taxonomies. Default \'Separate {taxonomy plural name} with commas\', used in the meta box.’.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'add_or_remove_items'        => wp_sprintf( _x( 'Add or remove %s', 'This label is only used for non-hierarchical taxonomies. Default \'Add or remove {taxonomy plural name}\', used in the meta box when JavaScript is disabled.', 'pinkcrab' ), $taxonomy->plural ),
+			'add_or_remove_items'        => wp_sprintf( _x( 'Add or remove %s', 'This label is only used for non-hierarchical taxonomies. Default \'Add or remove {taxonomy plural name}\', used in the meta box when JavaScript is disabled.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'choose_from_most_used'      => wp_sprintf( _x( 'Add or remove %s', 'This label is only used on non-hierarchical taxonomies. Default\'Choose from the most used {taxonomy plural name}\', used in the meta box.', 'pinkcrab' ), $taxonomy->plural ),
+			'choose_from_most_used'      => wp_sprintf( _x( 'Add or remove %s', 'This label is only used on non-hierarchical taxonomies. Default\'Choose from the most used {taxonomy plural name}\', used in the meta box.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 		);
 
 		$hierarchical_labels = array(
 			/* translators: %s: Taxonomy singular name */
-			'parent_item_colon' => wp_sprintf( _x( 'Parent %s:', 'Label used to prefix parents of hierarchical items. Not used on non-hierarchical post types. Default is ‘Parent {taxonomy plural name}:’.', 'pinkcrab' ), $taxonomy->singular ),
+			'parent_item_colon' => wp_sprintf( _x( 'Parent %s:', 'Label used to prefix parents of hierarchical items. Not used on non-hierarchical post types. Default is ‘Parent {taxonomy plural name}:’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'parent_item'       => wp_sprintf( _x( 'Parent %s', '**', 'pinkcrab' ), $taxonomy->singular ),
+			'parent_item'       => wp_sprintf( _x( 'Parent %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'filter_by_item'    => wp_sprintf( _x( 'Filter by %s', 'This label is only used for hierarchical taxonomies. Default \'Filter by {taxonomy singular name}\', used in the posts list table.', 'pinkcrab' ), $taxonomy->singular ),
+			'filter_by_item'    => wp_sprintf( _x( 'Filter by %s', 'This label is only used for hierarchical taxonomies. Default \'Filter by {taxonomy singular name}\', used in the posts list table.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 		);
 
 		$labels = array_merge(
@@ -142,12 +143,12 @@ class Taxonomy_Registrar implements Registrar {
 		/**
 		 * Allow 3rd party plugins to filter the labels also.
 		 *
-		 * @filter_handle PinkCrab/Registerable/post_type_labels
+		 * @filter_handle PinkCrab/Registerable/taxonomy_labels
 		 * @param array<string, string> $labels
-		 * @param Post_Type $cpt
+		 * @param Taxonomy $taxonomy
 		 * @return array<string, string>
 		 */
-		$labels = apply_filters( Registerable_Hooks::POST_TYPE_LABELS, $taxonomy->filter_labels( $labels ), $taxonomy );
+		$labels = apply_filters( Registerable_Hooks::TAXONOMY_LABELS, $taxonomy->filter_labels( $labels ), $taxonomy );
 
 		// Compose args.
 		$args = array(
@@ -182,11 +183,11 @@ class Taxonomy_Registrar implements Registrar {
 
 		/**
 		 * Allow 3rd party plugins to filter this also.
-		 * @filter_handle PinkCrab/Registerable/post_type_args
+		 * @filter_handle PinkCrab/Registerable/taxonomy_args
 		 * @param array<string, string|bool|int|null|array<string, string> $args
-		 * @param Post_Type $cpt
+		 * @param Taxonomy $taxonomy
 		 * @return array<string, string|bool|int|null|array<string, string>
 		 */
-		return apply_filters( Registerable_Hooks::POST_TYPE_ARGS, $taxonomy->filter_args( $args ), $taxonomy );
+		return apply_filters( Registerable_Hooks::TAXONOMY_ARGS, $taxonomy->filter_args( $args ), $taxonomy );
 	}
 }
