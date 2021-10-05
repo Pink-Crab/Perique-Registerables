@@ -4,6 +4,7 @@
 	<description>PinkCrab general PHPCS rules for modules</description>
 
 	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/OLD/*</exclude-pattern>
 	<exclude-pattern>/wordpress/*</exclude-pattern>
 	<exclude-pattern>/tests/*</exclude-pattern>
 

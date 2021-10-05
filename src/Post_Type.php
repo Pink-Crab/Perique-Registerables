@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * An abstract class for resitering custom post types.
+ * An abstract class for registering custom post types.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
-use PinkCrab\Registerables\MetaBox;
+use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Meta_Data;
 
 abstract class Post_Type implements Registerable {
@@ -71,21 +71,21 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Position in wp-admin menu list.
 	 *
-	 * @var int
+	 * @var int|null
 	 */
 	public $menu_position = 60;
 
 	/**
 	 * Should all meta fields use the capabilities
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $map_meta_cap = false;
 
 	/**
 	 * Does this post type have public functionality.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $public = true;
 
@@ -99,56 +99,56 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * INclude post type in wp-admin list.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $show_in_menu = true;
 
 	/**
 	 * Should this be included in the admin bar.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $show_in_admin_bar = true;
 
 	/**
 	 * Generate any post type UI in wp-admin.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $show_ui = true;
 
 	/**
 	 * Generate archives on front end.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $has_archive = true;
 
 	/**
 	 * Is post type hierarchical
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $hierarchical = false;
 
 	/**
 	 * Exclude from search results.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $exclude_from_search = false;
 
 	/**
 	 * Allow post type to be queried via url.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $publicly_queryable = true;
 
 	/**
 	 * Can post type be exported.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $can_export = true;
 
@@ -210,7 +210,7 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Should this post type be shown in rest.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $show_in_rest = true;
 
@@ -236,14 +236,14 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Sets if this post type should use the Gutenberg page builder.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
 	public $gutenberg = false;
 
 	/**
 	 * All block templates included with this cpt.
 	 *
-	 * @var array
+	 * @var string[]|null
 	 */
 	public $templates = array();
 
@@ -276,9 +276,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Array of meta boxes for the wp-edit screen.
 	 *
-	 * @var array<int, MetaBox>
+	 * @var array<int, Meta_Box>
 	 */
-	public $metaboxes = array();
+	public $meta_boxes = array();
 
 
 	/**
@@ -315,162 +315,4 @@ abstract class Post_Type implements Registerable {
 	public function filter_args( array $args ): array {
 		return $args;
 	}
-
-	// /**
-	//  * Used to register metaboxes.
-	//  *
-	//  * @return void
-	//  */
-	// public function metaboxes(): void {}
-
-	// /**
-	//  * Used to regiser meta_data.
-	//  *
-	//  * @return void
-	//  */
-	// public function meta_data(): void {}
-
-	// /**
-	//  * Check we have valid
-	//  *
-	//  * @return void
-	//  */
-	// private function validate() {
-	// 	if ( ! $this->key ) {
-	// 		throw new InvalidArgumentException( 'No key defined.' );
-	// 	}
-	// 	if ( ! $this->singular ) {
-	// 		throw new InvalidArgumentException( 'No singular defined.' );
-	// 	}
-	// 	if ( ! $this->plural ) {
-	// 		throw new InvalidArgumentException( 'No plural defined.' );
-	// 	}
-	// }
-
-	// /**
-	//  * Register the post type using defined variables within the
-	//  *
-	//  * @param Hook_Loader $loader
-	//  * @return void
-	//  */
-	// public function register( Hook_Loader $loader ): void {
-
-	// 	// Ensure we have all essential values.
-	// 	$this->validate();
-
-	// 	$labels = array(
-	// 		'name'               => $this->plural,
-	// 		'singular_name'      => $this->singular,
-	// 		'add_new'            => _x( 'Add New', 'pinkcrab' ),
-	// 		'add_new_item'       => 'Add New ' . $this->singular,
-	// 		'edit_item'          => 'Edit ' . $this->singular,
-	// 		'new_item'           => 'New ' . $this->singular,
-	// 		'view_item'          => 'View ' . $this->singular,
-	// 		'search_items'       => 'Search ' . $this->singular,
-	// 		'not_found'          => 'No ' . strtolower( $this->plural ) . ' found',
-	// 		'not_found_in_trash' => 'No ' . strtolower( $this->plural ) . ' found in Trash',
-	// 		'parent_item_colon'  => 'Parent ' . $this->singular . ':',
-	// 		'menu_name'          => $this->plural,
-	// 	);
-
-	// 	$args = array(
-	// 		'labels'              => $this->filter_labels( $labels ),           // @phpstan-ignore-next-line
-	// 		'hierarchical'        => is_bool( $this->hierarchical ) ? $this->hierarchical : false,
-	// 		'supports'            => $this->supports,           // @phpstan-ignore-next-line
-	// 		'public'              => is_bool( $this->public ) ? $this->public : true, // @phpstan-ignore-next-line
-	// 		'show_ui'             => is_bool( $this->show_ui ) ? $this->show_ui : true, // @phpstan-ignore-next-line
-	// 		'show_in_menu'        => is_bool( $this->show_in_menu ) ? $this->show_in_menu : true,
-	// 		'menu_position'       => $this->menu_position ?: 60,
-	// 		'menu_icon'           => $this->dashicon ?: 'dashicons-pets',
-	// 		'show_in_nav_menus'   => is_bool( $this->show_in_nav_menus ) ? $this->show_in_nav_menus : true, // @phpstan-ignore-next-line
-	// 		'publicly_queryable'  => is_bool( $this->publicly_queryable ) ? $this->publicly_queryable : true, // @phpstan-ignore-next-line
-	// 		'exclude_from_search' => is_bool( $this->exclude_from_search ) ? $this->exclude_from_search : true, // @phpstan-ignore-next-line
-	// 		'has_archive'         => is_bool( $this->has_archive ) ? $this->has_archive : true,
-	// 		'query_var'           => is_bool( $this->query_var ) ? $this->query_var : false, // @phpstan-ignore-next-line
-	// 		'can_export'          => is_bool( $this->can_export ) ? $this->can_export : true,
-	// 		'rewrite'             => is_bool( $this->rewrite ) ? $this->rewrite : false,
-	// 		'capability_type'     => $this->capability_type ?: 'page',
-	// 		'capabilities'        => $this->capabilities ?: array(),
-	// 		'taxonomies'          => $this->taxonmies ?: array(),
-	// 	);
-
-	// 	// If we have any metaboxes, register them.
-	// 	$this->meta_data();
-	// 	if ( ! empty( $this->meta_data ) ) {
-	// 		$this->register_meta_data( $loader );
-	// 	}
-
-	// 	register_post_type( $this->key, $this->filter_args( $args ) );
-
-	// 	// If we have any metaboxes, register them.
-	// 	$this->metaboxes();
-	// 	if ( ! empty( $this->metaboxes ) ) {
-	// 		$this->register_metaboxes( $loader );
-	// 	}
-
-	// }
-
-	// /**
-	//  * Returns the slug if set, else the CPT key.
-	//  *
-	//  * @return string|null
-	//  */
-	// public function slug(): ?string {
-	// 	return $this->slug ?? $this->key;
-	// }
-
-
-
-	// /**
-	//  * Gets the slug statically.
-	//  *
-	//  * @return string
-	//  */
-	// public static function get_slug(): string {
-	// 	$cpt = App::make( static::class );
-	// 	return $cpt && is_a( $cpt, static::class )
-	// 		? $cpt->slug() ?? ''
-	// 		: '';
-	// }
-
-	// /**
-	//  * Registers the metaboxes.
-	//  *
-	//  * @param Hook_Loader $loader
-	//  * @return void
-	//  */
-	// private function register_metaboxes( Hook_Loader $loader ): void {
-	// 	foreach ( $this->metaboxes as $metabox ) {
-	// 		$metabox->screen( $this->key ); // Add this post type to the screen list.
-	// 		$metabox->register( $loader ); // Pass loader into the MetaBoxes for registration.
-	// 	}
-	// }
-
-	// /**
-	//  * Registers all defined
-	//  *
-	//  * @param Hook_Loader $loader
-	//  * @return void
-	//  */
-	// public function register_meta_data( Hook_Loader $loader ): void {
-
-	// 	$meta_fields = array_filter(
-	// 		$this->meta_data,
-	// 		function( $e ): bool {
-	// 			return is_a( $e, Meta_Data::class );
-	// 		}
-	// 	);
-
-	// 	if ( count( $meta_fields ) > 0
-	// 	&& ! array_key_exists( 'custom-fields', $this->supports ) ) { /** @phpstan-ignore-line */
-	// 		$this->supports[] = 'custom-fields';
-	// 	}
-
-	// 	foreach ( $meta_fields as $meta ) {
-	// 		$meta->object_subtype( $this->key );
-	// 		$meta->meta_type( 'post' );
-	// 		$meta->register( $loader );
-	// 	}
-	// }
-
 }

@@ -26,6 +26,7 @@ namespace PinkCrab\Registerables\Dispatcher;
 
 use Exception;
 use PinkCrab\Registerables\Post_Type;
+use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Dispatcher\Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
@@ -39,7 +40,7 @@ class Post_Type_Registrar implements Registrar {
 	 */
 	protected $validator;
 
-	public function __construct( Post_Type_Validator $validator = null ) {
+	public function __construct( Post_Type_Validator $validator ) {
 		$this->validator = $validator;
 	}
 
@@ -50,6 +51,8 @@ class Post_Type_Registrar implements Registrar {
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {
+		/** @var Post_Type $registerable, Validation call below catches no Post_Type Registerables */
+
 		if ( ! $this->validator->validate( $registerable ) ) {
 			throw new Exception( 'Invalid post type model' );
 		}
@@ -58,7 +61,7 @@ class Post_Type_Registrar implements Registrar {
 		try {
 			$result = register_post_type( $registerable->key, $this->compile_args( $registerable ) );
 			if ( is_a( $result, \WP_Error::class ) ) {
-				throw new Exception( $result->get_error_messages() );
+				throw new Exception( join( $result->get_error_messages() ) );
 			}
 		} catch ( \Throwable $th ) {
 			throw new Exception( "Failed to register {$registerable->key} post type ({$th->getMessage()})" );
@@ -69,7 +72,7 @@ class Post_Type_Registrar implements Registrar {
 	 * Compiles the args used to register the post type.
 	 *
 	 * @param \PinkCrab\Registerables\Post_Type $post_type
-	 * @return array<string, string|int|arraY<string, string>
+	 * @return array<string, string|int|array<string, string>>
 	 */
 	protected function compile_args( Post_Type $post_type ): array {
 		// Create the labels.
@@ -131,35 +134,53 @@ class Post_Type_Registrar implements Registrar {
 			'item_link_description'    => wp_sprintf( _x( 'A link to a %s', 'Description for a navigation link block variation. Default is ‘A link to a {post type singular name}’.', 'pinkcrab' ), $post_type->singular ),
 		);
 
+		/**
+		 * Allow 3rd party plugins to filter the labels also.
+		 *
+		 * @filter_handle PinkCrab/Registerable/post_type_labels
+		 * @param array<string, string> $labels
+		 * @param Post_Type $cpt
+		 * @return array<string, string>
+		 */
+		$labels = apply_filters( Registerable_Hooks::POST_TYPE_LABELS, $post_type->filter_labels( $labels ), $post_type );
+
 		// Compose args.
 		$args = array(
-			'labels'                => $post_type->filter_labels( $labels ),           // @phpstan-ignore-next-line
-			'description'           => $post_type->description ?: $post_type->plural,           // @phpstan-ignore-next-line
+			'labels'                => $labels,
+			'description'           => $post_type->description ?: $post_type->plural,
 			'hierarchical'          => is_bool( $post_type->hierarchical ) ? $post_type->hierarchical : false,
-			'supports'              => $post_type->supports,           // @phpstan-ignore-next-line
-			'public'                => is_bool( $post_type->public ) ? $post_type->public : true, // @phpstan-ignore-next-line
-			'show_ui'               => is_bool( $post_type->show_ui ) ? $post_type->show_ui : true, // @phpstan-ignore-next-line
+			'supports'              => $post_type->supports,
+			'public'                => is_bool( $post_type->public ) ? $post_type->public : true,
+			'show_ui'               => is_bool( $post_type->show_ui ) ? $post_type->show_ui : true,
 			'show_in_menu'          => is_bool( $post_type->show_in_menu ) ? $post_type->show_in_menu : true,
 			'show_in_admin_bar'     => is_bool( $post_type->show_in_admin_bar ) ? $post_type->show_in_admin_bar : true,
 			'menu_position'         => $post_type->menu_position ?: 60,
 			'menu_icon'             => $post_type->dashicon ?: 'dashicons-pets',
-			'show_in_nav_menus'     => is_bool( $post_type->show_in_nav_menus ) ? $post_type->show_in_nav_menus : true, // @phpstan-ignore-next-line
-			'publicly_queryable'    => is_bool( $post_type->publicly_queryable ) ? $post_type->publicly_queryable : true, // @phpstan-ignore-next-line
-			'exclude_from_search'   => is_bool( $post_type->exclude_from_search ) ? $post_type->exclude_from_search : true, // @phpstan-ignore-next-line
+			'show_in_nav_menus'     => is_bool( $post_type->show_in_nav_menus ) ? $post_type->show_in_nav_menus : true,
+			'publicly_queryable'    => is_bool( $post_type->publicly_queryable ) ? $post_type->publicly_queryable : true,
+			'exclude_from_search'   => is_bool( $post_type->exclude_from_search ) ? $post_type->exclude_from_search : true,
 			'has_archive'           => is_bool( $post_type->has_archive ) ? $post_type->has_archive : true,
-			'query_var'             => is_bool( $post_type->query_var ) ? $post_type->query_var : false, // @phpstan-ignore-next-line
+			'query_var'             => is_bool( $post_type->query_var ) ? $post_type->query_var : false,
 			'can_export'            => is_bool( $post_type->can_export ) ? $post_type->can_export : true,
 			'rewrite'               => is_bool( $post_type->rewrite ) ? $post_type->rewrite : false,
 			'capability_type'       => $post_type->capability_type ?: 'page',
 			'capabilities'          => $post_type->capabilities ?: array(),
 			'taxonomies'            => $post_type->taxonomies ?: array(),
-			'show_in_rest'          => is_bool( $post_type->show_in_rest ) ? $post_type->show_in_rest : true, // @phpstan-ignore-next-line
+			'show_in_rest'          => is_bool( $post_type->show_in_rest ) ? $post_type->show_in_rest : true,
 			'rest_base'             => $post_type->rest_base ?? $post_type->key,
 			'rest_controller_class' => \class_exists( $post_type->rest_controller_class ) ? $post_type->rest_controller_class : \WP_REST_Posts_Controller::class,
 			'delete_with_user'      => \is_bool( $post_type->delete_with_user ) ? $post_type->delete_with_user : null,
 			'template'              => \is_array( $post_type->templates ) ? $post_type->templates : array(),
 			'template_lock'         => \is_string( $post_type->template_lock ) ? $post_type->template_lock : false,
 		);
-		return $post_type->filter_args( $args );
+
+		/**
+		 * Allow 3rd party plugins to filter this also.
+		 * @filter_handle PinkCrab/Registerable/post_type_args
+		 * @param array<string, string|bool|int|null|array<string, string> $args
+		 * @param Post_Type $cpt
+		 * @return array<string, string|bool|int|null|array<string, string>
+		 */
+		return apply_filters( Registerable_Hooks::POST_TYPE_ARGS, $post_type->filter_args( $args ), $post_type );
 	}
 }

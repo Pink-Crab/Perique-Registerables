@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * All hooks for Registerables
+ * An abstract class for registering custom Meta_Data.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,20 +24,8 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-class Registerable_Hooks {
+use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
-	/**
-	 * The prefix used on all hooks.
-	 */
-	private const HOOK_PREFIX = 'PinkCrab/Registerable/';
+abstract class Meta_Data implements Registerable {
 
-	/**
-	 * Filter handle for post type args
-	 */
-	public const POST_TYPE_ARGS = self::HOOK_PREFIX . 'post_type_args';
-
-	/**
-	 * Filter handle for post type labels
-	 */
-	public const POST_TYPE_LABELS = self::HOOK_PREFIX . 'post_type_labels';
 }

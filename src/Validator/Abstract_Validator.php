@@ -47,7 +47,7 @@ abstract class Abstract_Validator {
 	/**
 	 * Returns all errors.
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function get_errors(): array {
 		return $this->errors;

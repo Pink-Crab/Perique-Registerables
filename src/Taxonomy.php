@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * All hooks for Registerables
+ * An abstract class for registering custom taxonomies.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,20 +24,29 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-class Registerable_Hooks {
+use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\MetaBox;
+use PinkCrab\Registerables\Meta_Data;
+
+abstract class Taxonomy implements Registerable {
 
 	/**
-	 * The prefix used on all hooks.
+	 * Filters the labels through child class.
+	 *
+	 * @param array<string, mixed> $labels
+	 * @return array<string, mixed>
 	 */
-	private const HOOK_PREFIX = 'PinkCrab/Registerable/';
+	public function filter_labels( array $labels ): array {
+		return $labels;
+	}
 
 	/**
-	 * Filter handle for post type args
+	 * Filters the args used to register the CPT.
+	 *
+	 * @param array<string, mixed> $args
+	 * @return array<string, mixed>
 	 */
-	public const POST_TYPE_ARGS = self::HOOK_PREFIX . 'post_type_args';
-
-	/**
-	 * Filter handle for post type labels
-	 */
-	public const POST_TYPE_LABELS = self::HOOK_PREFIX . 'post_type_labels';
+	public function filter_args( array $args ): array {
+		return $args;
+	}
 }

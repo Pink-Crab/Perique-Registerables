@@ -42,9 +42,11 @@ class Post_Type_Validator extends Abstract_Validator {
 	public function validate( Registerable $object ): bool {
 		// If this is not a valid post type, just bail here.
 		if ( ! is_a( $object, Post_Type::class ) ) {
-			$this->add_error( sprintf( '%s is not a valid Post Type Model', $object ) );
+			$this->add_error( sprintf( '%s is not a valid Post Type Model', get_class( $object ) ) );
 			return false;
 		}
+
+		/* @var Post_Type $object, already confirmed as a post type */
 
 		// Ensure all required fields are set.
 		$this->has_required_fields( $object );
@@ -56,14 +58,14 @@ class Post_Type_Validator extends Abstract_Validator {
 	/**
 	 * Checks the model has the required fields.
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $post_type
+	 * @param Post_Type $post_type
 	 * @return void
 	 */
-	protected function has_required_fields( Registerable $post_type ): void {
+	protected function has_required_fields( Post_Type $post_type ): void {
 		foreach ( self::REQUIRED_FIELDS as $field ) {
 			if ( \mb_strlen( $post_type->{$field} ) === 0
 			&& ! is_string( $post_type->{$field} ) ) {
-				$this->add_error( sprintf( '%s is not set on %s Post Type Model', $field, $post_type ) );
+				$this->add_error( sprintf( '%s is not set on %s Post Type Model', $field, $post_type->key ) );
 			}
 		}
 	}
