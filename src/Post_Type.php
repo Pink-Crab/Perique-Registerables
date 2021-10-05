@@ -62,6 +62,13 @@ abstract class Post_Type implements Registerable {
 	public $dashicon = 'dashicons-pets';
 
 	/**
+	 * The post types description.
+	 *
+	 * @var string|null
+	 */
+	public $description;
+
+	/**
 	 * Position in wp-admin menu list.
 	 *
 	 * @var int
@@ -155,9 +162,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Should all posts by a user be removed if user removed.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
-	public $delete_with_user = false;
+	public $delete_with_user = null;
 
 	/**
 	 * Triggers the handling of rewrites for this post type.
@@ -231,7 +238,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var bool
 	 */
-	public $gutenberg = true;
+	public $gutenberg = false;
 
 	/**
 	 * All block templates included with this cpt.
@@ -256,7 +263,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var array<int, string|Taxonomy>
 	 */
-	public $taxonmies = array();
+	public $taxonomies = array();
 
 	/**
 	 * Associated meta fields.
@@ -281,12 +288,32 @@ abstract class Post_Type implements Registerable {
 		// Set the rewrite rules if not defined.
 		if ( is_null( $this->rewrite ) ) {
 			$this->rewrite = array(
-				'slug'       => $this->slug(),
+				'slug'       => $this->key,
 				'with_front' => true,
 				'feeds'      => false,
 				'pages'      => false,
 			);
 		}
+	}
+
+	/**
+	 * Filters the labels through child class.
+	 *
+	 * @param array<string, mixed> $labels
+	 * @return array<string, mixed>
+	 */
+	public function filter_labels( array $labels ): array {
+		return $labels;
+	}
+
+	/**
+	 * Filters the args used to register the CPT.
+	 *
+	 * @param array<string, mixed> $args
+	 * @return array<string, mixed>
+	 */
+	public function filter_args( array $args ): array {
+		return $args;
 	}
 
 	// /**
@@ -392,25 +419,7 @@ abstract class Post_Type implements Registerable {
 	// 	return $this->slug ?? $this->key;
 	// }
 
-	// /**
-	//  * Filters the labels through child class.
-	//  *
-	//  * @param array<string, mixed> $labels
-	//  * @return array<string, mixed>
-	//  */
-	// public function filter_labels( array $labels ): array {
-	// 	return $labels;
-	// }
 
-	// /**
-	//  * Filters the args used to register the CPT.
-	//  *
-	//  * @param array<string, mixed> $args
-	//  * @return array<string, mixed>
-	//  */
-	// private function filter_args( array $args ): array {
-	// 	return $args;
-	// }
 
 	// /**
 	//  * Gets the slug statically.

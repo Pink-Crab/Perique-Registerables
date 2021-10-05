@@ -16,9 +16,8 @@ use PinkCrab\Registerables\Post_Type;
 
 class Basic_CPT extends Post_Type {
 
-	public $key       = 'basic_cpt';
-	public $singular  = 'Basic';
-	public $plural    = 'Basics';
-	public $gutenberg = true;
+	public $key      = 'basic_cpt';
+	public $singular = 'Basic';
+	public $plural   = 'Basics';
 
 }
