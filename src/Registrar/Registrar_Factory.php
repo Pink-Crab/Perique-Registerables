@@ -25,7 +25,10 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
+use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Post_Type;
+use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
+use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
@@ -51,19 +54,14 @@ class Registrar_Factory {
 	public function create_from_registerable( Registerable $registerable ): Registrar {
 		switch ( true ) {
 			case is_a( $registerable, Post_Type::class ):
-				return $this->post_type_registrar();
+				return new Post_Type_Registrar( new Post_Type_Validator() );
+
+			case is_a( $registerable, Taxonomy::class ):
+				return new Taxonomy_Registrar( new Taxonomy_Validator() );
 
 			default:
 				throw new Exception( 'Invalid registerable type (no dispatcher exists)' );
 		}
 	}
 
-	/**
-	 * Create post type dispatcher.
-	 *
-	 * @return \PinkCrab\Registerables\Registrar\Post_Type_Registrar
-	 */
-	private function post_type_registrar(): Post_Type_Registrar {
-		return new Post_Type_Registrar( new Post_Type_Validator() );
-	}
 }

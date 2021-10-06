@@ -28,8 +28,8 @@ namespace PinkCrab\Registerables\Registration_Middleware;
 use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Perique\Interfaces\DI_Container;
-use PinkCrab\Perique\Interfaces\Registration_Middleware;
 use PinkCrab\Registerables\Registrar\Registrar_Factory;
+use PinkCrab\Perique\Interfaces\Registration_Middleware;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Registerable_Middleware implements Registration_Middleware {
@@ -69,7 +69,6 @@ class Registerable_Middleware implements Registration_Middleware {
 	public function process( $class ) {
 
 		if ( ! is_a( $class, Registerable::class ) ) {
-			dump( 'NOT REGISTERABLE: ' . get_class( $class ) );
 			return $class;
 		}
 
