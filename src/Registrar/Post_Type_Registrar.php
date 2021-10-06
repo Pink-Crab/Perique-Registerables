@@ -144,6 +144,16 @@ class Post_Type_Registrar implements Registrar {
 		 */
 		$labels = apply_filters( Registerable_Hooks::POST_TYPE_LABELS, $post_type->filter_labels( $labels ), $post_type );
 
+		// Set the rewrite rules if not defined.
+		if ( is_null( $post_type->rewrite ) ) {
+			$post_type->rewrite = array(
+				'slug'       => $post_type->key,
+				'with_front' => true,
+				'feeds'      => false,
+				'pages'      => false,
+			);
+		}
+
 		// Compose args.
 		$args = array(
 			'labels'                => $labels,

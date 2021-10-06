@@ -60,7 +60,7 @@ class Base_Taxonomy_Runner extends WP_UnitTestCase {
 	public function setUp(): void {
 		parent::setup();
 		if ( ! $this->taxonomy ) {
-			// Create the CPT and Loader instances.
+			// Create the Taxonomy and Loader instances.
 			$this->taxonomy = new $this->taxonomy_class;
 
 			self::create_with_registerables( $this->taxonomy_class )->boot();
