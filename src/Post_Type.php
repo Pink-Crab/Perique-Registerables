@@ -301,7 +301,7 @@ abstract class Post_Type implements Registerable {
 	 * @param Meta_Box[] $collection
 	 * @return Meta_Box[]
 	 */
-	public function meta_boxes( array $collection ): array {
+	public function meta_box( array $collection ): array {
 		return $collection;
 	}
 }
