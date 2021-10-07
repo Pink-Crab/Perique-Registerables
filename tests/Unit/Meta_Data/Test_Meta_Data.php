@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @package PinkCrab\Perique
  */
 
-namespace PinkCrab\Registerables\Tests\Unit\Metaboxes;
+namespace PinkCrab\Registerables\Tests\Unit\Meta_Data;
 
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Meta_Data;
