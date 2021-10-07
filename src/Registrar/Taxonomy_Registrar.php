@@ -26,7 +26,6 @@ namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
 use PinkCrab\Registerables\Taxonomy;
-use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
@@ -71,6 +70,38 @@ class Taxonomy_Registrar implements Registrar {
 			}
 		} catch ( \Throwable $th ) {
 			throw new Exception( "Failed to register {$registerable->slug} taxonomy ({$th->getMessage()})" );
+		}
+
+		// Register any associated meta data.
+		$this->register_meta_data( $registerable );
+
+	}
+
+	/**
+	 * Registers all meta data for taxonomy.
+	 *
+	 * @param \PinkCrab\Registerables\Taxonomy $taxonomy
+	 * @return void
+	 */
+	protected function register_meta_data( Taxonomy $taxonomy ): void {
+
+		// Get all meta fields for taxonomy.
+		$meta_fields = $taxonomy->meta_data( array() );
+
+		// Attempt to register all Meta for taxonomy.
+		try {
+			foreach ( $meta_fields as $meta_field ) {
+				// Set object data for this taxonomy.
+				$meta_field->object_subtype( $taxonomy->slug );
+				$meta_field->meta_type( 'term' );
+
+				$result = register_meta( $meta_field->get_meta_type(), $meta_field->get_meta_key(), $meta_field->parse_args() );
+				if ( ! $result ) {
+					throw new Exception( "Failed to register {$meta_field->get_meta_key()} (meta) for {$taxonomy->singular} taxonomy" );
+				}
+			}
+		} catch ( \Throwable $th ) {
+			throw new Exception( $th->getMessage() );
 		}
 	}
 

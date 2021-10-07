@@ -206,13 +206,6 @@ abstract class Taxonomy implements Registerable {
 	public $default_term;
 
 	/**
-	 * Array of all pre determined term meta.
-	 *
-	 * @var Meta_Data[]
-	 */
-	public $meta_data = array();
-
-	/**
 	 * Filters the labels through child class.
 	 *
 	 * @param array<string, mixed> $labels
@@ -223,12 +216,22 @@ abstract class Taxonomy implements Registerable {
 	}
 
 	/**
-	 * Filters the args used to register the CPT.
+	 * Filters the args used to register the taxonomy.
 	 *
 	 * @param array<string, mixed> $args
 	 * @return array<string, mixed>
 	 */
 	public function filter_args( array $args ): array {
 		return $args;
+	}
+
+	/**
+	 * Allows for the setting of meta data specifically for this taxonomy.
+	 *
+	 * @param Meta_Data[] $collection
+	 * @return Meta_Data[]
+	 */
+	public function meta_data( array $collection ): array {
+		return $collection;
 	}
 }

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Tests\Fixtures\CPT;
 
-use PinkCrab\Registerables\MetaBox;
+use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Post_Type;
 
 class MetaBox_CPT extends Post_Type {
@@ -21,9 +21,9 @@ class MetaBox_CPT extends Post_Type {
 	public $singular = 'singular';
 	public $plural   = 'plural';
 
-	public function metaboxes(): void {
+	public function meta_boxes( array $collection ): array {
 
-		$this->metaboxes[] = MetaBox::normal( 'metabox_cpt_normal' )
+		$collection[] = Meta_Box::normal( 'metabox_cpt_normal' )
 			->label( 'metabox_cpt_normal TITLE' )
 			->view(
 				function( \WP_Post $post, array $args ) {
@@ -31,13 +31,15 @@ class MetaBox_CPT extends Post_Type {
 				}
 			)->view_vars( array( 'key1' => 1 ) );
 
-		$this->metaboxes[] = MetaBox::side( 'metabox_cpt_side' )
+		$collection[] = Meta_Box::side( 'metabox_cpt_side' )
 			->label( 'metabox_cpt_side TITLE' )
 			->view(
 				function( \WP_Post $post, array $args ) {
 					print( 'metabox_cpt_side VIEW' );
 				}
 			)->view_vars( array( 'key2' => 2 ) );
+
+		return $collection;
 	}
 
 }

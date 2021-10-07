@@ -15,23 +15,36 @@ namespace PinkCrab\Registerables\Tests\Application\Taxonomies;
 
 use WP_UnitTestCase;
 use PinkCrab\Loader\Hook_Loader;
+use PinkCrab\Registerables\Tests\App_Helper_Trait;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Tag_With_Meta_Taxonomy;
 
 class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 
-    /** @return array<\WP_Taxonomy> */
+	use App_Helper_Trait;
+
+	/** @return array<\WP_Taxonomy> */
 	protected $taxonomy;
+
+	/**
+	 * Reset the app data after each test.
+	 *
+	 * @return void
+	 */
+	public function tearDown(): void {
+		self::unset_app_instance();
+	}
 
 	public function setUp(): void {
 		$this->taxonomy = new Tag_With_Meta_Taxonomy();
-		$this->taxonomy->register( new Hook_Loader() );
+		self::create_with_registerables( Tag_With_Meta_Taxonomy::class )->boot();
+		do_action( 'init' );
 	}
 
-    /** @return array<\WP_Term> */
+	/** @return array<\WP_Term> */
 	protected function get_terms(): array {
 		return get_terms(
 			array(
-				'taxonomy'   => $this->taxonomy::get_slug(),
+				'taxonomy'   => $this->taxonomy->slug,
 				'hide_empty' => false,
 			)
 		);
@@ -49,16 +62,16 @@ class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 		);
 	}
 
-    /** @testdox It should be possible to set term meta when defining a taxonomy. */
+	/** @testdox It should be possible to set term meta when defining a taxonomy. */
 	public function test_can_set_term_meta(): void {
-        $terms = $this->get_terms();
-        $term_id = $terms[0]->term_id;
+		$terms   = $this->get_terms();
+		$term_id = $terms[0]->term_id;
 
-        // Check default values.
-        $meta1 = get_term_meta($term_id, Tag_With_Meta_Taxonomy::META_1['key'], true);
-        $this->assertEquals(Tag_With_Meta_Taxonomy::META_1['default'], $meta1);
-        $meta2 = get_term_meta($term_id, Tag_With_Meta_Taxonomy::META_2['key'], true);
-        $this->assertEquals(Tag_With_Meta_Taxonomy::META_2['default'], $meta2);
+		// Check default values.
+		$meta1 = get_term_meta( $term_id, Tag_With_Meta_Taxonomy::META_1['key'], true );
+		$this->assertEquals( Tag_With_Meta_Taxonomy::META_1['default'], $meta1 );
+		$meta2 = get_term_meta( $term_id, Tag_With_Meta_Taxonomy::META_2['key'], true );
+		$this->assertEquals( Tag_With_Meta_Taxonomy::META_2['default'], $meta2 );
 	}
 
 

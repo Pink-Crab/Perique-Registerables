@@ -261,40 +261,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Which taxonomies should be included with this post types.
 	 *
-	 * @var array<int, string|Taxonomy>
+	 * @var string[]
 	 */
 	public $taxonomies = array();
-
-	/**
-	 * Associated meta fields.
-	 *
-	 * @var array<Meta_Data>
-	 */
-	public $meta_data = array();
-
-
-	/**
-	 * Array of meta boxes for the wp-edit screen.
-	 *
-	 * @var array<int, Meta_Box>
-	 */
-	public $meta_boxes = array();
-
-
-	/**
-	 * Creates an instance of the
-	 */
-	public function __construct() {
-		// Set the rewrite rules if not defined.
-		if ( is_null( $this->rewrite ) ) {
-			$this->rewrite = array(
-				'slug'       => $this->key,
-				'with_front' => true,
-				'feeds'      => false,
-				'pages'      => false,
-			);
-		}
-	}
 
 	/**
 	 * Filters the labels through child class.
@@ -314,5 +283,25 @@ abstract class Post_Type implements Registerable {
 	 */
 	public function filter_args( array $args ): array {
 		return $args;
+	}
+
+	/**
+	 * Allows for the setting of meta data specifically for this post type.
+	 *
+	 * @param Meta_Data[] $collection
+	 * @return Meta_Data[]
+	 */
+	public function meta_data( array $collection ): array {
+		return $collection;
+	}
+
+	/**
+	 * Allows for the setting of meta boxes specifically for this post type.
+	 *
+	 * @param Meta_Box[] $collection
+	 * @return Meta_Box[]
+	 */
+	public function meta_boxes( array $collection ): array {
+		return $collection;
 	}
 }
