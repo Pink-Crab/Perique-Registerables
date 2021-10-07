@@ -25,9 +25,13 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
+use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Post_Type;
+use PinkCrab\Perique\Interfaces\Renderable;
+use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
+use PinkCrab\Registerables\Validator\Meta_Box_Validator;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
@@ -62,6 +66,17 @@ class Registrar_Factory {
 			default:
 				throw new Exception( 'Invalid registerable type (no dispatcher exists)' );
 		}
+	}
+
+	/**
+	 * Returns an instance of the meta box registrar.
+	 *
+	 * @param \PinkCrab\Perique\Interfaces\DI_Container $container
+	 * @param \PinkCrab\Loader\Hook_Loader $loader
+	 * @return Meta_Box_Registrar
+	 */
+	public function meta_box_registrar( DI_Container $container, Hook_Loader $loader ): Meta_Box_Registrar {
+		return new Meta_Box_Registrar( new Meta_Box_Validator(), $container, $loader );
 	}
 
 }

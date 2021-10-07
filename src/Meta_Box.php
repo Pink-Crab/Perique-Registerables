@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * An abstract class for registering custom Metabox.
+ * Meta Box model
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,8 +24,183 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+class Meta_Box {
 
-abstract class Meta_Box implements Registerable {
+	/**
+	 * The metabox key
+	 *
+	 * @var string
+	 * @required
+	 */
+	public $key;
+
+	/**
+	 * The metabox label/title
+	 *
+	 * @var string
+	 * @required
+	 */
+	public $label;
+
+	/**
+	 * The view callback
+	 *
+	 * @var callable|null
+	 */
+	public $view;
+
+	/**
+	 * The view args passed to view.
+	 *
+	 * @var array<string, mixed>
+	 */
+	public $view_vars = array();
+
+	/**
+	 * The path relative to the defined base path
+	 * in config
+	 *
+	 * @var string|null
+	 */
+	public $view_template;
+
+	/**
+	 * Screens to display metabox.
+	 *
+	 * @var array<int, string>
+	 * @required
+	 */
+	public $screen = array();
+
+	/**
+	 * Metabox context/position
+	 *
+	 * @var string normal|side
+	 * @required
+	 */
+	public $context = 'normal';
+
+	/**
+	 * What is the loading priroity/
+	 *
+	 * @var string
+	 */
+	public $priority = 'default';
+
+	/**
+	 * Define any hooks that should fire with the metabox.
+	 *
+	 * @var array<string, array{callback:callable,priority:int,params:int}>
+	 */
+	public $actions = array();
+
+	/**
+	 * Creates a MetaBox with a defined key.
+	 *
+	 * @param string $key
+	 */
+	final public function __construct( string $key ) {
+		$this->key = $key;
+	}
+
+	/**
+	 * Creates a full width metabox with a defined key.
+	 *
+	 * @param string $key
+	 * @return self
+	 */
+	public static function normal( string $key ): self {
+		$meta_box          = new static( $key );
+		$meta_box->context = 'normal';
+		return $meta_box;
+	}
+
+	/**
+	 * Creates a full width metabox with a defined key.
+	 *
+	 * @param string $key
+	 * @return self
+	 */
+	public static function side( string $key ): self {
+		$meta_box          = new static( $key );
+		$meta_box->context = 'side';
+		return $meta_box;
+	}
+
+	/**
+	 * Sets the label
+	 *
+	 * @param string $label
+	 * @return self
+	 */
+	public function label( string $label ): self {
+		$this->label = $label;
+		return $this;
+	}
+
+	/**
+	 * Sets the screens this metabox will be loaded.
+	 *
+	 * @param string|array<mixed>|\WP_Screen $screen
+	 * @return self
+	 */
+	public function screen( $screen ): self {
+		array_push( $this->screen, $screen );
+		return $this;
+	}
+
+	/**
+	 * Sets the view args.
+	 *
+	 * @param array<string, mixed> $view_vars
+	 * @return self
+	 */
+	public function view_vars( array $view_vars ): self {
+		$this->view_vars = $view_vars;
+		return $this;
+	}
+
+	/**
+	 * Sets the views template path.
+	 * Should be relative to the base path defined in config.
+	 *
+	 * @param string $view_template
+	 * @return self
+	 */
+	public function view_template( string $view_template ): self {
+		$this->view_template = $view_template;
+		return $this;
+	}
+
+	/**
+	 * Sets the view method.
+	 * Can be a callable or a function or class|method array.
+	 *
+	 * @param callable $callable
+	 * @return self
+	 */
+	public function view( $callable ): self {
+		$this->view = $callable;
+		return $this;
+	}
+
+	/**
+	 * Adds a acton to be defined as a hook key and callable|function
+	 *
+	 * @param string   $hook
+	 * @param callable $callable
+	 * @param int $priority
+	 * @param int $params
+	 * @return self
+	 */
+	public function add_action( string $hook, callable $callable, int $priority = 10, int $params = 1 ): self {
+		$this->actions[ $hook ] =
+			array(
+				'callback' => $callable,
+				'priority' => $priority,
+				'params'   => $params,
+			);
+		return $this;
+	}
 
 }

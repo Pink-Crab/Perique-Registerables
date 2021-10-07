@@ -94,6 +94,20 @@ class Registerable_Middleware implements Registration_Middleware {
 				10,
 				2
 			);
+
+			// Register meta boxes.
+			$meta_boxes = $class->meta_boxes( array() );
+
+			if ( ! empty( $meta_boxes ) ) {
+				// Create the registrat
+				$meta_box_registrar = Registrar_Factory::new()
+					->meta_box_registrar( $this->container, $this->loader );
+
+				// Register each meta box.
+				foreach ( $meta_boxes as $meta_box ) {
+					$meta_box_registrar->register( $meta_box );
+				}
+			}
 		}
 
 		return $class;
