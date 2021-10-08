@@ -69,7 +69,7 @@ class Meta_Box_Registrar {
 		if ( ! $this->validator->verify_meta_box( $meta_box ) ) {
 			throw new Exception( 'Invalid meta box model' );
 		}
-
+		// dump([! \is_callable( $meta_box->view ), is_string( $meta_box->view_template )]);
 		// Set the view using Renderable, if not traditional callback supplied and a defined template.
 		if ( ! \is_callable( $meta_box->view ) && is_string( $meta_box->view_template ) ) {
 			$meta_box = $this->set_view_callback_from_renderable( $meta_box );
@@ -106,18 +106,16 @@ class Meta_Box_Registrar {
 	 * @return \PinkCrab\Registerables\Meta_Box
 	 */
 	protected function set_view_callback_from_renderable( Meta_Box $meta_box ): Meta_Box {
+
+		// Create View(Renderable)
+		$view = $this->container->create( Renderable::class );
+		if ( is_null( $view ) || ! is_a( $view, Renderable::class ) ) {
+			throw new Exception( 'View not defined' );
+		}
+
 		$meta_box->view(
-			function ( \WP_Post $post, array $args ) use ( $meta_box ) {
+			function ( \WP_Post $post, array $args ) use ( $meta_box, $view ) {
 				$args['args']['post'] = $post;
-
-				$view = $this->container->create( Renderable::class );
-				if ( is_null( $view ) || ! is_a( $view, Renderable::class ) ) {
-					throw new Exception( 'View not defined' );
-				}
-
-				if ( ! is_string( $meta_box->view_template ) ) {
-					throw new Exception( 'Meta box template not defined' );
-				}
 
 				$view->render( $meta_box->view_template, $args['args'] );
 			}
