@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Unit tests for the Post Type registrar
+ * Unit tests for the Meta Box registrar
  *
  * @since 0.1.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
@@ -22,7 +22,6 @@ use PinkCrab\Perique\Interfaces\Renderable;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Test_Meta_Box_Registrar extends TestCase {
 
@@ -101,9 +100,8 @@ class Test_Meta_Box_Registrar extends TestCase {
 			$this->createMock( Hook_Loader::class )
 		);
 
-		$admin_user = ( new \WP_UnitTest_Factory() )->user->create( array( 'role' => 'administrator' ) );
-		wp_set_current_user( $admin_user );
-		set_current_screen( 'post-new.php' );
+		global $current_screen;
+		$current_screen = (object) array( 'post_type' => 'post' );
 
 		// Should be active for post, post type
 		$mb_post = Meta_Box::normal( 'mb_post' )->screen( 'post' );
@@ -114,8 +112,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$this->assertFalse( Objects::invoke_method( $registrar, 'is_active', array( $mb_page ) ) );
 
 		// Reset
-		set_current_screen( 'dashboard' );
-		wp_logout();
+		$current_screen = null;
 	}
 
 	/** @testdox When registering all valid meta boxes should be added to the loader. */
@@ -141,6 +138,51 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$this->assertCount( 1, $hooks );
 		$this->assertEquals( 'action', $hooks[0]->get_type() );
 		$this->assertEquals( 'add_meta_boxes', $hooks[0]->get_handle() );
+	}
+
+	public function test_can_add_additional_actions_for_valid_screens(): void {
+		// Mock current screen
+		global $current_screen;
+		$current_screen = (object) array( 'post_type' => 'post' );
+
+		// Setup the validator, DI Container and Loader
+		$validator = $this->createMock( Meta_Box_Validator::class );
+		$validator->method( 'verify_meta_box' )->willReturn( true );
+
+		$loader    = new Hook_Loader();
+		$registrar = new Meta_Box_Registrar(
+			$validator,
+			$this->createMock( DI_Container::class ),
+			$loader
+		);
+
+		$mb_post = Meta_Box::normal( 'mb_post' )
+			->screen( 'post' )
+			->add_action( 'init', '__return_false' )
+			->add_action( 'foo', '__return_true' )
+			->view('__return_true');
+
+		
+		$registrar->register( $mb_post );
+
+		// Should now have add_meta_box hook added to loader.
+		$hooks = Objects::get_property( $loader, 'hooks' );
+		$hooks = Objects::get_property( $hooks, 'hooks' );
+
+		dump($hooks);
+		// Should have 3 (register MB and its Actions)
+		$this->assertCount( 3, $hooks );
+		
+		$this->assertEquals( 'action', $hooks[1]->get_type() );
+		$this->assertEquals( 'init', $hooks[1]->get_handle() );
+		$this->assertEquals( '__return_false', $hooks[1]->get_callback() );
+
+		$this->assertEquals( 'action', $hooks[2]->get_type() );
+		$this->assertEquals( 'foo', $hooks[2]->get_handle() );
+		$this->assertEquals( '__return_true', $hooks[2]->get_callback() );
+		// Reset
+		$current_screen = null;
+
 	}
 
 	//$factory = new WP_UnitTest_Factory();
