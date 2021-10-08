@@ -117,6 +117,7 @@ class Meta_Box_Registrar {
 			function ( \WP_Post $post, array $args ) use ( $meta_box, $view ) {
 				$args['args']['post'] = $post;
 
+				// @phpstan-ignore-next-line, template should already be checked for valid template path in register() method (which calls this)
 				$view->render( $meta_box->view_template, $args['args'] );
 			}
 		);
