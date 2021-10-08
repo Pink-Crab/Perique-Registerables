@@ -92,7 +92,8 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$registrar->register( $meta_box );
 	}
 
-	public function test_can_check_if_metabox_is_active(): void {
+	/** @testdox When registering all hooks for a meta box, these should only be added when the metabox is being displayed. */
+	public function test_can_check_if_meta_box_is_active(): void {
 		// Mock the Registrar
 		$registrar = $registrar = new Meta_Box_Registrar(
 			$this->createMock( Meta_Box_Validator::class ),
@@ -113,8 +114,33 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$this->assertFalse( Objects::invoke_method( $registrar, 'is_active', array( $mb_page ) ) );
 
 		// Reset
-		set_current_screen('dashboard');
+		set_current_screen( 'dashboard' );
 		wp_logout();
+	}
+
+	/** @testdox When registering all valid meta boxes should be added to the loader. */
+	public function test_adds_valid_meta_box_to_hook_loader(): void {
+		// Setup the validator, DI Container and Loader
+		$validator = $this->createMock( Meta_Box_Validator::class );
+		$validator->method( 'verify_meta_box' )->willReturn( true );
+
+		$loader    = new Hook_Loader();
+		$registrar = new Meta_Box_Registrar(
+			$validator,
+			$this->createMock( DI_Container::class ),
+			$loader
+		);
+
+		$meta_box = Meta_Box::normal( 'mb_post' )->view( function( ...$a ) {} );
+		$registrar->register( $meta_box );
+
+		// Should now have add_meta_box hook added to loader.
+		$hooks = Objects::get_property( $loader, 'hooks' );
+		$hooks = Objects::get_property( $hooks, 'hooks' );
+
+		$this->assertCount( 1, $hooks );
+		$this->assertEquals( 'action', $hooks[0]->get_type() );
+		$this->assertEquals( 'add_meta_boxes', $hooks[0]->get_handle() );
 	}
 
 	//$factory = new WP_UnitTest_Factory();
