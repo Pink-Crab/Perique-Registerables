@@ -16,6 +16,7 @@ namespace PinkCrab\Registerables\Tests\Unit\Registrar;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Gin0115\WPUnit_Helpers\Objects;
+use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
@@ -167,6 +168,36 @@ class Test_Post_Type_Registrar extends TestCase {
 
 		$this->assertArrayHasKey( 'foo', $args['labels'] );
 		$this->assertEquals( 'bar', $args['labels']['foo'] );
+	}
+
+	/** @testdox When registering meta data for a post type, any exceptions throws should be caught and rethrown */
+	public function test_throws_upper_exception_if_exception_thrown_during_meta_data_registration(): void {
+		// Mock CPT which uses the failing meta data.
+		$cpt = new class() extends Basic_CPT  {
+
+			// This is a method that is written to populate an array with objects
+			public function meta_data( array $collection ): array {
+				// This mock object, is designed to throw exception if called.
+				$collection[] = new class ('test') extends Meta_Data{
+					public function get_meta_type(): string {
+						throw new Exception( 'MOCK EXCEPTION' );
+						return $this->meta_type;
+					}
+				};
+
+				return $collection;
+			}
+		};
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+
+		$registrar = new Post_Type_Registrar( $validator );
+
+		$this->expectExceptionMessage( 'MOCK EXCEPTION' );
+		$this->expectException( \Exception::class );
+
+		Objects::invoke_method( $registrar, 'register_meta_data', array( $cpt ) );
 	}
 
 }

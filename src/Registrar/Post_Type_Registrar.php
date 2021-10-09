@@ -71,7 +71,7 @@ class Post_Type_Registrar implements Registrar {
 		$this->register_meta_data( $registerable );
 	}
 
-		/**
+	/**
 	 * Registers all meta data for post_type.
 	 *
 	 * @param \PinkCrab\Registerables\Post_Type $post_type
@@ -81,7 +81,6 @@ class Post_Type_Registrar implements Registrar {
 
 		// Get all meta fields for post_type.
 		$meta_fields = $post_type->meta_data( array() );
-
 		// Attempt to register all Meta for post_type.
 		try {
 			foreach ( $meta_fields as $meta_field ) {

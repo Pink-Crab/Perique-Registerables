@@ -53,7 +53,7 @@ class Meta_Box_Validator extends Abstract_Validator {
 	public function verify_meta_box( $meta_box ): bool {
 		// If this is not a valid post type, just bail here.
 		if ( ! is_object( $meta_box ) || ! is_a( $meta_box, Meta_Box::class ) ) {
-			$this->add_error( sprintf( '%s is not a valid Meta Box Model', get_class( $meta_box ) ) );
+			$this->add_error( sprintf( '%s is not a valid Meta Box Model', is_object( $meta_box ) ? get_class( $meta_box ) : \gettype( $meta_box ) ) );
 			return false;
 		}
 
@@ -80,13 +80,13 @@ class Meta_Box_Validator extends Abstract_Validator {
 			if ( ! is_string( $meta_box->{$field} )
 			|| \mb_strlen( $meta_box->{$field} ) === 0
 			) {
-				$this->add_error( sprintf( '%s is not set on %s Post Type Model', $field, get_class( $meta_box ) ) );
+				$this->add_error( sprintf( '%s is not set on %s Meta Box Model', $field, get_class( $meta_box ) ) );
 			}
 		}
 	}
 
 	/**
-	 * Checks if the meta box has a valid view callable ora template
+	 * Checks if the meta box has a valid view callable or a template
 	 * which can be rendered using VIEW.
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Box $meta_box
@@ -94,8 +94,10 @@ class Meta_Box_Validator extends Abstract_Validator {
 	 */
 	protected function has_valid_view( Meta_Box $meta_box ): void {
 		if ( ! \is_callable( $meta_box->view )
-		&& ! is_string( $meta_box->view_template )
-		&& ( is_string( $meta_box->view_template ) && \mb_strlen( $meta_box->view_template ) === 0 ) ) {
+		&& ( ! is_string( $meta_box->view_template )
+			|| ( is_string( $meta_box->view_template ) && \mb_strlen( $meta_box->view_template ) === 0 )
+		)
+		) {
 			$this->add_error( sprintf( '%s doesn\'t have a valid view defined.', get_class( $meta_box ) ) );
 		}
 	}

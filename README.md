@@ -1,6 +1,6 @@
 # Registerables
 
-A collection of Abstract Classes for creating common WordPress fixtires which need registering.
+A collection of Abstract Classes for creating common WordPress fixtures which need registering.
 
 * Post Types
 * Taxonomies
@@ -11,6 +11,7 @@ A collection of Abstract Classes for creating common WordPress fixtires which ne
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 ![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
 
 ## Version ##
 

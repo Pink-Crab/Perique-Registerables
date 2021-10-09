@@ -106,19 +106,18 @@ class Meta_Box_Registrar {
 	 * @return \PinkCrab\Registerables\Meta_Box
 	 */
 	protected function set_view_callback_from_renderable( Meta_Box $meta_box ): Meta_Box {
+
+		// Create View(Renderable)
+		$view = $this->container->create( Renderable::class );
+		if ( is_null( $view ) || ! is_a( $view, Renderable::class ) ) {
+			throw new Exception( 'View not defined' );
+		}
+
 		$meta_box->view(
-			function ( \WP_Post $post, array $args ) use ( $meta_box ) {
+			function ( \WP_Post $post, array $args ) use ( $meta_box, $view ) {
 				$args['args']['post'] = $post;
 
-				$view = $this->container->create( Renderable::class );
-				if ( is_null( $view ) || ! is_a( $view, Renderable::class ) ) {
-					throw new Exception( 'View not defined' );
-				}
-
-				if ( ! is_string( $meta_box->view_template ) ) {
-					throw new Exception( 'Meta box template not defined' );
-				}
-
+				// @phpstan-ignore-next-line, template should already be checked for valid template path in register() method (which calls this)
 				$view->render( $meta_box->view_template, $args['args'] );
 			}
 		);
