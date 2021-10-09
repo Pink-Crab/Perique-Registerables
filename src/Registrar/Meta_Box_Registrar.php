@@ -69,7 +69,7 @@ class Meta_Box_Registrar {
 		if ( ! $this->validator->verify_meta_box( $meta_box ) ) {
 			throw new Exception( 'Invalid meta box model' );
 		}
-		// dump([! \is_callable( $meta_box->view ), is_string( $meta_box->view_template )]);
+
 		// Set the view using Renderable, if not traditional callback supplied and a defined template.
 		if ( ! \is_callable( $meta_box->view ) && is_string( $meta_box->view_template ) ) {
 			$meta_box = $this->set_view_callback_from_renderable( $meta_box );
