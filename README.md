@@ -7,7 +7,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 * Metaboxes
 * Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.6.0-yellow.svg?style=flat " ") 
+![alt text](https://img.shields.io/badge/Current_Version-0.6.1-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 ![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
@@ -15,7 +15,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 
 ## Version ##
 
-**Release 0.6.0**
+**Release 0.6.1**
 
 > PLEASE NOTE REGISTERABLES V0.6.0 ONWARDS IS INTENDED FOR PINKCRAB PERIQUE FRAMEWORK 1.\*.\* AND ABOVE.   
 
@@ -82,7 +82,7 @@ $ composer test
 
 ### PHP Stan ###
 
-The module comes with a pollyfill for all WP Functions, allowing for the testing of all core files. The current config omits the Dice file as this is not ours. To run the suite call.
+The module comes with a polyfill for all WP Functions, allowing for the testing of all core files. The current config omits the Dice file as this is not ours. To run the suite call.
 ```bash 
 $ vendor/bin/phpstan analyse src/ -l8 
 ```
@@ -98,12 +98,14 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.6.1 - Removed old code and tests
+* 0.6.0 - Now works with Perique 1.0.0 and updwards. Added in Registration middleware and uses own registrars and validators rather than being part of the the base models.
 * 0.5.0 - 
   * Updated to reflect Perique (Plugin Framework) 0.5.0
   * Remove Ajax from registerables
 * 0.4.4 - Added wp_die() after emitting psr7 response in ajax.
 * 0.4.3 - Fixed merge issue with metabox view data.
-* 0.4.2 - Finalised Meta_Data, can now be added for Term and Post meta's when either CPT or taxonomy definied. Added in missing tests.
+* 0.4.2 - Finalised Meta_Data, can now be added for Term and Post meta's when either CPT or taxonomy defined. Added in missing tests.
 * 0.4.1 - Minor bugfixes
 * 0.4.0 - Bumped inline with core, moved to min requirments of core v0.4.0
 * 0.3.5 - Updated all code in src and tests to reflect the new Hook_Loader setup in core.
