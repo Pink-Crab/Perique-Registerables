@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /**
- * Basic CPT Mock Object
+ * Invalid cpt
  *
  * @since 0.2.0
  * @author Glynn Quelch <glynn.quelch@gmail.com>
@@ -14,11 +14,10 @@ namespace PinkCrab\Registerables\Tests\Fixtures\CPT;
 
 use PinkCrab\Registerables\Post_Type;
 
-class Basic_CPT extends Post_Type {
+class Invlaid_CPT extends Post_Type {
 
-	public $key       = 'basic_cpt';
-	public $singular  = 'Basic';
-	public $plural    = 'Basics';
-	public $gutenberg = true;
+	public $key      = null;
+	public $singular = null;
+	public $plural   = null;
 
 }

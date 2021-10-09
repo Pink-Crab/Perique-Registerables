@@ -3,8 +3,7 @@
 declare(strict_types=1);
 
 /**
- * An abstract class for registering meta data.
- * Can be used to create meta for  'post', 'comment', 'term', 'user' etc.
+ * Meta Data model
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,14 +24,9 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Perique\Application\App;
-use PinkCrab\Loader\Hook_Loader;
+use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
-use InvalidArgumentException;
-use PinkCrab\Perique\Interfaces\Registerable;
-
-class Meta_Data implements Registerable {
-
+class Meta_Data {
 	/**
 	 * Object type meta applies to
 	 *
@@ -56,7 +50,7 @@ class Meta_Data implements Registerable {
 	protected $type = 'string';
 
 	/**
-	 * Meta desctiption
+	 * Meta description
 	 *
 	 * @var string
 	 */
@@ -165,9 +159,9 @@ class Meta_Data implements Registerable {
 	}
 
 	/**
-	 * Set meta desctiption
+	 * Set meta description
 	 *
-	 * @param string $description  Meta desctiption
+	 * @param string $description  Meta description
 	 *
 	 * @return self
 	 */
@@ -199,7 +193,7 @@ class Meta_Data implements Registerable {
 	}
 
 	/**
-	 * Set the santization callback for setitng values.
+	 * Set the sanitization callback for setting values.
 	 *
 	 * @param callable(mixed):mixed $callback
 	 * @return self
@@ -210,7 +204,7 @@ class Meta_Data implements Registerable {
 	}
 
 	/**
-	 * Set the persmission callback for setitng/getting values
+	 * Set the permission callback for setting/getting values
 	 *
 	 * @param callable $callback
 	 * @return self
@@ -255,22 +249,20 @@ class Meta_Data implements Registerable {
 	}
 
 	/**
-	 * Register the meta field with the regular registation cylce.
-	 * Even though loader isnt used, we can still add to the registration.php as normal.
-	 *
-	 * @param Hook_Loader $loader
-	 * @return void
-	 */
-	public function register( Hook_Loader $loader ): void { // phpcs:ignore
-		register_meta( $this->meta_type, $this->meta_key, $this->parse_args() );
-	}
-
-	/**
 	 * Get meta key
 	 *
 	 * @return string
 	 */
 	public function get_meta_key(): string {
 		return $this->meta_key;
+	}
+
+	/**
+	 * Get object type meta applies to
+	 *
+	 * @return string
+	 */
+	public function get_meta_type(): string {
+		return $this->meta_type;
 	}
 }

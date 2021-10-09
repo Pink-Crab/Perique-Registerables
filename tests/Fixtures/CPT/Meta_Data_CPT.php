@@ -45,11 +45,12 @@ class Meta_Data_CPT extends Post_Type {
 	/**
 	 * Define some fake meta.
 	 *
-	 * @return void
+	 * @param Meta_Data[] $collection
+	 * @return Meta_Data[]
 	 */
-	public function meta_data(): void {
+	public function meta_data( array $collection ): array {
 
-		$this->meta_data[] = ( new Meta_Data( self::META_1['key'] ) )
+		$collection[] = ( new Meta_Data( self::META_1['key'] ) )
 			->type( self::META_1['type'] )
 			->default( self::META_1['default'] )
 			->description( self::META_1['description'] )
@@ -57,13 +58,15 @@ class Meta_Data_CPT extends Post_Type {
 			->sanitize( self::META_1['sanitize_callback'] )
 			->permissions( self::META_1['auth_callback'] );
 
-		$this->meta_data[] = ( new Meta_Data( self::META_2['key'] ) )
+		$collection[] = ( new Meta_Data( self::META_2['key'] ) )
 			->type( self::META_2['type'] )
 			->default( self::META_2['default'] )
 			->description( self::META_2['description'] )
 			->single( self::META_2['single'] )
 			->sanitize( self::META_2['sanitize_callback'] )
 			->permissions( self::META_2['auth_callback'] );
+
+		return $collection;
 	}
 
 }

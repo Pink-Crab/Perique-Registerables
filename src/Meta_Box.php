@@ -1,9 +1,9 @@
 <?php
 
-declare( strict_types=1 );
+declare(strict_types=1);
 
 /**
- * A simple wrapper for getting and sanitizing all http requests.
+ * Meta Box model
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,16 +24,13 @@ declare( strict_types=1 );
 
 namespace PinkCrab\Registerables;
 
-use Exception;
-use PinkCrab\Loader\Hook_Loader;
-use PinkCrab\Perique\Interfaces\Renderable;
-
-class MetaBox {
+class Meta_Box {
 
 	/**
 	 * The metabox key
 	 *
 	 * @var string
+	 * @required
 	 */
 	public $key;
 
@@ -41,13 +38,14 @@ class MetaBox {
 	 * The metabox label/title
 	 *
 	 * @var string
+	 * @required
 	 */
 	public $label;
 
 	/**
 	 * The view callback
 	 *
-	 * @var callable
+	 * @var callable|null
 	 */
 	public $view;
 
@@ -59,9 +57,18 @@ class MetaBox {
 	public $view_vars = array();
 
 	/**
+	 * The path relative to the defined base path
+	 * in config
+	 *
+	 * @var string|null
+	 */
+	public $view_template;
+
+	/**
 	 * Screens to display metabox.
 	 *
 	 * @var array<int, string>
+	 * @required
 	 */
 	public $screen = array();
 
@@ -69,6 +76,7 @@ class MetaBox {
 	 * Metabox context/position
 	 *
 	 * @var string normal|side
+	 * @required
 	 */
 	public $context = 'normal';
 
@@ -82,16 +90,9 @@ class MetaBox {
 	/**
 	 * Define any hooks that should fire with the metabox.
 	 *
-	 * @var array<string, array>
+	 * @var array<string, array{callback:callable,priority:int,params:int}>
 	 */
 	public $actions = array();
-
-	/**
-	 * Instance of renderable class
-	 *
-	 * @var Renderable|null
-	 */
-	protected $renderable;
 
 	/**
 	 * Creates a MetaBox with a defined key.
@@ -103,61 +104,6 @@ class MetaBox {
 	}
 
 	/**
-	 * Sets a renderable engine for use with templates.
-	 *
-	 * @param Renderable $renderable
-	 * @return self
-	 */
-	public function set_renderable( Renderable $renderable ):self {
-		$this->renderable = $renderable;
-		return $this;
-	}
-
-	/**
-	 * Checks renderable engined has been set.
-	 *
-	 * @return bool
-	 */
-	public function has_renderable(): bool {
-		return ! is_null( $this->renderable );
-	}
-
-	/**
-	 * Allows the setting of a renderable tempalte.
-	 * Please note this will overwrite any view() callback passed
-	 * and can be overwritten calling view() afterwards.
-	 *
-	 * @param string $template
-	 * @return self
-	 */
-	public function render( string $template ) : self {
-		if ( \is_null( $this->renderable ) || ! \is_a( $this->renderable, Renderable::class ) ) {
-			throw new \Exception( 'Renderable has not been set to this metabox' );
-		}
-		$this->view(
-			function ( \WP_Post $post, array $args ) use ( $template ) {
-				$args['args']['post'] = $post;
-				$this->renderable->render( $template, $args['args'] ); /* @phpstan-ignore-line Already type checked above*/
-			}
-		);
-		return $this;
-	}
-
-	/**
-	 * Attempts to set its own screen.
-	 *
-	 * @return void
-	 */
-	private function set_screen(): void {
-		$current_screen = $this->get_current_screen();
-		if ( \is_admin() && \is_object( $current_screen ) ) {
-			if ( ! empty( $current_screen->post_type ) ) {
-				array_push( $this->screen, $current_screen->post_type );
-			}
-		}
-	}
-
-	/**
 	 * Creates a full width metabox with a defined key.
 	 *
 	 * @param string $key
@@ -166,7 +112,6 @@ class MetaBox {
 	public static function normal( string $key ): self {
 		$meta_box          = new static( $key );
 		$meta_box->context = 'normal';
-		$meta_box->set_screen();
 		return $meta_box;
 	}
 
@@ -216,7 +161,19 @@ class MetaBox {
 	}
 
 	/**
-	 * Sets the view metod.
+	 * Sets the views template path.
+	 * Should be relative to the base path defined in config.
+	 *
+	 * @param string $view_template
+	 * @return self
+	 */
+	public function view_template( string $view_template ): self {
+		$this->view_template = $view_template;
+		return $this;
+	}
+
+	/**
+	 * Sets the view method.
 	 * Can be a callable or a function or class|method array.
 	 *
 	 * @param callable $callable
@@ -228,10 +185,12 @@ class MetaBox {
 	}
 
 	/**
-	 * Adds a acton to be defined as a hookkey and callable|function
+	 * Adds a acton to be defined as a hook key and callable|function
 	 *
-	 * @param string                $hook
+	 * @param string   $hook
 	 * @param callable $callable
+	 * @param int $priority
+	 * @param int $params
 	 * @return self
 	 */
 	public function add_action( string $hook, callable $callable, int $priority = 10, int $params = 1 ): self {
@@ -244,63 +203,4 @@ class MetaBox {
 		return $this;
 	}
 
-	/**
-	 * Registers the meta box.
-	 *
-	 * @param Hook_Loader $loader
-	 * @return void
-	 */
-	public function register( Hook_Loader $loader ): void {
-
-		// Register the metabox.
-		$loader->action(
-			'add_meta_boxes',
-			function() {
-				\add_meta_box(
-					$this->key,
-					$this->label,
-					$this->view,
-					$this->screen,
-					$this->context,
-					$this->priority,
-					$this->view_vars
-				);
-			}
-		);
-
-		// If we have any hook calls, add them to the loader.
-		if ( ! empty( $this->actions ) ) {
-			foreach ( $this->actions as $handle => $hook ) {
-				$loader->action( (string) $handle, $hook['callback'], $hook['priority'], $hook['params'] );
-			}
-		}
-	}
-
-
-	/**
-	 * Checks if the checkbox should be active.
-	 *
-	 * @return boolean
-	 */
-	protected function is_active(): bool {
-		$current_screen = $this->get_current_screen();
-		return ! empty( $current_screen->post_type ) && in_array( $current_screen->post_type, $this->screen, true );
-	}
-
-	/**
-	 * Pollyfill for get current screen.
-	 *
-	 * @since 0.3.3
-	 * @return \WP_Screen|null
-	 */
-	protected function get_current_screen(): ?\WP_Screen {
-		global $current_screen;
-
-		if ( ! isset( $current_screen ) ) {
-			return null;
-		}
-
-		return $current_screen;
-	}
 }
-

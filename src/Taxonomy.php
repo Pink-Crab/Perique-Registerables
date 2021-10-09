@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * An abstract class for registering taxonomies.
+ * An abstract class for registering custom taxonomies.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -22,23 +22,16 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-
 namespace PinkCrab\Registerables;
 
-use InvalidArgumentException;
-use PinkCrab\Registerables\Meta_Data;
-
-use PinkCrab\Perique\Application\App;
-use PinkCrab\Perique\Interfaces\Registerable;
-use PinkCrab\Loader\Hook_Loader;
-
+use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 abstract class Taxonomy implements Registerable {
 
 	/**
 	 * The singular label
 	 *
-	 * @var string
+	 * @var string|null
 	 * @required
 	 */
 	public $singular;
@@ -46,7 +39,7 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Plural label
 	 *
-	 * @var string
+	 * @var string|null
 	 * @required
 	 */
 	public $plural;
@@ -60,7 +53,7 @@ abstract class Taxonomy implements Registerable {
 	public $slug;
 
 	/**
-	 * The taxononmies label.
+	 * The taxonomies label.
 	 * Uses plural if not set.
 	 *
 	 * @var string|null
@@ -77,7 +70,7 @@ abstract class Taxonomy implements Registerable {
 	/**
 	 * Which post types should this taxonomy be applied to.
 	 *
-	 * @var array<int, mixed>
+	 * @var string[]
 	 */
 	public $object_type = array( 'post' );
 
@@ -213,129 +206,17 @@ abstract class Taxonomy implements Registerable {
 	public $default_term;
 
 	/**
-	 * Array of all pre determined term meta.
+	 * Filters the labels through child class.
 	 *
-	 * @var array<Meta_Data>
-	 */
-	public $meta_data = array();
-
-	/**
-	 * Runs prior to registration.
-	 *
-	 * @return void
-	 */
-	public function set_up(): void {}
-
-	/**
-	 * Used to regiser meta_data.
-	 *
-	 * @return void
-	 */
-	public function meta_data(): void {}
-
-	/**
-	 * Compiles the labels for a hierarchical taxonomy.
-	 *
+	 * @param array<string, mixed> $labels
 	 * @return array<string, mixed>
 	 */
-	protected function hierarchical_labels(): array {
-		return array(
-			'name'              => $this->label ?? $this->plural,
-			'singular_name'     => $this->singular,
-			'search_items'      => 'Search ' . $this->plural,
-			'all_items'         => "All {$this->plural}",
-			'parent_item'       => "Parent {$this->singular}",
-			'parent_item_colon' => "Parent {$this->singular}:",
-			'edit_item'         => "Edit {$this->singular}",
-			'update_item'       => "Update {$this->singular}",
-			'add_new_item'      => "Add New {$this->singular}",
-			'new_item_name'     => "New {$this->singular} Name",
-			'view_item'         => "View {$this->singular}",
-			'menu_name'         => $this->plural,
-			'popular_items'     => "Popular {$this->plural}",
-			'back_to_items'     => "← Back to {$this->plural}",
-		);
+	public function filter_labels( array $labels ): array {
+		return $labels;
 	}
 
 	/**
-	 * Gets the labels for a flat taxonomy.
-	 *
-	 * @return array<string, mixed>
-	 */
-	protected function flat_labels(): array {
-		return array(
-			'name'                       => $this->label ?? $this->plural,
-			'label'                      => $this->label ?? $this->plural,
-			'singular_name'              => $this->singular,
-			'search_items'               => 'Search ' . $this->plural,
-			'popular_items'              => "Popular {$this->plural}",
-			'all_items'                  => "All {$this->plural}",
-			'parent_item'                => null,
-			'parent_item_colon'          => null,
-			'edit_item'                  => "Edit {$this->singular}",
-			'update_item'                => "Update {$this->singular}",
-			'add_new_item'               => "Add New {$this->singular}",
-			'new_item_name'              => "New {$this->singular} Name",
-			'menu_name'                  => $this->plural,
-			'separate_items_with_commas' => "Separate {$this->plural} with commas",
-			'add_or_remove_items'        => "Add or remove {$this->plural}",
-			'choose_from_most_used'      => "Choose from the most used {$this->plural}",
-			'view_item'                  => "View {$this->singular}",
-			'not_found'                  => "No {$this->plural} found.",
-			'back_to_items'              => "← Back to {$this->plural}",
-		);
-	}
-
-	/**
-	 * Registers the taxonomy.
-	 *
-	 * @param Hook_Loader $loader
-	 * @return void
-	 */
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
-	final public function register( Hook_Loader $loader ): void {
-
-		// Run setup
-		$this->set_up();
-
-		$args = array(
-			'publicly_queryable'    => $this->publicly_queryable,
-			'show_ui'               => $this->show_ui,
-			'show_in_menu'          => $this->show_in_menu,
-			'show_in_nav_menus'     => $this->public,
-			'show_in_rest'          => $this->show_in_rest,
-			'rest_base'             => $this->rest_base ?? $this->slug,
-			'rest_controller_class' => $this->rest_controller_class,
-			'show_tagcloud'         => $this->show_tagcloud,
-			'show_in_quick_edit'    => $this->show_in_quick_edit,
-			'show_admin_column'     => $this->show_admin_column,
-			'sort'                  => $this->sort,
-			'description'           => $this->description,
-			'update_count_callback' => $this->update_count_callback,
-			'rewrite'               => $this->slug,
-			'label'                 => $this->label ?? $this->plural,
-			'query_var'             => $this->query_var,
-			'hierarchical'          => $this->hierarchical,
-		);
-
-		// Add optional fields & args.
-		$args           = $this->optional_args( $args );
-		$args['labels'] = $this->hierarchical ? $this->hierarchical_labels() : $this->flat_labels();
-
-		// Validate and maybe register.
-		$this->validate();
-
-		// If we have any metaboxes, register them.
-		$this->meta_data();
-		if ( ! empty( $this->meta_data ) ) {
-			$this->register_meta_data( $loader );
-		}
-
-		register_taxonomy( $this->slug, $this->object_type, $this->filter_args( $args ) );
-	}
-
-	/**
-	 * Overwriteable filter for the args.
+	 * Filters the args used to register the taxonomy.
 	 *
 	 * @param array<string, mixed> $args
 	 * @return array<string, mixed>
@@ -345,77 +226,12 @@ abstract class Taxonomy implements Registerable {
 	}
 
 	/**
-	 * Sets the option values, if set in properties.
+	 * Allows for the setting of meta data specifically for this taxonomy.
 	 *
-	 * @param array<string, mixed> $args
-	 * @return array<string, mixed>
+	 * @param Meta_Data[] $collection
+	 * @return Meta_Data[]
 	 */
-	final protected function optional_args( array $args ): array {
-		if ( $this->capabilities ) {
-			$args['capabilities'] = $this->capabilities;
-		}
-		if ( $this->update_count_callback ) {
-			$args['update_count_callback'] = $this->update_count_callback;
-		}
-		if ( $this->meta_box_cb ) {
-			$args['meta_box_cb'] = $this->meta_box_cb;
-		}
-		if ( get_bloginfo( 'version' ) >= '5.5.0' && is_array( $this->default_term ) ) {
-			$args['default_term'] = $this->default_term;
-		}
-
-		return $args;
-	}
-
-	/**
-	 * Check we have valid properties
-	 *
-	 * @return void
-	 * @throws InvalidArgumentException
-	 */
-	final protected function validate() {
-		if ( ! $this->slug ) {
-			throw new InvalidArgumentException( 'No slug defined.' );
-		}
-		if ( ! $this->singular ) {
-			throw new InvalidArgumentException( 'No singular defined.' );
-		}
-		if ( ! $this->plural ) {
-			throw new InvalidArgumentException( 'No plural defined.' );
-		}
-	}
-
-	/**
-	 * Registers all defined
-	 *
-	 * @param Hook_Loader $loader
-	 * @return void
-	 */
-	public function register_meta_data( Hook_Loader $loader ): void {
-
-		$meta_fields = array_filter(
-			$this->meta_data,
-			function( $e ): bool {
-				return is_a( $e, Meta_Data::class );
-			}
-		);
-
-		foreach ( $meta_fields as $meta ) {
-			$meta->object_subtype( $this->slug );
-			$meta->meta_type( 'term' );
-			$meta->register( $loader );
-		}
-	}
-
-	/**
-	 * Gets the slug statically.
-	 *
-	 * @return string
-	 */
-	public static function get_slug(): string {
-		$tax = App::make( static::class );
-		return $tax && is_a( $tax, static::class )
-			? $tax->slug
-			: '';
+	public function meta_data( array $collection ): array {
+		return $collection;
 	}
 }
