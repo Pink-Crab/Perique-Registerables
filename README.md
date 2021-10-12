@@ -98,6 +98,7 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.6.2 - Removed issue where Meta_Box Registrar was trying to create an instance of Renderable not View.
 * 0.6.1 - Removed old code and tests
 * 0.6.0 - Now works with Perique 1.0.0 and updwards. Added in Registration middleware and uses own registrars and validators rather than being part of the the base models.
 * 0.5.0 - 

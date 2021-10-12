@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests\Unit\Validator;
 
 use PHPUnit\Framework\TestCase;
-use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
