@@ -27,7 +27,7 @@ namespace PinkCrab\Registerables\Registrar;
 use Exception;
 use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Meta_Box;
-use PinkCrab\Perique\Interfaces\Renderable;
+use PinkCrab\Perique\Services\View\View;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
 
@@ -70,9 +70,9 @@ class Meta_Box_Registrar {
 			throw new Exception( 'Invalid meta box model' );
 		}
 
-		// Set the view using Renderable, if not traditional callback supplied and a defined template.
+		// Set the view using View, if not traditional callback supplied and a defined template.
 		if ( ! \is_callable( $meta_box->view ) && is_string( $meta_box->view_template ) ) {
-			$meta_box = $this->set_view_callback_from_renderable( $meta_box );
+			$meta_box = $this->set_view_callback_from_view( $meta_box );
 		}
 
 		// Add meta_box to loader.
@@ -100,16 +100,16 @@ class Meta_Box_Registrar {
 	}
 
 	/**
-	 * Apply rendering the view using Renderable to a meta_box
+	 * Apply rendering the view using View to a meta_box
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Box $meta_box
 	 * @return \PinkCrab\Registerables\Meta_Box
 	 */
-	protected function set_view_callback_from_renderable( Meta_Box $meta_box ): Meta_Box {
+	protected function set_view_callback_from_view( Meta_Box $meta_box ): Meta_Box {
 
-		// Create View(Renderable)
-		$view = $this->container->create( Renderable::class );
-		if ( is_null( $view ) || ! is_a( $view, Renderable::class ) ) {
+		// Create View(View)
+		$view = $this->container->create( View::class );
+		if ( is_null( $view ) || ! is_a( $view, View::class ) ) {
 			throw new Exception( 'View not defined' );
 		}
 

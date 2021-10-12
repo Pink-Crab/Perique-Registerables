@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 use PinkCrab\Loader\Hook_Loader;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Meta_Box;
-use PinkCrab\Perique\Interfaces\Renderable;
+use PinkCrab\Perique\Services\View\View;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
@@ -37,15 +37,15 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$registrar->register( $this->createMock( Meta_Box::class ) );
 	}
 
-	/** @testdox It should be possible to use the Renderable implementation to render the meta box view from a tempalte.*/
+	/** @testdox It should be possible to use the View implementation to render the meta box view from a tempalte.*/
 	public function test_populates_render_with_view(): void {
 
 		// Setup the validator, DI Container and Loader
 		$validator = $this->createMock( Meta_Box_Validator::class );
 		$validator->method( 'verify_meta_box' )->willReturn( true );
 
-		$renderable = $this->createMock( Renderable::class );
-		$renderable->method( 'render' )->will(
+		$view = $this->createMock( View::class );
+		$view->method( 'render' )->will(
 			$this->returnCallback(
 				function( ...$a ): void {
 					print 'MOCK OUTPUT';
@@ -54,7 +54,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		);
 
 		$di_container = $this->createMock( DI_Container::class );
-		$di_container->method( 'create' )->willReturn( $renderable );
+		$di_container->method( 'create' )->willReturn( $view );
 
 		// Build registrar
 		$registrar = new Meta_Box_Registrar( $validator, $di_container, $this->createMock( Hook_Loader::class ) );
@@ -64,13 +64,13 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$meta_box->view_template = 'foo';
 		$registrar->register( $meta_box );
 
-		// This should populate the view callable to use the Renderable
+		// This should populate the view callable to use the View
 		$this->expectOutputString( 'MOCK OUTPUT' );
 		( $meta_box->view )( get_post( wp_insert_post( array( 'post_title' => 'My post' ) ) ), array( 2 ) );
 	}
 
-	/** @testdox If when creating the view callable using Renderable, an exception should be thrown if the container can not create View class. */
-	public function test_throws_exception_if_renderable_cant_be_created_with_DI():void {
+	/** @testdox If when creating the view callable using View, an exception should be thrown if the container can not create View class. */
+	public function test_throws_exception_if_view_cant_be_created_with_DI():void {
 		// Setup the validator, DI Container and Loader
 		$validator = $this->createMock( Meta_Box_Validator::class );
 		$validator->method( 'verify_meta_box' )->willReturn( true );
