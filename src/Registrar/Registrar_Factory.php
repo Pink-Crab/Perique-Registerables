@@ -28,7 +28,6 @@ use Exception;
 use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Post_Type;
-use PinkCrab\Perique\Interfaces\Renderable;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;

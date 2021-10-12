@@ -1,5 +1,11 @@
 # Registerables
 
+![alt text](https://img.shields.io/badge/Current_Version-0.6.1-yellow.svg?style=flat " ") 
+[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
+[![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
+
 A collection of Abstract Classes for creating common WordPress fixtures which need registering.
 
 * Post Types
@@ -7,15 +13,10 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 * Metaboxes
 * Meta Data
 
-![alt text](https://img.shields.io/badge/Current_Version-0.6.1-yellow.svg?style=flat " ") 
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
-![](https://github.com/Pink-Crab/Module__Registerables/workflows/GitHub_CI/badge.svg " ")
-[![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
 
 ## Version ##
 
-**Release 0.6.1**
+**Release 0.6.2**
 
 > PLEASE NOTE REGISTERABLES V0.6.0 ONWARDS IS INTENDED FOR PINKCRAB PERIQUE FRAMEWORK 1.\*.\* AND ABOVE.   
 
@@ -98,6 +99,7 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.6.2 - Removed issue where Meta_Box Registrar was trying to create an instance of Renderable not View.
 * 0.6.1 - Removed old code and tests
 * 0.6.0 - Now works with Perique 1.0.0 and updwards. Added in Registration middleware and uses own registrars and validators rather than being part of the the base models.
 * 0.5.0 - 
