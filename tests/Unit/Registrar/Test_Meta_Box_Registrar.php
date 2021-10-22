@@ -30,11 +30,14 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		$validator = $this->createMock( Meta_Box_Validator::class );
 		$validator->method( 'validate' )->willReturn( false );
+		$validator->method( 'get_errors' )->willReturn( array( 'error1', 'error2' ) );
 		$registrar = new Meta_Box_Registrar( $validator, $this->createMock( DI_Container::class ), $this->createMock( Hook_Loader::class ) );
 
+		$meta_box = $this->createMock( Meta_Box::class );
+
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'Invalid meta box model' );
-		$registrar->register( $this->createMock( Meta_Box::class ) );
+		$this->expectExceptionMessage( 'Errors thrown while validating meta box ' . get_class( $meta_box ) . ': error1, error2' );
+		$registrar->register( $meta_box );
 	}
 
 	/** @testdox It should be possible to use the View implementation to render the meta box view from a tempalte.*/
@@ -161,9 +164,8 @@ class Test_Meta_Box_Registrar extends TestCase {
 			->screen( 'post' )
 			->add_action( 'init', '__return_false' )
 			->add_action( 'foo', '__return_true' )
-			->view('__return_true');
+			->view( '__return_true' );
 
-		
 		$registrar->register( $mb_post );
 
 		// Should now have add_meta_box hook added to loader.
@@ -172,7 +174,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		// Should have 3 (register MB and its Actions)
 		$this->assertCount( 3, $hooks );
-		
+
 		$this->assertEquals( 'action', $hooks[1]->get_type() );
 		$this->assertEquals( 'init', $hooks[1]->get_handle() );
 		$this->assertEquals( '__return_false', $hooks[1]->get_callback() );
@@ -180,7 +182,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$this->assertEquals( 'action', $hooks[2]->get_type() );
 		$this->assertEquals( 'foo', $hooks[2]->get_handle() );
 		$this->assertEquals( '__return_true', $hooks[2]->get_callback() );
-		
+
 		// Reset
 		$current_screen = null;
 	}
@@ -206,9 +208,8 @@ class Test_Meta_Box_Registrar extends TestCase {
 			->screen( 'page' )
 			->add_action( 'init', '__return_false' )
 			->add_action( 'foo', '__return_true' )
-			->view('__return_true');
+			->view( '__return_true' );
 
-		
 		$registrar->register( $mb_page );
 
 		// Should now have add_meta_box hook added to loader.
