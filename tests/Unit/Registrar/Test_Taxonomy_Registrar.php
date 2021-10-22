@@ -32,11 +32,15 @@ class Test_Taxonomy_Registrar extends TestCase {
 
 		$validator = $this->createMock( Taxonomy_Validator::class );
 		$validator->method( 'validate' )->willReturn( false );
+		$validator->method( 'get_errors' )->willReturn( array( 'error1', 'error2' ) );
+
 		$registrar = new Taxonomy_Registrar( $validator );
 
+		$taxonomy = $this->createMock( Registerable::class );
+
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'Invalid taxonomy model' );
-		$registrar->register( $this->createMock( Registerable::class ) );
+		$this->expectExceptionMessage( 'Failed validating taxonomy model(' . get_class( $taxonomy ) . ') with errors: error1, error2' );
+		$registrar->register( $taxonomy );
 	}
 
 	/** @testdox If a WP_Error class is returned when registering the taxonomy, this should be translated into an exception */

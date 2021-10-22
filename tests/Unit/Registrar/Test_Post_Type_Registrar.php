@@ -30,11 +30,15 @@ class Test_Post_Type_Registrar extends TestCase {
 
 		$validator = $this->createMock( Post_Type_Validator::class );
 		$validator->method( 'validate' )->willReturn( false );
+		$validator->method( 'get_errors' )->willReturn( array( 'error1', 'error2' ) );
+		
 		$registrar = new Post_Type_Registrar( $validator );
-
+		
+		$post_type = $this->createMock( Registerable::class );
+		
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'Invalid post type model' );
-		$registrar->register( $this->createMock( Registerable::class ) );
+		$this->expectExceptionMessage( 'Failed validating post type model(' . get_class( $post_type ) . ') with errors: error1, error2' );
+		$registrar->register( $post_type );
 	}
 
 	/** @testdox If a WP_Error class is returned when registering the post type, this should be translated into an exception */
