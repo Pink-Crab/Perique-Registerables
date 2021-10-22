@@ -36,7 +36,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$meta_box = $this->createMock( Meta_Box::class );
 
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'Errors thrown while validating meta box ' . get_class( $meta_box ) . ': error1, error2' );
+		$this->expectExceptionMessage( 'Failed validating meta box model(' . get_class( $meta_box ) . ') with errors: error1, error2' );
 		$registrar->register( $meta_box );
 	}
 

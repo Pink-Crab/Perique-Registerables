@@ -45,7 +45,7 @@ class Taxonomy_Registrar implements Registrar {
 	}
 
 	/**
-	 * Register a post type
+	 * Register a taxonomy
 	 *
 	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
 	 * @return void
@@ -54,10 +54,16 @@ class Taxonomy_Registrar implements Registrar {
 		/** @var Taxonomy $registerable, Validation call below catches no Post_Type Registerables */
 
 		if ( ! $this->validator->validate( $registerable ) ) {
-			throw new Exception( 'Invalid taxonomy model' );
+			throw new Exception(
+				sprintf(
+					'Failed validating taxonomy model(%s) with errors: %s',
+					get_class( $registerable ),
+					join( ', ', $this->validator->get_errors() )
+				)
+			);
 		}
 
-		// Attempt to register the post type.
+		// Attempt to register the taxonomy.
 		try {
 			$result = \register_taxonomy(
 				$registerable->slug,
@@ -106,7 +112,7 @@ class Taxonomy_Registrar implements Registrar {
 	}
 
 	/**
-	 * Compiles the args used to register the post type.
+	 * Compiles the args used to register the taxonomy.
 	 *
 	 * @param \PinkCrab\Registerables\Taxonomy $taxonomy
 	 * @return array<string, string|int|array<string, string>>
@@ -159,7 +165,7 @@ class Taxonomy_Registrar implements Registrar {
 
 		$hierarchical_labels = array(
 			/* translators: %s: Taxonomy singular name */
-			'parent_item_colon' => wp_sprintf( _x( 'Parent %s:', 'Label used to prefix parents of hierarchical items. Not used on non-hierarchical post types. Default is ‘Parent {taxonomy plural name}:’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
+			'parent_item_colon' => wp_sprintf( _x( 'Parent %s:', 'Label used to prefix parents of hierarchical items. Not used on non-hierarchical taxonomys. Default is ‘Parent {taxonomy plural name}:’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
 			'parent_item'       => wp_sprintf( _x( 'Parent %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */

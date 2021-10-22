@@ -69,7 +69,7 @@ class Meta_Box_Registrar {
 		if ( ! $this->validator->verify_meta_box( $meta_box ) ) {
 			throw new Exception(
 				sprintf(
-					'Errors thrown while validating meta box %s: %s',
+					'Failed validating meta box model(%s) with errors: %s',
 					get_class( $meta_box ),
 					join( ', ', $this->validator->get_errors() )
 				)
