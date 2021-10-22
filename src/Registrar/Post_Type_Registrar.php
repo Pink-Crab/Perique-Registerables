@@ -54,7 +54,13 @@ class Post_Type_Registrar implements Registrar {
 		/** @var Post_Type $registerable, Validation call below catches no Post_Type Registerables */
 
 		if ( ! $this->validator->validate( $registerable ) ) {
-			throw new Exception( 'Invalid post type model' );
+			throw new Exception(
+				sprintf(
+					'Failed validating post type model(%s) with errors: %s',
+					get_class( $registerable ),
+					join( ', ', $this->validator->get_errors() )
+				)
+			);
 		}
 
 		// Attempt to register the post type.

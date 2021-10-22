@@ -67,7 +67,13 @@ class Meta_Box_Registrar {
 	public function register( Meta_Box $meta_box ): void {
 
 		if ( ! $this->validator->verify_meta_box( $meta_box ) ) {
-			throw new Exception( 'Invalid meta box model' );
+			throw new Exception(
+				sprintf(
+					'Failed validating meta box model(%s) with errors: %s',
+					get_class( $meta_box ),
+					join( ', ', $this->validator->get_errors() )
+				)
+			);
 		}
 
 		// Set the view using View, if not traditional callback supplied and a defined template.
