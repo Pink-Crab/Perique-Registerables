@@ -1,0 +1,1 @@
+Post Type: <?php echo $post->post_type; ?>, Meta: <?php echo $meta; ?>

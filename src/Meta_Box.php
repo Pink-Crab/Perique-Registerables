@@ -95,6 +95,14 @@ class Meta_Box {
 	public $actions = array();
 
 	/**
+	 * Filter for pushing post specific data into the views
+	 * global variable scope
+	 *
+	 * @var null|callable(array<string, mixed> $args):array<string, mixed>
+	 */
+	public $view_data_filter;
+
+	/**
 	 * Creates a MetaBox with a defined key.
 	 *
 	 * @param string $key
@@ -203,4 +211,15 @@ class Meta_Box {
 		return $this;
 	}
 
+
+	/**
+	 * Set $args):args
+	 *
+	 * @param callable(array<string, mixed> $args):array<string, mixed> $view_data_filter
+	 * @return self
+	 */
+	public function view_data_filter( callable $view_data_filter ): self {
+		$this->view_data_filter = $view_data_filter;
+		return $this;
+	}
 }
