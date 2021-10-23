@@ -15,12 +15,15 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use PinkCrab\Perique\Application\App;
+use PinkCrab\Perique\Services\View\View;
 use PinkCrab\Registerables\Registration_Middleware\Registerable_Middleware;
 use PinkCrab\Loader\Hook_Loader;
 use Dice\Dice;
 use PinkCrab\Perique\Services\Dice\PinkCrab_Dice;
 use PinkCrab\Perique\Services\Registration\Registration_Service;
 use Gin0115\WPUnit_Helpers\Objects;
+use PinkCrab\Perique\Interfaces\Renderable;
+use PinkCrab\Perique\Services\View\PHP_Engine;
 
 trait App_Helper_Trait {
 
@@ -54,6 +57,16 @@ trait App_Helper_Trait {
 			$app->registration_classes( $class );
 		}
 		$app->set_app_config( array() );
+
+		$container->addRules(
+			array(
+				'*' => array(
+					'substitutions' => array(
+						Renderable::class => new PHP_Engine( \FIXTURES . '/Views' ),
+					),
+				),
+			)
+		);
 
 		return $app;
 	}

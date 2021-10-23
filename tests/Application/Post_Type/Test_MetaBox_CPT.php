@@ -121,16 +121,20 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 		$box = $this->meta_box_inspector->find( 'metabox_cpt_side' );
 		$this->assertNotNull( $box );
 
+		// Create the mock post and its matching meta.
+		$post = $this->factory->post->create( array( 'post_type' => $this->cpt->key ) );
+		\update_post_meta($post, 'pc_mock_meta', 'hello');
+
 		// Grab the view contents.
 		$view_output = Output::buffer(
-			function() use ( $box ) {
-				$this->meta_box_inspector->render_meta_box(
+			function() use ( $box, $post ) {
+				$this->meta_box_inspector->set_meta_boxes()->render_meta_box(
 					$box,
-					\get_post( $this->factory->post->create( array( 'post_type' => $this->cpt->key ) ) )
+					\get_post( $post )
 				);
 			}
 		);
-		$this->assertEquals( 'metabox_cpt_side VIEW', $view_output );
+		$this->assertEquals( 'metabox_cpt_side VIEW. Meta=hello', $view_output );
 
 		// Check title.
 		$this->assertEquals( 'metabox_cpt_side TITLE', $box->title );
@@ -138,5 +142,35 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 		// Check view vars.
 		$this->assertArrayHasKey( 'key2', $box->args );
 		$this->assertEquals( 2, $box->args['key2'] );
+	}
+
+	public function test_template_metabox_registered()
+	{
+		// Check metabox exists.
+		$box = $this->meta_box_inspector->find( 'metabox_cpt_template' );
+		$this->assertNotNull( $box );
+
+		// Create the mock post and its matching meta.
+		$post = $this->factory->post->create( array( 'post_type' => $this->cpt->key ) );
+		\update_post_meta($post, 'pc_mock_meta', 'hello');
+
+		// Grab the view contents.
+		$view_output = Output::buffer(
+			function() use ( $box, $post ) {
+				$this->meta_box_inspector->set_meta_boxes()->render_meta_box(
+					$box,
+					\get_post( $post )
+				);
+			}
+		);
+
+		$this->assertEquals('Post Type: metabox_cpt, Meta: metabox_cpt_template', $view_output);
+
+		// Check title.
+		$this->assertEquals( 'metabox_cpt_template TITLE', $box->title );
+
+		// Check view vars.
+		$this->assertArrayHasKey( 'key3', $box->args );
+		$this->assertEquals( 3, $box->args['key3'] );
 	}
 }
