@@ -78,7 +78,10 @@ class Meta_Box_Registrar {
 
 		// Set the view using View, if not traditional callback supplied and a defined template.
 		if ( ! \is_callable( $meta_box->view ) && is_string( $meta_box->view_template ) ) {
-			$meta_box = $this->set_view_callback_from_view( $meta_box );
+			$meta_box = $this->set_view_callback_from_renderable( $meta_box );
+		}
+		if ( \is_callable( $meta_box->view ) ) {
+			$meta_box = $this->set_view_callback_from_callable( $meta_box );
 		}
 
 		// Add meta_box to loader.
@@ -106,12 +109,40 @@ class Meta_Box_Registrar {
 	}
 
 	/**
+	 * Sets the view callback for a view which is defined as a callback.
+	 *
+	 * @param \PinkCrab\Registerables\Meta_Box $meta_box
+	 * @return \PinkCrab\Registerables\Meta_Box
+	 */
+	protected function set_view_callback_from_callable( Meta_Box $meta_box ): Meta_Box {
+
+		// Get the current view callback.
+		$current_callback = $meta_box->view;
+
+		$meta_box->view(
+			function ( \WP_Post $post, array $args ) use ( $meta_box, $current_callback ) {
+
+				// Set the view args
+				$args['args']['post'] = $post;
+				$args['args']         = $this->filter_view_args( $meta_box, $post, $args['args'] );
+
+				// Render the callback.
+				if ( \is_callable( $current_callback ) ) {
+					call_user_func( $current_callback, $post, $args );
+				}
+			}
+		);
+
+		return $meta_box;
+	}
+
+	/**
 	 * Apply rendering the view using View to a meta_box
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Box $meta_box
 	 * @return \PinkCrab\Registerables\Meta_Box
 	 */
-	protected function set_view_callback_from_view( Meta_Box $meta_box ): Meta_Box {
+	protected function set_view_callback_from_renderable( Meta_Box $meta_box ): Meta_Box {
 
 		// Create View(View)
 		$view = $this->container->create( View::class );
@@ -121,7 +152,9 @@ class Meta_Box_Registrar {
 
 		$meta_box->view(
 			function ( \WP_Post $post, array $args ) use ( $meta_box, $view ) {
+
 				$args['args']['post'] = $post;
+				$args['args']         = $this->filter_view_args( $meta_box, $post, $args['args'] );
 
 				// @phpstan-ignore-next-line, template should already be checked for valid template path in register() method (which calls this)
 				$view->render( $meta_box->view_template, $args['args'] );
@@ -142,5 +175,20 @@ class Meta_Box_Registrar {
 		return ! is_null( $current_screen )
 		&& ! empty( $current_screen->post_type )
 		&& in_array( $current_screen->post_type, $meta_box->screen, true );
+	}
+
+	/**
+	 * Filters the render time args through the optional
+	 * callback definition in model class.
+	 *
+	 * @param \PinkCrab\Registerables\Meta_Box $meta_box
+	 * @param array<string, mixed> $view_args
+	 * @return array<string, mixed>
+	 */
+	public function filter_view_args( Meta_Box $meta_box, \WP_Post $post, array $view_args ): array {
+		if ( is_callable( $meta_box->view_data_filter ) ) {
+			$view_args = ( $meta_box->view_data_filter )( $post, $view_args );
+		}
+		return $view_args;
 	}
 }
