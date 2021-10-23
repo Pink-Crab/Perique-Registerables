@@ -98,7 +98,7 @@ class Meta_Box {
 	 * Filter for pushing post specific data into the views
 	 * global variable scope
 	 *
-	 * @var null|callable(array<string, mixed> $args):array<string, mixed>
+	 * @var null|callable(\WP_Post $post,array<string, mixed> $args):array<string, mixed>
 	 */
 	public $view_data_filter;
 
@@ -215,7 +215,7 @@ class Meta_Box {
 	/**
 	 * Set $args):args
 	 *
-	 * @param callable(array<string, mixed> $args):array<string, mixed> $view_data_filter
+	 * @param callable(\WP_Post $post,array<string, mixed> $args):array<string, mixed> $view_data_filter
 	 * @return self
 	 */
 	public function view_data_filter( callable $view_data_filter ): self {

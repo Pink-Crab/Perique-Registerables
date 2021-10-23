@@ -124,7 +124,7 @@ class Meta_Box_Registrar {
 
 				// Set the view args
 				$args['args']['post'] = $post;
-				$args['args']         = $this->filter_view_args( $meta_box, $args['args'] );
+				$args['args']         = $this->filter_view_args( $meta_box, $post, $args['args'] );
 
 				// Render the callback.
 				if ( \is_callable( $current_callback ) ) {
@@ -154,7 +154,7 @@ class Meta_Box_Registrar {
 			function ( \WP_Post $post, array $args ) use ( $meta_box, $view ) {
 
 				$args['args']['post'] = $post;
-				$args['args']         = $this->filter_view_args( $meta_box, $args['args'] );
+				$args['args']         = $this->filter_view_args( $meta_box, $post, $args['args'] );
 
 				// @phpstan-ignore-next-line, template should already be checked for valid template path in register() method (which calls this)
 				$view->render( $meta_box->view_template, $args['args'] );
@@ -185,9 +185,9 @@ class Meta_Box_Registrar {
 	 * @param array<string, mixed> $view_args
 	 * @return array<string, mixed>
 	 */
-	public function filter_view_args( Meta_Box $meta_box, array $view_args ): array {
+	public function filter_view_args( Meta_Box $meta_box, \WP_Post $post, array $view_args ): array {
 		if ( is_callable( $meta_box->view_data_filter ) ) {
-			$view_args = ( $meta_box->view_data_filter )( $view_args );
+			$view_args = ( $meta_box->view_data_filter )( $post, $view_args );
 		}
 		return $view_args;
 	}
