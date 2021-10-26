@@ -96,16 +96,10 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 	/** @testdox When meta data is registered, if any errors are created, an exception should be thrown. */
 	public function test_throws_exception_for_invalid_meta_data(): void {
 		// Mock the meta data to throw and exception.
-		$mock_meta_data = $this->createMock( Meta_Data::class );
-		$mock_meta_data->method( 'get_meta_key' )
-			->will(
-				$this->returnCallback(
-					function() {
-						throw new \Exception( 'ERROR_INVALID_META_DATA', 1 );
+		$mock_meta_data = new Meta_Data( 'rr' );
+		$mock_meta_data->type( 'array' )->rest_schema( true );
 
-					}
-				)
-			);
+		dump( $mock_meta_data );
 
 		// Mock the controller to return the mock meta data.
 		$mock_controller = $this->createMock( Post_Page_Meta_Box::class );
@@ -119,8 +113,14 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 		$mb_registrar = $this->createMock( Meta_Box_Registrar::class );
 		$registrar    = new Shared_Meta_Box_Registrar( $mb_registrar );
 
+		// Prevent triggering error when calling doing it wrong.
+		add_filter( 'doing_it_wrong_trigger_error', '__return_false' );
+
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'ERROR_INVALID_META_DATA' );
+		$this->expectExceptionMessage( 'Failed to register rr (meta) for post post type' );
 		$registrar->register( $mock_controller );
+
+		// Reset doing it wrong.
+		add_filter( 'doing_it_wrong_trigger_error', '__return_true' );
 	}
 }
