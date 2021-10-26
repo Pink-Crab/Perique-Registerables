@@ -17,6 +17,7 @@ use stdClass;
 use PHPUnit\Framework\TestCase;
 use PinkCrab\Loader\Hook_Loader;
 use Gin0115\WPUnit_Helpers\Objects;
+use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 use PinkCrab\Registerables\Registration_Middleware\Registerable_Middleware;
@@ -59,7 +60,7 @@ class Test_Registerable_Middleware extends TestCase {
 		$middleware = new Registerable_Middleware;
 		$middleware->set_hook_loader( $loader );
 
-		$middleware->process( $this->createMock( Registerable::class ) );
+		$middleware->process( $this->createMock( Taxonomy::class ) );
 
 		// Extract just the hook handles form the loader.
 		$hooks = Objects::get_property( $loader, 'hooks' )->export();
