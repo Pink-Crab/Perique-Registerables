@@ -47,6 +47,6 @@ class Test_Shared_Meta_Box_Controller extends WP_UnitTestCase {
 
 		$this->assertInstanceOf( Meta_Data::class, $meta_data[1] );
 		$this->assertContains( 'post', $meta_data[1]->get_meta_type() );
-		$this->assertContains( 'pnp_number', $meta_data[1]->get_meta_key() );
+		$this->assertContains( 'pnp_words', $meta_data[1]->get_meta_key() );
 	}
 }

@@ -159,7 +159,15 @@ class Registerable_Middleware implements Registration_Middleware {
 		}
 	}
 
-	public function process_shared_meta_box( Shared_Meta_Box_Controller $controller ) {
+	/**
+	 * Processes a shared meta box controller.
+	 * Registers both meta box and meta data.
+	 *
+	 * @param \PinkCrab\Registerables\Shared_Meta_Box_Controller $controller
+	 * @return void
+	 * @since 0.7.0
+	 */
+	public function process_shared_meta_box( Shared_Meta_Box_Controller $controller ): void {
 		$registrar = new Shared_Meta_Box_Registrar( $this->get_meta_box_registrar() );
 		$registrar->register( $controller );
 	}

@@ -82,8 +82,20 @@ class Test_Post_Page_Meta_Box extends WP_UnitTestCase {
 
 	/** @testdox When registering a shared meta box controller, whatever screens are defined, should see the meta box registered for. */
 	public function test_meta_boxes_registered() {
-		$post_meta_box = array_values( $this->meta_box_inspector->for_post_types( 'post' ) )[0];
-		$page_meta_box = array_values( $this->meta_box_inspector->for_post_types( 'page' ) )[0];
+		$post_meta_box = array_values(
+			$this->meta_box_inspector->filter(
+				function( $meta_box ) {
+					return $meta_box->post_type === 'post' && $meta_box->id === 'post_page_mb';
+				}
+			)
+		)[0];
+		$page_meta_box = array_values(
+			$this->meta_box_inspector->filter(
+				function( $meta_box ) {
+					return $meta_box->post_type === 'page' && $meta_box->id === 'post_page_mb';
+				}
+			)
+		)[0];
 
 		// Check box are the same.
 		$this->assertSame( $post_meta_box->position, $page_meta_box->position );
