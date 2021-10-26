@@ -17,6 +17,7 @@ use WP_UnitTestCase;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Meta_Data;
+use PinkCrab\Registerables\Shared_Meta_Box_Controller;
 use PinkCrab\Registerables\Registrar\Shared_Meta_Box_Registrar;
 use PinkCrab\Registerables\Tests\Fixtures\Shared_Metabox\Post_Page_Meta_Box;
 
@@ -34,7 +35,7 @@ class Test_Shared_Meta_Box_Controller extends WP_UnitTestCase {
 		$this->assertContains( 'page', $meta_box->screen );
 	}
 
-    /** @testdox A populated Shared_Meta_Box_Controller should return an array of populated Meta Data. */
+	/** @testdox A populated Shared_Meta_Box_Controller should return an array of populated Meta Data. */
 	public function test_can_get_meta_data(): void {
 		$controller = new Post_Page_Meta_Box();
 		$meta_data  = Objects::invoke_method( $controller, 'meta_data', array( array() ) );
@@ -48,5 +49,14 @@ class Test_Shared_Meta_Box_Controller extends WP_UnitTestCase {
 		$this->assertInstanceOf( Meta_Data::class, $meta_data[1] );
 		$this->assertContains( 'post', $meta_data[1]->get_meta_type() );
 		$this->assertContains( 'pnp_words', $meta_data[1]->get_meta_key() );
+	}
+
+	public function test_meta_data_returns_empty_array_if_not_defined() {
+		$controller = $this->createMock( Shared_Meta_Box_Controller::class );
+
+		$meta = $controller->meta_data( array() );
+
+		$this->assertIsArray( $meta );
+		$this->assertEmpty( $meta );
 	}
 }

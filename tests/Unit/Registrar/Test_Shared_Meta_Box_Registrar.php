@@ -99,8 +99,6 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 		$mock_meta_data = new Meta_Data( 'rr' );
 		$mock_meta_data->type( 'array' )->rest_schema( true );
 
-		dump( $mock_meta_data );
-
 		// Mock the controller to return the mock meta data.
 		$mock_controller = $this->createMock( Post_Page_Meta_Box::class );
 		$mock_controller->method( 'meta_data' )->willReturn( array( $mock_meta_data ) );
