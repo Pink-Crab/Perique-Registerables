@@ -63,7 +63,8 @@ class Registrar_Factory {
 				return new Taxonomy_Registrar( new Taxonomy_Validator() );
 
 			default:
-				throw new Exception( 'Invalid registerable type (no dispatcher exists)' );
+				$type = get_class( $registerable );
+				throw new Exception( 'Invalid registerable (' . $type . ')type (no dispatcher exists)' );
 		}
 	}
 
