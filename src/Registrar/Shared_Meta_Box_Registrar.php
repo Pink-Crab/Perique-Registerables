@@ -98,7 +98,6 @@ class Shared_Meta_Box_Registrar implements Registrar {
 	 * @return void
 	 */
 	protected function register_meta_data_for_post_type( Meta_Data $meta_data, string $post_type ): void {
-
 		// Clone and set the post type, while enforcing it as a post meta.
 		$meta_data = clone $meta_data;
 		$meta_data->object_subtype( $post_type );
