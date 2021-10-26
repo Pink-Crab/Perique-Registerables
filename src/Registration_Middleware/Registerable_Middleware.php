@@ -26,10 +26,14 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registration_Middleware;
 
 use PinkCrab\Loader\Hook_Loader;
+use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Perique\Interfaces\DI_Container;
+use PinkCrab\Registerables\Shared_Meta_Box_Controller;
 use PinkCrab\Registerables\Registrar\Registrar_Factory;
 use PinkCrab\Perique\Interfaces\Registration_Middleware;
+use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
+use PinkCrab\Registerables\Registrar\Shared_Meta_Box_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Registerable_Middleware implements Registration_Middleware {
@@ -67,50 +71,115 @@ class Registerable_Middleware implements Registration_Middleware {
 	 * @return object
 	 */
 	public function process( $class ) {
-
 		if ( ! is_a( $class, Registerable::class ) ) {
 			return $class;
 		}
 
-		// Register registerable.
-		$this->loader->action(
-			'init',
-			static function() use ( $class ) {
-				Registrar_Factory::new()
-					->create_from_registerable( $class )
-					->register( $class );
-			}
-		);
+		// Based on the registerable type.
+		switch ( true ) {
+			case is_a( $class, Post_Type::class ):
+				$this->process_post_type( $class );
+				break;
 
-		// Disable gutenberg if post type decides.
-		if ( is_a( $class, Post_Type::class ) ) {
-			$this->loader->filter(
-				'use_block_editor_for_post_type',
-				static function( bool $state, string $post_type ) use ( $class ): bool {
-					return $post_type === $class->key
-						? (bool) $class->gutenberg
-						: $state;
-				},
-				10,
-				2
-			);
+			case is_a( $class, Taxonomy::class ):
+				$this->process_taxonomy( $class );
+				break;
 
-			// Register meta boxes.
-			$meta_boxes = $class->meta_boxes( array() );
+			case is_a( $class, Shared_Meta_Box_Controller::class ):
+				$this->process_shared_meta_box( $class );
+				break;
 
-			if ( ! empty( $meta_boxes ) ) {
-				// Create the registrat
-				$meta_box_registrar = Registrar_Factory::new()
-					->meta_box_registrar( $this->container, $this->loader );
-
-				// Register each meta box.
-				foreach ( $meta_boxes as $meta_box ) {
-					$meta_box_registrar->register( $meta_box );
-				}
-			}
+			default:
+				// Do nothing, but should not get to here.
+				break;
 		}
 
 		return $class;
+	}
+
+	/**
+	 * Processes and registers a taxonomy
+	 *
+	 * @param \PinkCrab\Registerables\Taxonomy $taxonomy
+	 * @return void
+	 * @since 0.7.0
+	 */
+	protected function process_taxonomy( Taxonomy $taxonomy ): void {
+		$this->loader->action(
+			'init',
+			static function() use ( $taxonomy ) {
+				Registrar_Factory::new()
+					->create_from_registerable( $taxonomy )
+					->register( $taxonomy );
+			}
+		);
+	}
+
+	/**
+	 * Processes and registers a post type.
+	 *
+	 * @param \PinkCrab\Registerables\Post_Type $post_type_registerable
+	 * @return void
+	 * @since 0.7.0
+	 */
+	protected function process_post_type( Post_Type $post_type_registerable ) {
+		// Register registerable.
+		$this->loader->action(
+			'init',
+			static function() use ( $post_type_registerable ) {
+				Registrar_Factory::new()
+					->create_from_registerable( $post_type_registerable )
+					->register( $post_type_registerable );
+			}
+		);
+
+		// Define use of gutenberg
+		$this->loader->filter(
+			'use_block_editor_for_post_type',
+			static function( bool $state, string $post_type ) use ( $post_type_registerable ): bool {
+					return $post_type === $post_type_registerable->key
+						? (bool) $post_type_registerable->gutenberg
+						: $state;
+			},
+			10,
+			2
+		);
+
+		// Register meta boxes.
+		$meta_boxes = $post_type_registerable->meta_boxes( array() );
+
+		if ( ! empty( $meta_boxes ) ) {
+			// Create the registrar
+			$meta_box_registrar = $this->get_meta_box_registrar();
+
+			// Register each meta box.
+			foreach ( $meta_boxes as $meta_box ) {
+				$meta_box_registrar->register( $meta_box );
+			}
+		}
+	}
+
+	/**
+	 * Processes a shared meta box controller.
+	 * Registers both meta box and meta data.
+	 *
+	 * @param \PinkCrab\Registerables\Shared_Meta_Box_Controller $controller
+	 * @return void
+	 * @since 0.7.0
+	 */
+	public function process_shared_meta_box( Shared_Meta_Box_Controller $controller ): void {
+		$registrar = new Shared_Meta_Box_Registrar( $this->get_meta_box_registrar() );
+		$registrar->register( $controller );
+	}
+
+	/**
+	 * Constructs and returns and instance of the Meta Box Registrar
+	 *
+	 * @return \PinkCrab\Registerables\Registrar\Meta_Box_Registrar
+	 * @since 0.7.0
+	 */
+	public function get_meta_box_registrar(): Meta_Box_Registrar {
+		return Registrar_Factory::new()->meta_box_registrar( $this->container, $this->loader );
 	}
 
 	public function setup(): void {
