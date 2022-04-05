@@ -65,6 +65,7 @@ class Post_Type_Registrar implements Registrar {
 
 		// Attempt to register the post type.
 		try {
+			/* @phpstan-ignore-next-line */
 			$result = register_post_type( $registerable->key, $this->compile_args( $registerable ) );
 			if ( is_a( $result, \WP_Error::class ) ) {
 				throw new Exception( join( $result->get_error_messages() ) );
@@ -223,10 +224,12 @@ class Post_Type_Registrar implements Registrar {
 		/**
 		 * Allow 3rd party plugins to filter this also.
 		 * @filter_handle PinkCrab/Registerable/post_type_args
+		 * @parm string $hook_name Hook Handle
 		 * @param array<string, string|bool|int|null|array<string, string> $args
-		 * @param Post_Type $cpt
+		 * @param Post_Type $post_type
 		 * @return array<string, string|bool|int|null|array<string, string>
 		 */
+		/* @phpstan-ignore-next-line, this is due to apply_filters type hints being wrong. */
 		return apply_filters( Registerable_Hooks::POST_TYPE_ARGS, $post_type->filter_args( $args ), $post_type );
 	}
 }

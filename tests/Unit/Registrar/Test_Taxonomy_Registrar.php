@@ -59,7 +59,7 @@ class Test_Taxonomy_Registrar extends TestCase {
 		};
 
 		$this->expectException( \Exception::class );
-		$this->expectExceptionMessageRegExp( '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
+		$this->expectExceptionMessageMatches( '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
 		$registrar->register( $post_type );
 	}
 

@@ -57,7 +57,7 @@ class Test_Post_Type_Registrar extends TestCase {
 		};
 
 		$this->expectException( \Exception::class );
-		$this->expectExceptionMessageRegExp( '#Failed to register 0123456789012345678901234567890123456789 post type (.*)$#' );
+		$this->expectExceptionMessageMatches( '#Failed to register 0123456789012345678901234567890123456789 post type (.*)$#' );
 		$registrar->register( $post_type );
 	}
 
