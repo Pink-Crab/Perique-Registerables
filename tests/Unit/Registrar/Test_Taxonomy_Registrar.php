@@ -59,7 +59,12 @@ class Test_Taxonomy_Registrar extends TestCase {
 		};
 
 		$this->expectException( \Exception::class );
-		$this->expectExceptionMessageMatches( '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
+		// Based on the phpunit version.
+		if ( \method_exists( $this, 'expectExceptionMessageMatches' ) ) {
+			$this->expectExceptionMessageMatches(  '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
+		} else {
+			$this->expectExceptionMessageRegExp(  '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
+		}
 		$registrar->register( $post_type );
 	}
 
