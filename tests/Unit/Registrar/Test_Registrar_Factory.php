@@ -34,19 +34,19 @@ class Test_Registrar_Factory extends TestCase {
 	public function test_throws_exception_if_unknown_registerable(): void {
 		$registerable = $this->createMock( Registerable::class );
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'Invalid registerable type (no dispatcher exists)' );
+		$this->expectExceptionMessage( 'Invalid registerable (' . get_class( $registerable ) . ')type (no dispatcher exists)' );
 		Registrar_Factory::new()->create_from_registerable( $registerable );
 	}
 
 	/**@testdox It should be possible to get a post type registrar by passing in a valid Registerable type. */
 	public function test_can_create_post_type_registrar(): void {
-		$registrar = Registrar_Factory::new()->create_from_registerable( new Basic_CPT );
+		$registrar = Registrar_Factory::new()->create_from_registerable( new Basic_CPT() );
 		$this->assertInstanceOf( Post_Type_Registrar::class, $registrar );
 	}
 
 	/**@testdox It should be possible to get a taxonomy registrar by passing in a valid Registerable type. */
 	public function test_can_create_taxonomy_registrar(): void {
-		$registrar = Registrar_Factory::new()->create_from_registerable( new Basic_Hierarchical_Taxonomy );
+		$registrar = Registrar_Factory::new()->create_from_registerable( new Basic_Hierarchical_Taxonomy() );
 		$this->assertInstanceOf( Taxonomy_Registrar::class, $registrar );
 	}
 }

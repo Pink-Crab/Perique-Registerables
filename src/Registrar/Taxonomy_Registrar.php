@@ -68,6 +68,7 @@ class Taxonomy_Registrar implements Registrar {
 			$result = \register_taxonomy(
 				$registerable->slug,
 				$registerable->object_type,
+				/* @phpstan-ignore-next-line */
 				$this->compile_args( $registerable )
 			);
 
@@ -225,6 +226,7 @@ class Taxonomy_Registrar implements Registrar {
 		 * @param Taxonomy $taxonomy
 		 * @return array<string, string|bool|int|null|array<string, string>
 		 */
+		/* @phpstan-ignore-next-line, this is due to apply_filters type hints being wrong. */
 		return apply_filters( Registerable_Hooks::TAXONOMY_ARGS, $taxonomy->filter_args( $args ), $taxonomy );
 	}
 }

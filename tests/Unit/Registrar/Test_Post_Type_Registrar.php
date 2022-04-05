@@ -31,11 +31,11 @@ class Test_Post_Type_Registrar extends TestCase {
 		$validator = $this->createMock( Post_Type_Validator::class );
 		$validator->method( 'validate' )->willReturn( false );
 		$validator->method( 'get_errors' )->willReturn( array( 'error1', 'error2' ) );
-		
+
 		$registrar = new Post_Type_Registrar( $validator );
-		
+
 		$post_type = $this->createMock( Registerable::class );
-		
+
 		$this->expectException( Exception::class );
 		$this->expectExceptionMessage( 'Failed validating post type model(' . get_class( $post_type ) . ') with errors: error1, error2' );
 		$registrar->register( $post_type );
@@ -57,7 +57,13 @@ class Test_Post_Type_Registrar extends TestCase {
 		};
 
 		$this->expectException( \Exception::class );
-		$this->expectExceptionMessageRegExp( '#Failed to register 0123456789012345678901234567890123456789 post type (.*)$#' );
+
+		// Based on the phpunit version.
+		if ( \method_exists( $this, 'expectExceptionMessageMatches' ) ) {
+			$this->expectExceptionMessageMatches( '#Failed to register 0123456789012345678901234567890123456789 post type (.*)$#' );
+		} else {
+			$this->expectExceptionMessageRegExp( '#Failed to register 0123456789012345678901234567890123456789 post type (.*)$#' );
+		}
 		$registrar->register( $post_type );
 	}
 
@@ -182,7 +188,7 @@ class Test_Post_Type_Registrar extends TestCase {
 			// This is a method that is written to populate an array with objects
 			public function meta_data( array $collection ): array {
 				// This mock object, is designed to throw exception if called.
-				$collection[] = new class ('test') extends Meta_Data{
+				$collection[] = new class('test') extends Meta_Data{
 					public function get_meta_type(): string {
 						throw new Exception( 'MOCK EXCEPTION' );
 						return $this->meta_type;
