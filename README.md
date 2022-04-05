@@ -10,9 +10,8 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 
 * Post Types
 * Taxonomies
-* Metaboxes
+* Meta Boxes
 * Meta Data
-
 
 ## Version ##
 
@@ -51,6 +50,8 @@ class Basic_CPT extends Post_Type {
 }
 ```
 
+> [Read more of the CPT Docs](./docs/CPT.md)
+***
 Creates a flat taxonomy for the **Post** Post Type.
 
 ``` php
@@ -65,6 +66,37 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 	public $object_type = array( 'post' );
 }
 ```
+> [Read more of the Taxonomy Docs](./docs/taxonomy.md)
+***
+Creates a basic ajax call.
+
+``` php
+use PinkCrab\Registerables\Ajax;
+
+class Simple_Ajax extends Ajax {
+	// None key
+    protected $nonce_handle = 'basic_ajax_get';
+	
+    // WP Ajax action
+    protected $action       = 'basic_ajax_get';
+
+	/**
+	 * Handles the callback.
+	 */
+	public function callback( ResponseInterface $response ): ResponseInterface {
+		$response_array = array( 'result' => $this->request->getQueryParams()['ajax_get_data'] );
+		return $response->withBody(
+			HTTP_Helper::stream_from_scalar( $response_array )
+		);
+	}
+}
+```
+> [Read more of the Ajax Docs](./docs/ajax.md)
+***
+> [Read more of the Meta Data Docs](./docs/meta_data.md)
+***
+> [Read more of the Metabox Docs](./docs/metabox.md)
+
 
 ## Testing ##
 

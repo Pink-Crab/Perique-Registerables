@@ -66,7 +66,10 @@ class Meta_Data_CPT extends Post_Type {
 			->sanitize( self::META_2['sanitize_callback'] )
 			->permissions( self::META_2['auth_callback'] );
 
+<<<<<<< HEAD
 		return $collection;
+=======
+>>>>>>> update-docs
 	}
 
 }

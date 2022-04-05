@@ -24,7 +24,6 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Meta_Data {
 	/**
@@ -251,10 +250,18 @@ class Meta_Data {
 	/**
 	 * Get meta key
 	 *
+<<<<<<< HEAD
 	 * @return string
 	 */
 	public function get_meta_key(): string {
 		return $this->meta_key;
+=======
+	 * @param Loader|null $loader
+	 * @return void
+	 */
+	public function register( ?Loader $loader = null ): void { // phpcs:ignore
+		register_meta( $this->meta_type, $this->meta_key, $this->parse_args() );
+>>>>>>> update-docs
 	}
 
 	/**

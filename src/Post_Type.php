@@ -304,4 +304,15 @@ abstract class Post_Type implements Registerable {
 	public function meta_boxes( array $collection ): array {
 		return $collection;
 	}
+
+	/**
+	 * Allow for the definition of gutenberg block template for the post type.
+	 *
+	 * If null returned, no template will be defined.
+	 *
+	 * @return array|null
+	 */
+	public function block_template(): ?array {
+		return null;
+	}
 }

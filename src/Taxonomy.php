@@ -96,7 +96,7 @@ abstract class Taxonomy implements Registerable {
 	public $show_in_menu = true;
 
 	/**
-	 * Undocumented variable
+	 * Show taxonomy in post table column
 	 *
 	 * @var bool
 	 */
