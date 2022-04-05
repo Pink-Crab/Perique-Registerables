@@ -7,3 +7,5 @@ clover.xml
 src/Previous
 Oldtests
 .vscode
+.phpunit.result.cache
+clover.xml
