@@ -57,7 +57,7 @@ class Registrar_Factory {
 	public function create_from_registerable( Registerable $registerable ): Registrar {
 		switch ( true ) {
 			case is_a( $registerable, Post_Type::class ):
-				return new Post_Type_Registrar( new Post_Type_Validator() );
+				return new Post_Type_Registrar( new Post_Type_Validator(), new Meta_Data_Registrar() );
 
 			case is_a( $registerable, Taxonomy::class ):
 				return new Taxonomy_Registrar( new Taxonomy_Validator() );
@@ -77,6 +77,15 @@ class Registrar_Factory {
 	 */
 	public function meta_box_registrar( DI_Container $container, Hook_Loader $loader ): Meta_Box_Registrar {
 		return new Meta_Box_Registrar( new Meta_Box_Validator(), $container, $loader );
+	}
+
+	/**
+	 * Returns and instance of the Meta Data registrar.
+	 *
+	 * @return Meta_Data_Registrar
+	 */
+	public function meta_data_registrar(): Meta_Data_Registrar {
+		return new Meta_Data_Registrar();
 	}
 
 }

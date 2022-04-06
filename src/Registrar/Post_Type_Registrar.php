@@ -25,9 +25,11 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
+use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
+use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
@@ -40,8 +42,19 @@ class Post_Type_Registrar implements Registrar {
 	 */
 	protected $validator;
 
-	public function __construct( Post_Type_Validator $validator ) {
-		$this->validator = $validator;
+	/**
+	 * Meta Data Registrar
+	 *
+	 * @var Meta_Data_Registrar
+	 */
+	protected $meta_data_registrar;
+
+	public function __construct(
+		Post_Type_Validator $validator,
+		Meta_Data_Registrar $meta_data_registrar
+	) {
+		$this->validator           = $validator;
+		$this->meta_data_registrar = $meta_data_registrar;
 	}
 
 	/**
@@ -91,19 +104,15 @@ class Post_Type_Registrar implements Registrar {
 		// Attempt to register all Meta for post_type.
 		try {
 			foreach ( $meta_fields as $meta_field ) {
-				// Set object data for this post_type.
-				$meta_field->object_subtype( $post_type->key );
-				$meta_field->meta_type( 'post' );
-
-				$result = register_meta( $meta_field->get_meta_type(), $meta_field->get_meta_key(), $meta_field->parse_args() );
-				if ( ! $result ) {
-					throw new Exception( "Failed to register {$meta_field->get_meta_key()} (meta) for {$post_type->singular} post type" );
-				}
+				$this->meta_data_registrar
+					->register_for_post_types( $meta_field, $post_type->key );
 			}
 		} catch ( \Throwable $th ) {
 			throw new Exception( $th->getMessage() );
 		}
 	}
+
+
 
 	/**
 	 * Compiles the args used to register the post type.

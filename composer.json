@@ -35,7 +35,8 @@
         "object-calisthenics/phpcs-calisthenics-rules": "*",
         "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0",
         "symfony/var-dumper": "4.*",
-        "gin0115/wpunit-helpers": "~1.0.0"
+        "gin0115/wpunit-helpers": "~1.0.0",
+        "pinkcrab/wp-rest-schema": "dev-master"
     },
     "require": {
         "php": ">=7.1.0",
@@ -53,5 +54,6 @@
             "roots/wordpress-core-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
