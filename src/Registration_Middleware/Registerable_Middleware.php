@@ -168,7 +168,10 @@ class Registerable_Middleware implements Registration_Middleware {
 	 * @since 0.7.0
 	 */
 	public function process_shared_meta_box( Shared_Meta_Box_Controller $controller ): void {
-		$registrar = new Shared_Meta_Box_Registrar( $this->get_meta_box_registrar() );
+		$registrar = new Shared_Meta_Box_Registrar(
+			$this->get_meta_box_registrar(),
+			Registrar_Factory::new()->meta_data_registrar()
+		);
 		$registrar->register( $controller );
 	}
 

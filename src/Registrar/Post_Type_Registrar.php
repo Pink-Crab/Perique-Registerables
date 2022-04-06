@@ -25,9 +25,11 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
+use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
+use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
@@ -40,8 +42,19 @@ class Post_Type_Registrar implements Registrar {
 	 */
 	protected $validator;
 
-	public function __construct( Post_Type_Validator $validator ) {
-		$this->validator = $validator;
+	/**
+	 * Meta Data Registrar
+	 *
+	 * @var Meta_Data_Registrar
+	 */
+	protected $meta_data_registrar;
+
+	public function __construct(
+		Post_Type_Validator $validator,
+		Meta_Data_Registrar $meta_data_registrar
+	) {
+		$this->validator           = $validator;
+		$this->meta_data_registrar = $meta_data_registrar;
 	}
 
 	/**
@@ -91,19 +104,15 @@ class Post_Type_Registrar implements Registrar {
 		// Attempt to register all Meta for post_type.
 		try {
 			foreach ( $meta_fields as $meta_field ) {
-				// Set object data for this post_type.
-				$meta_field->object_subtype( $post_type->key );
-				$meta_field->meta_type( 'post' );
-
-				$result = register_meta( $meta_field->get_meta_type(), $meta_field->get_meta_key(), $meta_field->parse_args() );
-				if ( ! $result ) {
-					throw new Exception( "Failed to register {$meta_field->get_meta_key()} (meta) for {$post_type->singular} post type" );
-				}
+				$this->meta_data_registrar
+					->register_for_post_types( $meta_field, $post_type->key );
 			}
 		} catch ( \Throwable $th ) {
 			throw new Exception( $th->getMessage() );
 		}
 	}
+
+
 
 	/**
 	 * Compiles the args used to register the post type.
@@ -194,15 +203,15 @@ class Post_Type_Registrar implements Registrar {
 		// Compose args.
 		$args = array(
 			'labels'                => $labels,
-			'description'           => $post_type->description ?: $post_type->plural,
+			'description'           => $post_type->description ?? $post_type->plural,
 			'hierarchical'          => is_bool( $post_type->hierarchical ) ? $post_type->hierarchical : false,
 			'supports'              => $post_type->supports,
 			'public'                => is_bool( $post_type->public ) ? $post_type->public : true,
 			'show_ui'               => is_bool( $post_type->show_ui ) ? $post_type->show_ui : true,
 			'show_in_menu'          => is_bool( $post_type->show_in_menu ) ? $post_type->show_in_menu : true,
 			'show_in_admin_bar'     => is_bool( $post_type->show_in_admin_bar ) ? $post_type->show_in_admin_bar : true,
-			'menu_position'         => $post_type->menu_position ?: 60,
-			'menu_icon'             => $post_type->dashicon ?: 'dashicons-pets',
+			'menu_position'         => $post_type->menu_position,
+			'menu_icon'             => $post_type->dashicon,
 			'show_in_nav_menus'     => is_bool( $post_type->show_in_nav_menus ) ? $post_type->show_in_nav_menus : true,
 			'publicly_queryable'    => is_bool( $post_type->publicly_queryable ) ? $post_type->publicly_queryable : true,
 			'exclude_from_search'   => is_bool( $post_type->exclude_from_search ) ? $post_type->exclude_from_search : true,
@@ -210,9 +219,9 @@ class Post_Type_Registrar implements Registrar {
 			'query_var'             => is_bool( $post_type->query_var ) ? $post_type->query_var : false,
 			'can_export'            => is_bool( $post_type->can_export ) ? $post_type->can_export : true,
 			'rewrite'               => is_bool( $post_type->rewrite ) ? $post_type->rewrite : false,
-			'capability_type'       => $post_type->capability_type ?: 'page',
-			'capabilities'          => $post_type->capabilities ?: array(),
-			'taxonomies'            => $post_type->taxonomies ?: array(),
+			'capability_type'       => $post_type->capability_type,
+			'capabilities'          => $post_type->capabilities,
+			'taxonomies'            => $post_type->taxonomies,
 			'show_in_rest'          => is_bool( $post_type->show_in_rest ) ? $post_type->show_in_rest : true,
 			'rest_base'             => $post_type->rest_base ?? $post_type->key,
 			'rest_controller_class' => \class_exists( $post_type->rest_controller_class ) ? $post_type->rest_controller_class : \WP_REST_Posts_Controller::class,

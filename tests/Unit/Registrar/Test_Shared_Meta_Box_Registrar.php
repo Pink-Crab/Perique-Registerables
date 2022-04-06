@@ -23,6 +23,7 @@ use PinkCrab\Perique\Services\View\View;
 use PinkCrab\Perique\Interfaces\DI_Container;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
+use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Registrar\Shared_Meta_Box_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Shared_Metabox\Post_Page_Meta_Box;
@@ -34,6 +35,7 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 		$registered = false;
 
 		$mb_registrar = $this->createMock( Meta_Box_Registrar::class );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
 		$mb_registrar->method( 'register' )
 			->with()
 			->will(
@@ -44,7 +46,7 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 				)
 			);
 
-		$registrar = new Shared_Meta_Box_Registrar( $mb_registrar );
+		$registrar = new Shared_Meta_Box_Registrar( $mb_registrar, $md_registrar );
 
 		$registrar->register( $this->createMock( Registerable::class ) );
 
@@ -66,8 +68,9 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 					}
 				)
 			);
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
 
-		$registrar = new Shared_Meta_Box_Registrar( $mb_registrar );
+		$registrar = new Shared_Meta_Box_Registrar( $mb_registrar, $md_registrar );
 
 		$registrar->register( new Post_Page_Meta_Box );
 
@@ -83,7 +86,8 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 		);
 
 		$registrar = new Shared_Meta_Box_Registrar(
-			$this->createMock( Meta_Box_Registrar::class )
+			$this->createMock( Meta_Box_Registrar::class ),
+			$this->createMock( Meta_Data_Registrar::class )
 		);
 
 		$filtered = Objects::invoke_method( $registrar, 'filter_meta_data', array( $data ) );
@@ -109,7 +113,9 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 
 		// Create the registrar with mock validator
 		$mb_registrar = $this->createMock( Meta_Box_Registrar::class );
-		$registrar    = new Shared_Meta_Box_Registrar( $mb_registrar );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+		$md_registrar->method( 'register_for_post_types' )->willThrowException( new Exception( 'Failed to register rr (meta) for post post type' ) );
+		$registrar    = new Shared_Meta_Box_Registrar( $mb_registrar, $md_registrar );
 
 		// Prevent triggering error when calling doing it wrong.
 		add_filter( 'doing_it_wrong_trigger_error', '__return_false' );

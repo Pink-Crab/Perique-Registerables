@@ -84,7 +84,7 @@ class Meta_Data {
 	/**
 	 * Rest schema definitions
 	 *
-	 * @var bool|array<mixed>
+	 * @var bool|array<mixed>|\PinkCrab\WP_Rest_Schema\Argument\Argument
 	 */
 	protected $rest_schema = false;
 
@@ -217,7 +217,7 @@ class Meta_Data {
 	/**
 	 * Set rest schema definitions
 	 *
-	 * @param bool|array<mixed> $rest_schema  Rest schema definitions
+	 * @param bool|array<mixed> $rest_schema|PinkCrab\WP_Rest_Schema\Argument\Argument  Rest schema definitions
 	 * @return self
 	 */
 	public function rest_schema( $rest_schema ): self {
@@ -264,5 +264,14 @@ class Meta_Data {
 	 */
 	public function get_meta_type(): string {
 		return $this->meta_type;
+	}
+
+	/**
+	 * Gets the rest schema definition.
+	 *
+	 * @return bool|array<mixed>|\PinkCrab\WP_Rest_Schema\Argument\Argument
+	 */
+	public function get_rest_schema() {
+		return $this->rest_schema;
 	}
 }
