@@ -46,7 +46,7 @@
         "test": "./vendor/bin/phpunit --coverage-clover clover.xml --testdox --colors=always",
         "coverage": "./vendor/bin/phpunit --coverage-html coverage-report --testdox --colors=always",
         "analyse": "./vendor/bin/phpstan analyse src -l8",
-        "sniff": "./vendor/bin/phpcs src/ -v",
+        "sniff": "./vendor/bin/phpcs --standard=phpcs.xml src/ -v",
         "all": "composer test && composer analyse && composer sniff"
     },
     "config": {
