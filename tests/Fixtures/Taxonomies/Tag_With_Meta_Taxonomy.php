@@ -62,7 +62,7 @@ class Tag_With_Meta_Taxonomy extends Taxonomy {
 		return array(
 			'type'        => 'number',
 			'description' => 'test 2',
-			'default'     => 3.245,
+			'default'     => 3.14,
 		);
 	}
 
