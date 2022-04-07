@@ -111,14 +111,6 @@ class Taxonomy_Registrar implements Registrar {
 		try {
 			foreach ( $meta_fields as $meta_field ) {
 				$this->meta_data_registrar->register_for_term( $meta_field, $taxonomy->slug );
-				/*              // Set object data for this taxonomy.
-				$meta_field->object_subtype( $taxonomy->slug );
-				$meta_field->meta_type( 'term' );
-
-				$result = register_meta( $meta_field->get_meta_type(), $meta_field->get_meta_key(), $meta_field->parse_args() );
-				if ( ! $result ) {
-					throw new Exception( "Failed to register {$meta_field->get_meta_key()} (meta) for {$taxonomy->singular} taxonomy" );
-				} */
 			}
 		} catch ( \Throwable $th ) {
 			throw new Exception( $th->getMessage() );
