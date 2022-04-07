@@ -22,6 +22,7 @@ use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
+use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
 
@@ -33,8 +34,9 @@ class Test_Taxonomy_Registrar extends TestCase {
 		$validator = $this->createMock( Taxonomy_Validator::class );
 		$validator->method( 'validate' )->willReturn( false );
 		$validator->method( 'get_errors' )->willReturn( array( 'error1', 'error2' ) );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
 
-		$registrar = new Taxonomy_Registrar( $validator );
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
 
 		$taxonomy = $this->createMock( Registerable::class );
 
@@ -46,10 +48,11 @@ class Test_Taxonomy_Registrar extends TestCase {
 	/** @testdox If a WP_Error class is returned when registering the taxonomy, this should be translated into an exception */
 	public function test_throws_exception_if_register_post_type_returns_wp_error(): void {
 
-		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator          = $this->createMock( Taxonomy_Validator::class );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
 		$validator->method( 'validate' )->willReturn( true );
 
-		$registrar = new Taxonomy_Registrar( $validator );
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
 
 		$post_type = new class() extends Taxonomy {
 			// Name is capped between 1 and 20
@@ -61,9 +64,9 @@ class Test_Taxonomy_Registrar extends TestCase {
 		$this->expectException( \Exception::class );
 		// Based on the phpunit version.
 		if ( \method_exists( $this, 'expectExceptionMessageMatches' ) ) {
-			$this->expectExceptionMessageMatches(  '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
+			$this->expectExceptionMessageMatches( '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
 		} else {
-			$this->expectExceptionMessageRegExp(  '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
+			$this->expectExceptionMessageRegExp( '#Failed to register 0123456789012345678901234567890123456789 taxonomy (.*)$#' );
 		}
 		$registrar->register( $post_type );
 	}
@@ -73,8 +76,9 @@ class Test_Taxonomy_Registrar extends TestCase {
 		$taxonomy  = new Basic_Hierarchical_Taxonomy();
 		$validator = $this->createMock( Taxonomy_Validator::class );
 		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
 
-		$registrar = new Taxonomy_Registrar( $validator );
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
 
 		// Get the args array for registering taxonomy.
 		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
@@ -127,7 +131,7 @@ class Test_Taxonomy_Registrar extends TestCase {
 
 	/** @testdox When registering the taxonomy the internal filter_args and filter_labels methods should allow to overwrite values */
 	public function test_uses_post_type_label_filters() {
-		$taxonomy       = new class() extends Taxonomy{
+		$taxonomy  = new class() extends Taxonomy{
 			public function filter_labels( array $e ): array {
 				  return array( 'foo' => 'bar' );
 			}
@@ -140,8 +144,9 @@ class Test_Taxonomy_Registrar extends TestCase {
 		};
 		$validator = $this->createMock( Taxonomy_Validator::class );
 		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
 
-		$registrar = new Taxonomy_Registrar( $validator );
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
 
 		// Get the args array for registering taxonomy.
 		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
@@ -154,15 +159,15 @@ class Test_Taxonomy_Registrar extends TestCase {
 	}
 
 
-	/** @testdox When registering meta data for a post type, any exceptions throws should be caught and rethrown */
-	public function test_throws_upper_exception_if_exception_thrown_during_meta_data_registration(): void {
+	/** @testdox When registering meta data for a term, any exceptions throws should be caught and rethrown */
+	public function test_throws_upper_exception_if_exception_thrown_during_meta_data_registration_term(): void {
 		// Mock Tax which uses the failing meta data.
 		$tax = new class() extends Basic_Hierarchical_Taxonomy  {
 
 			// This is a method that is written to populate an array with objects
 			public function meta_data( array $collection ): array {
 				// This mock object, is designed to throw exception if called.
-				$collection[] = new class ('test') extends Meta_Data{
+				$collection[] = new class('test') extends Meta_Data{
 					public function get_meta_type(): string {
 						throw new Exception( 'MOCK EXCEPTION' );
 						return $this->meta_type;
@@ -175,8 +180,10 @@ class Test_Taxonomy_Registrar extends TestCase {
 
 		$validator = $this->createMock( Taxonomy_Validator::class );
 		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+		$md_registrar->method( 'register_for_term' )->willThrowException( new Exception( 'MOCK EXCEPTION' ) );
 
-		$registrar = new Taxonomy_Registrar( $validator );
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
 
 		$this->expectExceptionMessage( 'MOCK EXCEPTION' );
 		$this->expectException( \Exception::class );

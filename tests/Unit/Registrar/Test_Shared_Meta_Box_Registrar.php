@@ -114,7 +114,7 @@ class Test_Shared_Meta_Box_Registrar extends TestCase {
 		// Create the registrar with mock validator
 		$mb_registrar = $this->createMock( Meta_Box_Registrar::class );
 		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
-		$md_registrar->method( 'register_for_post_types' )->willThrowException( new Exception( 'Failed to register rr (meta) for post post type' ) );
+		$md_registrar->method( 'register_for_post_type' )->willThrowException( new Exception( 'Failed to register rr (meta) for post post type' ) );
 		$registrar    = new Shared_Meta_Box_Registrar( $mb_registrar, $md_registrar );
 
 		// Prevent triggering error when calling doing it wrong.

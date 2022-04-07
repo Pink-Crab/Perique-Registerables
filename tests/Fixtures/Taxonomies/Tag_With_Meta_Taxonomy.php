@@ -14,6 +14,8 @@ namespace PinkCrab\Registerables\Tests\Fixtures\Taxonomies;
 
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Meta_Data;
+use PinkCrab\WP_Rest_Schema\Argument\Argument;
+use PinkCrab\WP_Rest_Schema\Argument\Number_Type;
 
 class Tag_With_Meta_Taxonomy extends Taxonomy {
 
@@ -38,6 +40,31 @@ class Tag_With_Meta_Taxonomy extends Taxonomy {
 	);
 
 	public const DEFAULT_TERM_SLUG = 'def_term_for_tax_w_meta';
+
+		// The schema for key 1 as array.
+	public static function meta_rest_key_1_schema(): array {
+		return array(
+			'type'        => 'string',
+			'default'     => 'default value 1',
+			'description' => 'test 1',
+		);
+	}
+
+	// The schema for key 2 as Argument type
+	public static function meta_rest_key_2_schema(): Argument {
+		return Number_Type::on( self::META_2['key'] )
+			->description( 'test 2' )
+			->default( 3.14 );
+	}
+
+	// Returns as an array for comparison.
+	public static function meta_rest_key_2_schema_as_array(): array {
+		return array(
+			'type'        => 'number',
+			'description' => 'test 2',
+			'default'     => 3.245,
+		);
+	}
 
 	public $slug         = 'tag_with_meta';
 	public $singular     = 'Tag with meta Taxonomy';
@@ -66,7 +93,8 @@ class Tag_With_Meta_Taxonomy extends Taxonomy {
 			->description( self::META_1['description'] )
 			->single( self::META_1['single'] )
 			->sanitize( self::META_1['sanitize_callback'] )
-			->permissions( self::META_1['auth_callback'] );
+			->permissions( self::META_1['auth_callback'] )
+			->rest_schema( self::meta_rest_key_1_schema() );
 
 		$collection[] = ( new Meta_Data( self::META_2['key'] ) )
 			->type( self::META_2['type'] )
@@ -74,7 +102,8 @@ class Tag_With_Meta_Taxonomy extends Taxonomy {
 			->description( self::META_2['description'] )
 			->single( self::META_2['single'] )
 			->sanitize( self::META_2['sanitize_callback'] )
-			->permissions( self::META_2['auth_callback'] );
+			->permissions( self::META_2['auth_callback'] )
+			->rest_schema( self::meta_rest_key_2_schema() );
 
 		return $collection;
 	}

@@ -74,5 +74,22 @@ class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 		$this->assertEquals( Tag_With_Meta_Taxonomy::META_2['default'], $meta2 );
 	}
 
+	/** @testdox When defining meta in the Taxonomies, term meta_data array, should see these meta values created within wp core, when we register the taxonomy. */
+	public function test_meta_data_registered(): void {
+		// Check post type has 2 meta fields applied.
+		$this->assertCount( 2, $this->meta_data_inspector->for_taxonomies( $this->taxonomy->slug ) );
+
+		// Meta 1 Values.
+		$meta1 = $this->meta_data_inspector->find_term_meta( $this->taxonomy->slug, Tag_With_Meta_Taxonomy::META_1['key'] );
+		$this->assertInstanceOf( Meta_Data_Entity::class, $meta1 );
+		$this->assertEquals( Tag_With_Meta_Taxonomy::meta_rest_key_1_schema(), $meta1->show_in_rest );
+
+
+		// Meta 2 Values.
+		$meta2 = $this->meta_data_inspector->find_term_meta( $this->taxonomy->slug, Tag_With_Meta_Taxonomy::META_2['key'] );
+		$this->assertInstanceOf( Meta_Data_Entity::class, $meta2 );
+		$this->assertEquals( Tag_With_Meta_Taxonomy::meta_rest_key_2_schema_as_array(), $meta2->show_in_rest );
+	}
+
 
 }

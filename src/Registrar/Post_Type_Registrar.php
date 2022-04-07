@@ -105,7 +105,7 @@ class Post_Type_Registrar implements Registrar {
 		try {
 			foreach ( $meta_fields as $meta_field ) {
 				$this->meta_data_registrar
-					->register_for_post_types( $meta_field, $post_type->key );
+					->register_for_post_type( $meta_field, $post_type->key );
 			}
 		} catch ( \Throwable $th ) {
 			throw new Exception( $th->getMessage() );

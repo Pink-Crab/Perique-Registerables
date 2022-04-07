@@ -81,7 +81,7 @@ class Shared_Meta_Box_Registrar implements Registrar {
 		foreach ( $this->filter_meta_data( $meta_data ) as $meta_field ) {
 			// Register meta data for each post type.
 			foreach ( $meta_box->screen as $post_type ) {
-				$this->meta_data_registrar->register_for_post_types( $meta_field, $post_type );
+				$this->meta_data_registrar->register_for_post_type( $meta_field, $post_type );
 			}
 		}
 
