@@ -37,8 +37,20 @@ class Meta_Data_Registrar {
 	 * @return bool
 	 * @throws \Exception if fails to register meta data.
 	 */
-	public function register_for_post_types( Meta_Data $meta, string $post_type ):bool {
+	public function register_for_post_type( Meta_Data $meta, string $post_type ):bool {
 		return $this->register_meta( $meta, 'post', $post_type );
+	}
+
+	/**
+	 * Registers meta data for terms.
+	 *
+	 * @param \PinkCrab\Registerables\Meta_Data $meta
+	 * @param string $taxonomy
+	 * @return bool
+	 * @throws \Exception if fails to register meta data.
+	 */
+	public function register_for_term( Meta_Data $meta, string $taxonomy ):bool {
+		return $this->register_meta( $meta, 'term', $taxonomy );
 	}
 
 	/**

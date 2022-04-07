@@ -75,15 +75,15 @@ class Meta_Box {
 	/**
 	 * Metabox context/position
 	 *
-	 * @var string normal|side
+	 * @var 'advanced'|'normal'|'side'
 	 * @required
 	 */
 	public $context = 'normal';
 
 	/**
-	 * What is the loading priroity/
+	 * What is the loading priority
 	 *
-	 * @var string
+	 * @var 'core'|'default'|'high'|'low'
 	 */
 	public $priority = 'default';
 

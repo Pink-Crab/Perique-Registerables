@@ -202,7 +202,7 @@ class Test_Post_Type_Registrar extends TestCase {
 		$validator = $this->createMock( Post_Type_Validator::class );
 		$validator->method( 'validate' )->willReturn( true );
 		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
-		$md_registrar->method( 'register_for_post_types' )->willThrowException( new Exception( 'MOCK EXCEPTION' ) );
+		$md_registrar->method( 'register_for_post_type' )->willThrowException( new Exception( 'MOCK EXCEPTION' ) );
 
 		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
 
@@ -210,10 +210,6 @@ class Test_Post_Type_Registrar extends TestCase {
 		$this->expectException( \Exception::class );
 
 		Objects::invoke_method( $registrar, 'register_meta_data', array( $cpt ) );
-	}
-
-	public function test_can_define_meta_schema_as_wp_rest_schema_type(): void {
-		# code...
 	}
 
 }

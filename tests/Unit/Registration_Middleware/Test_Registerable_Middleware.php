@@ -26,7 +26,7 @@ class Test_Registerable_Middleware extends TestCase {
 
 	/** @testdox It should be possible to load the middleware with an instance of the hook loader. */
 	public function test_can_populate_with_hook_loader(): void {
-		$middleware = new Registerable_Middleware;
+		$middleware = new Registerable_Middleware();
 
 		$loader = $this->createMock( Hook_Loader::class );
 		$middleware->set_hook_loader( $loader );
@@ -36,7 +36,7 @@ class Test_Registerable_Middleware extends TestCase {
 
 	/** @testdox It should be possible to load the middleware with an instance of the DI Container. */
 	public function test_can_populate_with_di_container(): void {
-		$middleware = new Registerable_Middleware;
+		$middleware = new Registerable_Middleware();
 
 		$container = $this->createMock( DI_Container::class );
 		$middleware->set_di_container( $container );
@@ -47,17 +47,17 @@ class Test_Registerable_Middleware extends TestCase {
 	/** @testdox The middleware should skip any objects which are not registerable instances. */
 	public function test_doesnt_process_none_registerable_objects(): void {
 		$loader     = new Hook_Loader();
-		$middleware = new Registerable_Middleware;
+		$middleware = new Registerable_Middleware();
 		$middleware->set_hook_loader( $loader );
 
-		$middleware->process( new stdClass );
+		$middleware->process( new stdClass() );
 		$this->assertEquals( 0, Objects::get_property( $loader, 'hooks' )->count() );
 	}
 
 	/** @testdox When registering a registerable, the register_xx function should be called on init. */
 	public function test_registers_registerable(): void {
 		$loader     = new Hook_Loader();
-		$middleware = new Registerable_Middleware;
+		$middleware = new Registerable_Middleware();
 		$middleware->set_hook_loader( $loader );
 
 		$middleware->process( $this->createMock( Taxonomy::class ) );
@@ -73,5 +73,19 @@ class Test_Registerable_Middleware extends TestCase {
 
 		$this->assertCount( 1, $hooks );
 		$this->assertContains( 'init', $hooks );
+	}
+
+	/** @testdox If an unhandled class which implements Registerable it should silently skip. */
+	public function test_unhandled_registerable_silently_skips(): void {
+		$loader     = new Hook_Loader();
+		$middleware = new Registerable_Middleware();
+		$middleware->set_hook_loader( $loader );
+		$registerable = new class() implements Registerable {
+
+		};
+		$middleware->process( $registerable );
+
+		$hooks = Objects::get_property( $loader, 'hooks' )->export();
+		$this->assertEmpty( $hooks );
 	}
 }

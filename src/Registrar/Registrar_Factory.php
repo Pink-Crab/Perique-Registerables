@@ -60,7 +60,7 @@ class Registrar_Factory {
 				return new Post_Type_Registrar( new Post_Type_Validator(), new Meta_Data_Registrar() );
 
 			case is_a( $registerable, Taxonomy::class ):
-				return new Taxonomy_Registrar( new Taxonomy_Validator() );
+				return new Taxonomy_Registrar( new Taxonomy_Validator(), new Meta_Data_Registrar() );
 
 			default:
 				$type = get_class( $registerable );
