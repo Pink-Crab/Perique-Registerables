@@ -212,8 +212,4 @@ class Test_Post_Type_Registrar extends TestCase {
 		Objects::invoke_method( $registrar, 'register_meta_data', array( $cpt ) );
 	}
 
-	public function test_can_define_meta_schema_as_wp_rest_schema_type(): void {
-		# code...
-	}
-
 }
