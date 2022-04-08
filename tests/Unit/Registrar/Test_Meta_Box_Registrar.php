@@ -180,11 +180,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 		$this->assertCount( 2, $hooks );
 		
-<<<<<<< HEAD
 		// Manually trigger the current screen action. (avoids issue with old versions of WP)
-=======
-		// Manuall trigger the current screen action. (avoids issue with old versions of WP)
->>>>>>> 23d2140aee5756f36a52d3abd8fa1bed8c2310a6
 		$hooks[1]->get_callback()();
 
 		// The 2 hooks should also be added.
@@ -227,11 +223,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 
-<<<<<<< HEAD
 		// Manually trigger the current screen action. (avoids issue with old versions of WP)
-=======
-		// Manuall trigger the current screen action. (avoids issue with old versions of WP)
->>>>>>> 23d2140aee5756f36a52d3abd8fa1bed8c2310a6
 		$hooks[1]->get_callback()();
 
 		// Should have 2 (register MB and defer action)
