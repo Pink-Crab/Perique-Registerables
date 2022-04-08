@@ -151,7 +151,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 	public function test_can_add_additional_actions_for_valid_screens(): void {
 		// Mock current screen
 		global $current_screen;
-		$current_screen = (object) array( 'post_type' => 'post' );
+		$current_screen = (object) array( 'post_type' => 'post', 'is_block_editor' => false );
 
 		// Setup the validator, DI Container and Loader
 		$validator = $this->createMock( Meta_Box_Validator::class );
@@ -193,7 +193,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 	public function test_not_add_additional_actions_for_invalid_screens(): void {
 		// Mock current screen
 		global $current_screen;
-		$current_screen = (object) array( 'post_type' => 'post' );
+		$current_screen = (object) array( 'post_type' => 'post', 'is_block_editor' => false  );
 
 		// Setup the validator, DI Container and Loader
 		$validator = $this->createMock( Meta_Box_Validator::class );
