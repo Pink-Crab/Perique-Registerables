@@ -43,6 +43,7 @@ abstract class Shared_Meta_Box_Controller implements Registerable {
 	 *
 	 * @param Meta_Data[] $meta_data
 	 * @return Meta_Data[]
+	 * @codeCoverageIgnore
 	 */
 	public function meta_data( array $meta_data ): array {
 		return $meta_data;

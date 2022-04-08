@@ -39,18 +39,18 @@ class Test_Shared_Meta_Box_Controller extends WP_UnitTestCase {
 	public function test_can_get_meta_data(): void {
 		$controller = new Post_Page_Meta_Box();
 		$meta_data  = Objects::invoke_method( $controller, 'meta_data', array( array() ) );
-
 		$this->assertCount( 2, $meta_data );
 
 		$this->assertInstanceOf( Meta_Data::class, $meta_data[0] );
-		$this->assertContains( 'post', $meta_data[0]->get_meta_type() );
-		$this->assertContains( 'pnp_string', $meta_data[0]->get_meta_key() );
+		$this->assertStringContainsString( 'post', $meta_data[0]->get_meta_type() );
+		$this->assertStringContainsString( 'pnp_string', $meta_data[0]->get_meta_key() );
 
 		$this->assertInstanceOf( Meta_Data::class, $meta_data[1] );
-		$this->assertContains( 'post', $meta_data[1]->get_meta_type() );
-		$this->assertContains( 'pnp_words', $meta_data[1]->get_meta_key() );
+		$this->assertStringContainsString( 'post', $meta_data[1]->get_meta_type() );
+		$this->assertStringContainsString( 'pnp_words', $meta_data[1]->get_meta_key() );
 	}
 
+	/** @testdox If not meta data is supplied to the controller, it should return an empty array */
 	public function test_meta_data_returns_empty_array_if_not_defined() {
 		$controller = $this->createMock( Shared_Meta_Box_Controller::class );
 

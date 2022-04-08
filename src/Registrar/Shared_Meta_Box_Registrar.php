@@ -30,6 +30,7 @@ use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Shared_Meta_Box_Controller;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
+use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 class Shared_Meta_Box_Registrar implements Registrar {
@@ -41,8 +42,19 @@ class Shared_Meta_Box_Registrar implements Registrar {
 	 */
 	protected $meta_box_registrar;
 
-	public function __construct( Meta_Box_Registrar $meta_box_registrar ) {
-		$this->meta_box_registrar = $meta_box_registrar;
+	/**
+	 * The Meta Data Registrar
+	 *
+	 * @var Meta_Data_Registrar
+	 */
+	protected $meta_data_registrar;
+
+	public function __construct(
+		Meta_Box_Registrar $meta_box_registrar,
+		Meta_Data_Registrar $meta_data_registrar
+	) {
+		$this->meta_box_registrar  = $meta_box_registrar;
+		$this->meta_data_registrar = $meta_data_registrar;
 	}
 
 	/**
@@ -69,7 +81,7 @@ class Shared_Meta_Box_Registrar implements Registrar {
 		foreach ( $this->filter_meta_data( $meta_data ) as $meta_field ) {
 			// Register meta data for each post type.
 			foreach ( $meta_box->screen as $post_type ) {
-				$this->register_meta_data_for_post_type( $meta_field, $post_type );
+				$this->meta_data_registrar->register_for_post_type( $meta_field, $post_type );
 			}
 		}
 
@@ -89,24 +101,4 @@ class Shared_Meta_Box_Registrar implements Registrar {
 			}
 		);
 	}
-
-	/**
-	 * Registers the Meta Data for a give post type.
-	 *
-	 * @param Meta_Data $meta_data
-	 * @param string $post_type
-	 * @return void
-	 */
-	protected function register_meta_data_for_post_type( Meta_Data $meta_data, string $post_type ): void {
-		// Clone and set the post type, while enforcing it as a post meta.
-		$meta_data = clone $meta_data;
-		$meta_data->object_subtype( $post_type );
-		$meta_data->meta_type( 'post' );
-		$result = register_meta( $meta_data->get_meta_type(), $meta_data->get_meta_key(), $meta_data->parse_args() );
-		if ( ! $result ) {
-			throw new \Exception( "Failed to register {$meta_data->get_meta_key()} (meta) for {$post_type} post type" );
-		}
-	}
-
-
 }

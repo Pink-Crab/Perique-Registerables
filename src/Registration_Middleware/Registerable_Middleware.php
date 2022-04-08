@@ -149,11 +149,13 @@ class Registerable_Middleware implements Registration_Middleware {
 		$meta_boxes = $post_type_registerable->meta_boxes( array() );
 
 		if ( ! empty( $meta_boxes ) ) {
+
 			// Create the registrar
 			$meta_box_registrar = $this->get_meta_box_registrar();
 
 			// Register each meta box.
 			foreach ( $meta_boxes as $meta_box ) {
+				$meta_box->screen( $post_type_registerable->key );
 				$meta_box_registrar->register( $meta_box );
 			}
 		}
@@ -168,7 +170,10 @@ class Registerable_Middleware implements Registration_Middleware {
 	 * @since 0.7.0
 	 */
 	public function process_shared_meta_box( Shared_Meta_Box_Controller $controller ): void {
-		$registrar = new Shared_Meta_Box_Registrar( $this->get_meta_box_registrar() );
+		$registrar = new Shared_Meta_Box_Registrar(
+			$this->get_meta_box_registrar(),
+			Registrar_Factory::new()->meta_data_registrar()
+		);
 		$registrar->register( $controller );
 	}
 

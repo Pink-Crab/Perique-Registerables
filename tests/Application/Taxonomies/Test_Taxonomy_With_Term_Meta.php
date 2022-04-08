@@ -15,7 +15,9 @@ namespace PinkCrab\Registerables\Tests\Application\Taxonomies;
 
 use WP_UnitTestCase;
 use PinkCrab\Loader\Hook_Loader;
+use Gin0115\WPUnit_Helpers\WP\Meta_Data_Inspector;
 use PinkCrab\Registerables\Tests\App_Helper_Trait;
+use Gin0115\WPUnit_Helpers\WP\Entities\Meta_Data_Entity;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Tag_With_Meta_Taxonomy;
 
 class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
@@ -24,6 +26,9 @@ class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 
 	/** @return array<\WP_Taxonomy> */
 	protected $taxonomy;
+
+	/** @var Meta_Data_Inspector */
+	protected $meta_data_inspector;
 
 	/**
 	 * Reset the app data after each test.
@@ -38,6 +43,9 @@ class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 		$this->taxonomy = new Tag_With_Meta_Taxonomy();
 		self::create_with_registerables( Tag_With_Meta_Taxonomy::class )->boot();
 		do_action( 'init' );
+
+		// Build inspector.
+		$this->meta_data_inspector = Meta_Data_Inspector::initialise();
 	}
 
 	/** @return array<\WP_Term> */
@@ -72,6 +80,23 @@ class Test_Taxonomy_With_Term_Meta extends WP_UnitTestCase {
 		$this->assertEquals( Tag_With_Meta_Taxonomy::META_1['default'], $meta1 );
 		$meta2 = get_term_meta( $term_id, Tag_With_Meta_Taxonomy::META_2['key'], true );
 		$this->assertEquals( Tag_With_Meta_Taxonomy::META_2['default'], $meta2 );
+	}
+
+	/** @testdox When defining meta in the Taxonomies, term meta_data array, should see these meta values created within wp core, when we register the taxonomy. */
+	public function test_meta_data_registered_taxonomy(): void {
+		// Check post type has 2 meta fields applied.
+		$this->assertCount( 2, $this->meta_data_inspector->for_taxonomies( $this->taxonomy->slug ) );
+
+		// Meta 1 Values.
+		$meta1 = $this->meta_data_inspector->find_term_meta( $this->taxonomy->slug, Tag_With_Meta_Taxonomy::META_1['key'] );
+		$this->assertInstanceOf( Meta_Data_Entity::class, $meta1 );
+		$this->assertEquals( Tag_With_Meta_Taxonomy::meta_rest_key_1_schema(), $meta1->show_in_rest );
+
+
+		// Meta 2 Values.
+		$meta2 = $this->meta_data_inspector->find_term_meta( $this->taxonomy->slug, Tag_With_Meta_Taxonomy::META_2['key'] );
+		$this->assertInstanceOf( Meta_Data_Entity::class, $meta2 );
+		$this->assertEquals( Tag_With_Meta_Taxonomy::meta_rest_key_2_schema_as_array(), $meta2->show_in_rest );
 	}
 
 
