@@ -224,7 +224,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		// Should have 2 (register MB and defer action)
 		$this->assertCount( 2, $hooks );
-dump($current_screen);
+
 		// The 2 hooks should not be added due to incorrect screen.
 		$this->assertFalse( has_action( 'init_for_page', '__return_false' ) );
 		$this->assertFalse( has_action( 'foo_for_page', '__return_true' ) );
