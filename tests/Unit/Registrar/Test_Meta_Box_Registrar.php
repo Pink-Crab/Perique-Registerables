@@ -138,16 +138,20 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 
-		$this->assertCount( 1, $hooks );
+		$this->assertCount( 2, $hooks );
 		$this->assertEquals( 'action', $hooks[0]->get_type() );
 		$this->assertEquals( 'add_meta_boxes', $hooks[0]->get_handle() );
+
+		// Deferred meta box action on current screen
+		$this->assertEquals( 'action', $hooks[1]->get_type() );
+		$this->assertEquals( 'current_screen', $hooks[1]->get_handle() );
 	}
 
 	/** @testdox When a metabox is registered any hooks should be added if the we are on the current screen. */
 	public function test_can_add_additional_actions_for_valid_screens(): void {
 		// Mock current screen
 		global $current_screen;
-		$current_screen = (object) array( 'post_type' => 'post' );
+		$current_screen = (object) array( 'post_type' => 'post', 'is_block_editor' => false );
 
 		// Setup the validator, DI Container and Loader
 		$validator = $this->createMock( Meta_Box_Validator::class );
@@ -162,26 +166,26 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		$mb_post = Meta_Box::normal( 'mb_post' )
 			->screen( 'post' )
-			->add_action( 'init', '__return_false' )
-			->add_action( 'foo', '__return_true' )
+			->add_action( 'init_for_post', '__return_false' )
+			->add_action( 'foo_for_post', '__return_true' )
 			->view( '__return_true' );
 
 		$registrar->register( $mb_post );
 
 		// Should now have add_meta_box hook added to loader.
+		$loader->register_hooks();
+
+		// Should have 3 (register MB and trigger hooks)
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
+		$this->assertCount( 2, $hooks );
+		
+		// Manuall trigger the current screen action. (avoids issue with old versions of WP)
+		$hooks[1]->get_callback()();
 
-		// Should have 3 (register MB and its Actions)
-		$this->assertCount( 3, $hooks );
-
-		$this->assertEquals( 'action', $hooks[1]->get_type() );
-		$this->assertEquals( 'init', $hooks[1]->get_handle() );
-		$this->assertEquals( '__return_false', $hooks[1]->get_callback() );
-
-		$this->assertEquals( 'action', $hooks[2]->get_type() );
-		$this->assertEquals( 'foo', $hooks[2]->get_handle() );
-		$this->assertEquals( '__return_true', $hooks[2]->get_callback() );
+		// The 2 hooks should also be added.
+		$this->assertEquals( 10, has_action( 'init_for_post', '__return_false' ) );
+		$this->assertEquals( 10, has_action( 'foo_for_post', '__return_true' ) );
 
 		// Reset
 		$current_screen = null;
@@ -191,7 +195,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 	public function test_not_add_additional_actions_for_invalid_screens(): void {
 		// Mock current screen
 		global $current_screen;
-		$current_screen = (object) array( 'post_type' => 'post' );
+		$current_screen = (object) array( 'post_type' => 'post', 'is_block_editor' => false  );
 
 		// Setup the validator, DI Container and Loader
 		$validator = $this->createMock( Meta_Box_Validator::class );
@@ -206,18 +210,28 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		$mb_page = Meta_Box::normal( 'mb_page' )
 			->screen( 'page' )
-			->add_action( 'init', '__return_false' )
-			->add_action( 'foo', '__return_true' )
+			->add_action( 'init_for_page', '__return_false' )
+			->add_action( 'foo_for_page', '__return_true' )
 			->view( '__return_true' );
 
 		$registrar->register( $mb_page );
 
 		// Should now have add_meta_box hook added to loader.
+		$loader->register_hooks();
+
+		// Should now have add_meta_box hook added to loader.
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 
-		// Should have 1 (register MB and not its Actions)
-		$this->assertCount( 1, $hooks );
+		// Manuall trigger the current screen action. (avoids issue with old versions of WP)
+		$hooks[1]->get_callback()();
+
+		// Should have 2 (register MB and defer action)
+		$this->assertCount( 2, $hooks );
+
+		// The 2 hooks should not be added due to incorrect screen.
+		$this->assertFalse( has_action( 'init_for_page', '__return_false' ) );
+		$this->assertFalse( has_action( 'foo_for_page', '__return_true' ) );
 
 		// Reset
 		$current_screen = null;

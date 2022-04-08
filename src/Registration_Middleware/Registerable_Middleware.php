@@ -149,11 +149,13 @@ class Registerable_Middleware implements Registration_Middleware {
 		$meta_boxes = $post_type_registerable->meta_boxes( array() );
 
 		if ( ! empty( $meta_boxes ) ) {
+
 			// Create the registrar
 			$meta_box_registrar = $this->get_meta_box_registrar();
 
 			// Register each meta box.
 			foreach ( $meta_boxes as $meta_box ) {
+				$meta_box->screen( $post_type_registerable->key );
 				$meta_box_registrar->register( $meta_box );
 			}
 		}

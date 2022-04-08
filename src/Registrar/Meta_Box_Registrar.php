@@ -99,12 +99,19 @@ class Meta_Box_Registrar {
 				);
 			}
 		);
-		// If we have any hook calls, add them to the loader.
-		if ( $this->is_active( $meta_box ) && ! empty( $meta_box->actions ) ) {
-			foreach ( $meta_box->actions as $handle => $hook ) {
-				$this->loader->action( (string) $handle, $hook['callback'], $hook['priority'], $hook['params'] );
+
+		// Deffer adding meta box hooks until we can asses the current screen.
+		$this->loader->action(
+			'current_screen',
+			function() use ( $meta_box ) {
+				// If we have any hook calls, add them to the loader.
+				if ( $this->is_active( $meta_box ) && ! empty( $meta_box->actions ) ) {
+					foreach ( $meta_box->actions as $handle => $hook ) {
+						add_action( (string) $handle, $hook['callback'], $hook['priority'], $hook['params'] );
+					}
+				}
 			}
-		}
+		);
 
 	}
 
