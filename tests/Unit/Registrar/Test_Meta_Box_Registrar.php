@@ -171,6 +171,10 @@ class Test_Meta_Box_Registrar extends TestCase {
 		// Should now have add_meta_box hook added to loader.
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
+		$this->assertCount( 2, $hooks );
+		
+		// Manually trigger the current screen action. (avoids issue with old versions of WP)
+		$hooks[1]->get_callback()();
 
 		// Should have 3 (register MB and its Actions)
 		$this->assertCount( 3, $hooks );
@@ -216,8 +220,15 @@ class Test_Meta_Box_Registrar extends TestCase {
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 
-		// Should have 1 (register MB and not its Actions)
-		$this->assertCount( 1, $hooks );
+		// Manually trigger the current screen action. (avoids issue with old versions of WP)
+		$hooks[1]->get_callback()();
+
+		// Should have 2 (register MB and defer action)
+		$this->assertCount( 2, $hooks );
+
+		// The 2 hooks should not be added due to incorrect screen.
+		$this->assertFalse( has_action( 'init_for_page', '__return_false' ) );
+		$this->assertFalse( has_action( 'foo_for_page', '__return_true' ) );
 
 		// Reset
 		$current_screen = null;
