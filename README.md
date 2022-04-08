@@ -96,7 +96,7 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
-* 0.7.1 - Fixed bug where meta box hooks didn't fire due to race conditions getting current screen on init. Now deferred loading to meta box hooks on current_screen action.
+* 0.7.1 - Fixed bug where meta box hooks didn't fire due to race conditions getting current screen on init. Now deferred loading to meta box hooks on current_screen action. Extended support for RestSchema including use of the PinkCrab WP Rest Schema lib. Various other small fixes.
 * 0.7.0 - Introduced the Shared Meta Box Controller for registering meta boxes and meta data for shared post types.
 * 0.6.4 - Added in a filter for meta boxes which allows for setting of view args based on the current post being displayed. Allows for passing of meta values to the view, without using get_post_meta in the view it self.
 * 0.6.3 - Now generates meaningful errors when Post Type, Taxonomy or Meta Box fails validation.
