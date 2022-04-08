@@ -137,10 +137,14 @@ class Test_Meta_Box_Registrar extends TestCase {
 		// Should now have add_meta_box hook added to loader.
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
-
-		$this->assertCount( 1, $hooks );
+		dump( $hooks );
+		$this->assertCount( 2, $hooks );
 		$this->assertEquals( 'action', $hooks[0]->get_type() );
 		$this->assertEquals( 'add_meta_boxes', $hooks[0]->get_handle() );
+
+		// Deferred meta box action on current screen
+		$this->assertEquals( 'action', $hooks[1]->get_type() );
+		$this->assertEquals( 'current_screen', $hooks[1]->get_handle() );
 	}
 
 	/** @testdox When a metabox is registered any hooks should be added if the we are on the current screen. */
@@ -162,26 +166,24 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		$mb_post = Meta_Box::normal( 'mb_post' )
 			->screen( 'post' )
-			->add_action( 'init', '__return_false' )
-			->add_action( 'foo', '__return_true' )
+			->add_action( 'init_for_post', '__return_false' )
+			->add_action( 'foo_for_post', '__return_true' )
 			->view( '__return_true' );
 
 		$registrar->register( $mb_post );
 
 		// Should now have add_meta_box hook added to loader.
+		$loader->register_hooks();
+		do_action( 'current_screen' );
+
+		// Should have 3 (register MB and trigger hooks)
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
+		$this->assertCount( 2, $hooks );
 
-		// Should have 3 (register MB and its Actions)
-		$this->assertCount( 3, $hooks );
-
-		$this->assertEquals( 'action', $hooks[1]->get_type() );
-		$this->assertEquals( 'init', $hooks[1]->get_handle() );
-		$this->assertEquals( '__return_false', $hooks[1]->get_callback() );
-
-		$this->assertEquals( 'action', $hooks[2]->get_type() );
-		$this->assertEquals( 'foo', $hooks[2]->get_handle() );
-		$this->assertEquals( '__return_true', $hooks[2]->get_callback() );
+		// The 2 hooks should also be added.
+		$this->assertEquals( 10, has_action( 'init_for_post', '__return_false' ) );
+		$this->assertEquals( 10, has_action( 'foo_for_post', '__return_true' ) );
 
 		// Reset
 		$current_screen = null;
@@ -206,18 +208,26 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		$mb_page = Meta_Box::normal( 'mb_page' )
 			->screen( 'page' )
-			->add_action( 'init', '__return_false' )
-			->add_action( 'foo', '__return_true' )
+			->add_action( 'init_for_page', '__return_false' )
+			->add_action( 'foo_for_page', '__return_true' )
 			->view( '__return_true' );
 
 		$registrar->register( $mb_page );
 
 		// Should now have add_meta_box hook added to loader.
+		$loader->register_hooks();
+		do_action( 'current_screen' );
+
+		// Should now have add_meta_box hook added to loader.
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 
-		// Should have 1 (register MB and not its Actions)
-		$this->assertCount( 1, $hooks );
+		// Should have 2 (register MB and defer action)
+		$this->assertCount( 2, $hooks );
+dump($current_screen);
+		// The 2 hooks should not be added due to incorrect screen.
+		$this->assertFalse( has_action( 'init_for_page', '__return_false' ) );
+		$this->assertFalse( has_action( 'foo_for_page', '__return_true' ) );
 
 		// Reset
 		$current_screen = null;
