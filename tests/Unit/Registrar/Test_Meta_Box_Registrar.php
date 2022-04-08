@@ -137,7 +137,7 @@ class Test_Meta_Box_Registrar extends TestCase {
 		// Should now have add_meta_box hook added to loader.
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
-		dump( $hooks );
+
 		$this->assertCount( 2, $hooks );
 		$this->assertEquals( 'action', $hooks[0]->get_type() );
 		$this->assertEquals( 'add_meta_boxes', $hooks[0]->get_handle() );
@@ -174,12 +174,14 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		// Should now have add_meta_box hook added to loader.
 		$loader->register_hooks();
-		do_action( 'current_screen' );
 
 		// Should have 3 (register MB and trigger hooks)
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
 		$this->assertCount( 2, $hooks );
+		
+		// Manuall trigger the current screen action. (avoids issue with old versions of WP)
+		$hooks[1]->get_callback()();
 
 		// The 2 hooks should also be added.
 		$this->assertEquals( 10, has_action( 'init_for_post', '__return_false' ) );
@@ -216,11 +218,13 @@ class Test_Meta_Box_Registrar extends TestCase {
 
 		// Should now have add_meta_box hook added to loader.
 		$loader->register_hooks();
-		do_action( 'current_screen' );
 
 		// Should now have add_meta_box hook added to loader.
 		$hooks = Objects::get_property( $loader, 'hooks' );
 		$hooks = Objects::get_property( $hooks, 'hooks' );
+
+		// Manuall trigger the current screen action. (avoids issue with old versions of WP)
+		$hooks[1]->get_callback()();
 
 		// Should have 2 (register MB and defer action)
 		$this->assertCount( 2, $hooks );
