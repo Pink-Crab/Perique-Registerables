@@ -47,37 +47,37 @@ The taxonomy description.
 Which post types should this taxonomy be applied to.
 
 ### $hierarchical
-> @var bool
+> @var bool  
 > @default false
 
 Should this taxonomy have a hierarchy
 
 ### $show_ui
-> @var bool
+> @var bool  
 > @default true
 
 Should render WP_Admin UI
 
 ### $show_in_menu
-> @var bool
+> @var bool  
 > @default true
 
 Show in WP_Admin menu list.
 
 ### $show_admin_column
-> @var bool
+> @var bool  
 > @default true
 
 Show in Post Types list table of posts
 
 ### $show_tagcloud
-> @var bool
+> @var bool  
 > @default false
 
 Include in the tag cloud.
 
 ### $show_in_quick_edit
-> @var bool
+> @var bool  
 > @default true
 
 Inlcude in quick edit.
@@ -94,7 +94,7 @@ Should terms remain in the order added (if false will be alphabetical)
 Custom callback for rendering the Term meta box on edit post
 
 ### $show_in_rest
-> @var bool
+> @var bool  
 > @default false
 
 Include in rest
@@ -106,7 +106,7 @@ Base rest path. If not set, will use taxonomy slug
 
 
 ### $rest_controller_class
-> @var string
+> @var string  
 > @default 'WP_REST_Terms_Controller'
 
 xx
