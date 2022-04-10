@@ -90,7 +90,7 @@ The callback to render the view. This can be omitted if using `Renderable` to re
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->view = function(\WP_Post $post, array $args): void {
-    echo 'Hi from my meta_box';
+  echo 'Hi from my meta_box';
 };
 ```
 > Any additional vars passed using `view_vars` would be accessible as `$args['args']['custom_key1']`
@@ -101,8 +101,8 @@ $meta_box->view = function(\WP_Post $post, array $args): void {
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->view_vars = [
-    'key1' => 'value1',
-    'key2' => 'value2',
+  'key1' => 'value1',
+  'key2' => 'value2',
 ]
 ```
 
@@ -122,8 +122,8 @@ $meta_box->view_template = 'path/to/template';
 
 ```php
 $meta_box->view_vars = [
-    'key1' => 'value1',
-    'key2' => 'value2',
+  'key1' => 'value1',
+  'key2' => 'value2',
 ]
 
 ###################################
@@ -140,9 +140,9 @@ This allows setting a callable to be called when the args are passed to the temp
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->view_vars(['key1' => 'value1']);
 $meta_box->view_data_filter = function(\WP_Post $post, array $args): array {
-    $args['meta_value1'] => get_post_meta($post->ID, 'foo', true);
-    // $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
-    return $args;
+  $args['meta_value1'] => get_post_meta($post->ID, 'foo', true);
+  // $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
+  return $args;
 };
 ```
 
@@ -170,7 +170,7 @@ The Meta_Box needs a label applying, this acts as the header value.
 
 ```php
 $meta_box = Meta_Box::normal('my_meta_box_key_1')
-    ->label('My First Meta_Box');
+  ->label('My First Meta_Box');
 ```
 
 ### as_side(): Meta_Box
@@ -221,8 +221,8 @@ You can define whichever screen you wish to render the Meta_Box on. This can be 
 ```php
 // To render on all post and page edit.php pages.
 $meta_box = Meta_Box::normal('my_meta_box_key_1')
-    ->screen('post')
-    ->screen('page');
+  ->screen('post')
+  ->screen('page');
 ```
 
 **If you are registering your Meta_Box when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.**
@@ -235,12 +235,12 @@ You can use the priority value to denote when the Meta_Box is loaded in context 
 
 ```php
 Meta_Box::advanced('my_meta_box_key_1')
-    ->priority('high'); 
+  ->priority('high'); 
 ```
 
 ### action(string, callable, ?int, ?int): Meta_Box
 > @param string   $hook   
-> @param callable $callback     
+> @param callable $callback   
 > @param int|null $priority   
 > @param int|null $params   
 > @return Meta_Box
@@ -251,16 +251,16 @@ Multiple actions can be passed, allowing for granular control over your Meta_Box
 ```php
 // Inline
 Meta_Box::advanced('my_meta_box_key_1')
-    ->action(
-        'post_updated', 
-        function($id, $after_update, $before_update){
-            if( isset( $_POST['my_field'] ) {
-                update_post_meta($id, 'my_meta', sanitize_text_field($_POST['my_field'])
-            }
-        }, 
-        10, 
-        3
-    ); 
+  ->action(
+    'post_updated', 
+    function($id, $after_update, $before_update){
+      if( isset( $_POST['my_field'] ) {
+        update_post_meta($id, 'my_meta', sanitize_text_field($_POST['my_field'])
+      }
+    }, 
+    10, 
+    3
+  ); 
 ```
 _Priority has a default of 10 and params of 1._
 
@@ -276,9 +276,9 @@ This allows the setting of a conventional (WP Core) callback to render the view 
 
 ```php
 $meta_box = Meta_Box::normal('my_meta_box_key_1')
-    ->view(static function($post, $args){
-        echo 'Hi from my meta_box, im called statically as i do not need to be bound to the class. Micro optimisations ;) ';
-    });
+  ->view(static function($post, $args){
+    echo 'Hi from my meta_box, im called statically as i do not need to be bound to the class. Micro optimisations ;) ';
+  });
 
 ```
 
@@ -299,8 +299,8 @@ $meta_box->view_template('some/path/to/file');
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->view_template('some/path/to/file');
 $meta_box->view_vars([
-    'key1' => 'value1',
-    'key2' => 'value2',
+  'key1' => 'value1',
+  'key2' => 'value2',
 ]);
 
 ###################################
@@ -318,19 +318,34 @@ Data can be passed through to the Meta_Box view callable, unlike the native Meta
 ```php
 // Using the view() callable
 Meta_Box::normal('my_meta_box_key_1')
-    ->view_vars(['user' => get_current_user_id(),...])
-    ->view(function( WP_Post $post, args $args): void {
-        printf("Hello user with ID:%d", $args['user']->ID);
-    });
+  ->view_vars(['user_id' => get_current_user_id()])
+  ->view(function( WP_Post $post, args $args): void {
+    printf("Hello user with ID:%d", $args['user_id']);
+  });
 
 // Using view template.
 Meta_Box::normal('my_meta_box_key_1')
-    ->view_vars(['user' => get_current_user_id(),...])
-    ->view_template('some/path');
+  ->view_vars(['user_id' => get_current_user_id()])
+  ->view_template('some/path');
 ```
 > Template file `'some/path.php'`
 ```php
-Hello user with ID<?php echo $user->ID; ?>
+Hello user with ID:<?php echo $user_id; ?>
 ```
 
 > As the post is auto added to the 'post' key, care should be taken to not overwrite it with your view vars.
+
+### view_data_filter(callable): Meta_Box
+> @param callable(\WP_Post, array): array   
+> @return Meta_Box   
+
+This allows setting a callable to be called when the args are passed to the template file. This gives a chance to add additional args and edit them at render time (to avoid race conditions caused by hook timings)
+
+```php
+Meta_Box::normal('my_meta_box_key_1')
+  ->view_data_filter(function(\WP_Post $post, array $args): array {
+    $args['meta_value1'] => get_post_meta($post->ID, 'foo', true);
+    // $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
+    return $args;
+  });
+```
