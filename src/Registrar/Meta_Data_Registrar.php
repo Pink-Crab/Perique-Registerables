@@ -202,7 +202,9 @@ class Meta_Data_Registrar {
 					break;
 
 				default:
+					// @codeCoverageIgnoreStart
 					break;
+					// @codeCoverageIgnoreEnd
 			}
 
 			return $value;
