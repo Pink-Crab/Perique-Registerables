@@ -114,8 +114,7 @@ class Meta_Data_Registrar {
 	*/
 	public function register_meta_rest_field( Meta_Data $meta ) {
 		// Skip if not sub type defined for post or term.
-		if ( in_array( $meta->get_meta_type(), array( 'post', 'term' ), true )
-		&& null === $meta->get_subtype() ) {
+		if ( null === $meta->get_subtype() ) {
 			return;
 		}
 
@@ -129,7 +128,7 @@ class Meta_Data_Registrar {
 						'get_callback'    => $meta->get_rest_view() ?? $this->create_rest_get_method( $meta ),
 						'schema'          => $meta->get_rest_schema(),
 						'update_callback' => $meta->get_rest_update() ?? $this->create_rest_update_method( $meta ),
-					),
+					)
 				);
 			}
 		);
@@ -183,23 +182,23 @@ class Meta_Data_Registrar {
 		return function( $value, $object ) use ( $meta ) {
 			switch ( $meta->get_meta_type() ) {
 				case 'post':
-					// @var \WP_Post $object
+					/** @var \WP_Post $object */
 					update_post_meta( $object->ID, $meta->get_meta_key(), $value );
 					break;
 
 				case 'term':
-					// @var \WP_Term $object
+					/** @var \WP_Term $object */
 					update_term_meta( $object->term_id, $meta->get_meta_key(), $value );
 					break;
 
 				case 'user':
-					// @var \WP_User $object
+					/** @var \WP_User $object */
 					update_user_meta( $object->ID, $meta->get_meta_key(), $value );
 					break;
 
 				case 'comment':
-					// @var \WP_Comment $object
-					update_comment_meta( $object->comment_ID, $meta->get_meta_key(), $value );
+					/** @var \WP_Comment $object */
+					update_comment_meta( (int) $object->comment_ID, $meta->get_meta_key(), $value );
 					break;
 
 				default:
