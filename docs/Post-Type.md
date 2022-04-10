@@ -239,14 +239,14 @@ Setting as false will not lock or restrict the blocks as defined by the template
 The Postd_Type class comes with a few methods you can use for setting and modifying the defined values. 
 
 ### public function meta boxes(array): array
+> @param Meta_Box[]   
+> @return Meta_Box[]  
+
+This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed Meta_Box objects, then when the Post_Type is registered, the meta boxes are automatically added and rendered.
+
+### public function meta_data(array): array
 > @param Meta_Data[]   
-> @return Meta_Data[]  
-
-This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed Meta_Box objects, then when the Postd_Type is registered, the meta boxes are automatically added and rendered.
-
-### public function meta_data(): void
-
-> @return void
+> @return Meta_Data[] 
 
 This method is used to push meta data to the post type. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the type, or subclass (post type) as these are set automatically.
 
@@ -256,14 +256,14 @@ This method is used to push meta data to the post type. This allows for the crea
 
 This returns either the defined $slug or $key if the slug isn't defined.
 
-### public function filterd_labels(array $labels): array
+### public function filter_labels(array $labels): array
 
 > @param array $labels The compiled labels array.  
 > @return array
 
-Before the labels are passed to registerd_postd_type(), they can be filtered through this method. This allows the altering of label values, based on the result of operations. Please note this is used before the core `post_type_labels_{$post_type}` filter.
+Before the labels are passed to register_post_type(), they can be filtered through this method. This allows the altering of label values, based on the result of operations. Please note this is used before the core `post_type_labels_{$post_type}` filter.
 
-### public function filterd_args(array $args): array
+### public function filter_args(array $args): array
 
 > @param array $args The compiled args array.  
 > @return array
@@ -358,9 +358,9 @@ class Public_Post_Type extends Post_Type {
 }
 ```
 
-## Using filterd_labels()
+## Using filter_labels()
 
-filterd_labels() can be used to either alter the predefined value or adding in new ones.
+filter_labels() can be used to either alter the predefined value or adding in new ones.
 
 **[Default Label Values](#post-type-labels)**
 
@@ -388,9 +388,9 @@ class Orders_CPT extends Post_Type {
 }
 ```
 
-## Using filterd_args()
+## Using filter_args()
 
-filterd_args() can be used to alter the post types properties at run time, based on operations and current state.
+filter_args() can be used to alter the post types properties at run time, based on operations and current state.
 
 ```php
 class Secret_CPT extends Post_Type {

@@ -152,7 +152,25 @@ Sets the default term for the taxonomy
 
 ## Methods
 
+### public function filter_labels(array $labels): array
 
+> @param array $labels The compiled labels array.  
+> @return array
+
+Before the labels are passed to register_taxonomy(), they can be filtered through this method. This allows the altering of label values, based on the result of operations. Please note this is used before the core `taxonomy_labels_{$taxonomy}` filter.
+
+### public function filter_args(array $args): array
+
+> @param array $args The compiled args array.  
+> @return array
+
+Like the labels, the full args array can be altered at run time as well, by overwriting this method. Please note this is used before the core 'register_taxonomy_args' filter.
+
+### public function meta_data(array): array
+> @param Meta_Data[]   
+> @return Meta_Data[] 
+
+This method is used to push meta data to the taxonomy. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the meta type, or subclass (taxonomy) as these are set automatically.
 
 ## Registering Meta_Data
 
@@ -212,7 +230,7 @@ class Order_Type extends Taxonomy {
 
 ## Using filter_args()
 
-filter_args() can be used to alter the post types properties at run time, based on operations and current state.
+filter_args() can be used to alter the taxonomy properties at run time, based on operations and current state.
 
 ```php
 class Secret_Tax extends Taxonomy {
