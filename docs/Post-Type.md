@@ -261,19 +261,14 @@ This returns either the defined $slug or $key if the slug isn't defined.
 > @param array $labels The compiled labels array.  
 > @return array
 
-Before the labels are passed to register\_post\_type\(\), they can be filtered through this method. This allows the altering of label values, based on the result of operations.
+Before the labels are passed to register\_post\_type\(\), they can be filtered through this method. This allows the altering of label values, based on the result of operations. Please note this is used before the core `post_type_labels_{$post_type}` filter.
 
 ### public function filter\_args\(array $args\): array
 
 > @param array $args The compiled args array.  
 > @return array
 
-Like the labels, the full args array can be altered at run time as well, by overwriting this method.
-
-### public static function get\_slug\(\): ?string
-
-This can be used to get the defined slug for the post type, without directly constructing the object. If you plan to use this method, please be aware it creates its own internal instance BUT DOES NOT USE the DI container, so the use of custom constructor arguments will throw errors.
-
+Like the labels, the full args array can be altered at run time as well, by overwriting this method. Please note this is used before the core `register_post_type_args` filter.
 
 ## Registering MetaBoxes
 
