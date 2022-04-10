@@ -161,16 +161,16 @@ Denotes all the edit post features supplied. If left as an empty array will incl
 
 All taxonomies to include with this post type. Please note if you are adding custom taxonomies using the Taxonomies Registerable, it's best to list the post types in the taxonomy and use this for core or plugin taxonomies.
 
-### $metaboxes
+### $meta_boxes
 
-> @var array\[MetaBox\] // PinkCrab\Modules\Registerables\MetaBox
+> @var array\[Meta_Box\] // PinkCrab\Registerables\Meta_Box
 
-This can be loaded with metaboxes for this post type. The array must be populated with pre-configured MetaBox objects. The MetaBoxes are registered in the Post Type registration process. While they can be added directly into this property, there is an overwritable method that makes this easier.  As you can not define an object as a property in a class, you will need to use either the metaboxes\(\) method in constructor or child obj&gt;ect.   
+This can be loaded with meta boxes for this post type. The array must be populated with pre-configured Meta_Box objects. The Meta_Boxes are registered in the Post Type registration process. While they can be added directly into this property, there is an overwritable method that makes this easier.  As you can not define an object as a property in a class, you will need to use either the meta_boxes\(\) method in constructor or child obj&gt;ect.   
 See the example below.
 
 ### $meta_data
 
-> @var array\[Meta_Data\] // PinkCrab\Modules\Registerables\Meta_Data
+> @var array\[Meta_Data\] // PinkCrab\Registerables\Meta_Data
 
 All Post Meta definitions which should registered for the post type. By defining these, you can have full access to the WP Meta Data api for Theme and Rest purposes.
 
@@ -242,7 +242,7 @@ The Post\_Type class comes with a few methods you can use for setting and modify
 > @param Meta_Data[]   
 > @return Meta_Data[]  
 
-This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed MetaBox objects, then when the Post\_Type is registered, the meta boxes are automatically added and rendered.
+This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed Meta_Box objects, then when the Post\_Type is registered, the meta boxes are automatically added and rendered.
 
 ### public function meta_data\(\): void
 
@@ -270,13 +270,13 @@ Before the labels are passed to register\_post\_type\(\), they can be filtered t
 
 Like the labels, the full args array can be altered at run time as well, by overwriting this method. Please note this is used before the core `register_post_type_args` filter.
 
-## Registering MetaBoxes
+## Registering Meta_Boxes
 
-To register MetaBoxes, populate the $this-&gt;metaboxes property \(an array\) with partially constructed MetaBox objects. When the registration process is run, they will be bound to your post type and included.
+To register Meta_Boxes, populate the $this-&gt;meta boxes property \(an array\) with partially constructed Meta_Box objects. When the registration process is run, they will be bound to your post type and included.
 
 ```php
-use PinkCrab\Modules\Registerables\Post_Type;
-use PinkCrab\Modules\Registerables\MetaBox;
+use PinkCrab\Registerables\Post_Type;
+use PinkCrab\Registerables\Meta_Box;
 
 class Public_Post_Type extends Post_Type {
     
@@ -284,19 +284,19 @@ class Public_Post_Type extends Post_Type {
     public $singular = 'Public Post';
     public $plural   = 'Public Posts';
     
-    // Register metaboxes
+    // Register meta boxes
     public function meta_boxes(array $meta_boxes): array {
-        $meta_boxes = Meta_Box::normal('custom_metabox')
+        $meta_boxes = Meta_Box::normal('custom_meta_box')
             ->label( 'This is the main meta box' )
-            ->view([$this, 'metabox_1_view'])
+            ->view([$this, 'meta_box_1_view'])
             ->view_vars(['key' => 'value'])
-            ->add_action('edit_post', [$this, 'metabox_edit_post'], 10, 2);
-            ->add_action('delete_post', [$this, 'metabox_delete_post'], 10, 2);
+            ->add_action('edit_post', [$this, 'meta_box_edit_post'], 10, 2);
+            ->add_action('delete_post', [$this, 'meta_box_delete_post'], 10, 2);
         
         // If you wish to add more than one.
-        $meta_boxes = MetaBox::side('another_metabox')
+        $meta_boxes = Meta_Box::side('another_meta_box')
             ->label('Etc etc')
-            ->view([$this, 'metabox_2_view'])
+            ->view([$this, 'meta_box_2_view'])
             ->view_vars(['key2' => 'value2'])
             ......
 
@@ -304,41 +304,41 @@ class Public_Post_Type extends Post_Type {
     }
         
     /**
-     * Render metabox
+     * Render meta box
      *
      * @param WP_Post $post The post
-     * @paran array $view_vars Metabox view args
+     * @paran array $view_vars Meta box view args
      */
-    public function metabox_1_view(WP_Post $post, array $view_vars): void{
+    public function meta_box_1_view(WP_Post $post, array $view_vars): void{
         // The values found in view_vars.
         // ['key' => 'value']
         
-        echo 'Whatever you want in the MetaBox';
+        echo 'Whatever you want in the Meta_Box';
     }
     
     /**
-     * Save metabox.
+     * Save meta box.
      *
      * @param int $post_id The post Id.
      * @param WP_Post $post The post
      */
-    public function metabox_edit_post(int $post_id, WP_Post $post): void{
+    public function meta_box_edit_post(int $post_id, WP_Post $post): void{
         // Save any post meta, or fire off actions etc.
     }
 }
 ```
 
-Please note if your MetaBox is to be displayed on other post types, it's often better to register them in a separate Controller. When registered in a Post\_Type object, the screen is automatically defined as this post type.
+Please note if your Meta_Box is to be displayed on other post types, it's often better to register them in a separate Controller. When registered in a Post\_Type object, the screen is automatically defined as this post type.
 
-If you are adding more than 1 metabox, it's best to use shared hooks, rather than calling the same hook multiple times.
+If you are adding more than 1 meta box, it's best to use shared hooks, rather than calling the same hook multiple times.
 
 ## Registering Meta_Data
 
 You can easily add post meta to your post type.
 
 ```php
-use PinkCrab\Modules\Registerables\Post_Type;
-use PinkCrab\Modules\Registerables\Meta_Data;
+use PinkCrab\Registerables\Post_Type;
+use PinkCrab\Registerables\Meta_Data;
 
 class Public_Post_Type extends Post_Type {
     
@@ -421,7 +421,7 @@ class Secret_CPT extends Post_Type {
 If you wish to make use of the App_Config class, for defining your cpt slug/key, you can do either of the following._
 
 ```php
-use PinkCrab\Modules\Registerables\Post_Type;
+use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Core\Application\App_Config;
 
 class Public_Post_Type extends Post_Type {

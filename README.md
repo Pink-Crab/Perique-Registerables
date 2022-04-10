@@ -150,7 +150,7 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
    * Return the Meta Box instance.
    */
   public function meta_box(): Meta_Box {
-    return MetaBox::side('acme_box')
+    return Meta_Box::side('acme_box')
       ->label('Acme Meta Box')
       ->screen('acme_post_type_a')
       ->screen('acme_post_type_b')
@@ -175,7 +175,7 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
   /** The save_post|update_post hook callback */
   public function save_method( int $post_id ): array {
     // Handle validating and updating post meta.
-	update_post_meta($post_id, 'acme_meta_1', $value);
+    update_post_meta($post_id, 'acme_meta_1', $value);
   }
 }
 ```
