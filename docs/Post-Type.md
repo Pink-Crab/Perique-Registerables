@@ -58,12 +58,6 @@ The Post Types singular label. Used for "Create new {$singular}"
 
 The Post Types plural label. Used for "View {$plural}"
 
-### $slug
-
-> @var string\|null
-
-The slug is a value you can use if you wanted to change just the slug of the permalinks created for your post type. \(see example below\)
-
 ### $dashicon
 
 > @var string  
@@ -78,18 +72,12 @@ You can set a custom dash icon for wp-admin, you can use either DashIcons or cus
 
 Define the position in wp-admin menu.
 
-### $metaboxes
+### $map_meta_cap  
+> @var bool|null  
+> @default false  
 
-> @var array\[MetaBox\] // PinkCrab\Modules\Registerables\MetaBox
+If set to true all meta felids assigned to the post type will inherit the same capabilities as the post type it self.
 
-This can be loaded with metaboxes for this post type. The array must be populated with pre-configured MetaBox objects. The MetaBoxes are registered in the Post Type registration process. While they can be added directly into this property, there is an overwritable method that makes this easier.  As you can not define an object as a property in a class, you will need to use either the metaboxes\(\) method in constructor or child obj&gt;ect.   
-See the example below.
-
-### $meta_data
-
-> @var array\[Meta_Data\] // PinkCrab\Modules\Registerables\Meta_Data
-
-All Post Meta definitions which should registered for the post type. By defining these, you can have full access to the WP Meta Data api for Theme and Rest purposes.
 
 ### $public
 
@@ -111,6 +99,13 @@ Should post type be included in the menu selections.
 > @default TRUE
 
 Should post type be included in the main wp-admin menu
+
+### $show_in_admin_bar
+
+> @var bool\|null  
+> @default TRUE  
+
+If set to true (which it is by default) the post type will be included in the admin bars helper actions.
 
 ### $show\_ui
 
@@ -190,6 +185,56 @@ Denotes all the edit post features supplied. If left as an empty array will incl
 > @default \[ \]
 
 All taxonomies to include with this post type. Please note if you are adding custom taxonomies using the Taxonomies Registerable, it's best to list the post types in the taxonomy and use this for core or plugin taxonomies.
+
+### $metaboxes
+
+> @var array\[MetaBox\] // PinkCrab\Modules\Registerables\MetaBox
+
+This can be loaded with metaboxes for this post type. The array must be populated with pre-configured MetaBox objects. The MetaBoxes are registered in the Post Type registration process. While they can be added directly into this property, there is an overwritable method that makes this easier.  As you can not define an object as a property in a class, you will need to use either the metaboxes\(\) method in constructor or child obj&gt;ect.   
+See the example below.
+
+### $meta_data
+
+> @var array\[Meta_Data\] // PinkCrab\Modules\Registerables\Meta_Data
+
+All Post Meta definitions which should registered for the post type. By defining these, you can have full access to the WP Meta Data api for Theme and Rest purposes.
+
+### $show_in_rest  
+
+> @var bool\|null  
+> @default TRUE
+
+If set to true (by default), this post type will be registered using `$rest_controller_class` to handled the actions.
+
+### $rest_base  
+
+> @var string\|null   
+> @default null  
+
+Defines the base of the post types endpoints. If set as null (by default), the post types key will be used.  
+
+### $rest_controller_class
+
+> @var string\|class-string    
+> @default `WP_REST_Posts_Controller` 
+
+Allows the use of a custom rest controller, by default the WP_REST_Posts_Controller is used. 
+
+### $gutenberg
+
+> @var bool 
+> @default FALSE  
+
+This allows denoting if this post type should use `gutenberg`, set to FALSE by default. 
+
+### $template  
+
+> @var string[]\|null   
+> @default []  
+
+Allows for the definition of a Gutenberg Template for the poste type. [More details](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-templates/#custom-post-types)
+
+
 
 ## Methods
 
