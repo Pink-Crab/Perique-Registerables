@@ -261,15 +261,6 @@ Meta_Box::advanced('my_meta_box_key_1')
         10, 
         3
     ); 
-    
-
-// Using the property.
-$meta_box = new Meta_Box('my_meta_box_key_1');
-$meta_box->action['post_updated'] = [
-    'callback' => [$this, 'some_callback_method'],
-    'priority' => 10,
-    'params' => 3
-];
 ```
 _Priority has a default of 10 and params of 1._
 
