@@ -158,39 +158,29 @@ $meta_box->actions['init'] = ['callable' => 'some_function', 'priority'=> 10,'pa
 > Please note only a single action can be defined per hook!
 
 
+## Methods
 
+There are also a collection of helper methods which can be used to define the Meta Box fluently.
 
-
-
-
-### label
+### label(string): Meta_Box
+> @param string  
+> @return Meta_Box  
 
 The Meta_Box needs a label applying, this acts as the header value.
 
 ```php
-// Depending on how you instantiated your meta_box, the title can be added as.
-
-$meta_box = new Meta_Box('my_meta_box_key_1');
-$meta_box->label ='My First Meta_Box';
-
-// OR
-
 $meta_box = Meta_Box::normal('my_meta_box_key_1')
     ->label('My First Meta_Box');
 ```
 
-### Context
+### as_side(): Meta_Box
+### as_advanced(): Meta_Box
+### as_normal(): Meta_Box
+> @return Meta_Box
 
-The Meta_Box can be placed using the context property. By default, this is set as normal and can either be set using the static constructors or as follows.
+These act as collection of helper methods for defining the content.
 
 ```php
-$meta_box = new Meta_Box('my_meta_box_key_1');
-$meta_box->context = 'side';
-$meta_box->context = 'normal';
-$meta_box->context = 'advanced';
-
-// OR
-
 $meta_box->as_side(); // for 'side'
 $meta_box->as_advanced(); // for 'advanced'
 $meta_box->as_normal(); // for 'normal'
