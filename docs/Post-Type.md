@@ -36,14 +36,14 @@ The Post Types plural label. Used for "View {$plural}"
 ### $dashicon
 
 > @var string  
-> ****@default 'dashicons-pets'
+> @default 'dashicons-pets'  
 
 You can set a custom dash icon for wp-admin, you can use either DashIcons or custom icons. If no dashicon is supplied, the pets \(dog paw\) will be used in its place.
 
 ### $menu\_position
 
 > @var int  
-> ****@default 60
+> @default 60  
 
 Define the position in wp-admin menu.
 
