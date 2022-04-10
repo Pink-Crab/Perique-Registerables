@@ -181,6 +181,9 @@ Sets the [context](#context) as 'side'
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->as_side(); 
+
+// Or using the static alternative
+$meta_box = Meta_Box::side('my_meta_box_key_1');
 ```
 
 ### as_advanced(): Meta_Box
@@ -190,7 +193,10 @@ Sets the [context](#context) as 'advanced'
 
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
-$meta_box->as_side(); 
+$meta_box->as_advanced(); 
+
+// Or using the static alternative
+$meta_box = Meta_Box::advanced('my_meta_box_key_1');
 ``` 
 
 ### as_normal(): Meta_Box
@@ -201,6 +207,9 @@ Sets the [context](#context) as 'normal'
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->as_normal();
+
+// Or using the static alternative
+$meta_box = Meta_Box::normal('my_meta_box_key_1');
 ``` 
 
 ### Screen
