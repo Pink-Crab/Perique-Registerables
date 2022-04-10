@@ -176,19 +176,32 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1')
 ### as_side(): Meta_Box
 > @return Meta_Box
 
-These act as collection of helper methods for defining the content.
+Sets the [context](#context) as 'side'
 
 ```php
-$meta_box->as_side(); // for 'side'
-$meta_box->as_advanced(); // for 'advanced'
-$meta_box->as_normal(); // for 'normal'
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->as_side(); 
 ```
 
 ### as_advanced(): Meta_Box
-> [See as_side()](#as_side-meta_box)  
+> @return Meta_Box
+
+Sets the [context](#context) as 'advanced'
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->as_side(); 
+``` 
 
 ### as_normal(): Meta_Box
-> [See as_side()](#as_side-meta_box)  
+> @return Meta_Box
+
+Sets the [context](#context) as 'normal'
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->as_normal();
+``` 
 
 ### Screen
 
