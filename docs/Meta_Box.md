@@ -75,123 +75,6 @@ $metabox = MetaBox::normal('my_metabox_key_1')
 
 If you are registering your MetaBox when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.
 
-### View
-
-Each MetaBox has its own definable view callback, this can either be called inline or a separate method within your class.
-
-```php
-// Inline
-$metabox = MetaBox::normal('my_metabox_key_1')
-    ->view(static function($post, $args){
-        echo 'Hi from my metabox, im called statically as i do not need to be bound to the class. Micro optimisations ;) ';
-    });
-
-// OR 
-
-$metabox = new MetaBox('my_metabox_key_1');
-$metabox->view = function($post, $args){
-    echo 'Hi from my metabox';
-};
-```
-
-```php
-// As part of a controller class.
-
-use Some\Namespace\My_Service;
-use PinkCrab\Core\Interfaces\Registerable;
-use PinkCrab\Modules\Registerables\MetaBox;
-use PinkCrab\Core\Services\Registration\Loader
-
-class MetaBox_Controller implements Registerable {
-    
-    /** Our service to use in view */
-    protected $my_service;
-    
-    public function __construct(My_Service $my_service) {
-        $this->my_service = $my_service;
-    }
-    
-    /**
-     * We use the register hook, to register
-     * as many metaboxes as we need
-     */
-    public function register( Loader $loader): void {
-        $this->register_metabox($loader);        
-        // $this->register_another_metabox($loader);
-    }
-    
-    /**
-     * Registers the metabox
-     */
-    protected function register_metabox(Loader $loader){
-        MetaBox::normal('my_metabox_key_1')
-            ->title('My MetaBox')
-            ->screen('post')
-            ->screen('page')
-            ->view([$this, 'metabox_view'])
-            ->register($loader);
-    }
-    
-    /**
-     * Renders the metaboxes view
-     * Is bound to class to access $my_service
-     */
-    public function metabox_view( WP_Post $post, array $args): void {
-        $data = $this->my_service->from_post($post);
-        printf( "Wow this %s is from data", $data->thing );
-    }
-}
-    
-```
-
-### View Vars
-
-Data can be passed through to the MetaBox view callable, unlike the native MetaBox functions. The view vars passed to the view callable are only those defined within the view\_vars\(\) method. _These are optional, can be omitted if you don't need to pass additional data._
-
-```php
-MetaBox::normal('my_metabox_key_1')
-    ->view_vars(['user' => get_current_user_id(),...])
-    ->view(function( WP_Post $post, args $args): void {
-        printf("Hello user with ID:%d", $args['user']);
-    });
-```
-
-### Renderable
-
-As of verison 0.3.5 you can now use any of class which implements the Renderable interface. The instance needs adding to the metabox before use, otherwise an Exception will be thrown.
-
-```php
-class Some_Controller {
-    protected $view;
-    
-    public function __construct(Renderable $view) {
-        $this->view = $view;
-    }
-    
-    protected function register_metabox(Loader $loader){
-        MetaBox::normal('my_metabox_key_1')
-            ->view_vars(['user' => get_current_user_id(), 'foo' => 'bar'])
-            ->set_renderable($this->view)
-            ->render('path/to/template/')
-            ->register($loader);
-    }
-}
-```
-
-The data passed into your view is a merge or all view\_var and the current post as `['post']=> get_post()`
-
-```php
-<?php /** Template */ ?>
-
-<p> This is a template for <?php echo $post->post_title;?>, 
-we can access the current post using $post and all of our other passed vars as
-<?php echo $user;?> & <?php echo $foo;?></p>
-```
-
-{% hint style="info" %}
-As the post is auto added to the 'post' key, care should be taken to not overwrite it with your view vars.
-{% endhint %}
-
 ### Priority
 
 You can use the priority value to denote when the MetaBox is loaded in context with the rest of the page. By default, this is passed as 'default' but can be 
@@ -258,36 +141,51 @@ $metabox->action['post_updated'] = [
     'params' => 3
 ];
 ```
-
 _Priority has a default of 10 and params of 1._
 
-### Register
+## Rendering the Meta Box View
 
-MetaBoxes must be registered as part of the registration process, and a valid instance of loader must be passed to the register\(\) method. Under the hood, the MetaBox is registered on the '**add\_meta\_box**' hook automatically. This can be used to treat the MetaBox as an abstract registerable like post\_type and taxonomy but isn't really intended to do so. 
+There are 2 ways to render the Meta Box view, this can either be done with a simple `callable` or `\Closure` (as per core WP) or making use the `Renderable` service.
 
-Please see the example above under View to see an example of implementing in a custom metabox\_controller.
+### View
 
-Whenever MetaBoxes are added via the Post\_Type registerable, the register method is called automatically when registering the post type, so is not required.
+Each Meta Box has its own definable view callback, this can either be called inline or a separate method within your class.
 
 ```php
-// As part of a post type
+// Inline
+$metabox = MetaBox::normal('my_metabox_key_1')
+    ->view(static function($post, $args){
+        echo 'Hi from my metabox, im called statically as i do not need to be bound to the class. Micro optimisations ;) ';
+    });
 
-class Public_Post_Type extends Post_Type {
-    
-    public $key = 'public_post_type';
-    public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
-    
-    // Register metaboxes
-    public function metaboxes(){
-        $this->metaboxes[] = MetaBox::normal('custom_metabox')
-            ->label( 'This is the main meta box' )
-            ->view([$this, 'metabox_1_view'])
-            ->view_vars(['key' => 'value'])
-            ->add_action('edit_post', [$this, 'metabox_edit_post'], 10, 2);
-            ->add_action('delete_post', [$this, 'metabox_delete_post'], 10, 2);
-            // No need to call the register method (no access to loader anyways)
-    }
-}
+// OR 
+
+$metabox = new MetaBox('my_metabox_key_1');
+$metabox->view = function($post, $args){
+    echo 'Hi from my metabox';
+};
 ```
 
+### View Vars
+
+Data can be passed through to the MetaBox view callable, unlike the native MetaBox functions. The view vars passed to the view callable are only those defined within the view\_vars\(\) method. _These are optional, can be omitted if you don't need to pass additional data._
+
+```php
+MetaBox::normal('my_metabox_key_1')
+    ->view_vars(['user' => get_current_user_id(),...])
+    ->view(function( WP_Post $post, args $args): void {
+        printf("Hello user with ID:%d", $args['user']);
+    });
+```
+
+The data passed into your view is a merge or all view\_var and the current post as `['post']=> get_post()`
+
+```php
+<?php /** Template */ ?>
+
+<p> This is a template for <?php echo $post->post_title;?>, 
+we can access the current post using $post and all of our other passed vars as
+<?php echo $user;?> & <?php echo $foo;?></p>
+```
+
+> As the post is auto added to the 'post' key, care should be taken to not overwrite it with your view vars.
