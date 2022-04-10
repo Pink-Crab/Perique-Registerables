@@ -79,6 +79,12 @@ class Meta_Data_Registrar {
 				"Failed to register {$meta->get_meta_key()} (meta) for {$sub_type} of {$meta_type} type"
 			);
 		}
+
+		// Maybe register rest fields.
+		if ( false !== $meta->get_rest_schema() ) {
+			$this->register_meta_rest_field( $meta );
+		}
+
 		return $result;
 	}
 
@@ -98,5 +104,109 @@ class Meta_Data_Registrar {
 			$meta->rest_schema( \PinkCrab\WP_Rest_Schema\Parser\Argument_Parser::for_meta_data( $meta->get_rest_schema() ) );
 		}
 		return $meta;
+	}
+
+	/**
+	* Registers a Meta Data object as defined REST field.
+	*
+	* @param \PinkCrab\Registerables\Meta_Data $meta
+	* @return void
+	*/
+	public function register_meta_rest_field( Meta_Data $meta ) {
+		// Skip if not sub type defined for post or term.
+		if ( in_array( $meta->get_meta_type(), array( 'post', 'term' ), true )
+		&& null === $meta->get_subtype() ) {
+			return;
+		}
+
+		add_action(
+			'rest_api_init',
+			function () use ( $meta ) {
+				register_rest_field(
+					$meta->get_subtype(),
+					$meta->get_meta_key(),
+					array( // @phpstan-ignore-line WP Docblock doesn't give enough details of callable param types, so throws false positive
+						'get_callback'    => $meta->get_rest_view() ?? $this->create_rest_get_method( $meta ),
+						'schema'          => $meta->get_rest_schema(),
+						'update_callback' => $meta->get_rest_update() ?? $this->create_rest_update_method( $meta ),
+					),
+				);
+			}
+		);
+	}
+
+	/**
+	 * Creates a fallback rest get callback.
+	 *
+	 * @param \PinkCrab\Registerables\Meta_Data $meta
+	 * @return callable(array<mixed>):void
+	 */
+	protected function create_rest_get_method( Meta_Data $meta ): callable {
+		return function( $model ) use ( $meta ) {
+			switch ( $meta->get_meta_type() ) {
+				case 'post':
+					$value = get_post_meta( $model['id'], $meta->get_meta_key(), true );
+					break;
+
+				case 'term':
+					$value = get_term_meta( $model['id'], $meta->get_meta_key(), true );
+					break;
+
+				case 'user':
+					$value = get_user_meta( $model['id'], $meta->get_meta_key(), true );
+					break;
+
+				case 'comment':
+					$value = get_comment_meta( $model['id'], $meta->get_meta_key(), true );
+					break;
+
+				default:
+					$value = null;
+					break;
+			}
+
+			return $value;
+		};
+	}
+
+	/**
+	 * Creates a fallback rest update callback.
+	 *
+	 * @param Meta_Data $meta
+	 * @return callable(mixed $value, \WP_Post|\WP_Term|\WP_User|\WP_Comment $object)
+	 */
+	protected function create_rest_update_method( Meta_Data $meta ): callable {
+		/**
+		 * @param mixed $value
+		 * @param \WP_Post|\WP_Term|\WP_User|\WP_Comment $object
+		 */
+		return function( $value, $object ) use ( $meta ) {
+			switch ( $meta->get_meta_type() ) {
+				case 'post':
+					// @var \WP_Post $object
+					update_post_meta( $object->ID, $meta->get_meta_key(), $value );
+					break;
+
+				case 'term':
+					// @var \WP_Term $object
+					update_term_meta( $object->term_id, $meta->get_meta_key(), $value );
+					break;
+
+				case 'user':
+					// @var \WP_User $object
+					update_user_meta( $object->ID, $meta->get_meta_key(), $value );
+					break;
+
+				case 'comment':
+					// @var \WP_Comment $object
+					update_comment_meta( $object->comment_ID, $meta->get_meta_key(), $value );
+					break;
+
+				default:
+					break;
+			}
+
+			return $value;
+		};
 	}
 }
