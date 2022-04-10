@@ -29,79 +29,80 @@ The plural label for the taxonomy. **This is required**
 The plural label for the taxonomy. **This is required**
 
 ### $label
-> @var string  
+> @var string|null    
+> @default Value of $plural  
 
-xx
+The taxonomies label (Uses plural if not defined).
 
 ### $description
 > @var string  
 > @default ''
 
-xx
+The taxonomy description.
 
 ### $object_type
 > @var string[]  
 > @default ['post'] (**post** post type)  
 
-xx
+Which post types should this taxonomy be applied to.
 
 ### $hierarchical
 > @var bool
 > @default false
 
-xx
+Should this taxonomy have a hierarchy
 
 ### $show_ui
 > @var bool
 > @default true
 
-xx
+Should render WP_Admin UI
 
 ### $show_in_menu
 > @var bool
 > @default true
 
-xx
+Show in WP_Admin menu list.
 
 ### $show_admin_column
 > @var bool
 > @default true
 
-xx
+Show in Post Types list table of posts
 
 ### $show_tagcloud
 > @var bool
 > @default false
 
-xx
+Include in the tag cloud.
 
 ### $show_in_quick_edit
 > @var bool
 > @default true
 
-xx
+Inlcude in quick edit.
 
 ### $sort
 > @var bool
 > @default true
 
-xx
+Should terms remain in the order added (if false will be alphabetical)
 
 ### $meta_box_cb
 > @var callable|null
 
-xx
+Custom callback for rendering the Term meta box on edit post
 
 ### $show_in_rest
 > @var bool
 > @default false
 
-xx
+Include in rest
 
 ### $rest_base
 > @var string|null
 
-xx
+Base rest path. If not set, will use taxonomy slug
 
 
 ### $rest_controller_class
