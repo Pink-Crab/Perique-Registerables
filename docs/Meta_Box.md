@@ -213,7 +213,7 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1');
 ``` 
 
 ### screen(string): Meta_Box
-> @param string $screen 
+> @param string $screen  
 > @return Meta_Box
 
 You can define whichever screen you wish to render the Meta_Box on. This can be defined by-passing the screen id, post type, or WP\_Screen instance. These should be passed as single values.
@@ -228,7 +228,7 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1')
 **If you are registering your Meta_Box when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.**
 
 ### priority(string): Meta_Box
-> @param string $priority  
+> @param string $priority   
 > @return Meta_Box
 
 You can use the priority value to denote when the Meta_Box is loaded in context with the rest of the page. By default, this is passed as 'default' but can be 
@@ -239,10 +239,10 @@ Meta_Box::advanced('my_meta_box_key_1')
 ```
 
 ### action(string, callable, ?int, ?int): Meta_Box
-> @param string $hook   
-> @param string $hook   
-> @param string $hook   
-> @param string $hook   
+> @param string   $hook   
+> @param callable $callback     
+> @param int|null $priority   
+> @param int|null $params   
 > @return Meta_Box
 
 Actions can be applied to Meta_Boxes,  this allows for the verification and processing of additional meta fields. Any form fields added, will be passed to the global POST array. _Care should be taken when using save\_post, as this is fired when the draft post is created and before the Meta_Box is rendered._   
