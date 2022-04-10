@@ -327,7 +327,9 @@ Meta_Box::normal('my_meta_box_key_1')
 Meta_Box::normal('my_meta_box_key_1')
     ->view_vars(['user' => get_current_user_id(),...])
     ->view_template('some/path');
-
+```
+****
+```php
 <?php /** Inside Template */ ?>
 Hello user with ID<?php echo $user->ID; ?>
 ```
