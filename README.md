@@ -11,9 +11,9 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 * [Post Types](#post-type)
 * [Taxonomies](#taxonomy)
 * [Meta Box](#meta-box)
-*    [Shared Meta Boxes](#shared-meta-boxes)
+  * [Shared Meta Boxes](#shared-meta-boxes)
 * Meta Data
-*    [Additional Meta Data](#additional-meta-data)
+  * [Additional Meta Data](#additional-meta-data)
 
 
 ## Version ##
