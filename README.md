@@ -165,6 +165,10 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
    * @see Post Type docs for more details
    */
   public function meta_data( array $meta_data ): array {
+    $meta_data[] = ( new Meta_Data( 'acme_meta_1' ) )
+      ->type( 'integer' )
+        ->single......
+ 
     return $meta_data;
   }
 
