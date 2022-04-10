@@ -345,7 +345,8 @@ This allows setting a callable to be called when the args are passed to the temp
 Meta_Box::normal('my_meta_box_key_1')
   ->view_data_filter(function(\WP_Post $post, array $args): array {
     $args['meta_value1'] => get_post_meta($post->ID, 'foo', true);
-    // $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
+    // $args = ['meta_value1'=> 'value from meta']
     return $args;
   });
 ```
+
