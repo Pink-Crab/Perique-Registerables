@@ -174,8 +174,6 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1')
 ```
 
 ### as_side(): Meta_Box
-### as_advanced(): Meta_Box
-### as_normal(): Meta_Box
 > @return Meta_Box
 
 These act as collection of helper methods for defining the content.
@@ -185,6 +183,12 @@ $meta_box->as_side(); // for 'side'
 $meta_box->as_advanced(); // for 'advanced'
 $meta_box->as_normal(); // for 'normal'
 ```
+
+### as_advanced(): Meta_Box
+> See as_side()  
+
+### as_normal(): Meta_Box
+> See as_side()  
 
 ### Screen
 
