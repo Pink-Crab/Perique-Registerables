@@ -96,7 +96,22 @@ $meta_box->view_vars = [
 // In template
 echo $key1; // 'value1'
 ```
-### 
+
+### $view_data_filter
+> @var callable(\WP_Post, array): array   
+
+This allows setting a callable to be called when the args are passed to the template file. This gives a chance to add additional args and edit them at render time (to avoid race conditions caused by hook timings)
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->view_vars(['key1' => 'value1']);
+$meta_box->view_data_filter = function(\WP_Post $post, array $args): array {
+    $args['meta_value1'] => get_post_meta($post->ID, 'foo', true);
+    return $args;
+};
+
+// $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
+
 
 
 
