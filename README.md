@@ -139,7 +139,45 @@ class My_CPT extends Post_Type {
 
 [See full Meta Box Docs](docs/Meta_Box.md)
 
+### Shared Meta Boxes
 
+Sometimes you want to render the same Meta Boxes on multiple Custom Post Types or added to existing ones. We have a simple `Shared_Meta_Box_Controller` base class which can be extended to register meta boxes isolated from a Post Type.
+
+
+```php
+class Acme_Meta_Box extends Shared_Meta_Box_Controller {
+	/**
+	 * Return the Meta Box instance.
+	 */
+	public function meta_box(): Meta_Box {
+		return MetaBox::side('acme_box')
+			->label('Acme Meta Box')
+			->screen('acme_post_type_a')
+			->screen('acme_post_type_b')
+			->view_template('path/to/view/template')
+			->view_vars(['some' => 'additional data passed to view'])
+			->action('save_post', [$this, 'save_method'])
+			->action('update_post', [$this, 'save_method'])
+	}
+
+	/**
+	 * Sets any meta data against the meta box.
+	 * @see Post Type docs for more details
+	 */
+	public function meta_data( array $meta_data ): array {
+		return $meta_data;
+	}
+
+	/** The save_post|update_post hook callback */
+	public function save_method( int $post_id ): array {
+		// Handle validating and updating post meta.
+	}
+}
+```
+**[Defining Meta Data](docs/Post-Type.md#registering-meta_data)**
+
+> The above Meta Box would be shown on both `acme_post_type_a` and `acme_post_type_b`  
+> You can also inject any dependencies via the constructor too.
 ## Testing ##
 
 ### PHP Unit ###
