@@ -1,6 +1,6 @@
 # Registerables
 
-![Current Version 0.7.1](https://img.shields.io/badge/Current_Version-0.7.1-yellow.svg?style=flat " ") 
+![Current Version 0.7.2](https://img.shields.io/badge/Current_Version-0.7.2-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 [![GitHub_CI](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml)
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
@@ -16,7 +16,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 
 ## Version ##
 
-**Release 0.7.1**
+**Release 0.7.2**
 
 > For older versions of the PinkCrab Plugin Framework please use Registerables V0.5.\*
 
@@ -96,6 +96,7 @@ $ composer analyse
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.7.2 - Improved Meta Data REST support.
 * 0.7.1 - Fixed bug where meta box hooks didn't fire due to race conditions getting current screen on init. Now deferred loading to meta box hooks on current_screen action. Extended support for RestSchema including use of the PinkCrab WP Rest Schema lib. Various other small fixes.
 * 0.7.0 - Introduced the Shared Meta Box Controller for registering meta boxes and meta data for shared post types.
 * 0.6.4 - Added in a filter for meta boxes which allows for setting of view args based on the current post being displayed. Allows for passing of meta values to the view, without using get_post_meta in the view it self.
