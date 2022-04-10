@@ -49,9 +49,9 @@ use PinkCrab\Registerables\Post_Type;
 
 class Basic_CPT extends Post_Type {
 
-	public $key      = 'basic_cpt';
-	public $singular = 'Basic';
-	public $plural   = 'Basics';
+  public $key      = 'basic_cpt';
+  public $singular = 'Basic';
+  public $plural   = 'Basics';
 }
 ```
  
@@ -65,12 +65,12 @@ Creates a flat taxonomy for the **Post** Post Type.
 use PinkCrab\Registerables\Taxonomy;
 
 class Basic_Tag_Taxonomy extends Taxonomy {
-	public $slug         = 'basic_tag_tax';
-	public $singular     = 'Basic Tag Taxonomy';
-	public $plural       = 'Basic Tag Taxonomies';
-	public $description  = 'The Basic Tag Taxonomy.';
-	public $hierarchical = false;
-	public $object_type = array( 'post' );
+  public $slug         = 'basic_tag_tax';
+  public $singular     = 'Basic Tag Taxonomy';
+  public $plural       = 'Basic Tag Taxonomies';
+  public $description  = 'The Basic Tag Taxonomy.';
+  public $hierarchical = false;
+  public $object_type = array( 'post' );
 }
 ```
 
@@ -81,18 +81,18 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 Create a simple meta box as part of a post type definition.
 ```php
 class My_CPT extends Post_Type {
-	public $key      = 'my_cpt';
-	public $singular = 'CPT Post';
-	public $plural   = 'CPT Posts';
+  public $key      = 'my_cpt';
+  public $singular = 'CPT Post';
+  public $plural   = 'CPT Posts';
 
-	public function meta_boxes( array $meta_boxes ): array {
-		$meta_boxes = MetaBox::side('my_metabox_key_1')
-			->label('My Meta Box')
-			->view_template('path/to/view/template')
-			->view_vars(['some' => 'additional data passed to view'])
-			->action('save_post', [$this, 'save_method'])
-			->action('update_post', [$this, 'save_method'])
-	}
+  public function meta_boxes( array $meta_boxes ): array {
+    $meta_boxes = MetaBox::side('my_metabox_key_1')
+      ->label('My Meta Box')
+      ->view_template('path/to/view/template')
+      ->view_vars(['some' => 'additional data passed to view'])
+      ->action('save_post', [$this, 'save_method'])
+      ->action('update_post', [$this, 'save_method'])
+  }
 }
 ```
 
@@ -101,37 +101,37 @@ class My_CPT extends Post_Type {
 ```php
 /** The Meta Box Service */
 class Meta_Box_Service {
-	public function get_meta_boxes(): array {
-		$meta_boxes = array();
-		$meta_boxes = MetaBox::side('my_metabox_key_1')
-			->label('My Meta Box')
-			->view_template('path/to/view/template')
-			->view_vars(['some' => 'additional data passed to view'])
-			->action('save_post', [$this, 'save_method'])
-			->action('update_post', [$this, 'save_method'])
-	}
+  public function get_meta_boxes(): array {
+    $meta_boxes = array();
+    $meta_boxes = MetaBox::side('my_metabox_key_1')
+      ->label('My Meta Box')
+      ->view_template('path/to/view/template')
+      ->view_vars(['some' => 'additional data passed to view'])
+      ->action('save_post', [$this, 'save_method'])
+      ->action('update_post', [$this, 'save_method'])
+  }
 
-	public function save_method( int $post_id ): array {
-		// Handle validating and updating post meta.
-	}
+  public function save_method( int $post_id ): array {
+    // Handle validating and updating post meta.
+  }
 }
 
 /** Injected into post type */
 class My_CPT extends Post_Type {
-	public $key      = 'my_cpt';
-	public $singular = 'CPT Post';
-	public $plural   = 'CPT Posts';
+  public $key      = 'my_cpt';
+  public $singular = 'CPT Post';
+  public $plural   = 'CPT Posts';
 
-	// Pass the service in as a dependency.
-	private Meta_Box_Service $meta_box_service;
-	public function __construct(Meta_Box_Service $meta_box_service){
-		$this->meta_box_service = $meta_box_service;
-	}
+  // Pass the service in as a dependency.
+  private Meta_Box_Service $meta_box_service;
+  public function __construct(Meta_Box_Service $meta_box_service){
+    $this->meta_box_service = $meta_box_service;
+  }
 
-	// Return the populated Meta_Box instances.
-	public function meta_boxes( array $meta_boxes ): array {
-		return $this->meta_box_service->get_meta_boxes();
-	}
+  // Return the populated Meta_Box instances.
+  public function meta_boxes( array $meta_boxes ): array {
+    return $this->meta_box_service->get_meta_boxes();
+  }
 }
 ```
 
