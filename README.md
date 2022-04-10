@@ -40,7 +40,7 @@ $app = ( new PinkCrab\Perique\Application\App_Factory() )
 ```
 Once the middleware has been included, we can use Post_Type, Taxonomies, Meta Data and Meta boxes as part of the usual Registration process
 
-## Post Types
+## Post Type
 
 Creates a simple post type.
 
@@ -57,6 +57,8 @@ class Basic_CPT extends Post_Type {
  
 [See full Post_Type docs](docs/Post-Type.md)
 
+## Taxonomy
+
 Creates a flat taxonomy for the **Post** Post Type.
 
 ``` php
@@ -71,6 +73,70 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 	public $object_type = array( 'post' );
 }
 ```
+
+[See full Taxonomy Docs](docs/Taxonomy.md)
+
+## Meta Box
+
+Create a simple meta box as part of a post type definition.
+```php
+class My_CPT extends Post_Type {
+	public $key      = 'my_cpt';
+	public $singular = 'CPT Post';
+	public $plural   = 'CPT Posts';
+
+	public function meta_boxes( array $meta_boxes ): array {
+		$meta_boxes = MetaBox::side('my_metabox_key_1')
+			->label('My Meta Box')
+			->view_template('path/to/view/template')
+			->view_vars(['some' => 'additional data passed to view'])
+			->action('save_post', [$this, 'save_method'])
+			->action('update_post', [$this, 'save_method'])
+	}
+}
+```
+
+> If you're meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.
+
+```php
+/** The Meta Box Service */
+class Meta_Box_Service {
+	public function get_meta_boxes(): array {
+		$meta_boxes = array();
+		$meta_boxes = MetaBox::side('my_metabox_key_1')
+			->label('My Meta Box')
+			->view_template('path/to/view/template')
+			->view_vars(['some' => 'additional data passed to view'])
+			->action('save_post', [$this, 'save_method'])
+			->action('update_post', [$this, 'save_method'])
+	}
+
+	public function save_method( int $post_id ): array {
+		// Handle validating and updating post meta.
+	}
+}
+
+/** Injected into post type */
+class My_CPT extends Post_Type {
+	public $key      = 'my_cpt';
+	public $singular = 'CPT Post';
+	public $plural   = 'CPT Posts';
+
+	// Pass the service in as a dependency.
+	private Meta_Box_Service $meta_box_service;
+	public function __construct(Meta_Box_Service $meta_box_service){
+		$this->meta_box_service = $meta_box_service;
+	}
+
+	// Return the populated Meta_Box instances.
+	public function meta_boxes( array $meta_boxes ): array {
+		return $this->meta_box_service->get_meta_boxes();
+	}
+}
+```
+
+[See full Meta Box Docs](docs/Meta_Box.md)
+
 
 ## Testing ##
 
