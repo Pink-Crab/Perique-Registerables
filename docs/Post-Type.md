@@ -4,20 +4,20 @@ description: >-
   create fully customisable custom post types, easily and cleanly.
 ---
 
-# Post\_Type
+# Postd_Type
 
 As with all classes which implement the Registerable interface, adding the post type to the registration config file, will handle all the registration for you.
 
 ## Fields
 
-The core register\_post\_type\(\) function takes a slug and an array of labels. To make this less complicated and messy, almost all args are defined as properties.
+The core registerd_postd_type() function takes a slug and an array of labels. To make this less complicated and messy, almost all args are defined as properties.
 
 ### $key
 
 > @var string  
 > @required
 
-The Post Type key is the internal key used for your post type, this can be overwritten if you wish to use a more seo friendly slug for archives and permalinks \(see $SLUG below\).
+The Post Type key is the internal key used for your post type, this can be overwritten if you wish to use a more seo friendly slug for archives and permalinks (see $SLUG below).
 
 ### $singular
 
@@ -38,9 +38,9 @@ The Post Types plural label. Used for "View {$plural}"
 > @var string  
 > @default 'dashicons-pets'  
 
-You can set a custom dash icon for wp-admin, you can use either DashIcons or custom icons. If no dashicon is supplied, the pets \(dog paw\) will be used in its place.
+You can set a custom dash icon for wp-admin, you can use either DashIcons or custom icons. If no dashicon is supplied, the pets (dog paw) will be used in its place.
 
-### $menu\_position
+### $menud_position
 
 > @var int  
 > @default 60  
@@ -61,14 +61,14 @@ If set to true all meta felids assigned to the post type will inherit the same c
 
 Should this post type be accessible by both the frontend and within wp-admin. If set to true, will be a hidden post type, with no admin UI, permalinks,  or queryable from frontend. 
 
-### $show\_in\_nav\_menus
+### $showd_ind_navd_menus
 
 > @var bool\|null  
 > @default TRUE
 
 Should post type be included in the menu selections.
 
-### $show\_in\_menu
+### $showd_ind_menu
 
 > @var bool\|null  
 > @default TRUE
@@ -82,14 +82,14 @@ Should post type be included in the main wp-admin menu
 
 If set to true (which it is by default) the post type will be included in the admin bars helper actions.
 
-### $show\_ui
+### $showd_ui
 
 > @var bool\|null  
 > @default TRUE
 
 Should post type have the post list, create/edit/delete UI in wp-admin.
 
-### $has\_archive
+### $hasd_archive
 
 > @var bool\|null  
 > @default TRUE
@@ -103,28 +103,28 @@ Should post type have an archive created on the frontend.
 
 Should this post type have hierarchical properties?
 
-### $exclude\_from\_search
+### $excluded_fromd_search
 
 > @var bool\|null  
 > @default FALSE
 
 Should this post type be excluded from the site-wide search.
 
-### $publicly\_queryable
+### $publiclyd_queryable
 
 > @var bool\|null  
 > @default TRUE
 
 Allow the Post Type to be accessible from URL params.
 
-### $can\_export
+### $cand_export
 
 > @var bool\|null  
 > @default TRUE
 
 Allow post type to be exportable.
 
-### $query\_var
+### $queryd_var
 
 > @var bool\|string  
 > @default FALSE
@@ -134,13 +134,13 @@ This can be used to assign this post type to any public query vars. [See the cod
 ### $rewrite
 
 > @var bool\|array\|null  
-> @default \['slug' =&gt; $key/$slug, 'with\_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\]
+> @default \['slug' =&gt; $key/$slug, 'withd_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\]
 
-This can be used to set the rewite rules for the post type. If $rewrite is left as NULL, it will be resolved to the defualt of  \['slug' =&gt; $key/$slug, 'with\_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\].  
+This can be used to set the rewite rules for the post type. If $rewrite is left as NULL, it will be resolved to the defualt of  \['slug' =&gt; $key/$slug, 'withd_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\].  
 If you wish to have no permalinks, you can pass FALSE here, else define with your own array.  
 _Please note that we use the constructor to set default if left as null._
 
-### $capability\_type
+### $capabilityd_type
 
 > @var string\|array  
 > @default 'post'
@@ -152,7 +152,7 @@ The string to use to build the read, edit, and delete capabilities. [See the wor
 > @var bool\|array  
 > @default \[ \]
 
-Denotes all the edit post features supplied. If left as an empty array will include \(title and editor\), passing false will remove all features.
+Denotes all the edit post features supplied. If left as an empty array will include (title and editor), passing false will remove all features.
 
 ### $taxonmies
 
@@ -165,7 +165,7 @@ All taxonomies to include with this post type. Please note if you are adding cus
 
 > @var array\[Meta_Box\] // PinkCrab\Registerables\Meta_Box
 
-This can be loaded with meta boxes for this post type. The array must be populated with pre-configured Meta_Box objects. The Meta_Boxes are registered in the Post Type registration process. While they can be added directly into this property, there is an overwritable method that makes this easier.  As you can not define an object as a property in a class, you will need to use either the meta_boxes\(\) method in constructor or child obj&gt;ect.   
+This can be loaded with meta boxes for this post type. The array must be populated with pre-configured Meta_Box objects. The Meta_Boxes are registered in the Post Type registration process. While they can be added directly into this property, there is an overwritable method that makes this easier.  As you can not define an object as a property in a class, you will need to use either the meta_boxes() method in constructor or child obj&gt;ect.   
 See the example below.
 
 ### $meta_data
@@ -236,34 +236,34 @@ Setting as false will not lock or restrict the blocks as defined by the template
 
 ## Methods
 
-The Post\_Type class comes with a few methods you can use for setting and modifying the defined values. 
+The Postd_Type class comes with a few methods you can use for setting and modifying the defined values. 
 
-### public function meta boxes\(array): array
+### public function meta boxes(array): array
 > @param Meta_Data[]   
 > @return Meta_Data[]  
 
-This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed Meta_Box objects, then when the Post\_Type is registered, the meta boxes are automatically added and rendered.
+This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed Meta_Box objects, then when the Postd_Type is registered, the meta boxes are automatically added and rendered.
 
-### public function meta_data\(\): void
+### public function meta_data(): void
 
 > @return void
 
 This method is used to push meta data to the post type. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the type, or subclass (post type) as these are set automatically.
 
-### public function slug\(\): ?string
+### public function slug(): ?string
 
 > @return null\|string
 
 This returns either the defined $slug or $key if the slug isn't defined.
 
-### public function filter\_labels\(array $labels\): array
+### public function filterd_labels(array $labels): array
 
 > @param array $labels The compiled labels array.  
 > @return array
 
-Before the labels are passed to register\_post\_type\(\), they can be filtered through this method. This allows the altering of label values, based on the result of operations. Please note this is used before the core `post_type_labels_{$post_type}` filter.
+Before the labels are passed to registerd_postd_type(), they can be filtered through this method. This allows the altering of label values, based on the result of operations. Please note this is used before the core `post_type_labels_{$post_type}` filter.
 
-### public function filter\_args\(array $args\): array
+### public function filterd_args(array $args): array
 
 > @param array $args The compiled args array.  
 > @return array
@@ -272,7 +272,7 @@ Like the labels, the full args array can be altered at run time as well, by over
 
 ## Registering Meta_Boxes
 
-To register Meta_Boxes, populate the $this-&gt;meta boxes property \(an array\) with partially constructed Meta_Box objects. When the registration process is run, they will be bound to your post type and included.
+To register Meta_Boxes, populate the $this-&gt;meta boxes property (an array) with partially constructed Meta_Box objects. When the registration process is run, they will be bound to your post type and included.
 
 ```php
 use PinkCrab\Registerables\Post_Type;
@@ -328,7 +328,7 @@ class Public_Post_Type extends Post_Type {
 }
 ```
 
-Please note if your Meta_Box is to be displayed on other post types, it's often better to register them in a separate Controller. When registered in a Post\_Type object, the screen is automatically defined as this post type.
+Please note if your Meta_Box is to be displayed on other post types, it's often better to register them in a separate Controller. When registered in a Postd_Type object, the screen is automatically defined as this post type.
 
 If you are adding more than 1 meta box, it's best to use shared hooks, rather than calling the same hook multiple times.
 
@@ -358,9 +358,9 @@ class Public_Post_Type extends Post_Type {
 }
 ```
 
-## Using filter\_labels\(\)
+## Using filterd_labels()
 
-filter\_labels\(\) can be used to either alter the predefined value or adding in new ones.
+filterd_labels() can be used to either alter the predefined value or adding in new ones.
 
 **[Default Label Values](#post-type-labels)**
 
@@ -388,9 +388,9 @@ class Orders_CPT extends Post_Type {
 }
 ```
 
-## Using filter\_args\(\)
+## Using filterd_args()
 
-filter\_args\(\) can be used to alter the post types properties at run time, based on operations and current state.
+filterd_args() can be used to alter the post types properties at run time, based on operations and current state.
 
 ```php
 class Secret_CPT extends Post_Type {
@@ -418,7 +418,7 @@ class Secret_CPT extends Post_Type {
 }
 ```
 
-## Using App\_Config
+## Using Appd_Config
 
 If you wish to make use of the App_Config class, for defining your cpt slug/key, you can do either of the following._
 
@@ -433,7 +433,6 @@ class Public_Post_Type extends Post_Type {
     
     public function __construct(App_Config $config){
         $this->key = $config->post_types('public_post', 'slug');
-        parent::__construct();
     }
 }  
 ```

@@ -8,7 +8,7 @@ description: >-
 
 As with all classes which implement the Registerable interface, adding the taxonomy to the registration config file, will handle all the registration for you.
 
-## Fields
+## Properties
 
 ### $singular
 > @var string  
@@ -150,3 +150,113 @@ Array of capabilities for the taxonomy
 
 Sets the default term for the taxonomy
 
+## Methods
+
+
+
+## Registering Meta_Data
+
+You can easily add term meta to your taxonomies term.
+
+```php
+use PinkCrab\Registerables\Taxonomy;
+use PinkCrab\Registerables\Meta_Data;
+
+class Order_Type extends Taxonomy {
+    
+    public $singular = 'Order';
+    public $plural   = 'Orders';
+    public $slug     = 'acme_order';
+    
+    // Register meta_data
+    public function meta_data(array $meta_data): void {
+        $meta_data[] = ( new Meta_Data('meta_key'))
+            ->type('string')
+            ->description('Some term meta, that means something to someone')
+            ->single(true)
+            ->default('something');
+        return $meta_data;
+    }
+}
+```
+
+## Using filter_labels()
+
+filter_labels() can be used to either alter the predefined value or adding in new ones.
+
+**[Default Label Values](#taxonomy-labels)**
+
+```php
+class Order_Type extends Taxonomy {
+    ...
+    public $singular = 'Order';
+    public $plural   = 'Orders';
+    ...
+    
+    // Show different labels based on settings.
+    public function filter_labels(array $labels): array{
+        
+        // Alter based on a conditional
+        if( (bool) get_option('use_custom_order_labels') ) {
+            $labels['name'] = get_option('custom_order_label_name');
+            $labels['singular_name'] = get_option('custom_order_label_singular_name');
+        }
+        
+        // Can also be used to add in additional labels not included above.
+        $labels['use_featured_image'] = 'Set as featured images';
+        
+        return $labels;
+    }
+}
+```
+
+## Using filter_args()
+
+filter_args() can be used to alter the post types properties at run time, based on operations and current state.
+
+```php
+class Secret_Tax extends Taxonomy {
+    ...
+    // Assume its usually hidden.
+    public $public = false;
+    ...
+    
+
+    public function filter_args(array $args): array{
+        
+        // Get the users meta value and if true, change
+        // the $public to true.
+        $user_has_secret_access = get_user_meta(
+             get_current_user_id(),
+             'has_secret_tax_access',
+             true
+         );        
+        
+        if( (bool) $user_has_secret_access ){
+            $args['public'] = true;
+        }
+        return $args;
+    }
+}
+```
+
+## Using App_Config
+
+If you wish to make use of the App_Config class, for defining your cpt slug/key, you can do either of the following._
+
+```php
+use PinkCrab\Registerables\Taxonomy;
+use PinkCrab\Perique\Application\App_Config;
+
+class Secret_Tax extends Taxonomy {
+    
+    public $singular = 'Public Post';
+    public $plural   = 'Public Posts';
+    
+    public function __construct(App_Config $config){
+        $this->slug = $config->additional('secret_tax_slug');
+    }
+}  
+```
+
+## Post Type Labels
