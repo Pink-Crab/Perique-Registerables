@@ -12,22 +12,16 @@ description: >-
 There are 2 ways to create either kind of Meta_Box
 
 ```php
-use PinkCrab\Modules\Registerables\Meta_Box;
-
 // Manual Instancing
 $meta_box = new Meta_Box('my_meta_box_key_1');
 
 // Create with normal (wider) context
 $meta_box = Meta_Box::normal('my_meta_box_key_1');
-
-// Create with advanced (wider) context
-$meta_box = Meta_Box::advanced('my_meta_box_key_1');
-
-// Create with side context
-$meta_box = Meta_Box::side('my_meta_box_key_1');
 ```
 
 Depending on your preferences, you can use the static constructor to create your Meta_Box a single chained method call.
+
+***
 
 ## Properties
 
