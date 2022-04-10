@@ -362,7 +362,7 @@ class Public_Post_Type extends Post_Type {
 
 filter\_labels\(\) can be used to either alter the predefined value or adding in new ones.
 
-**[Default Label Values](#post-type-labels)
+**[Default Label Values](#post-type-labels)**
 
 ```php
 class Orders_CPT extends Post_Type {
