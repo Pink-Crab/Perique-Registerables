@@ -222,7 +222,7 @@ Allows the use of a custom rest controller, by default the WP_REST_Posts_Control
 
 ### $gutenberg
 
-> @var bool 
+> @var bool  
 > @default FALSE  
 
 This allows denoting if this post type should use `gutenberg`, set to FALSE by default. 
@@ -233,6 +233,23 @@ This allows denoting if this post type should use `gutenberg`, set to FALSE by d
 > @default []  
 
 Allows for the definition of a Gutenberg Template for the poste type. [More details](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-templates/#custom-post-types)
+
+```php
+class My_Cpt extends Post_Type {
+    ... rest of properties
+    public $template = array(
+        array( 'core/image', array(
+            'align' => 'left',
+        ) ),
+        array( 'core/heading', array(
+            'placeholder' => 'Add Author...',
+        ) ),
+        array( 'core/paragraph', array(
+            'placeholder' => 'Add Description...',
+        ) ),
+    );
+}
+```
 
 
 
