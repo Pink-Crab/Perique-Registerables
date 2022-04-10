@@ -1,118 +1,194 @@
 ---
 description: >-
-  MetaBoxes can be constructed and used as either parts of registered post types
+  Meta_Boxes can be constructed and used as either parts of registered post types
   or as independently for Users, Pages and anywhere else you can naively render
   one.
 ---
 
-# MetaBox
+# Meta_Box
 
 ### Basic Setup
 
-There are 2 ways to create either kind of MetaBox
+There are 2 ways to create either kind of Meta_Box
 
 ```php
-use PinkCrab\Modules\Registerables\MetaBox;
+use PinkCrab\Modules\Registerables\Meta_Box;
 
 // Manual Instancing
-$metabox = new MetaBox('my_metabox_key_1');
+$meta_box = new Meta_Box('my_meta_box_key_1');
 
 // Create with normal (wider) context
-$metabox = MetaBox::normal('my_metabox_key_1');
+$meta_box = Meta_Box::normal('my_meta_box_key_1');
 
 // Create with advanced (wider) context
-$metabox = MetaBox::advanced('my_metabox_key_1');
+$meta_box = Meta_Box::advanced('my_meta_box_key_1');
 
 // Create with side context
-$metabox = MetaBox::side('my_metabox_key_1');
+$meta_box = Meta_Box::side('my_meta_box_key_1');
 ```
 
-Depending on your preferences, you can use the static constru_c_tor to create your MetaBox a single chained method call.
+Depending on your preferences, you can use the static constructor to create your Meta_Box a single chained method call.
+
+## Properties
+
+### $key
+> @var string  
+> @required  
+
+This is set when creating the meta box `new Meta_Box('my_meta_box_key_1')` or `Meta_Box::normal('my_meta_box_key_1')`
+
+### $label 
+> @var string  
+> @required
+
+This defines the label of the Meta Box.
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->label ='My First Meta_Box';
+```
+
+### $view
+> @var null|callable(\WP_Post, array):void  
+
+The callback to render the view. This can be omitted if using `Renderable` to render from a template file.
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->view = function(\WP_Post $post, array $args): void {
+    echo 'Hi from my meta_box';
+};
+```
+> Any additional vars passed using `view_vars` would be accessible as `$args['args']['custom_key1']`
+
+### $view_vars
+> @var array<string, mixed>  
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->view_vars = [
+    'key1' => 'value1',
+    'key2' => 'value2',
+]
+```
+
+> **To make use of `Renderable` and custom template files please use the following**
+
+### $view_template
+> @var string|null  
+
+This is the path to the template, it should be defined in relation to the base view path defined at Perique setup.
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->view_template = 'path/to/template';
+```
+
+> Please note when using a template, any additional view vars are accessible via the key defined.
+
+```php
+$meta_box->view_vars = [
+    'key1' => 'value1',
+    'key2' => 'value2',
+]
+
+###################################
+// In template
+echo $key1; // 'value1'
+```
+### 
+
+
+
+
+
+
+
 
 ### label
 
-The MetaBox needs a label applying, this acts as the header value.
+The Meta_Box needs a label applying, this acts as the header value.
 
 ```php
-// Depending on how you instantiated your metabox, the title can be added as.
+// Depending on how you instantiated your meta_box, the title can be added as.
 
-$metabox = new MetaBox('my_metabox_key_1');
-$metabox->label ='My First MetaBox';
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->label ='My First Meta_Box';
 
 // OR
 
-$metabox = MetaBox::normal('my_metabox_key_1')
-    ->label('My First MetaBox');
+$meta_box = Meta_Box::normal('my_meta_box_key_1')
+    ->label('My First Meta_Box');
 ```
 
 ### Context
 
-The MetaBox can be placed using the context property. By default, this is set as normal and can either be set using the static constructors or as follows.
+The Meta_Box can be placed using the context property. By default, this is set as normal and can either be set using the static constructors or as follows.
 
 ```php
-$metabox = new MetaBox('my_metabox_key_1');
-$metabox->context = 'side';
-$metabox->context = 'normal';
-$metabox->context = 'advanced';
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->context = 'side';
+$meta_box->context = 'normal';
+$meta_box->context = 'advanced';
 
 // OR
 
-$metabox->as_side(); // for 'side'
-$metabox->as_advanced(); // for 'advanced'
-$metabox->as_normal(); // for 'normal'
+$meta_box->as_side(); // for 'side'
+$meta_box->as_advanced(); // for 'advanced'
+$meta_box->as_normal(); // for 'normal'
 ```
 
 ### Screen
 
-You can define whichever screen you wish to render the MetaBox on. This can be defined by-passing the screen id, post type, or WP\_Screen instance. These should be passed as single values.
+You can define whichever screen you wish to render the Meta_Box on. This can be defined by-passing the screen id, post type, or WP\_Screen instance. These should be passed as single values.
 
 ```php
 // To render on all post and page edit.php pages.
-$metabox = MetaBox::normal('my_metabox_key_1')
+$meta_box = Meta_Box::normal('my_meta_box_key_1')
     ->screen('post')
     ->screen('page');
 ```
 
-If you are registering your MetaBox when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.
+If you are registering your Meta_Box when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.
 
 ### Priority
 
-You can use the priority value to denote when the MetaBox is loaded in context with the rest of the page. By default, this is passed as 'default' but can be 
+You can use the priority value to denote when the Meta_Box is loaded in context with the rest of the page. By default, this is passed as 'default' but can be 
 
 ```php
-$metabox = new MetaBox('my_metabox_key_1');
-$metabox->priority = 'high';
-$metabox->priority = 'core';
-$metabox->priority = 'default';
-$metabox->priority = 'low';
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->priority = 'high';
+$meta_box->priority = 'core';
+$meta_box->priority = 'default';
+$meta_box->priority = 'low';
 
 // OR
 
-MetaBox::advanced('my_metabox_key_1')
+Meta_Box::advanced('my_meta_box_key_1')
     ->priority('high'); 
-MetaBox::advanced('my_metabox_key_1')
+Meta_Box::advanced('my_meta_box_key_1')
     ->priority('core'); 
     
-MetaBox::advanced('my_metabox_key_1')
+Meta_Box::advanced('my_meta_box_key_1')
     ->priority('default'); 
     
-MetaBox::advanced('my_metabox_key_1')
+Meta_Box::advanced('my_meta_box_key_1')
     ->priority('low'); 
 ```
 
 ### Add Action
 
-Actions can be applied to MetaBoxes,  this allows for the verification and processing of additional meta fields. Any form fields added, will be passed to the global POST array. _Care should be taken when using save\_post, as this is fired when the draft post is created and before the MetaBox is rendered._   
-Multiple actions can be passed, allowing for granular control over your MetaBox data.
+Actions can be applied to Meta_Boxes,  this allows for the verification and processing of additional meta fields. Any form fields added, will be passed to the global POST array. _Care should be taken when using save\_post, as this is fired when the draft post is created and before the Meta_Box is rendered._   
+Multiple actions can be passed, allowing for granular control over your Meta_Box data.
 
 ```php
 // Inline
-MetaBox::advanced('my_metabox_key_1')
+Meta_Box::advanced('my_meta_box_key_1')
     ->action(
         'post_updated', 
         function($id, $after_update, $before_update){
-            if(isset($_POST['my_field']){
-                update_post_meta($id, 'my_meta', sanitize_text_field($_POST['my_field']);
+            if( isset( $_POST['my_field'] ) {
+                update_post_meta($id, 'my_meta', sanitize_text_field($_POST['my_field'])
             }
         }, 
         10, 
@@ -120,23 +196,10 @@ MetaBox::advanced('my_metabox_key_1')
     ); 
     
 
-// Part of class
-public function register_metabox($loader): void {
-    MetaBox::advanced('my_metabox_key_1')
-    ->action('post_updated', [$this, 'post_updated_callback'], 10, 3)
-    ->register($loader);
-}
-
-public function post_updated_callback($post_id, $after_update, $before_update): void {
-    if(isset($_POST['my_field']){
-        update_post_meta($id, 'my_meta', sanitize_text_field($_POST['my_field']);
-    }
-}
-
 // Using the property.
-$metabox = new MetaBox('my_metabox_key_1');
-$metabox->action['post_updated'] = [
-    'callback' => [$this, 'post_updated_callback'],
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->action['post_updated'] = [
+    'callback' => [$this, 'some_callback_method'],
     'priority' => 10,
     'params' => 3
 ];
@@ -152,26 +215,19 @@ There are 2 ways to render the Meta Box view, this can either be done with a sim
 Each Meta Box has its own definable view callback, this can either be called inline or a separate method within your class.
 
 ```php
-// Inline
-$metabox = MetaBox::normal('my_metabox_key_1')
+$meta_box = Meta_Box::normal('my_meta_box_key_1')
     ->view(static function($post, $args){
-        echo 'Hi from my metabox, im called statically as i do not need to be bound to the class. Micro optimisations ;) ';
+        echo 'Hi from my meta_box, im called statically as i do not need to be bound to the class. Micro optimisations ;) ';
     });
 
-// OR 
-
-$metabox = new MetaBox('my_metabox_key_1');
-$metabox->view = function($post, $args){
-    echo 'Hi from my metabox';
-};
 ```
 
 ### View Vars
 
-Data can be passed through to the MetaBox view callable, unlike the native MetaBox functions. The view vars passed to the view callable are only those defined within the view\_vars\(\) method. _These are optional, can be omitted if you don't need to pass additional data._
+Data can be passed through to the Meta_Box view callable, unlike the native Meta_Box functions. The view vars passed to the view callable are only those defined within the view\_vars\(\) method. _These are optional, can be omitted if you don't need to pass additional data._
 
 ```php
-MetaBox::normal('my_metabox_key_1')
+Meta_Box::normal('my_meta_box_key_1')
     ->view_vars(['user' => get_current_user_id(),...])
     ->view(function( WP_Post $post, args $args): void {
         printf("Hello user with ID:%d", $args['user']);
