@@ -175,6 +175,7 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
   /** The save_post|update_post hook callback */
   public function save_method( int $post_id ): array {
     // Handle validating and updating post meta.
+	update_post_meta($post_id, 'acme_meta_1', $value);
   }
 }
 ```
