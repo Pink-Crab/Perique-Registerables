@@ -424,7 +424,7 @@ If you wish to make use of the App_Config class, for defining your cpt slug/key,
 
 ```php
 use PinkCrab\Registerables\Post_Type;
-use PinkCrab\Core\Application\App_Config;
+use PinkCrab\Perique\Application\App_Config;
 
 class Public_Post_Type extends Post_Type {
     
