@@ -259,4 +259,4 @@ class Secret_Tax extends Taxonomy {
 }  
 ```
 
-## Post Type Labels
+## Taxonomy Labels
