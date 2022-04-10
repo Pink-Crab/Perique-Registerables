@@ -251,23 +251,29 @@ class My_Cpt extends Post_Type {
 }
 ```
 
+### $template_lock  
+> @var bool|'all'|'insert'  
+> @default false  
+
+Setting as false will not lock or restrict the blocks as defined by the template. Setting as `all` will not allow the adding/removing/moving of blocks. `insert` will allow the moving of blocks, but not adding/removing them.
+
 
 
 ## Methods
 
 The Post\_Type class comes with a few methods you can use for setting and modifying the defined values. 
 
-### public function metaboxes\(\): void
+### public function meta boxes\(array): array
+> @param Meta_Data[]   
+> @return Meta_Data[]  
 
-> @return void
-
-This method is used for creating and defining all the metaboxes used for this post type. The method should be used to populate the $metaboxes array with partially completed MetaBox objects, then when the Post\_Type is registered, the metaboxes are automatically added and rendered. See the example below.
+This method is used for creating and defining all the meta boxes used for this post type. The method should be used to populate the $meta boxes array with partially completed MetaBox objects, then when the Post\_Type is registered, the meta boxes are automatically added and rendered.
 
 ### public function meta_data\(\): void
 
 > @return void
 
-This method is used to push meta data to the post type. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defulats. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the type, or subclass (post type) as these are set automatically.
+This method is used to push meta data to the post type. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the type, or subclass (post type) as these are set automatically.
 
 ### public function slug\(\): ?string
 
@@ -293,29 +299,8 @@ Like the labels, the full args array can be altered at run time as well, by over
 
 This can be used to get the defined slug for the post type, without directly constructing the object. If you plan to use this method, please be aware it creates its own internal instance BUT DOES NOT USE the DI container, so the use of custom constructor arguments will throw errors.
 
-## Examples
 
-### Using a custom slug for Permalinks.
-
-If you wish to use a custom slug, it can be defined like this.
-
-```php
-class Public_Post_Type extends Post_Type {
-    public $key = 'public_post_type';
-    public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
-    // Custom slug
-    public $slug = 'my_post_type';
-}
-```
-
-Now we have a post type which has a post\_type of '**public\_post\_type**' but all permalinks and archives have the slug if '**my\_post\_type'**
-
-![](https://gblobscdn.gitbook.com/assets%2F-MNx9Q1zp4O9w6CJIiBQ%2F-MOBMyywu6i9SGwz4wNj%2F-MOBdlnT5MdpWXYk0fUE%2FSHlQ7z5.png?alt=media&token=78bf0819-99ea-4c54-add1-eeb1dd73011a)
-
-![](https://gblobscdn.gitbook.com/assets%2F-MNx9Q1zp4O9w6CJIiBQ%2F-MOBMyywu6i9SGwz4wNj%2F-MOBdpJwpkO-mGK05TnZ%2FTiVqELr.png?alt=media&token=b65916e1-1fc9-4077-888a-4181ea0e22a4)
-
-### Registering MetaBoxes
+## Registering MetaBoxes
 
 To register MetaBoxes, populate the $this-&gt;metaboxes property \(an array\) with partially constructed MetaBox objects. When the registration process is run, they will be bound to your post type and included.
 
@@ -330,8 +315,8 @@ class Public_Post_Type extends Post_Type {
     public $plural   = 'Public Posts';
     
     // Register metaboxes
-    public function metaboxes(){
-        $this->metaboxes[] = MetaBox::normal('custom_metabox')
+    public function meta_boxes(array $meta_boxes): array {
+        $meta_boxes = Meta_Box::normal('custom_metabox')
             ->label( 'This is the main meta box' )
             ->view([$this, 'metabox_1_view'])
             ->view_vars(['key' => 'value'])
@@ -339,11 +324,13 @@ class Public_Post_Type extends Post_Type {
             ->add_action('delete_post', [$this, 'metabox_delete_post'], 10, 2);
         
         // If you wish to add more than one.
-        $this->metaboxes[] = MetaBox::side('another_metabox')
+        $meta_boxes = MetaBox::side('another_metabox')
             ->label('Etc etc')
             ->view([$this, 'metabox_2_view'])
             ->view_vars(['key2' => 'value2'])
             ......
+
+        return $meta_boxes
     }
         
     /**
@@ -375,7 +362,7 @@ Please note if your MetaBox is to be displayed on other post types, it's often b
 
 If you are adding more than 1 metabox, it's best to use shared hooks, rather than calling the same hook multiple times.
 
-### Registering Meta_Data
+## Registering Meta_Data
 
 You can easily add post meta to your post type.
 
@@ -390,18 +377,18 @@ class Public_Post_Type extends Post_Type {
     public $plural   = 'Public Posts';
     
     // Register meta_data
-    public function meta_data(){
-        $this->meta_data[] = ( new Meta_Data('meta_key'))
+    public function meta_data(array $meta_data): void {
+        $meta_data[] = ( new Meta_Data('meta_key'))
             ->type('string')
             ->description('Some post meta, that means something to someone')
             ->single(true)
             ->default('something');
-        
+        return $meta_data;
     }
 }
 ```
 
-### Using filter\_labels\(\)
+## Using filter\_labels\(\)
 
 filter\_labels\(\) can be used to either alter the predefined value or adding in new ones.
 
@@ -429,7 +416,7 @@ class Orders_CPT extends Post_Type {
 }
 ```
 
-### Using filter\_args\(\)
+## Using filter\_args\(\)
 
 filter\_args\(\) can be used to alter the post types properties at run time, based on operations and current state.
 
@@ -459,7 +446,7 @@ class Secret_CPT extends Post_Type {
 }
 ```
 
-### Using App\_Config or Config \(proxy\)
+## Using App\_Config or Config \(proxy\)
 
 If you wish to make use of the App_Config class, for defining your cpt slug/key, you can do either of the following._
 
