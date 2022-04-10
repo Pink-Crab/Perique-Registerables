@@ -416,7 +416,7 @@ class Secret_CPT extends Post_Type {
 }
 ```
 
-## Using App\_Config or Config \(proxy\)
+## Using App\_Config
 
 If you wish to make use of the App_Config class, for defining your cpt slug/key, you can do either of the following._
 
@@ -435,3 +435,40 @@ class Public_Post_Type extends Post_Type {
     }
 }  
 ```
+
+## Post Type Labels
+
+The following labels are automatically defined, but can be changed using [`filter_labels()`](#using-filter_labels)
+
+* 'name'                     => {plural name}
+* 'singular_name'            => {singular name}
+* 'add_new'                  => Add New
+* 'add_new_item'             => Add New {singular name}
+* 'edit_item'                => Edit {singular name}
+* 'new_item'                 => New {singular name}
+* 'view_item'                => View {singular name}
+* 'view_items'               => View{plural name}
+* 'search_items'             => Search {plural name}
+* 'not_found'                => No {plural name} found
+* 'not_found_in_trash'       => No {plural name} found in Trash
+* 'parent_item_colon'        => Parent {plural name}:
+* 'all_items'                => All {plural name}
+* 'archives'                 => {plural name} Archives
+* 'attributes'               => {plural name} Attributes
+* 'insert_into_item'         => Insert into {plural name}
+* 'uploaded_to_this_item'    => Uploaded to this {plural name}
+* 'featured_image'           => 'Featured image', 'Label for the featured image meta box title. Default is ‘Featured image’.', 'pinkcrab' ),
+* 'set_featured_image'       => 'Set featured image', 'Label for setting the featured image. Default is ‘Set featured image’.', 'pinkcrab' ),
+* 'remove_featured_image'    => 'Remove featured image', 'Label for removing the featured image. Default is ‘Remove featured image’.', 'pinkcrab' ),
+* 'use_featured_image'       => 'Use as featured image', 'Label in the media frame for using a featured image. Default is ‘Use as featured image’.', 'pinkcrab' ),
+* 'menu_name'                => $post_type->plural,
+* 'filter_items_list'        => Filter %s list', 'Label for the table views hidden heading. Default is ‘Filter {plural name} list’.', 'pinkcrab' ), $post_type->plural ),
+* 'filter_by_date'           => 'Filter by date', 'Label for the date filter in list tables. Default is ‘Filter by date’.', 'pinkcrab' ),
+* 'items_list'               => %s list', 'Label for the table hidden heading. Default is ‘{plural name} list’.', 'pinkcrab' ), \ucfirst( $post_type->plural ) ),
+* 'item_published'           => %s published', 'Label used when an item is published. Default is ‘{singular name} published’.', 'pinkcrab' ), \ucfirst( $post_type->singular ) ),
+* 'item_published_privately' => %s published privately', 'Label used when an item is published with private visibility. Default is ‘{singular name} published privately.’.', 'pinkcrab' ), \ucfirst( $post_type->singular ) ),
+* 'item_reverted_to_draft'   => %s reverted to draft', 'Label used when an item is switched to a draft. Default is ‘{singular name} reverted to draft’.', 'pinkcrab' ), \ucfirst( $post_type->singular ) ),
+* 'item_scheduled'           => %s scheduled', 'Label used when an item is scheduled for publishing. Default is ‘{singular name} scheduled.’ ', 'pinkcrab' ), \ucfirst( $post_type->singular ) ),
+* 'item_updated'             => %s updated', 'Label used when an item is updated. Default is ‘{singular name} updated.’.', 'pinkcrab' ), \ucfirst( $post_type->singular ) ),
+* 'item_link'                => %s Link', 'Title for a navigation link block variation. Default is ‘{singular name} Link’.', 'pinkcrab' ), \ucfirst( $post_type->singular ) ),
+* 'item_link_description'    => A link to a %s', 'Description for a navigation link block variation. Default is ‘A link to a {singular name}’.', 'pinkcrab' ), $post_type->singular ),
