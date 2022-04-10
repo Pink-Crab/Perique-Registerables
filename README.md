@@ -86,7 +86,7 @@ class My_CPT extends Post_Type {
   public $plural   = 'CPT Posts';
 
   public function meta_boxes( array $meta_boxes ): array {
-    $meta_boxes = MetaBox::side('my_metabox_key_1')
+    $meta_boxes = MetaBox::side('my_meta_box')
       ->label('My Meta Box')
       ->view_template('path/to/view/template')
       ->view_vars(['some' => 'additional data passed to view'])
@@ -96,14 +96,14 @@ class My_CPT extends Post_Type {
 }
 ```
 
-> If you're meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.
+> **If you're meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.**
 
 ```php
 /** The Meta Box Service */
 class Meta_Box_Service {
   public function get_meta_boxes(): array {
     $meta_boxes = array();
-    $meta_boxes = MetaBox::side('my_metabox_key_1')
+    $meta_boxes[] = MetaBox::side('my_meta_box')
       ->label('My Meta Box')
       ->view_template('path/to/view/template')
       ->view_vars(['some' => 'additional data passed to view'])
