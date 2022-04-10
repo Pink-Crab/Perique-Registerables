@@ -212,7 +212,9 @@ $meta_box->as_normal();
 $meta_box = Meta_Box::normal('my_meta_box_key_1');
 ``` 
 
-### Screen
+### screen(string): Meta_Box
+> @param string $screen 
+> @return Meta_Box
 
 You can define whichever screen you wish to render the Meta_Box on. This can be defined by-passing the screen id, post type, or WP\_Screen instance. These should be passed as single values.
 
@@ -223,34 +225,25 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1')
     ->screen('page');
 ```
 
-If you are registering your Meta_Box when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.
+**If you are registering your Meta_Box when defining a post type, the screen is automatically added when registered. So no need to pass the post type key.**
 
-### Priority
+### priority(string): Meta_Box
+> @param string $priority  
+> @return Meta_Box
 
 You can use the priority value to denote when the Meta_Box is loaded in context with the rest of the page. By default, this is passed as 'default' but can be 
 
 ```php
-$meta_box = new Meta_Box('my_meta_box_key_1');
-$meta_box->priority = 'high';
-$meta_box->priority = 'core';
-$meta_box->priority = 'default';
-$meta_box->priority = 'low';
-
-// OR
-
 Meta_Box::advanced('my_meta_box_key_1')
     ->priority('high'); 
-Meta_Box::advanced('my_meta_box_key_1')
-    ->priority('core'); 
-    
-Meta_Box::advanced('my_meta_box_key_1')
-    ->priority('default'); 
-    
-Meta_Box::advanced('my_meta_box_key_1')
-    ->priority('low'); 
 ```
 
-### Add Action
+### action(string, callable, ?int, ?int): Meta_Box
+> @param string $hook   
+> @param string $hook   
+> @param string $hook   
+> @param string $hook   
+> @return Meta_Box
 
 Actions can be applied to Meta_Boxes,  this allows for the verification and processing of additional meta fields. Any form fields added, will be passed to the global POST array. _Care should be taken when using save\_post, as this is fired when the draft post is created and before the Meta_Box is rendered._   
 Multiple actions can be passed, allowing for granular control over your Meta_Box data.
