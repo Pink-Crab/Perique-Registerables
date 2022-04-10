@@ -268,9 +268,11 @@ _Priority has a default of 10 and params of 1._
 
 There are 2 ways to render the Meta Box view, this can either be done with a simple `callable` or `\Closure` (as per core WP) or making use the `Renderable` service.
 
-### View
+### view( callable(\WP_Post,array):void ): Meta_Box
+> @param callable(\WP_Post,array):void  
+> @return Meta_Box
 
-Each Meta Box has its own definable view callback, this can either be called inline or a separate method within your class.
+This allows the setting of a conventional (WP Core) callback to render the view of the meta box. Any additional view_vars will be accessible under `$args['args']`
 
 ```php
 $meta_box = Meta_Box::normal('my_meta_box_key_1')
@@ -280,26 +282,54 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1')
 
 ```
 
-### View Vars
+### view_template(string): Meta_Box
+> @param string   
+> @return Meta_Box
+
+This allows for the defining of a view template, rather than using the core WP view callback. If a callable is set using `->view(function(){...})`, this will over rule its use and render from the template.
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->view_template('some/path/to/file');
+```
+
+> Please note when using view templates, the WP_Post object is accessible via `$post` and the view vars are accessible based on there key
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->view_template('some/path/to/file');
+$meta_box->view_vars([
+    'key1' => 'value1',
+    'key2' => 'value2',
+]);
+
+###################################
+// In template
+echo $key1; // 'value1'
+echo $post->post_title; // The Post Title
+```
+
+### view_vars(array): Meta_Box
+> @param array<string, mixed>   
+> @return Meta_Box
 
 Data can be passed through to the Meta_Box view callable, unlike the native Meta_Box functions. The view vars passed to the view callable are only those defined within the view\_vars\(\) method. _These are optional, can be omitted if you don't need to pass additional data._
 
 ```php
+// Using the view() callable
 Meta_Box::normal('my_meta_box_key_1')
     ->view_vars(['user' => get_current_user_id(),...])
     ->view(function( WP_Post $post, args $args): void {
-        printf("Hello user with ID:%d", $args['user']);
+        printf("Hello user with ID:%d", $args['user']->ID);
     });
-```
 
-The data passed into your view is a merge or all view\_var and the current post as `['post']=> get_post()`
+// Using view template.
+Meta_Box::normal('my_meta_box_key_1')
+    ->view_vars(['user' => get_current_user_id(),...])
+    ->view_template('some/path');
 
-```php
-<?php /** Template */ ?>
-
-<p> This is a template for <?php echo $post->post_title;?>, 
-we can access the current post using $post and all of our other passed vars as
-<?php echo $user;?> & <?php echo $foo;?></p>
+<?php /** Inside Template */ ?>
+Hello user with ID<?php echo $user->ID; ?>
 ```
 
 > As the post is auto added to the 'post' key, care should be taken to not overwrite it with your view vars.
