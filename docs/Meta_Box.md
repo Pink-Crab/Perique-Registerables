@@ -48,6 +48,40 @@ $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->label ='My First Meta_Box';
 ```
 
+### $screen
+> @var string[]  
+
+Defines which post types this meta box should be rendered as part of.
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->screen = ['post', 'page', 'my_cpt'];
+```
+
+### $context
+> @var string 
+> @default 'normal'  (options 'advanced'|'normal'|'side')
+
+Defines where the Meta Box should render 
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->context = 'side';
+```
+
+### $priority 
+> @var string 
+> @default 'default'  ('core'|'default'|'high'|'low')
+
+Defines the loading priority of meta boxes in the same context.
+
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->context = 'side';
+$meta_box->priority = 'high';
+```
+
+
 ### $view
 > @var null|callable(\WP_Post, array):void  
 
@@ -107,12 +141,21 @@ $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->view_vars(['key1' => 'value1']);
 $meta_box->view_data_filter = function(\WP_Post $post, array $args): array {
     $args['meta_value1'] => get_post_meta($post->ID, 'foo', true);
+    // $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
     return $args;
 };
+```
 
-// $args = ['key1' => 'value1', 'meta_value1'=> 'value from meta']
+### $actions
+> @var array<string, array{callback:callable,priority:int,params:int}>   
 
+Defines actions which wil only be registered if the meta box is currently rendered on the edit.php for the post.
 
+```php
+$meta_box = new Meta_Box('my_meta_box_key_1');
+$meta_box->actions['init'] = ['callable' => 'some_function', 'priority'=> 10,'params'=> 1];
+```
+> Please note only a single action can be defined per hook!
 
 
 
