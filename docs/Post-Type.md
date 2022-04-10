@@ -6,31 +6,6 @@ description: >-
 
 # Post\_Type
 
-## Basic Setup
-
-You can create a very simple, public facing post type with only the need to use a key, singluar and plural titles.
-
-```php
-//@file src/CPT/Public_Post_Type.php
-
-class Public_Post_Type extends Post_Type {
-    public $key = 'public_cpt';
-    public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
-}
-
-/** Then add to registration array */
-
-//@file config/registration.php
-use My_Plugin\CPT\Public_Post_Type;
-
-return array(
-    .......
-    Public_Post_Type::class,
-    .......
-);
-```
-
 As with all classes which implement the Registerable interface, adding the post type to the registration config file, will handle all the registration for you.
 
 ## Fields
