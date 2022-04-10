@@ -441,35 +441,35 @@ class Public_Post_Type extends Post_Type {
 The following labels are automatically defined, but can be changed using [`filter_labels()`](#using-filter_labels)
 | Label | Default Value |
 | --- | ----------- |
-| 'name'                     | {plural name} |
-| 'singular_name'            | {singular name} |
-| 'add_new'                  | Add New |
-| 'add_new_item'             | Add New {singular name} |
-| 'edit_item'                | Edit {singular name} |
-| 'new_item'                 | New {singular name} |
-| 'view_item'                | View {singular name} |
-| 'view_items'               | View {plural name} |
-| 'search_items'             | Search {plural name} |
-| 'not_found'                | No {plural name} found |
-| 'not_found_in_trash'       | No {plural name} found in Trash |
-| 'parent_item_colon'        | Parent {plural name}: |
-| 'all_items'                | All {plural name} |
-| 'archives'                 | {plural name} Archives |
-| 'attributes'               | {plural name} Attributes |
-| 'insert_into_item'         | Insert into {plural name} |
-| 'uploaded_to_this_item'    | Uploaded to this {plural name} |
-| 'featured_image'           | Featured image |
-| 'set_featured_image'       | Set featured image |
-| 'remove_featured_image'    | Remove featured image |
-| 'use_featured_image'       | Use as featured image |
-| 'menu_name'                | {plural name}, |
-| 'filter_items_list'        | Filter {plural name} list |
-| 'filter_by_date'           | Filter by date |
-| 'items_list'               | {plural name} list |
-| 'item_published'           | {singular name} published |
-| 'item_published_privately' | {singular name} published privately |
-| 'item_reverted_to_draft'   | {singular name} reverted to draft |
-| 'item_scheduled'           | {singular name} scheduled |
-| 'item_updated'             | {singular name} updated |
-| 'item_link'                | {singular name} Link |
-| 'item_link_description'    | A link to a {singular name} |
+| name                     | **{plural name}** |
+| singular_name            | **{singular name}** |
+| add_new                  | Add New |
+| add_new_item             | Add New **{singular name}** |
+| edit_item                | Edit **{singular name}** |
+| new_item                 | New **{singular name}** |
+| view_item                | View **{singular name}** |
+| view_items               | View **{plural name}** |
+| search_items             | Search **{plural name}** |
+| not_found                | No **{plural name}** found |
+| not_found_in_trash       | No **{plural name}** found in Trash |
+| parent_item_colon        | Parent **{plural name}**: |
+| all_items                | All **{plural name}** |
+| archives                 | **{plural name}** Archives |
+| attributes               | **{plural name}** Attributes |
+| insert_into_item         | Insert into **{plural name}** |
+| uploaded_to_this_item    | Uploaded to this **{plural name}** |
+| featured_image           | Featured image |
+| set_featured_image       | Set featured image |
+| remove_featured_image    | Remove featured image |
+| use_featured_image       | Use as featured image |
+| menu_name                | **{plural name}** |
+| filter_items_list        | Filter **{plural name}** list |
+| filter_by_date           | Filter by date |
+| items_list               | **{plural name}** list |
+| item_published           | **{singular name}** published |
+| item_published_privately | **{singular name}** published privately |
+| item_reverted_to_draft   | **{singular name}** reverted to draft |
+| item_scheduled           | **{singular name}** scheduled |
+| item_updated             | **{singular name}** updated |
+| item_link                | **{singular name}** Link |
+| item_link_description    | A link to a **{singular name}** |
