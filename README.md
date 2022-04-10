@@ -8,9 +8,9 @@
 
 A collection of Abstract Classes for creating common WordPress fixtures which need registering.
 
-* Post Types
-* Taxonomies
-* Meta boxes
+* [Post Types](#post-type)
+* [Taxonomies](#taxonomy)
+* [Meta Box](#meta-box)
 * Meta Data
 
 
