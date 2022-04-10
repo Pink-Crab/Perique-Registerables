@@ -80,16 +80,16 @@ Include in the tag cloud.
 > @var bool  
 > @default true
 
-Inlcude in quick edit.
+Include in quick edit.
 
 ### $sort
-> @var bool
+> @var bool  
 > @default true
 
 Should terms remain in the order added (if false will be alphabetical)
 
 ### $meta_box_cb
-> @var callable|null
+> @var callable|null  
 
 Custom callback for rendering the Term meta box on edit post
 
@@ -107,50 +107,46 @@ Base rest path. If not set, will use taxonomy slug
 
 ### $rest_controller_class
 > @var string  
-> @default 'WP_REST_Terms_Controller'
+> @default 'WP_REST_Terms_Controller'  
 
-xx
+Rest base controller.
 
 ### $public
-> @var bool
+> @var bool  
 > @default true
 
-xx
+Is this Taxonomy to be used frontend wise
 
 ### $publicly_queryable
 > @var bool
 > @default true
 
-xx
+Whether the taxonomy is publicly queryable.
 
 ### $query_var
 > @var bool|string
 > @default false
 
-xx
+Define a custom query var, if false with use $this->slug
 
 ### $rewrite
 > @var array<string, mixed>|bool
 > @default true
 
-xx
+Rewrite the permalinks structure. If set to true will use the default of the slug.
 
 ### $update_count_callback
 > @var string|bool
 
-xx
+If blank string will use the internal counting functions. Must be a named function or invokeable class. Anonymous functions not allowed.
 
 ### $capabilities
 > @var array<string, mixed>|null
 
-xx
+Array of capabilities for the taxonomy
 
 ### $default_term
 > @var array<string, mixed>|null
 
-xx
+Sets the default term for the taxonomy
 
-### $meta_data
-> @var array<Meta_Data>
-
-xx
