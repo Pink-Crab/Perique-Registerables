@@ -54,7 +54,7 @@ class Basic_CPT extends Post_Type {
 	public $plural   = 'Basics';
 }
 ```
-
+ 
 Creates a flat taxonomy for the **Post** Post Type.
 
 ``` php
