@@ -473,3 +473,5 @@ The following labels are automatically defined, but can be changed using [`filte
 | item_updated             | **{singular name}** updated |
 | item_link                | **{singular name}** Link |
 | item_link_description    | A link to a **{singular name}** |
+
+> Additional or missing labels can be added via the [`filter_labels()`](#using-filter_labels) `Post_Type` method
