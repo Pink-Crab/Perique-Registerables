@@ -72,13 +72,20 @@ class Meta_Data {
 	protected $default = '';
 
 	/**
-	 * The meta fields callbacks
-	 *
-	 * @var array<string, callable|null>
-	 */
+	* The meta fields callbacks
+	*
+	* @var array{
+	*  sanitize: null|callable,
+	*  permissions: null|callable,
+	*  rest_view: null|callable(mixed[]): void,
+	*  rest_update: null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment): void
+	* }
+	*/
 	protected $callbacks = array(
 		'sanitize'    => null,
 		'permissions' => null,
+		'rest_view'   => null,
+		'rest_update' => null,
 	);
 
 	/**
@@ -226,6 +233,28 @@ class Meta_Data {
 	}
 
 	/**
+	* Sets the GET callback for REST requests.
+	*
+	* @param callable|null $callback
+	* @return self
+	*/
+	public function rest_view( ?callable $callback ): self {
+		$this->callbacks['rest_view'] = $callback;
+		return $this;
+	}
+
+	/**
+	 * Sets the UPDATE callback for REST requests.
+	 *
+	 * @param null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment):void $callback
+	 * @return self
+	 */
+	public function rest_update( ?callable $callback ): self {
+		$this->callbacks['rest_update'] = $callback;
+		return $this;
+	}
+
+	/**
 	 * Builds the args array for registering metadata
 	 *
 	 * @return array<string, mixed>
@@ -274,4 +303,32 @@ class Meta_Data {
 	public function get_rest_schema() {
 		return $this->rest_schema;
 	}
+
+	/**
+	 * Get holds a secondary object type, used for post type and taxonomy.
+	 *
+	 * @return string|null
+	 */
+	public function get_subtype(): ?string {
+		return $this->object_subtype;
+	}
+
+	/**
+	* Gets the GET callback for REST requests.
+	*
+	* @return null|callable(mixed[]): void
+	*/
+	public function get_rest_view(): ?callable {
+		return $this->callbacks['rest_view'];
+	}
+
+	/**
+	 * Sets the GET callback for REST requests.
+	 *
+	 * @return null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment): void
+	 */
+	public function get_rest_update(): ?callable {
+		return $this->callbacks['rest_update'];
+	}
+
 }
