@@ -185,10 +185,10 @@ $meta_box->as_normal(); // for 'normal'
 ```
 
 ### as_advanced(): Meta_Box
-> See as_side()  
+> [See as_side()](#as_side-meta_box)  
 
 ### as_normal(): Meta_Box
-> See as_side()  
+> [See as_side()](#as_side-meta_box)  
 
 ### Screen
 
