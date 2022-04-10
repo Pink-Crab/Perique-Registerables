@@ -22,9 +22,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 
 ## Why? ##
 
-Creating many of WordPress's internal fixtures can sometimes be very verbose with large arrays of values which do not throw errors if incorrect. 
-
-The PinkCrab Registerables module provides a small selection of Abstract Classes which can be extended and added to the registration system.  
+WordPress has a number of Registerable functions based around Post Types, Post Meta and Taxonomies. These tend to have large arrays of args that need to be defined. This small library allows these to be defined as Classes which can be registered via the Registration process.
 
 ## Setup ##
 
@@ -33,7 +31,16 @@ $ composer require pinkcrab/registerables
 
 ``` 
 
-## Example ##
+Once the module is included, we need to include the Registerable_Middleware Middleware. As this has its own dependencies, this will need to be added using construct_registration_middleware() from the App_Factory instance.
+```php
+$app = ( new PinkCrab\Perique\Application\App_Factory() )
+  // Perique bootstrapping as normal.   
+  ->construct_registration_middleware( Registerable_Middleware::class );
+  ->boot();
+```
+Once the middleware has been included, we can use Post_Type, Taxonomies, Meta Data and Meta boxes as part of the usual Registration process
+
+## Post Types
 
 Creates a simple post type.
 
