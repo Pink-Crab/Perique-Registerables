@@ -282,7 +282,7 @@ class Secret_Tax extends Taxonomy {
 
 | Label | Default Value |
 | --- | ----------- |
-| > *Shared Labels*         ||
+| ### *Shared Labels*         ||
 | name                  | **{plural name}** |
 | singular_name         | **{singular name}** |
 | menu_name             | **{plural name}** |
@@ -301,11 +301,11 @@ class Secret_Tax extends Taxonomy {
 | back_to_items         | ← Back to **{plural name}** |
 | item_link             | **{singular name}** Link |
 | item_link_description | A link to a **{singular name}** |
-| *Tag Only* ||
-| separate_items_with_commas' | Separate **{plural name}** with commas |
-| add_or_remove_items'        | Add or remove **{plural name}** |
-| choose_from_most_used'      | Add or remove **{plural name}** |
-| *Hierarchical Only* ||
-| parent_item_colon' | Parent **{singular name}**: |
-| parent_item'       | Parent **{singular name}** |
-| filter_by_item'    | Filter by **{singular name}** |
+| ### *Tag Only* ||
+| separate_items_with_commas | Separate **{plural name}** with commas |
+| add_or_remove_items        | Add or remove **{plural name}** |
+| choose_from_most_used      | Add or remove **{plural name}** |
+| ### *Hierarchical Only* ||
+| parent_item_colon | Parent **{singular name}**: |
+| parent_item      | Parent **{singular name}** |
+| filter_by_item    | Filter by **{singular name}** |
