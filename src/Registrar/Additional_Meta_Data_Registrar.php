@@ -61,7 +61,7 @@ class Additional_Meta_Data_Registrar implements Registrar {
 		}
 
 		/** @var Additional_Meta_Data $registerable, Validation call below catches no Additional_Meta_Data Registerables */
-		$meta_data = $registerable->meta_data( array() );
+		$meta_data = $this->filter_meta_data( $registerable->meta_data( array() ) );
 
 		// Iterate through all meta data and register them.
 		foreach ( $meta_data as $meta_data_item ) {
