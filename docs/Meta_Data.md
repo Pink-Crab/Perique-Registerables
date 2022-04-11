@@ -145,3 +145,25 @@ $meta = ( new Meta_Data('my_key') )
   ->permissions(function($allowed, $meta_key, $object_id, $user_id, $cap, $caps){
     return current_user_can( 'edit_resume', $object_id );
   });
+```
+```php
+/**
+ * @param  boolean   $allowed    Can add/update meta value.
+ * @param  string    $meta_key   The meta key.
+ * @param  integer   $object_id  The post/user/term/comment ID.
+ * @param  integer   $user_id    The user ID.
+ * @param  string    $cap        The meta capability.
+ * @param  string[]  $caps       An array of capabilities.
+ * @return boolean
+ */
+function(
+  boo $allowed, 
+  string $meta_key, 
+  int $object_id, 
+  int $user_id, 
+  string $cap, 
+  array $caps
+){
+  return something($user_id);
+}
+```
