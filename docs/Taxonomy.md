@@ -291,7 +291,7 @@ class Secret_Tax extends Taxonomy {
 | edit_item             | Edit **{singular name}** |
 | view_item             | View **{singular name}** |
 | update_item           | Update **{singular name}** |
-| add_new_item          | Add New**{singular name}** |
+| add_new_item          | Add New **{singular name}** |
 | new_item_name         | New **{singular name}** |
 | not_found             | No **{plural name}** found |
 | items_list            | **{plural name}** list |
