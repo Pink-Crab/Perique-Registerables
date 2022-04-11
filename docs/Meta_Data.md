@@ -15,7 +15,7 @@ $meta = new Meta_Data('my_key');
 ```
 
 ## meta_type(string $type): Meta_Data
-> @param string['post','term','comment','user'] $type
+> @param string['post','term','comment','user'] $type  
 > @return Meta_Data  
 
 A valid Meta_Data type must be defined.
@@ -31,4 +31,27 @@ $meta->meta_type('comment'); // get_comment_meta(...)
 
 ## object_subtype(string $type): Meta_Data
 > @param string $type    
-> @return Meta_Data 
+> @return Meta_Data  
+
+Post and Term meta requires a sub type being defined. This would be the post type for post meta and taxonomy for term meta. 
+
+> You can use the `post_type()` and `taxonomy()` helper methods to set both meta_type and subtype in a single method.
+
+```php
+$meta = new Meta_Data('my_key');
+$meta->meta_type('post')
+$meta->object_subtype('page')
+
+// Can be expressed as
+$meta = new Meta_Data('my_key');
+$meta->post_type('page');
+
+## With Term Meta
+$meta = new Meta_Data('my_key');
+$meta->meta_type('term')
+$meta->object_subtype('custom_tax')
+
+// Can be expressed as
+$meta = new Meta_Data('my_key');
+$meta->taxonomy('custom_tax');
+```
