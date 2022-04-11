@@ -226,7 +226,7 @@ class Post_Type_Registrar implements Registrar {
 			'rest_base'             => $post_type->rest_base ?? $post_type->key,
 			'rest_controller_class' => \class_exists( $post_type->rest_controller_class ) ? $post_type->rest_controller_class : \WP_REST_Posts_Controller::class,
 			'delete_with_user'      => \is_bool( $post_type->delete_with_user ) ? $post_type->delete_with_user : null,
-			'template'              => \is_array( $post_type->templates ) ? $post_type->templates : array(),
+			'template'              => \is_array( $post_type->template ) ? $post_type->template : array(),
 			'template_lock'         => \is_string( $post_type->template_lock ) ? $post_type->template_lock : false,
 		);
 

@@ -245,7 +245,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var string[]|null
 	 */
-	public $templates = array();
+	public $template = array();
 
 	/**
 	 * Should the defined templates above be locked
