@@ -211,7 +211,11 @@ class Additional_Post_Meta extends Additional_Meta_Data_Controller {
 
 You can also define Meta Data for [Post Types](docs/Post-Type.md#registering-meta_data) and [Taxonomies](docs/Taxonomy.md#registering-meta_data) when creating them.
 
+### Additional_Meta_Data_Controller
 
+To register standalone Meta_Data, you can use the `Additional_Meta_Data_Controller` which has a single method `meta_data(array $meta_data): array`. Like in the [example above](#meta-data), you add your Meta_Data instances to the array and return.
+
+The class has an empty constructor, so you can easily inject dependencies in and make use of the `App_Config` meta options.
 
 ## Contributions
 
