@@ -132,7 +132,7 @@ class Taxonomy_Registrar implements Registrar {
 			/* translators: %s: Taxonomy plural name */
 			'search_items'          => wp_sprintf( _x( 'Search %s', 'Label for searching plural items. Default is ‘Search {taxonomy plural name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'popular_items'         => wp_sprintf( _x( 'Popular %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
+			'popular_items'         => wp_sprintf( _x( 'Popular %s', 'Label for the popular terms', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
 			'edit_item'             => wp_sprintf( _x( 'Edit %s', 'Label for editing a singular item. Default is ‘Edit {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
@@ -173,7 +173,7 @@ class Taxonomy_Registrar implements Registrar {
 			/* translators: %s: Taxonomy singular name */
 			'parent_item_colon' => wp_sprintf( _x( 'Parent %s:', 'Label used to prefix parents of hierarchical items. Not used on non-hierarchical taxonomys. Default is ‘Parent {taxonomy plural name}:’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'parent_item'       => wp_sprintf( _x( 'Parent %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
+			'parent_item'       => wp_sprintf( _x( 'Parent %s', 'Label for the parent term', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
 			'filter_by_item'    => wp_sprintf( _x( 'Filter by %s', 'This label is only used for hierarchical taxonomies. Default \'Filter by {taxonomy singular name}\', used in the posts list table.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 		);
