@@ -38,6 +38,8 @@ Post and Term meta requires a sub type being defined. This would be the post typ
 > You can use the `post_type()` and `taxonomy()` helper methods to set both meta_type and subtype in a single method.
 
 ```php
+## With Post Meta
+
 $meta = new Meta_Data('my_key');
 $meta->meta_type('post')
 $meta->object_subtype('page')
@@ -47,6 +49,7 @@ $meta = new Meta_Data('my_key');
 $meta->post_type('page');
 
 ## With Term Meta
+
 $meta = new Meta_Data('my_key');
 $meta->meta_type('term')
 $meta->object_subtype('custom_tax')
