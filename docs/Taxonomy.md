@@ -312,4 +312,4 @@ class Secret_Tax extends Taxonomy {
 
 
 | One    | Two | Three | Four    | Five  | Six |
-| --- | --- | --- | --- |
+| ----------- | ----------- | ----------- | ----------- |
