@@ -58,7 +58,7 @@ class Basic_CPT extends Post_Type {
 }
 ```
  
-[See full Post_Type docs](docs/Post-Type.md)
+[See full Post Type docs](docs/Post-Type.md)
 
 ## Taxonomy
 
