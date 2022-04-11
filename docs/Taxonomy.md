@@ -279,7 +279,11 @@ class Secret_Tax extends Taxonomy {
 
 ## Taxonomy Labels
 
+The following labels are automatically defined, but can be changed using [`filter_labels()`](#using-filter_labels)
+
 ### Shared Labels
+
+> These first labels are shared between both *Tag* and *Hierarchical* taxonomies.
 
 | Label | Default Value |
 | --- | ----------- |
