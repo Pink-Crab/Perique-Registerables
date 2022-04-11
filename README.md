@@ -184,6 +184,34 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
 > The above Meta Box would be shown on both `acme_post_type_a` and `acme_post_type_b`  
 > You can also inject any dependencies via the constructor too.
 
+## Meta Data
+
+You can register, `post`, `term`, `user` and `comment` meta fields either as a part of Post Types/Taxonomy Registerables or on there own. This fluent object based definition makes it easy to create these inline.
+
+Can easily add full REST support by supplying a schema for the field and Registrar will register the field also.
+
+```php
+class Additional_Post_Meta extends Additional_Meta_Data_Controller {
+  /** Define the Meta Data */
+  public function meta_data(array $meta_data): array {
+    $meta_data[] = (new Meta_Data('meta_key'))
+      ->post_type('post')
+      ->default('some fallback')
+      ->description('This is a meta fields description')
+      ->single()
+      ->sanitize('sanitize_text_field')
+      ->rest_schema(['type' => 'string']);
+
+    return $meta_data;
+  }
+}
+```
+
+[See full Meta Data Docs](docs/Meta_Data.md)  
+
+You can also define Meta Data for [Post Types](docs/Post-Type.md#registering-meta_data) and [Taxonomies](docs/Taxonomy.md#registering-meta_data) when creating them.
+
+
 
 ## Contributions
 
