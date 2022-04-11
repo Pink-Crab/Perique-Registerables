@@ -142,4 +142,6 @@ $meta = ( new Meta_Data('my_key') )->permissions('__return_true');
 
 $meta = ( new Meta_Data('my_key') )
   ->type('integer')
-  ->permissions(fn($allowed, $meta_key, $object_id, $user_id, $cap, $caps) => current_user_can( 'edit_resume', $object_id ));
+  ->permissions(function($allowed, $meta_key, $object_id, $user_id, $cap, $caps){
+    return current_user_can( 'edit_resume', $object_id );
+  });
