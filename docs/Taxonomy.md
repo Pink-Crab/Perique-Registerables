@@ -309,6 +309,8 @@ The following labels are automatically defined, but can be changed using [`filte
 
 ### Tag Only
 
+> Combined with the shared labels, these are used for Tag taxonomies
+
 | Label | Default Value |
 | --- | ----------- |
 | separate_items_with_commas | Separate **{plural name}** with commas |
@@ -317,6 +319,8 @@ The following labels are automatically defined, but can be changed using [`filte
 
 
 ### Hierarchical Only 
+
+> Combined with the shared labels, these are used for Hierarchical taxonomies
 
 | Label | Default Value |
 | --- | ----------- |
