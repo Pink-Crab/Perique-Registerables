@@ -279,7 +279,7 @@ class Secret_Tax extends Taxonomy {
 
 ## Taxonomy Labels
 
-> Shared Labels
+### Shared Labels
 
 | Label | Default Value |
 | --- | ----------- |
@@ -303,7 +303,7 @@ class Secret_Tax extends Taxonomy {
 | item_link_description | A link to a **{singular name}** |
 
 
-> Tag Only
+### Tag Only
 
 | Label | Default Value |
 | --- | ----------- |
@@ -312,7 +312,7 @@ class Secret_Tax extends Taxonomy {
 | choose_from_most_used      | Add or remove **{plural name}** |
 
 
-> Hierarchical Only 
+### Hierarchical Only 
 
 | Label | Default Value |
 | --- | ----------- |
