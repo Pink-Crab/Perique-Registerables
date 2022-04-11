@@ -278,3 +278,26 @@ class Secret_Tax extends Taxonomy {
 ```
 
 ## Taxonomy Labels
+
+// Create the labels.
+| Label | Default Value |
+| --- | ----------- |
+| Shared Labels         | |
+| name                  | {plural name}, |
+| singular_name         | {singular name}, |
+| menu_name             | {plural name} |
+| search_items          | Search {plural name} |
+| popular_items         | Popular {plural name} |
+| edit_item             | Edit {singular name} |
+| view_item             | View {singular name} |
+| update_item           | Update {singular name} |
+| add_new_item          | Add New{singular name} |
+| new_item_name         | New {singular name} |
+| not_found             | No {plural name} found |
+| items_list            | {plural name} list |
+| items_list_navigation | {plural name} list navigation |
+| all_items             | All {plural name} |
+| most_used             |  Most Used |
+| back_to_items         | ← Back to {plural name} |
+| item_link             | {singular name} Link |
+| item_link_description | A link to a {singular name} |
