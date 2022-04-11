@@ -282,7 +282,7 @@ class Secret_Tax extends Taxonomy {
 
 | Label | Default Value |
 | --- | ----------- |
-| ### Shared Labels         ||
+| ###Shared Labels         ||
 | name                  | **{plural name}** |
 | singular_name         | **{singular name}** |
 | menu_name             | **{plural name}** |
