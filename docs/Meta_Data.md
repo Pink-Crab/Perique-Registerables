@@ -45,8 +45,7 @@ $meta->meta_type('post')
 $meta->object_subtype('page')
 
 // Can be expressed as
-$meta = new Meta_Data('my_key');
-$meta->post_type('page');
+$meta = ( new Meta_Data('my_key') )->post_type('page');
 
 ## With Term Meta
 
@@ -55,6 +54,5 @@ $meta->meta_type('term')
 $meta->object_subtype('custom_tax')
 
 // Can be expressed as
-$meta = new Meta_Data('my_key');
-$meta->taxonomy('custom_tax');
+$meta = ( new Meta_Data('my_key') )->taxonomy('custom_tax');
 ```
