@@ -104,7 +104,7 @@ get_post_meta($id, 'your_key', true); // 'apple'
 ```
 
 ## sanitize( callable $sanitize_callback): Meta_Data
-> @param callable(mixed $meta_value, string $meta_key, string $meta_type ):<T>  
+> @param callable(mixed $meta_value, string $meta_key, string $meta_type ): mixed  
 > @return Meta_Data 
 
 Sets a sanitize callback which is used when getting the meta value.
@@ -114,19 +114,32 @@ $meta = ( new Meta_Data('my_key') )->sanitize('sanitize_text_field');
 
 $meta = ( new Meta_Data('my_key') )
   ->type('integer')
-  ->sanitize(fn($value, $key, $type) => absint($value));
+  ->sanitize(fn($value, $key, $type, $subtype) => absint($value));
 ```
 > The callback
 
 ```php
 /**
- * @param mixed $meta_value The unsanitized value.
- * @param string $meta_key  The fields meta key
- * @param string $meta_type The meta type (post, user, term or comment)
+ * @param mixed $meta_value     The unsanitized value.
+ * @param string $meta_key      The fields meta key
+ * @param string $meta_type     The meta type (post, user, term or comment)
+ * @param string $meta_sub_type The meta type (post type or taxonomy)
+ * @return mixed
  */
-function(mixed $meta_value, string $meta_key, string $meta_type){
+function(mixed $meta_value, string $meta_key, string $meta_type string $meta_subtype){
   return something($meta_value);
 }
 ```
 
-## permissions()
+## permissions(callable $auth_callback): Meta_Data
+> @param callable $auth_callback  
+> @return Meta_Data 
+
+This allows for the setting of a custom auth method, to ensure the current logged in user can add/edit the value of this meta field.
+
+```php
+$meta = ( new Meta_Data('my_key') )->permissions('__return_true');
+
+$meta = ( new Meta_Data('my_key') )
+  ->type('integer')
+  ->permissions(fn($allowed, $meta_key, $object_id, $user_id, $cap, $caps) => current_user_can( 'edit_resume', $object_id ));
