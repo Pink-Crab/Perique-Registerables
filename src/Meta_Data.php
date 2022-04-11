@@ -331,4 +331,13 @@ class Meta_Data {
 		return $this->callbacks['rest_update'];
 	}
 
+	/**
+	 * Returns the value type.
+	 *
+	 * @return string
+	 */
+	public function get_value_type(): string {
+		return $this->type;
+	}
+
 }
