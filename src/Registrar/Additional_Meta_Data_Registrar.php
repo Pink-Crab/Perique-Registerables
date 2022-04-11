@@ -54,10 +54,12 @@ class Additional_Meta_Data_Registrar implements Registrar {
 	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
 	 * @return void
 	 * @throws Exception If either post or term meta and the post type or taxonomy are not registered.
+	 * @throws Exception If a none Additional_Meta_Data_Controller registerable is attempted to be registered.
+	 * @throws Exception If a meta type which is not POST, USER, TERM or COMMENT is attempted to be registered.
 	 */
 	public function register( Registerable $registerable ): void {
 		if ( ! is_a( $registerable, Additional_Meta_Data_Controller::class ) ) {
-			return;
+			throw new Exception( 'Registerable must be an instance of Additional_Meta_Data_Controller' );
 		}
 
 		/** @var Additional_Meta_Data $registerable, Validation call below catches no Additional_Meta_Data Registerables */
@@ -113,7 +115,7 @@ class Additional_Meta_Data_Registrar implements Registrar {
 					break;
 
 				default:
-					break;
+					throw new Exception( 'Unexpected meta type' );
 			}
 		}
 	}
