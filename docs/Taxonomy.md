@@ -309,3 +309,8 @@ class Secret_Tax extends Taxonomy {
 | parent_item_colon | Parent **{singular name}**: |
 | parent_item      | Parent **{singular name}** |
 | filter_by_item    | Filter by **{singular name}** |
+
+
+One    | Two | Three | Four    | Five  | Six
+-|||||-
+Span <td colspan=3>triple  <td colspan=2>double
