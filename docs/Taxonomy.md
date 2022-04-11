@@ -311,6 +311,6 @@ class Secret_Tax extends Taxonomy {
 | filter_by_item    | Filter by **{singular name}** |
 
 
-One    | Two | Three | Four    | Five  | Six
-|--|--|--|--|
+| One    | Two | Three | Four    | Five  | Six|
+| --|--|--|-- |
 Span <td colspan=3>triple  <td colspan=2>double
