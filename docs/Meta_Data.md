@@ -116,5 +116,17 @@ $meta = ( new Meta_Data('my_key') )
   ->type('integer')
   ->sanitize(fn($value, $key, $type) => absint($value));
 ```
+> The callback
+
+```php
+/**
+ * @param mixed $meta_value The unsanitized value.
+ * @param string $meta_key  The fields meta key
+ * @param string $meta_type The meta type (post, user, term or comment)
+ */
+function(mixed $meta_value, string $meta_key, string $meta_type){
+  return something($meta_value);
+}
+```
 
 ## permissions()
