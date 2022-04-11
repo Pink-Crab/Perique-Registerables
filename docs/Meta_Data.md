@@ -56,3 +56,13 @@ $meta->object_subtype('custom_tax')
 // Can be expressed as
 $meta = ( new Meta_Data('my_key') )->taxonomy('custom_tax');
 ```
+
+## type($type): Meta_Data
+> @param string['string', 'boolean', 'integer', 'number', 'array', 'object'] $type   
+> @return Meta_Data  
+
+Defines the scala type of the meta data's value.
+
+```php
+$meta = ( new Meta_Data('my_key') )->type('number');
+```
