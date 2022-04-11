@@ -282,7 +282,7 @@ class Secret_Tax extends Taxonomy {
 
 | Label | Default Value |
 | --- | ----------- |
-|Shared Labels |       
+|**Shared Labels** |    **** |   
 | name                  | **{plural name}** |
 | singular_name         | **{singular name}** |
 | menu_name             | **{plural name}** |
@@ -310,6 +310,3 @@ class Secret_Tax extends Taxonomy {
 | parent_item      | Parent **{singular name}** |
 | filter_by_item    | Filter by **{singular name}** |
 
-
-| One    | Two | Three | Four    | Five  | Six |
-| ----------- | ----------- | ----------- | ----------- |
