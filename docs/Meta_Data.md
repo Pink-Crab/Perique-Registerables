@@ -102,3 +102,17 @@ update_post_meta($id, 'your_key', 'apple');
 get_post_meta($id, 'my_key', true); // 'fallback'
 get_post_meta($id, 'your_key', true); // 'apple'
 ```
+
+## sanitize( callable(<T>):<T> $sanitize_callback): Meta_Data
+> @param callable(<T>):<T>  
+> @return Meta_Data 
+
+Sets a sanitize callback which is used when getting the meta value.
+
+```php
+$meta = ( new Meta_Data('my_key') )->sanitize('sanitize_text_field');
+
+$meta = ( new Meta_Data('my_key') )
+  ->type('integer')
+  ->sanitize('absint');
+```
