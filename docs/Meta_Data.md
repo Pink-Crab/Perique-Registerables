@@ -66,3 +66,39 @@ Defines the scala type of the meta data's value.
 ```php
 $meta = ( new Meta_Data('my_key') )->type('number');
 ```
+
+## description(string $description): Meta_Data
+> @param string $description    
+> @return Meta_Data  
+
+Allows for defining a description for the Meta Data. This is used for Schema definition as part of WP Rest.
+
+```php
+$meta = new Meta_Data('my_key');
+$meta->description('This is a description for a meta data field.');
+```
+
+## single(bool $single): Meta_Data
+> @param bool $single    
+> @return Meta_Data  
+
+Denotes if this is a single meta value or an array of values.
+
+```php
+$meta = new Meta_Data('my_key');
+$meta->single();
+```
+
+## default(mixed $default): Meta_Data
+> @param mixed $default    
+> @return Meta_Data 
+
+Lets you define a default value. If you are planning to use this meta field as part an endpoint schema, set a valid default.
+
+```php
+$meta = ( new Meta_Data('my_key') )->default('fallback');
+
+update_post_meta($id, 'your_key', 'apple');
+get_post_meta($id, 'my_key', true); // 'fallback'
+get_post_meta($id, 'your_key', true); // 'apple'
+```
