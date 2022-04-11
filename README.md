@@ -8,12 +8,21 @@
 
 A collection of Abstract Classes for creating common WordPress fixtures which need registering.
 
-* [Post Types](#post-type)
-* [Taxonomies](#taxonomy)
-* [Meta Box](#meta-box)
-  * [Shared Meta Boxes](#shared-meta-boxes)
-* Meta Data
-  * [Additional Meta Data](#additional-meta-data)
+- [Registerables](#registerables)
+	- [Version](#version)
+	- [Why?](#why)
+	- [Setup](#setup)
+	- [Post Type](#post-type)
+	- [Taxonomy](#taxonomy)
+	- [Meta Box](#meta-box)
+		- [Shared Meta Boxes](#shared-meta-boxes)
+	- [Meta Data](#meta-data)
+		- [Additional_Meta_Data_Controller](#additional_meta_data_controller)
+	- [Contributions](#contributions)
+		- [To run test suite](#to-run-test-suite)
+	- [License](#license)
+		- [MIT License](#mit-license)
+	- [Change Log](#change-log)
 
 
 ## Version ##
