@@ -183,31 +183,25 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
 
 > The above Meta Box would be shown on both `acme_post_type_a` and `acme_post_type_b`  
 > You can also inject any dependencies via the constructor too.
-## Testing ##
 
-### PHP Unit ###
 
-If you would like to run the tests for this package, please ensure you add your database details into the test/wp-config.php file before running phpunit.
+## Contributions
 
-``` bash
-$ phpunit
-```
+If you would like to contribute to this project, please feel free to fork and submit a PR. If any issue doesnt exist for the problem, please create one.
 
-```bash 
-$ composer test
+Please ensure your changes to do not drop coverage lower than they currently are, unless it can not be helped (include a reason why)
 
-``` 
+### To run test suite
 
-### PHP Stan ###
+Setup the dev environment
+`$ composer install`
 
-The module comes with a polyfill for all WP Functions, allowing for the testing of all core files. The current config omits the Dice file as this is not ours. To run the suite call.
-```bash 
-$ vendor/bin/phpstan analyse src/ -l8 
-```
+* `$ composer all` - This will run all the tests, static analysis and linter
+* `$ composer coverage` - This will produce a HTML coverage report `../coverage-report`
+* `$ composer analyse` - This will run PHPStan on lv 8
+* `$ composer sniff` - This will run PHPCS with the WP Ruleset.
 
-```bash 
-$ composer analyse
-```
+> Please note the CI Actions runs `composer all` on multiple PHP and WP versions. Running locally will only run with your version of PHP and latest major or WP.
 
 ## License ##
 

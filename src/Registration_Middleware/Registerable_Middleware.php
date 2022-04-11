@@ -33,8 +33,10 @@ use PinkCrab\Registerables\Shared_Meta_Box_Controller;
 use PinkCrab\Registerables\Registrar\Registrar_Factory;
 use PinkCrab\Perique\Interfaces\Registration_Middleware;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
+use PinkCrab\Registerables\Additional_Meta_Data_Controller;
 use PinkCrab\Registerables\Registrar\Shared_Meta_Box_Registrar;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Registrar\Additional_Meta_Data_Registrar;
 
 class Registerable_Middleware implements Registration_Middleware {
 
@@ -87,6 +89,10 @@ class Registerable_Middleware implements Registration_Middleware {
 
 			case is_a( $class, Shared_Meta_Box_Controller::class ):
 				$this->process_shared_meta_box( $class );
+				break;
+
+			case is_a( $class, Additional_Meta_Data_Controller::class ):
+				$this->process_additional_meta_data( $class );
 				break;
 
 			default:
@@ -172,6 +178,20 @@ class Registerable_Middleware implements Registration_Middleware {
 	public function process_shared_meta_box( Shared_Meta_Box_Controller $controller ): void {
 		$registrar = new Shared_Meta_Box_Registrar(
 			$this->get_meta_box_registrar(),
+			Registrar_Factory::new()->meta_data_registrar()
+		);
+		$registrar->register( $controller );
+	}
+
+	/**
+	 * Process the additional meta data controller.
+	 *
+	 * @param \PinkCrab\Registerables\Additional_Meta_Data_Controller $controller
+	 * @return void
+	 * @since 0.8.0
+	 */
+	public function process_additional_meta_data( Additional_Meta_Data_Controller $controller ): void {
+		$registrar = new Additional_Meta_Data_Registrar(
 			Registrar_Factory::new()->meta_data_registrar()
 		);
 		$registrar->register( $controller );
