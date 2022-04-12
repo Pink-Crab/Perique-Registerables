@@ -22,12 +22,11 @@ declare(strict_types=1);
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
  * @package PinkCrab\Registerables
- * @since 0.7.0
+ * @since 0.8.0
  */
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Registration_Middleware\Registerable;
 
 abstract class Additional_Meta_Data_Controller implements Registerable {
