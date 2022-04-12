@@ -157,7 +157,7 @@ $meta = ( new Meta_Data('my_key') )
  * @return boolean
  */
 function(
-  boo $allowed, 
+  bool $allowed, 
   string $meta_key, 
   int $object_id, 
   int $user_id, 
@@ -167,3 +167,62 @@ function(
   return something($user_id);
 }
 ```
+
+## rest_schema( $rest_schema ): Meta_Data
+> @param array<string, mixed>|PinkCrab\WP_Rest_Schema\Argument $rest_schema  
+> @return Meta_Data 
+
+Allows for the setting of REST schema for the meta field. Defining this will automatically define the rest field. You can use an array as per [core WP](https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/) or make use of the [PinkCrab\WP_Rest_Schema](https://github.com/Pink-Crab/WP_Rest_Schema) library.
+
+```php
+$meta = ( new Meta_Data('my_key') )
+  ->rest_schema([
+    'type' => 'string',
+    'minLength' => 2,
+  ]);
+
+// Using WP_Rest_Schema
+$meta = ( new Meta_Data('my_key') )
+  ->rest_schema(String_Type::on('my_key')->minimum(2));
+  
+```
+
+> If defining a method as `required`, ensure you set a default in the Meta_Data definition.
+
+## rest_view(?callable $callback): Meta_Data
+> @param null|?callable(array $object):mixed  
+> @return Meta_Data 
+
+The callback used to get the meta value when called via REST. 
+
+```php
+$meta = ( new Meta_Data('my_key') )
+  ->rest_view(function($object){
+    return get_post_meta($object['id'], 'my_key', true);
+  });
+```
+> Will call get_{type}_meta() by default if no callback is defined. If you wish to disable this field being accessible when doing a `GET`, define the context in schema.
+
+```php
+// Callback
+/**
+ * @param mixed $value  The value being updated/set
+ * @param array $object A basic array representation of the Post, Comment, Term or User
+ */
+function( array $object ){
+  // $object['id'] will give access to the Post, Comment, Term or User ID. 
+}
+```
+
+## rest_update?callable $callback): Meta_Data
+> @param null|?callable(array $object):mixed  
+> @return Meta_Data 
+
+Defines the callback when updating a value from a POST/PUT request.
+```php
+$meta = ( new Meta_Data('my_key') )
+  ->rest_view(function($object){
+    return get_post_meta($object['id'], 'my_key', true);
+  });
+```
+
