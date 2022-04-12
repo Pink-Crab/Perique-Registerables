@@ -206,7 +206,6 @@ $meta = ( new Meta_Data('my_key') )
 ```php
 // Callback
 /**
- * @param mixed $value  The value being updated/set
  * @param array $object A basic array representation of the Post, Comment, Term or User
  */
 function( array $object ){
@@ -221,8 +220,20 @@ function( array $object ){
 Defines the callback when updating a value from a POST/PUT request.
 ```php
 $meta = ( new Meta_Data('my_key') )
-  ->rest_view(function($object){
-    return get_post_meta($object['id'], 'my_key', true);
+  ->rest_update(function($value, $object){
+    return update_user_meta($object['id'], 'my_key', $value);
   });
 ```
+> Will call update_{type}_meta() by default if no callback is defined. If you wish to disable this field being accessible when doing a `POST`, define the context in schema.
 
+
+```php
+// Callback
+/**
+ * @param mixed $value  The value being updated/set
+ * @param array $object A basic array representation of the Post, Comment, Term or User
+ */
+function( $value, array $object ){
+  // $object['id'] will give access to the Post, Comment, Term or User ID. 
+}
+```
