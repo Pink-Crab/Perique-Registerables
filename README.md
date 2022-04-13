@@ -25,7 +25,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 
 ## Why? ##
 
-WordPress has a number of Registerable functions based around Post Types, Post Meta and Taxonomies. These tend to have large arrays of args that need to be defined. This small library allows these to be defined as Classes which can be registered via the Registration process.
+WordPress has a number of Registerable functions for Post Types, Post Meta and Taxonomies. These tend to require large arrays of arguments to be defined. This library provides Classes which can be registered and used with the Registration process.
 
 ## Setup ##
 
