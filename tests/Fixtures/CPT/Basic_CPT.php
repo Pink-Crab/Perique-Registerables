@@ -20,5 +20,5 @@ class Basic_CPT extends Post_Type {
 	public $singular  = 'Basic';
 	public $plural    = 'Basics';
 	public $gutenberg = true;
-
+	public $map_meta_cap = true;
 }
