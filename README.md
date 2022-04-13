@@ -99,7 +99,7 @@ class My_CPT extends Post_Type {
 }
 ```
 
-> **If you're meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.**
+> **If your meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.**
 
 ```php
 /** The Meta Box Service */
