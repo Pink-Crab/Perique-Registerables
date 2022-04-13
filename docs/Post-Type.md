@@ -1,16 +1,16 @@
 ---
 description: >-
   Post_Type is an Abstract Class which can be extended within your codebase, to
-  create fully customisable custom post types, easily and cleanly.
+  create fully customisable custom post types.
 ---
 
-# Postd_Type
+# Post_Type
 
 As with all classes which implement the Registerable interface, adding the post type to the registration config file, will handle all the registration for you.
 
 ## Fields
 
-The core registerd_postd_type() function takes a slug and an array of labels. To make this less complicated and messy, almost all args are defined as properties.
+The core register_post_type() function takes a slug and an array of labels. To make this less complicated and messy, almost all args are defined as properties.
 
 ### $key
 
@@ -40,7 +40,7 @@ The Post Types plural label. Used for "View {$plural}"
 
 You can set a custom dash icon for wp-admin, you can use either DashIcons or custom icons. If no dashicon is supplied, the pets (dog paw) will be used in its place.
 
-### $menud_position
+### $menu_position
 
 > @var int  
 > @default 60  
@@ -51,7 +51,7 @@ Define the position in wp-admin menu.
 > @var bool|null  
 > @default false  
 
-If set to true all meta felids assigned to the post type will inherit the same capabilities as the post type it self.
+If set to true all meta fields assigned to the post type will inherit the same capabilities as the post type itself.
 
 
 ### $public
@@ -61,14 +61,14 @@ If set to true all meta felids assigned to the post type will inherit the same c
 
 Should this post type be accessible by both the frontend and within wp-admin. If set to true, will be a hidden post type, with no admin UI, permalinks,  or queryable from frontend. 
 
-### $showd_ind_navd_menus
+### $show_in_nav_menus
 
 > @var bool\|null  
 > @default TRUE
 
 Should post type be included in the menu selections.
 
-### $showd_ind_menu
+### $show_in_menu
 
 > @var bool\|null  
 > @default TRUE
@@ -82,14 +82,14 @@ Should post type be included in the main wp-admin menu
 
 If set to true (which it is by default) the post type will be included in the admin bars helper actions.
 
-### $showd_ui
+### $show_ui
 
 > @var bool\|null  
 > @default TRUE
 
 Should post type have the post list, create/edit/delete UI in wp-admin.
 
-### $hasd_archive
+### $has_archive
 
 > @var bool\|null  
 > @default TRUE
@@ -103,28 +103,28 @@ Should post type have an archive created on the frontend.
 
 Should this post type have hierarchical properties?
 
-### $excluded_fromd_search
+### $excluded_from_search
 
 > @var bool\|null  
 > @default FALSE
 
 Should this post type be excluded from the site-wide search.
 
-### $publiclyd_queryable
+### $publicly_queryable
 
 > @var bool\|null  
 > @default TRUE
 
 Allow the Post Type to be accessible from URL params.
 
-### $cand_export
+### $can_export
 
 > @var bool\|null  
 > @default TRUE
 
 Allow post type to be exportable.
 
-### $queryd_var
+### $query_var
 
 > @var bool\|string  
 > @default FALSE
@@ -134,18 +134,18 @@ This can be used to assign this post type to any public query vars. [See the cod
 ### $rewrite
 
 > @var bool\|array\|null  
-> @default \['slug' =&gt; $key/$slug, 'withd_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\]
+> @default \['slug' =&gt; $key/$slug, 'with_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\]
 
-This can be used to set the rewite rules for the post type. If $rewrite is left as NULL, it will be resolved to the defualt of  \['slug' =&gt; $key/$slug, 'withd_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\].  
+This can be used to set the rewrite rules for the post type. If $rewrite is left as NULL, it will be resolved to the default of  \['slug' =&gt; $key/$slug, 'with_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\].  
 If you wish to have no permalinks, you can pass FALSE here, else define with your own array.  
 _Please note that we use the constructor to set default if left as null._
 
-### $capabilityd_type
+### $capability_type
 
 > @var string\|array  
 > @default 'post'
 
-The string to use to build the read, edit, and delete capabilities. [See the wordpress codex for more details](https://developer.wordpress.org/reference/functions/register_post_type/#capability_type)
+The string to use to build the read, edit, and delete capabilities. [See the WordPress codex for more details](https://developer.wordpress.org/reference/functions/register_post_type/#capability_type)
 
 ### $supports
 
@@ -179,7 +179,7 @@ All Post Meta definitions which should registered for the post type. By defining
 > @var bool\|null  
 > @default TRUE
 
-If set to true (by default), this post type will be registered using `$rest_controller_class` to handled the actions.
+If set to true (the default), this post type will be registered using `$rest_controller_class` to handle the actions.
 
 ### $rest_base  
 
@@ -207,7 +207,7 @@ This allows denoting if this post type should use `gutenberg`, set to FALSE by d
 > @var string[]\|null   
 > @default []  
 
-Allows for the definition of a Gutenberg Template for the poste type. [More details](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-templates/#custom-post-types)
+Allows for the definition of a Gutenberg Template for the post type. [More details](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-templates/#custom-post-types)
 
 ```php
 class My_Cpt extends Post_Type {
@@ -236,7 +236,7 @@ Setting as false will not lock or restrict the blocks as defined by the template
 
 ## Methods
 
-The Postd_Type class comes with a few methods you can use for setting and modifying the defined values. 
+The Post_Type class comes with a few methods you can use for setting and modifying the defined values. 
 
 ### public function meta boxes(array): array
 > @param Meta_Box[]   
@@ -248,7 +248,7 @@ This method is used for creating and defining all the meta boxes used for this p
 > @param Meta_Data[]   
 > @return Meta_Data[] 
 
-This method is used to push meta data to the post type. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the type, or subclass (post type) as these are set automatically.
+This method is used to push metadata to the post type. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the type, or subclass (post type) as these are set automatically.
 
 ### public function slug(): ?string
 
@@ -328,7 +328,7 @@ class Public_Post_Type extends Post_Type {
 }
 ```
 
-Please note if your Meta_Box is to be displayed on other post types, it's often better to register them in a separate Controller. When registered in a Postd_Type object, the screen is automatically defined as this post type.
+Please note if your Meta_Box is to be displayed on other post types, it's often better to register them in a separate Controller. When registered in a Post_Type object, the screen is automatically defined as this post type.
 
 If you are adding more than 1 meta box, it's best to use shared hooks, rather than calling the same hook multiple times.
 
@@ -395,7 +395,7 @@ filter_args() can be used to alter the post types properties at run time, based 
 ```php
 class Secret_CPT extends Post_Type {
     ...
-    // Assume its usally hidden.
+    // Assume its usually hidden.
     public $public = false;
     ...
     
@@ -418,7 +418,7 @@ class Secret_CPT extends Post_Type {
 }
 ```
 
-## Using Appd_Config
+## Using App_Config
 
 If you wish to make use of the App_Config class, for defining your cpt slug/key, you can do either of the following._
 

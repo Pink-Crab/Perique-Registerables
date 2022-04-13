@@ -34,14 +34,15 @@ $ composer require pinkcrab/registerables
 
 ``` 
 
-Once the module is included, we need to include the Registerable_Middleware Middleware. As this has its own dependencies, this will need to be added using construct_registration_middleware() from the App_Factory instance.
+You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the construct_registration_middleware() from the App_Factory instance.
 ```php
 $app = ( new PinkCrab\Perique\Application\App_Factory() )
-  // Perique bootstrapping as normal.   
+  // Normal Perique bootstrapping.   
   ->construct_registration_middleware( Registerable_Middleware::class );
   ->boot();
 ```
-Once the middleware has been included, we can use Post_Type, Taxonomies, Meta Data and Meta boxes as part of the usual Registration process
+
+Once the middleware has been included, you can use Post_Type, Taxonomies, Meta Data and Meta boxes as part of the usual Registration process
 
 ## Post Type
 
@@ -91,16 +92,16 @@ class My_CPT extends Post_Type {
   public function meta_boxes( array $meta_boxes ): array {
     $meta_boxes = MetaBox::side('my_meta_box')
       ->label('My Meta Box')
-      ->view_template('path/to/view/template')
-      ->view_vars(['some' => 'additional data passed to view'])
+      ->view_template($template_path)
+      ->view_vars($additional_view_data)
       ->action('save_post', [$this, 'save_method'])
       ->action('update_post', [$this, 'save_method'])
   }
 }
 ```
 
-> **If your meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.**
-
+> **If your meta box has any level of complexity, it is recommended to create a separate service which handles this and inject it into the Post_Type class.**
+> 
 ```php
 /** The Meta Box Service */
 class Meta_Box_Service {
@@ -108,8 +109,8 @@ class Meta_Box_Service {
     $meta_boxes = array();
     $meta_boxes[] = MetaBox::side('my_meta_box')
       ->label('My Meta Box')
-      ->view_template('path/to/view/template')
-      ->view_vars(['some' => 'additional data passed to view'])
+      ->view_template($template_path)
+      ->view_vars($additional_view_data)
       ->action('save_post', [$this, 'save_method'])
       ->action('update_post', [$this, 'save_method'])
   }
@@ -127,6 +128,7 @@ class My_CPT extends Post_Type {
 
   // Pass the service in as a dependency.
   private Meta_Box_Service $meta_box_service;
+  
   public function __construct(Meta_Box_Service $meta_box_service){
     $this->meta_box_service = $meta_box_service;
   }
@@ -155,14 +157,14 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
       ->label('Acme Meta Box')
       ->screen('acme_post_type_a')
       ->screen('acme_post_type_b')
-      ->view_template('path/to/view/template')
-      ->view_vars(['some' => 'additional data passed to view'])
+      ->view_template($template_path)
+      ->view_vars($additional_view_data)
       ->action('save_post', [$this, 'save_method'])
       ->action('update_post', [$this, 'save_method'])
   }
 
   /**
-   * Sets any meta data against the meta box.
+   * Sets any metadata against the meta box.
    * @see Post Type docs for more details
    */
   public function meta_data( array $meta_data ): array {
@@ -185,11 +187,11 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
 > The above Meta Box would be shown on both `acme_post_type_a` and `acme_post_type_b`  
 > You can also inject any dependencies via the constructor too.
 
-## Meta Data
+## MetaData
 
-You can register, `post`, `term`, `user` and `comment` meta fields either as a part of Post Types/Taxonomy Registerables or on there own. This fluent object based definition makes it easy to create these inline.
+You can register `post`, `term`, `user` and `comment` meta fields either as a part of Post Types/Taxonomy Registerables or on there own. This fluent object based definition makes it easy to create these inline.
 
-You can add full REST support by supplying a schema for the field and Registrar will register the field also.
+You can add full REST support by supplying a schema for the field and the Registrar will register the field also.
 
 ```php
 class Additional_Post_Meta extends Additional_Meta_Data_Controller {
@@ -197,8 +199,8 @@ class Additional_Post_Meta extends Additional_Meta_Data_Controller {
   public function meta_data(array $meta_data): array {
     $meta_data[] = (new Meta_Data('meta_key'))
       ->post_type('post')
-      ->default('some fallback')
-      ->description('This is a meta fields description')
+      ->default('foo')
+      ->description($description)
       ->single()
       ->sanitize('sanitize_text_field')
       ->rest_schema(['type' => 'string']);
@@ -210,7 +212,7 @@ class Additional_Post_Meta extends Additional_Meta_Data_Controller {
 
 [See full Meta Data Docs](docs/Meta_Data.md)  
 
-You can also define Meta Data for [Post Types](docs/Post-Type.md#registering-meta_data) and [Taxonomies](docs/Taxonomy.md#registering-meta_data) when creating them.
+You can also define MetaData for [Post Types](docs/Post-Type.md#registering-meta_data) and [Taxonomies](docs/Taxonomy.md#registering-meta_data) when creating them.
 
 ### Additional_Meta_Data_Controller
 
