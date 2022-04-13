@@ -34,14 +34,15 @@ $ composer require pinkcrab/registerables
 
 ``` 
 
-Once the module is included, we need to include the Registerable_Middleware Middleware. As this has its own dependencies, this will need to be added using construct_registration_middleware() from the App_Factory instance.
+You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the construct_registration_middleware() from the App_Factory instance.
 ```php
 $app = ( new PinkCrab\Perique\Application\App_Factory() )
-  // Perique bootstrapping as normal.   
+  // Normal Perique bootstrapping.   
   ->construct_registration_middleware( Registerable_Middleware::class );
   ->boot();
 ```
-Once the middleware has been included, we can use Post_Type, Taxonomies, Meta Data and Meta boxes as part of the usual Registration process
+
+Once the middleware has been included, you can use Post_Type, Taxonomies, Meta Data and Meta boxes as part of the usual Registration process
 
 ## Post Type
 
@@ -91,15 +92,15 @@ class My_CPT extends Post_Type {
   public function meta_boxes( array $meta_boxes ): array {
     $meta_boxes = MetaBox::side('my_meta_box')
       ->label('My Meta Box')
-      ->view_template('path/to/view/template')
-      ->view_vars(['some' => 'additional data passed to view'])
+      ->view_template($template_path)
+      ->view_vars($additional_view_data)
       ->action('save_post', [$this, 'save_method'])
       ->action('update_post', [$this, 'save_method'])
   }
 }
 ```
 
-> **If you're meta box has any level of complexity, it is advised to create a separate service which handles this and is injected into the Post_Type class.**
+> **If your meta box has any level of complexity, it is recommended to create a separate service which handles this and inject it into the Post_Type class.**
 
 ```php
 /** The Meta Box Service */
@@ -108,8 +109,8 @@ class Meta_Box_Service {
     $meta_boxes = array();
     $meta_boxes[] = MetaBox::side('my_meta_box')
       ->label('My Meta Box')
-      ->view_template('path/to/view/template')
-      ->view_vars(['some' => 'additional data passed to view'])
+      ->view_template($template_path)
+      ->view_vars($additional_view_data)
       ->action('save_post', [$this, 'save_method'])
       ->action('update_post', [$this, 'save_method'])
   }
@@ -127,6 +128,7 @@ class My_CPT extends Post_Type {
 
   // Pass the service in as a dependency.
   private Meta_Box_Service $meta_box_service;
+  
   public function __construct(Meta_Box_Service $meta_box_service){
     $this->meta_box_service = $meta_box_service;
   }
@@ -155,14 +157,14 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
       ->label('Acme Meta Box')
       ->screen('acme_post_type_a')
       ->screen('acme_post_type_b')
-      ->view_template('path/to/view/template')
-      ->view_vars(['some' => 'additional data passed to view'])
+      ->view_template($template_path)
+      ->view_vars($additional_view_data)
       ->action('save_post', [$this, 'save_method'])
       ->action('update_post', [$this, 'save_method'])
   }
 
   /**
-   * Sets any meta data against the meta box.
+   * Sets any metadata against the meta box.
    * @see Post Type docs for more details
    */
   public function meta_data( array $meta_data ): array {
