@@ -28,7 +28,6 @@ namespace PinkCrab\Registerables\Registrar;
 use Exception;
 use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Registrar\Registrar;
-use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Additional_Meta_Data_Controller;
 use PinkCrab\Registerables\Tests\Fixtures\Additional_Meta_Data;
