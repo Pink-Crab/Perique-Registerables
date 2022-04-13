@@ -142,7 +142,7 @@ class My_CPT extends Post_Type {
 
 ### Shared Meta Boxes
 
-Sometimes you want to render the same Meta Boxes on multiple Custom Post Types or added to existing ones. We have a simple `Shared_Meta_Box_Controller` base class which can be extended to register meta boxes isolated from a Post Type.
+In case you would like to render the same meta box on multiple Custom Post Types or to add it to existing ones, you can use the `Shared_Meta_Box_Controller` base class and extend it to register independent meta boxes.
 
 
 ```php
@@ -173,7 +173,7 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
     return $meta_data;
   }
 
-  /** The save_post|update_post hook callback */
+  /** The save_post and update_post hook callback */
   public function save_method( int $post_id ): array {
     // Handle validating and updating post meta.
     update_post_meta($post_id, 'acme_meta_1', $value);
