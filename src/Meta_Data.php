@@ -24,8 +24,6 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
-
 class Meta_Data {
 	/**
 	 * Object type meta applies to

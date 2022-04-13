@@ -189,7 +189,7 @@ class Acme_Meta_Box extends Shared_Meta_Box_Controller {
 
 You can register, `post`, `term`, `user` and `comment` meta fields either as a part of Post Types/Taxonomy Registerables or on there own. This fluent object based definition makes it easy to create these inline.
 
-Can easily add full REST support by supplying a schema for the field and Registrar will register the field also.
+You can add full REST support by supplying a schema for the field and Registrar will register the field also.
 
 ```php
 class Additional_Post_Meta extends Additional_Meta_Data_Controller {
