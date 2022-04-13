@@ -1,6 +1,6 @@
 ---
 description: >-
-  Meta Data can be defined and registered as part of Post Type or Taxonomy definitions, but also standalone. Stand alone Meta Data can be assigned to existing Post Types or Taxonomies, but also User and Comment.
+  MetaData can be defined and registered as part of Post Type or Taxonomy definitions, but also standalone. Stand alone Meta ata can be assigned to existing Post Types or Taxonomies, but also User and Comment.
 ---
 
 # Meta Data
@@ -8,7 +8,7 @@ description: >-
 ## __construct(string $meta_key)
 > @param string $meta_key
 
-Creates a new Meta Data instance with the defined meta key.
+Creates a new MetaData instance with the defined meta key.
 
 ```php
 $meta = new Meta_Data('my_key');
@@ -33,7 +33,7 @@ $meta->meta_type('comment'); // get_comment_meta(...)
 > @param string $type    
 > @return Meta_Data  
 
-Post and Term meta requires a sub type being defined. This would be the post type for post meta and taxonomy for term meta. 
+Post and Term meta requires a subtype being defined. This would be the post type for post meta and taxonomy for term meta. 
 
 > You can use the `post_type()` and `taxonomy()` helper methods to set both meta_type and subtype in a single method.
 
@@ -61,7 +61,7 @@ $meta = ( new Meta_Data('my_key') )->taxonomy('custom_tax');
 > @param string['string', 'boolean', 'integer', 'number', 'array', 'object'] $type   
 > @return Meta_Data  
 
-Defines the scala type of the meta data's value.
+Defines the scala type of the metadata value.
 
 ```php
 $meta = ( new Meta_Data('my_key') )->type('number');
@@ -71,7 +71,7 @@ $meta = ( new Meta_Data('my_key') )->type('number');
 > @param string $description    
 > @return Meta_Data  
 
-Allows for defining a description for the Meta Data. This is used for Schema definition as part of WP Rest.
+Allows for defining a description for the Met Data. This is used for Schema definition as part of WP Rest.
 
 ```php
 $meta = new Meta_Data('my_key');
@@ -107,7 +107,7 @@ get_post_meta($id, 'your_key', true); // 'apple'
 > @param callable(mixed $meta_value, string $meta_key, string $meta_type ): mixed  
 > @return Meta_Data 
 
-Sets a sanitize callback which is used when getting the meta value.
+Sets a sanitizer callback which is used when getting the meta value.
 
 ```php
 $meta = ( new Meta_Data('my_key') )->sanitize('sanitize_text_field');
@@ -135,7 +135,7 @@ function(mixed $meta_value, string $meta_key, string $meta_type string $meta_sub
 > @param callable $auth_callback  
 > @return Meta_Data 
 
-This allows for the setting of a custom auth method, to ensure the current logged in user can add/edit the value of this meta field.
+This allows for the setting of a custom auth method, to ensure the current logged-in user can add/edit the value of this meta field.
 
 ```php
 $meta = ( new Meta_Data('my_key') )->permissions('__return_true');

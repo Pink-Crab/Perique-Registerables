@@ -1,7 +1,7 @@
 ---
 description: >-
-  Meta_Boxes can be constructed and used as either parts of registered post types
-  or as independently for Users, Pages and anywhere else you can naively render
+  Meta_Boxes can be constructed and used as either parts of registered post types,
+  or independently for Users, Pages and anywhere else you can natively render
   one.
 ---
 
@@ -19,7 +19,7 @@ $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box = Meta_Box::normal('my_meta_box_key_1');
 ```
 
-Depending on your preferences, you can use the static constructor to create your Meta_Box a single chained method call.
+Depending on your preferences, you can use the static constructor to create your Meta_Box, or a single chained method call.
 
 ***
 
@@ -45,7 +45,7 @@ $meta_box->label ='My First Meta_Box';
 ### $screen
 > @var string[]  
 
-Defines which post types this meta box should be rendered as part of.
+Defines which post types this meta box should be rendered on.
 
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
@@ -100,7 +100,8 @@ $meta_box->view_vars = [
 ]
 ```
 
-> **To make use of `Renderable` and custom template files please use the following**
+
+##To make use of `Renderable` and custom template files please use the following
 
 ### $view_template
 > @var string|null  
@@ -128,7 +129,7 @@ echo $key1; // 'value1'
 ### $view_data_filter
 > @var callable(\WP_Post, array): array   
 
-This allows setting a callable to be called when the args are passed to the template file. This gives a chance to add additional args and edit them at render time (to avoid race conditions caused by hook timings)
+Allows to set a callable to be called when the args are passed to the template file. This gives a chance to add additional args and edit them at render time (to avoid race conditions caused by hook timings)
 
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
@@ -143,7 +144,7 @@ $meta_box->view_data_filter = function(\WP_Post $post, array $args): array {
 ### $actions
 > @var array<string, array{callback:callable,priority:int,params:int}>   
 
-Defines actions which wil only be registered if the meta box is currently rendered on the edit.php for the post.
+Defines actions which will only be registered if the meta box is currently rendered on the edit.php for the post.
 
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
@@ -280,14 +281,14 @@ $meta_box = Meta_Box::normal('my_meta_box_key_1')
 > @param string   
 > @return Meta_Box
 
-This allows for the defining of a view template, rather than using the core WP view callback. If a callable is set using `->view(function(){...})`, this will over rule its use and render from the template.
+This allows for the defining of a view template, rather than using the core WP view callback. If a callable is set using `->view(function(){...})`, this will overrule its use and render from the template.
 
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');
 $meta_box->view_template('some/path/to/file');
 ```
 
-> Please note when using view templates, the WP_Post object is accessible via `$post` and the view vars are accessible based on there key
+> Please note when using view templates, the WP_Post object is accessible via `$post` and the view vars are accessible based on their key
 
 ```php
 $meta_box = new Meta_Box('my_meta_box_key_1');

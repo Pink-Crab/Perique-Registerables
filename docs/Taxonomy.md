@@ -138,7 +138,7 @@ Rewrite the permalinks structure. If set to true will use the default of the slu
 ### $update_count_callback
 > @var string|bool
 
-If blank string will use the internal counting functions. Must be a named function or invokeable class. Anonymous functions not allowed.
+If blank string will use the internal counting functions. Must be a named function or invokable class. Anonymous functions not allowed.
 
 ### $capabilities
 > @var array<string, mixed>|null
@@ -170,7 +170,7 @@ Like the labels, the full args array can be altered at run time as well, by over
 > @param Meta_Data[]   
 > @return Meta_Data[] 
 
-This method is used to push meta data to the taxonomy. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the meta type, or subclass (taxonomy) as these are set automatically.
+This method is used to push metadata to the taxonomy. This allows for the creation of fully populated WP_Meta data, complete with validation, permission, rest schema and defaults. Just push populated Meta_Data instances to the $meta_data array. You do not need to set the meta type, or subclass (taxonomy) as these are set automatically.
 
 ## Registering Meta_Data
 
