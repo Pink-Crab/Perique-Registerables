@@ -109,6 +109,7 @@ class Test_Post_Type_Registrar extends TestCase {
 			'delete_with_user'      => null,
 			'template'              => array(),
 			'template_lock'         => false,
+			'map_meta_cap'          => true,
 		);
 
 		foreach ( $expected as $key => $value ) {

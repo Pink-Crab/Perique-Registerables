@@ -227,6 +227,7 @@ class Post_Type_Registrar implements Registrar {
 			'delete_with_user'      => \is_bool( $post_type->delete_with_user ) ? $post_type->delete_with_user : null,
 			'template'              => \is_array( $post_type->template ) ? $post_type->template : array(),
 			'template_lock'         => \is_string( $post_type->template_lock ) ? $post_type->template_lock : false,
+			'map_meta_cap'          => \is_bool( $post_type->map_meta_cap ) ? $post_type->map_meta_cap : false,
 		);
 
 		/**
