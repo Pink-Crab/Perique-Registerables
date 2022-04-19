@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Registrar;
 
-use Exception;
 use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Shared_Meta_Box_Controller;

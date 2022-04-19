@@ -24,8 +24,6 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
-
 class Meta_Data {
 	/**
 	 * Object type meta applies to
@@ -329,6 +327,15 @@ class Meta_Data {
 	 */
 	public function get_rest_update(): ?callable {
 		return $this->callbacks['rest_update'];
+	}
+
+	/**
+	 * Returns the value type.
+	 *
+	 * @return string
+	 */
+	public function get_value_type(): string {
+		return $this->type;
 	}
 
 }

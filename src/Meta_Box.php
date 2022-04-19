@@ -27,7 +27,7 @@ namespace PinkCrab\Registerables;
 class Meta_Box {
 
 	/**
-	 * The metabox key
+	 * The meta box key
 	 *
 	 * @var string
 	 * @required
@@ -35,7 +35,7 @@ class Meta_Box {
 	public $key;
 
 	/**
-	 * The metabox label/title
+	 * The meta box label/title
 	 *
 	 * @var string
 	 * @required
@@ -65,7 +65,7 @@ class Meta_Box {
 	public $view_template;
 
 	/**
-	 * Screens to display metabox.
+	 * Screens to display meta box.
 	 *
 	 * @var array<int, string>
 	 * @required
@@ -73,7 +73,7 @@ class Meta_Box {
 	public $screen = array();
 
 	/**
-	 * Metabox context/position
+	 * Meta box context/position
 	 *
 	 * @var 'advanced'|'normal'|'side'
 	 * @required
@@ -88,7 +88,7 @@ class Meta_Box {
 	public $priority = 'default';
 
 	/**
-	 * Define any hooks that should fire with the metabox.
+	 * Define any hooks that should fire with the meta box.
 	 *
 	 * @var array<string, array{callback:callable,priority:int,params:int}>
 	 */
@@ -103,7 +103,7 @@ class Meta_Box {
 	public $view_data_filter;
 
 	/**
-	 * Creates a MetaBox with a defined key.
+	 * Creates a Meta Box with a defined key.
 	 *
 	 * @param string $key
 	 */
@@ -112,7 +112,7 @@ class Meta_Box {
 	}
 
 	/**
-	 * Creates a full width metabox with a defined key.
+	 * Creates a full width meta box with a defined key.
 	 *
 	 * @param string $key
 	 * @return self
@@ -124,7 +124,7 @@ class Meta_Box {
 	}
 
 	/**
-	 * Creates a full width metabox with a defined key.
+	 * Creates a full width meta box with a defined key.
 	 *
 	 * @param string $key
 	 * @return self
@@ -147,7 +147,7 @@ class Meta_Box {
 	}
 
 	/**
-	 * Sets the screens this metabox will be loaded.
+	 * Sets the screens this meta box will be loaded.
 	 *
 	 * @param string|array<mixed>|\WP_Screen $screen
 	 * @return self

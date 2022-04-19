@@ -41,6 +41,7 @@ class Test_Meta_Data extends WP_UnitTestCase {
 		$meta->type( 'string' );
 
 		$this->assertEquals( 'string', $meta->parse_args()['type'] );
+		$this->assertEquals( 'string', $meta->get_value_type());
 	}
 
 	/** @testdox It should be possible to the description for the meta data. */

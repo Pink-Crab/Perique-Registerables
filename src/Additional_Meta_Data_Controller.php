@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 /**
- * The (empty) interface for all classes which can be used to register with WP
+ * Additional Meta Data Controller
+ *
+ * Used to register additional meta data independently of the post type and taxonomy
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -20,8 +22,22 @@ declare(strict_types=1);
  * @author Glynn Quelch <glynn.quelch@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
  * @package PinkCrab\Registerables
+ * @since 0.8.0
  */
 
-namespace PinkCrab\Registerables\Registration_Middleware;
+namespace PinkCrab\Registerables;
 
-interface Registerable{}
+use PinkCrab\Registerables\Registration_Middleware\Registerable;
+
+abstract class Additional_Meta_Data_Controller implements Registerable {
+
+	/**
+	 * Sets any meta data against the meta box.
+	 *
+	 * @param Meta_Data[] $meta_data
+	 * @return Meta_Data[]
+	 * @codeCoverageIgnore
+	 */
+	abstract public function meta_data( array $meta_data ): array;
+
+}

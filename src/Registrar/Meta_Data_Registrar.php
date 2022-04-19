@@ -54,6 +54,28 @@ class Meta_Data_Registrar {
 	}
 
 	/**
+	 * Registers meta data for users.
+	 *
+	 * @param \PinkCrab\Registerables\Meta_Data $meta
+	 * @return bool
+	 * @throws \Exception if fails to register meta data.
+	 */
+	public function register_for_user( Meta_Data $meta ): bool {
+		return $this->register_meta( $meta, 'user', '' );
+	}
+
+	/**
+	 * Registers meta data for comments.
+	 *
+	 * @param \PinkCrab\Registerables\Meta_Data $meta
+	 * @return bool
+	 * @throws \Exception if fails to register meta data.
+	 */
+	public function register_for_comment( Meta_Data $meta ): bool {
+		return $this->register_meta( $meta, 'comment', '' );
+	}
+
+	/**
 	 * Registers meta data for a defined type.
 	 *
 	 * Will cast WP Rest Schema model to array
