@@ -25,7 +25,6 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
-use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
