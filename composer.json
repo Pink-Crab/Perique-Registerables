@@ -27,16 +27,16 @@
         "phpunit/phpunit": "^7.0 || ^8.0",
         "phpstan/phpstan": "^1.0",
         "szepeviktor/phpstan-wordpress": "^1.0",
-        "php-stubs/wordpress-stubs": "^5.9.0",
-        "roots/wordpress": "^5.9",
-        "wp-phpunit/wp-phpunit": "^5.9",
+        "php-stubs/wordpress-stubs": "^6.0 || ^5.9",
+        "roots/wordpress": "^6.0",
+        "wp-phpunit/wp-phpunit": "^6.0",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
         "object-calisthenics/phpcs-calisthenics-rules": "*",
         "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0",
         "symfony/var-dumper": "4.*",
-        "gin0115/wpunit-helpers": "~1.0.0",
-        "pinkcrab/wp-rest-schema": "dev-master"
+        "pinkcrab/wp-rest-schema": "dev-master",
+        "gin0115/wpunit-helpers": "~1.0.0"
     },
     "require": {
         "php": ">=7.1.0",

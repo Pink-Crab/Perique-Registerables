@@ -1,6 +1,6 @@
 # Registerables
 
-![Current Version 0.8.0](https://img.shields.io/badge/Current_Version-0.8.0-yellow.svg?style=flat " ") 
+![Current Version 0.8.1](https://img.shields.io/badge/Current_Version-0.8.1-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 [![GitHub_CI](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml)
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
@@ -245,6 +245,7 @@ Setup the dev environment
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.8.1 - Update dev deps to cover wp6.0.0
 * 0.8.0 - 
    * Renamed `Post_Type::$templates` to `Post_Type::$template`
    * Update docs
