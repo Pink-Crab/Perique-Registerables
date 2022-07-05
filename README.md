@@ -1,6 +1,6 @@
 # Registerables
 
-![Current Version 0.8.1](https://img.shields.io/badge/Current_Version-0.8.1-yellow.svg?style=flat " ") 
+![Current Version 0.8.2](https://img.shields.io/badge/Current_Version-0.8.1-yellow.svg?style=flat " ") 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 [![GitHub_CI](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml)
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
@@ -19,7 +19,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
 
 ## Version ##
 
-**Release 0.8.0**
+**Release 0.8.2**
 
 > For older versions of the PinkCrab Plugin Framework please use Registerables V0.5.\*
 
