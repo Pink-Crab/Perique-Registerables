@@ -69,6 +69,8 @@ jobs:
           sudo rm -rf vendor 
           && rm -rf composer.lock 
           && composer clearcache 
+          && composer require php-stubs/wordpress-stubs:5.8 --dev 
+          && composer require roots/wordpress:5.8 --dev 
           && composer install --prefer-dist --no-suggest 
           && composer all
           
