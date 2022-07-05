@@ -85,7 +85,6 @@ jobs:
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.8 --dev 
           && composer require roots/wordpress:5.8 --dev 
-          && composer require roots/wordpress:5.8 --dev 
           && composer clearcache 
           && rm -rf composer.lock 
           && composer install --prefer-dist --no-suggest 
@@ -98,7 +97,6 @@ jobs:
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.7 --dev 
-          && composer require roots/wordpress:5.7 --dev 
           && composer require roots/wordpress:5.7 --dev 
           && composer clearcache 
           && rm -rf composer.lock 
@@ -113,7 +111,6 @@ jobs:
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.6 --dev 
           && composer require roots/wordpress:5.6 --dev 
-          && composer require roots/wordpress:5.6 --dev 
           && composer clearcache 
           && rm -rf composer.lock 
           && composer install --prefer-dist --no-suggest 
@@ -126,7 +123,6 @@ jobs:
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.5 --dev 
-          && composer require roots/wordpress:5.5 --dev 
           && composer require roots/wordpress:5.5 --dev 
           && composer clearcache 
           && rm -rf composer.lock 
