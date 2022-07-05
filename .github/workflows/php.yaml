@@ -83,6 +83,7 @@ jobs:
         run: > 
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
+          && rm -rf wordpress/index.php
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.8 --dev --no-cache
           && composer require roots/wordpress:5.8 --dev --no-cache
@@ -97,6 +98,7 @@ jobs:
         run: > 
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
+          && rm -rf wordpress/index.php
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.7 --dev --no-cache
           && composer require roots/wordpress:5.7 --dev --no-cache
@@ -111,6 +113,7 @@ jobs:
         run: > 
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
+          && rm -rf wordpress/index.php
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.6 --dev --no-cache
           && composer require roots/wordpress:5.6 --dev --no-cache
@@ -125,6 +128,7 @@ jobs:
         run: > 
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
+          && rm -rf wordpress/index.php
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.5 --dev --no-cache
           && composer require roots/wordpress:5.5 --dev --no-cache
