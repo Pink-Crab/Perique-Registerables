@@ -71,8 +71,8 @@ jobs:
           && rm -rf wordpress/wp-signup.php
           && rm -rf wordpress/wp-signup.php
           && rm -rf composer.lock 
-          && composer require php-stubs/wordpress-stubs:5.9 --dev ----no-cache
-          && composer require roots/wordpress:5.9 --dev ----no-cache
+          && composer require php-stubs/wordpress-stubs:5.9 --dev --no-cache
+          && composer require roots/wordpress:5.9 --dev --no-cache
           && rm -rf composer.lock 
           && composer clearcache 
           && composer install --prefer-dist --no-suggest 
@@ -86,8 +86,8 @@ jobs:
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
           && rm -rf composer.lock 
-          && composer require php-stubs/wordpress-stubs:5.8 --dev ----no-cache
-          && composer require roots/wordpress:5.8 --dev ----no-cache
+          && composer require php-stubs/wordpress-stubs:5.8 --dev --no-cache
+          && composer require roots/wordpress:5.8 --dev --no-cache
           && rm -rf composer.lock 
           && composer clearcache 
           && composer install --prefer-dist --no-suggest 
@@ -100,8 +100,8 @@ jobs:
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
           && rm -rf composer.lock 
-          && composer require php-stubs/wordpress-stubs:5.7 --dev ----no-cache
-          && composer require roots/wordpress:5.7 --dev ----no-cache
+          && composer require php-stubs/wordpress-stubs:5.7 --dev --no-cache
+          && composer require roots/wordpress:5.7 --dev --no-cache
           && rm -rf composer.lock 
           && composer clearcache 
           && composer install --prefer-dist --no-suggest 
@@ -114,8 +114,8 @@ jobs:
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
           && rm -rf composer.lock 
-          && composer require php-stubs/wordpress-stubs:5.6 --dev ----no-cache
-          && composer require roots/wordpress:5.6 --dev ----no-cache
+          && composer require php-stubs/wordpress-stubs:5.6 --dev --no-cache
+          && composer require roots/wordpress:5.6 --dev --no-cache
           && rm -rf composer.lock 
           && composer clearcache 
           && composer install --prefer-dist --no-suggest 
@@ -128,8 +128,8 @@ jobs:
           sudo rm -rf wordpress && rm -rf vendor
           && rm -rf wordpress/wp-signup.php
           && rm -rf composer.lock 
-          && composer require php-stubs/wordpress-stubs:5.5 --dev ----no-cache
-          && composer require roots/wordpress:5.5 --dev ----no-cache
+          && composer require php-stubs/wordpress-stubs:5.5 --dev --no-cache
+          && composer require roots/wordpress:5.5 --dev --no-cache
           && rm -rf composer.lock 
           && composer clearcache 
           && composer install --prefer-dist --no-suggest 
