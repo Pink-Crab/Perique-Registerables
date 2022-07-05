@@ -22,7 +22,6 @@ class Basic_CPT extends Post_Type {
 	public $gutenberg    = true;
 	public $map_meta_cap = true;
 	public $capabilities = array(
-		'edit_post' => 'edit_basic',
-		'read'      => 'i dont read',
+		'edit_published_posts'   => 'edit_basic',
 	);
 }

@@ -111,7 +111,7 @@ class Test_Basic_CPT extends Base_CPT_Case {
 		);
 
 		$expected = array(
-			'edit_post'              => 'edit_basic',
+			'edit_post'              => 'edit_post',
 			'read_post'              => 'read_post',
 			'delete_post'            => 'delete_post',
 			'edit_posts'             => 'edit_posts',
@@ -119,12 +119,12 @@ class Test_Basic_CPT extends Base_CPT_Case {
 			'delete_posts'           => 'delete_posts',
 			'publish_posts'          => 'publish_posts',
 			'read_private_posts'     => 'read_private_posts',
-			'read'                   => 'i dont read',
+			'read'                   => 'read',
 			'delete_private_posts'   => 'delete_private_posts',
 			'delete_published_posts' => 'delete_published_posts',
 			'delete_others_posts'    => 'delete_others_posts',
 			'edit_private_posts'     => 'edit_private_posts',
-			'edit_published_posts'   => 'edit_published_posts',
+			'edit_published_posts'   => 'edit_basic',
 			'create_posts'           => 'edit_posts',
 		);
 
