@@ -45,8 +45,7 @@ jobs:
 
       - name: Clear existing composer
         run: >
-          sudo rm -rf wordpress 
-          && rm -rf vendor 
+          sudo rm -rf vendor 
           && rm -rf composer.lock 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -81,9 +80,7 @@ jobs:
         env:
           environment_github: true
         run: > 
-          sudo rm -rf wordpress && rm -rf vendor
-          && rm -rf wordpress/wp-signup.php
-          && rm -rf wordpress/index.php
+          sudo rm -rf vendor
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.8 --dev --no-cache
           && composer require roots/wordpress:5.8 --dev --no-cache
@@ -96,9 +93,7 @@ jobs:
         env:
           environment_github: true
         run: > 
-          sudo rm -rf wordpress && rm -rf vendor
-          && rm -rf wordpress/wp-signup.php
-          && rm -rf wordpress/index.php
+          sudo rm -rf vendor
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.7 --dev --no-cache
           && composer require roots/wordpress:5.7 --dev --no-cache
@@ -111,9 +106,7 @@ jobs:
         env:
           environment_github: true
         run: > 
-          sudo rm -rf wordpress && rm -rf vendor
-          && rm -rf wordpress/wp-signup.php
-          && rm -rf wordpress/index.php
+          sudo rm -rf vendor
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.6 --dev --no-cache
           && composer require roots/wordpress:5.6 --dev --no-cache
@@ -126,9 +119,7 @@ jobs:
         env:
           environment_github: true
         run: > 
-          sudo rm -rf wordpress && rm -rf vendor
-          && rm -rf wordpress/wp-signup.php
-          && rm -rf wordpress/index.php
+          sudo rm -rf vendor
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.5 --dev --no-cache
           && composer require roots/wordpress:5.5 --dev --no-cache
