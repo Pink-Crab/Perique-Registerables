@@ -194,9 +194,9 @@ class Meta_Data_Registrar {
 	 * Creates a fallback rest update callback.
 	 *
 	 * @param Meta_Data $meta
-	 * @return callable(mixed $value, \WP_Post|\WP_Term|\WP_User|\WP_Comment $object)
+	 * @return \Closure(mixed, \WP_Post|\WP_Term|\WP_User|\WP_Comment): mixed
 	 */
-	protected function create_rest_update_method( Meta_Data $meta ): callable {
+	protected function create_rest_update_method( Meta_Data $meta ): \Closure {
 		/**
 		 * @param mixed $value
 		 * @param \WP_Post|\WP_Term|\WP_User|\WP_Comment $object

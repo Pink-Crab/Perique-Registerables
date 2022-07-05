@@ -67,4 +67,17 @@ class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 	public function test_permalinks() {
 		$this->assertRegexp( '/basic_tag_tax/', get_term_link( $this->terms[0] ) );
 	}
+
+	/** @testdox It should be possible to add custom capabilities and have these xored with the defaults */
+	public function test_capabilities() {
+		$expected = array(
+			'manage_terms' => 'custom_terms',
+			'edit_terms'   => 'manage_categories',
+			'delete_terms' => 'custom_delete',
+			'assign_terms' => 'edit_posts',
+		);
+
+		// Check values match.
+		$this->assertEquals( $expected, (array) \get_taxonomy( 'basic_tag_tax' )->cap );
+	}
 }

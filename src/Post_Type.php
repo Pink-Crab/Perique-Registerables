@@ -225,7 +225,7 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * The CPY Rest Controller, defaults to WP_REST_Posts_Controller
 	 *
-	 * @var string;
+	 * @var string
 	 */
 	public $rest_controller_class = \WP_REST_Posts_Controller::class;
 
