@@ -67,9 +67,7 @@ jobs:
         env:
           environment_github: true
         run: > 
-          sudo rm -rf wordpress && rm -rf vendor 
-          && rm -rf wordpress/wp-signup.php
-          && rm -rf wordpress/wp-signup.php
+          sudo rm -rf vendor 
           && rm -rf composer.lock 
           && composer require php-stubs/wordpress-stubs:5.9 --dev --no-cache
           && composer require roots/wordpress:5.9 --dev --no-cache
