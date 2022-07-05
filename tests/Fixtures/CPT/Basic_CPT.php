@@ -16,9 +16,13 @@ use PinkCrab\Registerables\Post_Type;
 
 class Basic_CPT extends Post_Type {
 
-	public $key       = 'basic_cpt';
-	public $singular  = 'Basic';
-	public $plural    = 'Basics';
-	public $gutenberg = true;
+	public $key          = 'basic_cpt';
+	public $singular     = 'Basic';
+	public $plural       = 'Basics';
+	public $gutenberg    = true;
 	public $map_meta_cap = true;
+	public $capabilities = array(
+		'edit_post' => 'edit_basic',
+		'read'      => 'i dont read',
+	);
 }

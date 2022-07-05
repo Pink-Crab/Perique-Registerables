@@ -212,16 +212,21 @@ class Taxonomy_Registrar implements Registrar {
 			'label'                 => $taxonomy->label ?? $taxonomy->plural,
 			'query_var'             => $taxonomy->query_var,
 			'hierarchical'          => $taxonomy->hierarchical,
-			'capabilities'          => $taxonomy->capabilities ?? array(
-				'manage_terms' => "manage_ {$taxonomy->slug}",
-				'edit_terms'   => "edit_ $taxonomy->slug",
-				'delete_terms' => "delete $taxonomy->slug",
-				'assign_terms' => "assign_ $taxonomy->slug",
-			),
 			'update_count_callback' => $taxonomy->update_count_callback ?? '_update_post_term_count',
 			'meta_box_cb'           => $taxonomy->meta_box_cb ??
 				$taxonomy->hierarchical ? 'post_categories_meta_box' : 'post_tags_meta_box',
 			'default_term'          => $taxonomy->default_term,
+		);
+
+		// Merge existing capabilities with the new ones.
+		$args['capabilities'] = array_merge(
+			array(
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts',
+			),
+			$taxonomy->capabilities ?? array()
 		);
 
 		/**
