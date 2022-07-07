@@ -55,7 +55,7 @@ jobs:
       - name: Install dependencies
         run: >
           rm -rf composer.lock && composer clearcache
-          && composer install --prefer-dist --no-suggest
+          && composer install --prefer-dist --no-suggest --no-cache
       - name: Run Tests on WP6.0
         env:
           environment_github: true
@@ -72,8 +72,8 @@ jobs:
           && rm -rf composer.lock 
           && composer clearcache 
           && composer remove roots/wordpress
-          && composer require php-stubs/wordpress-stubs:5.9 --dev 
-          && composer require roots/wordpress:5.9 --dev 
+          && composer require php-stubs/wordpress-stubs:5.9 --dev --no-cache
+          && composer require roots/wordpress:5.9 --dev --no-cache
           && composer install --prefer-dist --no-suggest 
           && composer sniff
           
@@ -85,8 +85,8 @@ jobs:
           sudo rm -rf vendor
           && rm -rf composer.lock 
           && composer clearcache 
-          && composer require php-stubs/wordpress-stubs:5.8 --dev 
-          && composer require roots/wordpress:5.8 --dev
+          && composer require php-stubs/wordpress-stubs:5.8 --dev --no-cache
+          && composer require roots/wordpress:5.8 --dev --no-cache
           && composer install --prefer-dist --no-suggest 
           && composer sniff
       - name: Test on WP5.7
