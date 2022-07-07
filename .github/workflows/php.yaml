@@ -11,8 +11,10 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
-        mysql-versions: ['mysql:5.7', 'mariadb:10.7']
+        php-versions: ['7.4']
+        # php-versions: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        mysql-versions: ['mysql:5.7']
+        # mysql-versions: ['mysql:5.7', 'mariadb:10.7']
     runs-on: ${{ matrix.operating-system }}
     services:
       # Setup MYSQL
