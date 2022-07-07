@@ -55,7 +55,7 @@ jobs:
       - name: Install dependencies
         run: >
           rm -rf composer.lock && composer clearcache
-          && composer install --prefer-source --no-cache
+          && composer update --no-cache
       - name: Run Tests on WP6.0
         env:
           environment_github: true
