@@ -64,7 +64,7 @@ jobs:
       - name: Codecov
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.REGISTERABLES_CODECOV }}
       
-      - name: Test on WP5.9
+      - name: Test on WP5.9 
         env:
           environment_github: true
         run: > 
