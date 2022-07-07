@@ -55,7 +55,7 @@ jobs:
       - name: Install dependencies
         run: >
           rm -rf composer.lock && composer clearcache
-          && composer install --prefer-dist --no-suggest --no-cache
+          && composer install --prefer-dist --no-cache
       - name: Run Tests on WP6.0
         env:
           environment_github: true
@@ -74,7 +74,7 @@ jobs:
           && composer remove roots/wordpress
           && composer require php-stubs/wordpress-stubs:5.9 --dev --no-cache
           && composer require roots/wordpress:5.9 --dev --no-cache
-          && composer install --prefer-dist --no-suggest 
+          && composer update --prefer-dist --no-cache 
           && composer sniff
           
       - name: Test on WP5.8
@@ -87,7 +87,7 @@ jobs:
           && composer clearcache 
           && composer require php-stubs/wordpress-stubs:5.8 --dev --no-cache
           && composer require roots/wordpress:5.8 --dev --no-cache
-          && composer install --prefer-dist --no-suggest 
+          && composer update --prefer-dist --no-cache 
           && composer sniff
       - name: Test on WP5.7
         if: ${{ matrix.php-versions != '8.0' && matrix.php-versions != '8.1' }}
@@ -98,7 +98,7 @@ jobs:
           && rm -rf composer.lock 
           && rm -rf composer.lock 
           && composer clearcache 
-          && composer install --prefer-dist --no-suggest 
+          && composer update --prefer-dist --no-cache 
           && composer all
       - name: Test on WP5.6
         if: ${{ matrix.php-versions != '8.0' && matrix.php-versions != '8.1' }}
@@ -109,7 +109,7 @@ jobs:
           && rm -rf composer.lock 
           && rm -rf composer.lock 
           && composer clearcache 
-          && composer install --prefer-dist --no-suggest 
+          && composer update --prefer-dist --no-cache 
           && composer all
       - name: Test on WP5.5
         if: ${{ matrix.php-versions != '8.0' && matrix.php-versions != '8.1' }}
@@ -120,6 +120,6 @@ jobs:
           && rm -rf composer.lock 
           && rm -rf composer.lock 
           && composer clearcache 
-          && composer install --prefer-dist --no-suggest 
+          && composer update --prefer-dist --no-cache 
           && composer all
       
