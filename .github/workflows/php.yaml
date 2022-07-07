@@ -59,7 +59,7 @@ jobs:
       - name: Run Tests on WP6.0
         env:
           environment_github: true
-        run: composer all
+        # run: composer all
 
       - name: Codecov
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.REGISTERABLES_CODECOV }}
@@ -71,12 +71,11 @@ jobs:
           sudo rm -rf vendor 
           && rm -rf composer.lock 
           && composer clearcache 
-          && rm -rf wordpress/wp-signup.php
-          && rm -rf wordpress
+          && composer remove roots/wordpress
           && composer require php-stubs/wordpress-stubs:5.9 --dev 
           && composer require roots/wordpress:5.9 --dev 
           && composer install --prefer-dist --no-suggest 
-          && composer all
+          && composer sniff
           
       - name: Test on WP5.8
         if: ${{ matrix.php-versions != '8.0' && matrix.php-versions != '8.1' }}
@@ -89,7 +88,7 @@ jobs:
           && composer require php-stubs/wordpress-stubs:5.8 --dev 
           && composer require roots/wordpress:5.8 --dev
           && composer install --prefer-dist --no-suggest 
-          && composer all
+          && composer sniff
       - name: Test on WP5.7
         if: ${{ matrix.php-versions != '8.0' && matrix.php-versions != '8.1' }}
         env:
