@@ -12,7 +12,6 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.1', '7.2', '7.3', '7.4']
-        mysql-versions: ['mysql:5.7']
     services:
       # Setup MYSQL
       mysql-service:
