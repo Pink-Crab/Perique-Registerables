@@ -20,5 +20,9 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 	public $plural       = 'Basic Tag Taxonomies';
 	public $description  = 'The Basic Tag Taxonomy.';
 	public $hierarchical = false;
-	public $object_type = array( 'basic_cpt' );
+	public $object_type  = array( 'basic_cpt' );
+	public $capabilities = array(
+		'manage_terms' => 'custom_terms',
+		'delete_terms' => 'custom_delete',
+	);
 }

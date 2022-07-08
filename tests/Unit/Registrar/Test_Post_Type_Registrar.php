@@ -101,7 +101,7 @@ class Test_Post_Type_Registrar extends TestCase {
 			'can_export'            => true,
 			'rewrite'               => false,
 			'capability_type'       => 'post',
-			'capabilities'          => array(),
+			'capabilities'          => array( 'edit_published_posts' => 'edit_basic' ),
 			'taxonomies'            => array(),
 			'show_in_rest'          => true,
 			'rest_base'             => 'basic_cpt',

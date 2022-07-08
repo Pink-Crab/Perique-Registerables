@@ -100,4 +100,34 @@ class Test_Basic_CPT extends Base_CPT_Case {
 	protected $has_single = true;
 
 	protected $allow_gutenberg = true;
+
+	/** @testdox It should be possible to set any of the capabilities and have the rest use the POST defaults. */
+	public function test_CPT_capabilities() {
+		$post_types = get_post_types(
+			array(
+				'name' => 'basic_cpt',
+			),
+			'objects'
+		);
+
+		$expected = array(
+			'edit_post'              => 'edit_post',
+			'read_post'              => 'read_post',
+			'delete_post'            => 'delete_post',
+			'edit_posts'             => 'edit_posts',
+			'edit_others_posts'      => 'edit_others_posts',
+			'delete_posts'           => 'delete_posts',
+			'publish_posts'          => 'publish_posts',
+			'read_private_posts'     => 'read_private_posts',
+			'read'                   => 'read',
+			'delete_private_posts'   => 'delete_private_posts',
+			'delete_published_posts' => 'delete_published_posts',
+			'delete_others_posts'    => 'delete_others_posts',
+			'edit_private_posts'     => 'edit_private_posts',
+			'edit_published_posts'   => 'edit_basic',
+			'create_posts'           => 'edit_posts',
+		);
+
+		$this->assertEquals( $expected, (array) $post_types['basic_cpt']->cap );
+	}
 }
