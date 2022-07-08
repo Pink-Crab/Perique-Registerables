@@ -54,7 +54,6 @@ jobs:
         run: >
           rm -rf composer.lock 
           && composer clearcache
-          && composer remove roots/wordpress
           && composer require php-stubs/wordpress-stubs:5.9 --dev
           && composer require roots/wordpress:5.9 --dev
           && composer update
