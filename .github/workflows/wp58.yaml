@@ -1,4 +1,4 @@
-name: WP_5_9
+name: WP_5_8
 
 on:
   push:
@@ -58,7 +58,7 @@ jobs:
           && composer require roots/wordpress:5.9 --dev
           && composer update
       
-      - name: Run Tests on WP5.9
+      - name: Run Tests on WP5.8 (Pre php8 support)
         env:
           environment_github: true
         run: composer all
