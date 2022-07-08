@@ -1,4 +1,4 @@
-name: GitHub_CI
+name: WP_Latest
 
 on:
   push:
@@ -12,12 +12,11 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
-        mysql-versions: ['mysql:5.7']
     runs-on: ${{ matrix.operating-system }}
     services:
       # Setup MYSQL
       mysql-service:
-        image: ${{ matrix.mysql-versions }}
+        image: 'mysql:5.7'
         env:
           MYSQL_ROOT_PASSWORD: 'crab'
           MYSQL_DATABASE: pc_core_tests

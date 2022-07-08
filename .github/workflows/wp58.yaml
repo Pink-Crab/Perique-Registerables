@@ -54,8 +54,8 @@ jobs:
           rm -rf composer.lock 
           && composer clearcache
           && composer remove roots/wordpress
-          && composer require php-stubs/wordpress-stubs:5.9 --dev
-          && composer require roots/wordpress:5.9 --dev
+          && composer require php-stubs/wordpress-stubs:5.8 --dev
+          && composer require roots/wordpress:5.8 --dev
           && composer update
       
       - name: Run Tests on WP5.8 (Pre php8 support)
