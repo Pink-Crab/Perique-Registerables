@@ -17,7 +17,7 @@ jobs:
     services:
       # Setup MYSQL
       mysql-service:
-        image: ${{ matrix.mysql-versions }}
+        image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: 'crab'
           MYSQL_DATABASE: pc_core_tests
