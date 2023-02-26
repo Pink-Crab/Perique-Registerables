@@ -199,6 +199,14 @@ class Post_Type_Registrar implements Registrar {
 			);
 		}
 
+		// Set the meta cap based on its definition and if uses gutenberg.
+		// See https://github.com/Pink-Crab/Perique-Registerables/issues/66
+		if ( null === $post_type->map_meta_cap ) {
+			$meta_cap = $post_type->gutenberg ? true : false;
+		} else {
+			$meta_cap = $post_type->map_meta_cap ?? false;
+		}
+
 		// Compose args.
 		$args = array(
 			'labels'                => $labels,
@@ -227,7 +235,7 @@ class Post_Type_Registrar implements Registrar {
 			'delete_with_user'      => \is_bool( $post_type->delete_with_user ) ? $post_type->delete_with_user : null,
 			'template'              => \is_array( $post_type->template ) ? $post_type->template : array(),
 			'template_lock'         => \is_string( $post_type->template_lock ) ? $post_type->template_lock : false,
-			'map_meta_cap'          => \is_bool( $post_type->map_meta_cap ) ? $post_type->map_meta_cap : false,
+			'map_meta_cap'          => $meta_cap,
 		);
 
 		/**

@@ -13,8 +13,7 @@
     }],
     "autoload": {
         "psr-4": {
-            "PinkCrab\\Registerables\\": "src",
-            "Gin0115\\WPUnit_Helpers\\": "WPUnit_Helpers"
+            "PinkCrab\\Registerables\\": "src"
         },
         "files": []
     },
@@ -28,25 +27,25 @@
         "phpstan/phpstan": "^1.0",
         "szepeviktor/phpstan-wordpress": "^1.0",
         "php-stubs/wordpress-stubs": "^6.0 || ^5.9",
-        "roots/wordpress": "^6.0",
-        "wp-phpunit/wp-phpunit": "^6.0",
+        "roots/wordpress": "^6.1",
+        "wp-phpunit/wp-phpunit": "^6.1",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
-        "object-calisthenics/phpcs-calisthenics-rules": "*",
         "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0",
-        "symfony/var-dumper": "4.*",
-        "pinkcrab/wp-rest-schema": "dev-master",
-        "gin0115/wpunit-helpers": "~1.0.0"
+        "symfony/var-dumper": "*",
+        "gin0115/wpunit-helpers": "~1",
+        "vlucas/phpdotenv": "^5.4",
+        "pinkcrab/wp-rest-schema": "dev-master"
     },
     "require": {
-        "php": ">=7.1.0",
-        "pinkcrab/perique-framework-core": "^1.0"
+        "php": ">=7.2.0",
+        "pinkcrab/perique-framework-core": "1.3.*"
     },
     "scripts": {
         "test": "./vendor/bin/phpunit --coverage-clover clover.xml --testdox --colors=always",
         "coverage": "./vendor/bin/phpunit --coverage-html coverage-report --testdox --colors=always",
         "analyse": "./vendor/bin/phpstan analyse src -l8",
-        "sniff": "./vendor/bin/phpcs --standard=phpcs.xml src/ -v",
+        "sniff": "./vendor/bin/phpcs src/ -v",
         "all": "composer test && composer analyse && composer sniff"
     },
     "config": {

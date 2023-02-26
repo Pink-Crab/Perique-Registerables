@@ -94,9 +94,7 @@ class Meta_Box_Validator extends Abstract_Validator {
 	 */
 	protected function has_valid_view( Meta_Box $meta_box ): void {
 		if ( ! \is_callable( $meta_box->view )
-		&& ( ! is_string( $meta_box->view_template )
-			|| ( is_string( $meta_box->view_template ) && \mb_strlen( $meta_box->view_template ) === 0 )
-		)
+		&& ( ! is_string( $meta_box->view_template ) || \mb_strlen( $meta_box->view_template ) === 0 )
 		) {
 			$this->add_error( sprintf( '%s doesn\'t have a valid view defined.', get_class( $meta_box ) ) );
 		}

@@ -1,27 +1,36 @@
 # Registerables
 
-![Current Version 0.8.2](https://img.shields.io/badge/Current_Version-0.8.1-yellow.svg?style=flat " ") 
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
-[![WP_Latest](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/php.yaml)
+
+[![Latest Stable Version](http://poser.pugx.org/pinkcrab/registerables/v)](https://packagist.org/packages/pinkcrab/registerables)
+[![Total Downloads](http://poser.pugx.org/pinkcrab/registerables/downloads)](https://packagist.org/packages/pinkcrab/registerables)
+[![License](http://poser.pugx.org/pinkcrab/registerables/license)](https://packagist.org/packages/pinkcrab/registerables)
+[![PHP Version Require](http://poser.pugx.org/pinkcrab/registerables/require/php)](https://packagist.org/packages/pinkcrab/registerables)
+![GitHub contributors](https://img.shields.io/github/contributors/Pink-Crab/Perique-Registerables?label=Contributors)
+![GitHub issues](https://img.shields.io/github/issues-raw/Pink-Crab/Perique-Registerables)
+[![WordPress 6.1 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml)
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/19fd3d66720b0c94424d/maintainability)](https://codeclimate.com/github/Pink-Crab/Perique-Registerables/maintainability)
 
 A collection of Abstract Classes for creating common WordPress fixtures which need registering.
 
-- [Post Type](#post-type)  
-- [Taxonomy](#taxonomy)  
-- [Meta Box](#meta-box)
-  - [Shared Meta Boxes](#shared-meta-boxes)
-- [Meta Data](#meta-data)
-  - [Additional Meta Data](#additional_meta_data_controller)
+- [Registerables](#registerables)
+  - [Why?](#why)
+  - [Setup](#setup)
+  - [Post Type](#post-type)
+  - [Taxonomy](#taxonomy)
+  - [Meta Box](#meta-box)
+    - [Shared Meta Boxes](#shared-meta-boxes)
+  - [MetaData](#metadata)
+    - [Additional\_Meta\_Data\_Controller](#additional_meta_data_controller)
+  - [Contributions](#contributions)
+    - [To run test suite](#to-run-test-suite)
+  - [License](#license)
+    - [MIT License](#mit-license)
+  - [Change Log](#change-log)
 
+> ## For Perique V1.3.*
 
-
-## Version ##
-
-**Release 0.8.2**
-
-> For older versions of the PinkCrab Plugin Framework please use Registerables V0.5.\*
 
 ## Why? ##
 
@@ -245,6 +254,7 @@ Setup the dev environment
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.9.0 - Move to compatable with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
 * 0.8.2 - Fixed bug with Taxonomy Capabilities to not use fallbacks if not defined.
 * 0.8.1 - Update dev deps to cover wp6.0.0
 * 0.8.0 - 
