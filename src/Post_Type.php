@@ -80,7 +80,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var bool|null
 	 */
-	public $map_meta_cap = false;
+	public $map_meta_cap = null;
 
 	/**
 	 * Does this post type have public functionality.
