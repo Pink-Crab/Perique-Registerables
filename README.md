@@ -254,6 +254,7 @@ Setup the dev environment
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Change Log ##
+* 0.9.0 - Move to compatable with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
 * 0.8.2 - Fixed bug with Taxonomy Capabilities to not use fallbacks if not defined.
 * 0.8.1 - Update dev deps to cover wp6.0.0
 * 0.8.0 - 
