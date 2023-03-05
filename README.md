@@ -7,6 +7,8 @@
 [![PHP Version Require](http://poser.pugx.org/pinkcrab/registerables/require/php)](https://packagist.org/packages/pinkcrab/registerables)
 ![GitHub contributors](https://img.shields.io/github/contributors/Pink-Crab/Perique-Registerables?label=Contributors)
 ![GitHub issues](https://img.shields.io/github/issues-raw/Pink-Crab/Perique-Registerables)
+[![WordPress 5.9 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml)
+[![WordPress 6.0 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml)
 [![WordPress 6.1 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml)
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
