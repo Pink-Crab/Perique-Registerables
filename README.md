@@ -257,8 +257,8 @@ Setup the dev environment
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Previous Versions ##
-For Perique 1.3.* please use version Registerables 0.9.*
-For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*
+* For Perique 1.3.* please use version Registerables 0.9.*  
+* For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
 * 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
