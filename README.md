@@ -29,9 +29,10 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
     - [To run test suite](#to-run-test-suite)
   - [License](#license)
     - [MIT License](#mit-license)
+  - [Previous Versions](#previous-versions)
   - [Change Log](#change-log)
 
-> ## For Perique V1.3.*
+> ## For Perique V1.4.*
 
 
 ## Why? ##
@@ -233,7 +234,7 @@ The class has an empty constructor, so you can easily inject dependencies in and
 
 ## Contributions
 
-If you would like to contribute to this project, please feel free to fork and submit a PR. If any issue doesnt exist for the problem, please create one.
+If you would like to contribute to this project, please feel free to fork and submit a PR. If any issue doesn't exist for the problem, please create one.
 
 Please ensure your changes to do not drop coverage lower than they currently are, unless it can not be helped (include a reason why)
 
@@ -245,7 +246,7 @@ Setup the dev environment
 * `$ composer all` - This will run all the tests, static analysis and linter
 * `$ composer coverage` - This will produce a HTML coverage report `../coverage-report`
 * `$ composer analyse` - This will run PHPStan on lv 8
-* `$ composer sniff` - This will run PHPCS with the WP Ruleset.
+* `$ composer sniff` - This will run PHPCS with the WP Rule set.
 
 > Please note the CI Actions runs `composer all` on multiple PHP and WP versions. Running locally will only run with your version of PHP and latest major or WP.
 
@@ -255,8 +256,13 @@ Setup the dev environment
 
 http://www.opensource.org/licenses/mit-license.html  
 
+## Previous Versions ##
+* For Perique 1.3.* please use version Registerables 0.9.*  
+* For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
+
 ## Change Log ##
-* 0.9.0 - Move to compatable with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
+* 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
+* 0.9.0 - Move to compatible with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
 * 0.8.2 - Fixed bug with Taxonomy Capabilities to not use fallbacks if not defined.
 * 0.8.1 - Update dev deps to cover wp6.0.0
 * 0.8.0 - 
