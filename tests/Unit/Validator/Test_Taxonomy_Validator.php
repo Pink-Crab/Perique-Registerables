@@ -15,7 +15,7 @@ namespace PinkCrab\Registerables\Tests\Unit\Validator;
 
 use PHPUnit\Framework\TestCase;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
 
 class Test_Taxonomy_Validator extends TestCase {

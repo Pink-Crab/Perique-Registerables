@@ -27,7 +27,7 @@ namespace PinkCrab\Registerables\Validator;
 
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Validator\Abstract_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Taxonomy_Validator extends Abstract_Validator {
 
@@ -36,7 +36,7 @@ class Taxonomy_Validator extends Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
 	 * @return bool
 	 */
 	public function validate( Registerable $object ): bool {

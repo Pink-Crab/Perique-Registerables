@@ -16,7 +16,7 @@ namespace PinkCrab\Registerables\Tests\Unit\Validator;
 use PHPUnit\Framework\TestCase;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Validator\Abstract_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Test_Abstract_Validator extends TestCase {
 
