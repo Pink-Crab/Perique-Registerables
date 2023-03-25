@@ -1,4 +1,4 @@
-![logo](docs/Perique-Registerables-Card.png "Pink Crab")
+![logo](docs/Plugin-Registerables.jpg "Pink Crab")
 
 # Registerables
 
@@ -34,7 +34,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
   - [Previous Versions](#previous-versions)
   - [Change Log](#change-log)
 
-> ## For Perique V1.4.*
+> ## For Perique V2.0.*
 
 
 ## Why? ##
