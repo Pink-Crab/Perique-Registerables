@@ -16,7 +16,7 @@ namespace PinkCrab\Registerables\Tests\Unit\Validator;
 use PHPUnit\Framework\TestCase;
 use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
 
 class Test_Meta_Box_Validator extends TestCase {

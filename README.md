@@ -1,3 +1,5 @@
+![logo](docs/Plugin-Registerables.jpg "Pink Crab")
+
 # Registerables
 
 
@@ -32,7 +34,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
   - [Previous Versions](#previous-versions)
   - [Change Log](#change-log)
 
-> ## For Perique V1.4.*
+> ## For Perique V2.0.*
 
 
 ## Why? ##
@@ -46,11 +48,11 @@ $ composer require pinkcrab/registerables
 
 ``` 
 
-You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the construct_registration_middleware() from the App_Factory instance.
+You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
 ```php
 $app = ( new PinkCrab\Perique\Application\App_Factory() )
   // Normal Perique bootstrapping.   
-  ->construct_registration_middleware( Registerable_Middleware::class );
+  ->module( Registerable::class );
   ->boot();
 ```
 
@@ -257,10 +259,12 @@ Setup the dev environment
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Previous Versions ##
+* For Perique 1.4.* please use version Registerables 1.0.*
 * For Perique 1.3.* please use version Registerables 0.9.*  
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.0.0 - Bumped support for Perique 2.0.0, added `Regiserable` module, but no other changes needed.
 * 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
 * 0.9.0 - Move to compatible with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
 * 0.8.2 - Fixed bug with Taxonomy Capabilities to not use fallbacks if not defined.

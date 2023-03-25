@@ -23,7 +23,7 @@ use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
 
 class Test_Taxonomy_Registrar extends TestCase {

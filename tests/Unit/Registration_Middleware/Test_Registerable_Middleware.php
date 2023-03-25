@@ -19,8 +19,8 @@ use PinkCrab\Loader\Hook_Loader;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Perique\Interfaces\DI_Container;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
-use PinkCrab\Registerables\Registration_Middleware\Registerable_Middleware;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable_Middleware;
 
 class Test_Registerable_Middleware extends TestCase {
 
@@ -41,7 +41,7 @@ class Test_Registerable_Middleware extends TestCase {
 		$container = $this->createMock( DI_Container::class );
 		$middleware->set_di_container( $container );
 
-		$this->assertSame( $container, Objects::get_property( $middleware, 'container' ) );
+		$this->assertSame( $container, Objects::get_property( $middleware, 'di_container' ) );
 	}
 
 	/** @testdox The middleware should skip any objects which are not registerable instances. */

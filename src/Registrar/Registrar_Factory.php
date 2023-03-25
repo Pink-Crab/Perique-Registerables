@@ -34,7 +34,7 @@ use PinkCrab\Registerables\Validator\Meta_Box_Validator;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Registrar_Factory {
 
@@ -50,7 +50,7 @@ class Registrar_Factory {
 	/**
 	 * Creates the dispatcher based on the registerable passed.
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return Registrar
 	 * @throws Exception If not valid registerable type passed.
 	 */

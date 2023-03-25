@@ -31,7 +31,7 @@ use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Additional_Meta_Data_Controller;
 use PinkCrab\Registerables\Tests\Fixtures\Additional_Meta_Data;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Additional_Meta_Data_Registrar implements Registrar {
 
@@ -50,7 +50,7 @@ class Additional_Meta_Data_Registrar implements Registrar {
 	/**
 	 * Used to register a registerable
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return void
 	 * @throws Exception If either post or term meta and the post type or taxonomy are not registered.
 	 * @throws Exception If a none Additional_Meta_Data_Controller registerable is attempted to be registered.

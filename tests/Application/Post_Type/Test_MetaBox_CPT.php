@@ -82,13 +82,9 @@ class Test_MetaBox_CPT extends WP_UnitTestCase {
 		}
 	}
 
-	/**
-	 * Test the normal meta box is there and all values passed.
-	 *
-	 * @return void
-	 */
-	public function test_normal_metabox_registered(): void {
-		// Check metabox exists.
+	/**@testdox Test the normal meta box is there and all values passed. */
+	public function test_normal_meta_box_registered(): void {
+		// Check meta box exists.
 		$box = $this->meta_box_inspector->find( 'metabox_cpt_normal' );
 		$this->assertNotNull( $box );
 

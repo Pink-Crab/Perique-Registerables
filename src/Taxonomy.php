@@ -24,7 +24,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 abstract class Taxonomy implements Registerable {
 

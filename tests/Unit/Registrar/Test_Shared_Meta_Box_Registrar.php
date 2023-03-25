@@ -25,7 +25,7 @@ use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Registrar\Shared_Meta_Box_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Shared_Metabox\Post_Page_Meta_Box;
 
 class Test_Shared_Meta_Box_Registrar extends TestCase {

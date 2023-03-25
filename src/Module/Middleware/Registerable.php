@@ -22,6 +22,6 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Registerables\Registration_Middleware;
+namespace PinkCrab\Registerables\Module\Middleware;
 
 interface Registerable{}
