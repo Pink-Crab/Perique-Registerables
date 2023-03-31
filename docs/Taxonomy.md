@@ -183,8 +183,8 @@ use PinkCrab\Registerables\Meta_Data;
 class Order_Type extends Taxonomy {
     
     public $singular = 'Order';
-    public $plural   = 'Orders';
-    public $slug     = 'acme_order';
+    public string $plural   = 'Orders';
+    public string $slug     = 'acme_order';
     
     // Register meta_data
     public function meta_data(array $meta_data): void {
@@ -208,7 +208,7 @@ filter_labels() can be used to either alter the predefined value or adding in ne
 class Order_Type extends Taxonomy {
     ...
     public $singular = 'Order';
-    public $plural   = 'Orders';
+    public string $plural   = 'Orders';
     ...
     
     // Show different labels based on settings.
@@ -269,7 +269,7 @@ use PinkCrab\Perique\Application\App_Config;
 class Secret_Tax extends Taxonomy {
     
     public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
+    public string $plural   = 'Public Posts';
     
     public function __construct(App_Config $config){
         $this->slug = $config->additional('secret_tax_slug');

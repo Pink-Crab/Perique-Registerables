@@ -66,15 +66,15 @@ class Tag_With_Meta_Taxonomy extends Taxonomy {
 		);
 	}
 
-	public $slug         = 'tag_with_meta';
-	public $singular     = 'Tag with meta Taxonomy';
-	public $plural       = 'Tag with meta Taxonomies';
-	public $description  = 'Tag with meta Taxonomy.';
-	public $hierarchical = false;
-	public $object_type  = array( 'basic_cpt' );
+	public string $slug         = 'tag_with_meta';
+	public ?string $singular    = 'Tag with meta Taxonomy';
+	public string $plural       = 'Tag with meta Taxonomies';
+	public ?string $description = 'Tag with meta Taxonomy.';
+	public bool $hierarchical        = false;
+	public array $object_type         = array( 'basic_cpt' );
 
 	// Default term
-	public $default_term = array(
+	public ?array $default_term = array(
 		'name'        => 'Default Term for Taxonomy With Meta',
 		'slug'        => self::DEFAULT_TERM_SLUG,
 		'description' => 'Like the name',

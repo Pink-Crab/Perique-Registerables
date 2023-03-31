@@ -54,9 +54,9 @@ class Test_Post_Type_Registrar extends TestCase {
 
 		$post_type = new class() extends Post_Type {
 			// Name is capped between 1 and 20
-			public $key      = '0123456789012345678901234567890123456789';
-			public $singular = '0123456789012345678901234567890123456789';
-			public $plural   = '0123456789012345678901234567890123456789';
+			public string $key      = '0123456789012345678901234567890123456789';
+			public string $singular = '0123456789012345678901234567890123456789';
+			public string $plural   = '0123456789012345678901234567890123456789';
 		};
 
 		$this->expectException( \Exception::class );

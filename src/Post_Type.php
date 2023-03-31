@@ -36,7 +36,7 @@ abstract class Post_Type implements Registerable {
 	 * @var string
 	 * @required
 	 */
-	public $key;
+	public string $key = '';
 
 	/**
 	 * The singular key name
@@ -44,7 +44,7 @@ abstract class Post_Type implements Registerable {
 	 * @var string
 	 * @required
 	 */
-	public $singular;
+	public string $singular = '';
 
 	/**
 	 * The plural name.
@@ -52,105 +52,105 @@ abstract class Post_Type implements Registerable {
 	 * @var string
 	 * @required
 	 */
-	public $plural;
+	public string $plural = '';
 
 	/**
 	 * The Dashicon for wp-admin
 	 *
 	 * @var string
 	 */
-	public $dashicon = 'dashicons-pets';
+	public string $dashicon = 'dashicons-pets';
 
 	/**
 	 * The post types description.
 	 *
 	 * @var string|null
 	 */
-	public $description;
+	public ?string $description = null;
 
 	/**
 	 * Position in wp-admin menu list.
 	 *
 	 * @var int|null
 	 */
-	public $menu_position = 60;
+	public ?int $menu_position = 60;
 
 	/**
 	 * Should all meta fields use the capabilities
 	 *
 	 * @var bool|null
 	 */
-	public $map_meta_cap = null;
+	public ?bool $map_meta_cap = null;
 
 	/**
 	 * Does this post type have public functionality.
 	 *
 	 * @var bool|null
 	 */
-	public $public = true;
+	public ?bool $public = true;
 
 	/**
 	 * Include post type in frontend menu choices.
 	 *
 	 * @var bool|null
 	 */
-	public $show_in_nav_menus = true;
+	public ?bool $show_in_nav_menus = true;
 
 	/**
 	 * INclude post type in wp-admin list.
 	 *
 	 * @var bool|null
 	 */
-	public $show_in_menu = true;
+	public ?bool $show_in_menu = true;
 
 	/**
 	 * Should this be included in the admin bar.
 	 *
 	 * @var bool|null
 	 */
-	public $show_in_admin_bar = true;
+	public ?bool $show_in_admin_bar = true;
 
 	/**
 	 * Generate any post type UI in wp-admin.
 	 *
 	 * @var bool|null
 	 */
-	public $show_ui = true;
+	public ?bool $show_ui = true;
 
 	/**
 	 * Generate archives on front end.
 	 *
 	 * @var bool|null
 	 */
-	public $has_archive = true;
+	public ?bool $has_archive = true;
 
 	/**
 	 * Is post type hierarchical
 	 *
 	 * @var bool|null
 	 */
-	public $hierarchical = false;
+	public ?bool $hierarchical = false;
 
 	/**
 	 * Exclude from search results.
 	 *
 	 * @var bool|null
 	 */
-	public $exclude_from_search = false;
+	public ?bool $exclude_from_search = false;
 
 	/**
 	 * Allow post type to be queried via url.
 	 *
 	 * @var bool|null
 	 */
-	public $publicly_queryable = true;
+	public ?bool $publicly_queryable = true;
 
 	/**
 	 * Can post type be exported.
 	 *
 	 * @var bool|null
 	 */
-	public $can_export = true;
+	public ?bool $can_export = true;
 
 	/**
 	 * Sets the query_var key for this post type
@@ -164,7 +164,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var bool|null
 	 */
-	public $delete_with_user = null;
+	public ?bool $delete_with_user = null;
 
 	/**
 	 * Triggers the handling of rewrites for this post type.
@@ -194,14 +194,14 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var array<int, string>
 	 */
-	public $capabilities = array();
+	public array $capabilities = array();
 
 	/**
 	 * Which features are included with the post type (editor, author etc)
 	 *
 	 * @var array<int, string>
 	 */
-	public $supports = array();
+	public array $supports = array();
 
 	/**
 	 * Rest
@@ -212,7 +212,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var bool|null
 	 */
-	public $show_in_rest = true;
+	public ?bool $show_in_rest = true;
 
 	/**
 	 * The base to use for all CPT routes
@@ -220,14 +220,14 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var string|null
 	 */
-	public $rest_base = null;
+	public ?string $rest_base = null;
 
 	/**
 	 * The CPY Rest Controller, defaults to WP_REST_Posts_Controller
 	 *
 	 * @var string
 	 */
-	public $rest_controller_class = \WP_REST_Posts_Controller::class;
+	public string $rest_controller_class = \WP_REST_Posts_Controller::class;
 
 	/**
 	 * Gutenberg
@@ -238,7 +238,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var bool|null
 	 */
-	public $gutenberg = false;
+	public ?bool $gutenberg = false;
 
 	/**
 	 * All block templates included with this cpt.
@@ -263,7 +263,7 @@ abstract class Post_Type implements Registerable {
 	 *
 	 * @var string[]
 	 */
-	public $taxonomies = array();
+	public array $taxonomies = array();
 
 	/**
 	 * Filters the labels through child class.

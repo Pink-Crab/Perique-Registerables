@@ -34,19 +34,8 @@ use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Shared_Meta_Box_Registrar implements Registrar {
 
-	/**
-	 * The Meta Box Registrar
-	 *
-	 * @var Meta_Box_Registrar
-	 */
-	protected $meta_box_registrar;
-
-	/**
-	 * The Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Meta_Box_Registrar $meta_box_registrar;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Meta_Box_Registrar $meta_box_registrar,

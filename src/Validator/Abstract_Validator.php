@@ -33,7 +33,7 @@ abstract class Abstract_Validator {
 	 *
 	 * @var string[]
 	 */
-	protected $errors = array();
+	protected array $errors = array();
 
 	/**
 	 * Checks if errors set.

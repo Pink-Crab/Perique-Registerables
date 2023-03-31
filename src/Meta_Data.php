@@ -30,14 +30,14 @@ class Meta_Data {
 	 *
 	 * @var string
 	 */
-	protected $meta_type = 'post';
+	protected string $meta_type = 'post';
 
 	/**
 	 * Holds a secondary object type, used for post type and taxonomy.
 	 *
 	 * @var string|null
 	 */
-	protected $object_subtype = null;
+	protected ?string $object_subtype = null;
 
 	/**
 	 * Value type.
@@ -45,21 +45,21 @@ class Meta_Data {
 	 *
 	 * @var string
 	 */
-	protected $type = 'string';
+	protected string $type = 'string';
 
 	/**
 	 * Meta description
 	 *
 	 * @var string
 	 */
-	protected $description = '';
+	protected string $description = '';
 
 	/**
 	 * Meta value is single value or array
 	 *
 	 * @var bool
 	 */
-	protected $single = false;
+	protected bool $single = false;
 
 	/**
 	 * Default value
@@ -79,7 +79,7 @@ class Meta_Data {
 	*  rest_update: null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment): void
 	* }
 	*/
-	protected $callbacks = array(
+	protected array $callbacks = array(
 		'sanitize'    => null,
 		'permissions' => null,
 		'rest_view'   => null,
@@ -98,7 +98,7 @@ class Meta_Data {
 	 *
 	 * @var string
 	 */
-	protected $meta_key;
+	protected string $meta_key;
 
 	public function __construct( string $meta_key ) {
 		$this->meta_key = $meta_key;

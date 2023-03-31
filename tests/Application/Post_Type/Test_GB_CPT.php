@@ -27,10 +27,10 @@ class Test_GB_CPT extends WP_UnitTestCase {
 	 */
 	protected function get_post_type(): \PinkCrab\Registerables\Post_Type {
 		return new class() extends Post_Type{
-			public $key       = 'basic_cpt';
-			public $singular  = 'Basic';
-			public $plural    = 'Basics';
-			public $gutenberg = true;
+			public string $key       = 'basic_cpt';
+			public string $singular  = 'Basic';
+			public string $plural    = 'Basics';
+			public ?bool $gutenberg = true;
 		};
 	}
 

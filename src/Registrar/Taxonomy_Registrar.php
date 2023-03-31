@@ -34,19 +34,8 @@ use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Taxonomy_Registrar implements Registrar {
 
-	/**
-	 * Taxonomy Validator
-	 *
-	 * @var Taxonomy_Validator
-	 */
-	protected $validator;
-
-	/**
-	 * Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Taxonomy_Validator $validator;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Taxonomy_Validator $validator,

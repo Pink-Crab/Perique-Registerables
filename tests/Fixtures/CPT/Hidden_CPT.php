@@ -16,21 +16,21 @@ use PinkCrab\Registerables\Post_Type;
 
 class Hidden_CPT extends Post_Type {
 
-	public $key       = 'hidden_cpt';
-	public $singular  = 'Hide';
-	public $plural    = 'Hidden';
-	public $public    = false;
-	public $supports  = array( 'thumbnail' );
-	public $gutenberg = false;
+	public string $key       = 'hidden_cpt';
+	public string $singular  = 'Hide';
+	public string $plural    = 'Hidden';
+	public ?bool $public    = false;
+	public array $supports  = array( 'thumbnail' );
+	public ?bool $gutenberg = false;
 
 	// Remove all ui
-	public $show_ui           = false;
-	public $show_in_nav_menus = false;
-	public $show_in_admin_bar = false;
-	public $has_archive       = false;
+	public ?bool $show_ui           = false;
+	public ?bool $show_in_nav_menus = false;
+	public ?bool $show_in_admin_bar = false;
+	public ?bool $has_archive       = false;
 
 	// Only allow admins to do anything.
-	public $capabilities = array(
+	public array $capabilities = array(
 		'edit_post'              => 'manage_options',
 		'read_post'              => 'manage_options',
 		'delete_post'            => 'manage_options',

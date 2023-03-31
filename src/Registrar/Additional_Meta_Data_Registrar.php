@@ -29,19 +29,13 @@ use Exception;
 use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Additional_Meta_Data_Controller;
 use PinkCrab\Registerables\Tests\Fixtures\Additional_Meta_Data;
-use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Additional_Meta_Data_Registrar implements Registrar {
 
-
-	/**
-	 * The Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct( Meta_Data_Registrar $meta_data_registrar ) {
 		$this->meta_data_registrar = $meta_data_registrar;

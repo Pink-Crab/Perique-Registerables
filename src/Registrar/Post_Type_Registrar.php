@@ -34,19 +34,8 @@ use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Post_Type_Registrar implements Registrar {
 
-	/**
-	 * Post Type Validator
-	 *
-	 * @var Post_Type_Validator
-	 */
-	protected $validator;
-
-	/**
-	 * Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Post_Type_Validator $validator;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Post_Type_Validator $validator,

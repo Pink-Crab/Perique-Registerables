@@ -45,26 +45,11 @@ class Test_Post_Type_Validator extends TestCase {
 		$this->assertFalse( $result );
 		$this->assertContains( 'key is not set on PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT Post Type Model', $validator->get_errors() );
 		$validator->reset_errors();
-		$cpt = new Basic_CPT;
-
-		// Key none string.
-		$cpt->key = null;
-		$result   = $validator->validate( $cpt );
-		$this->assertFalse( $result );
-		$this->assertContains( 'key is not set on PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT Post Type Model', $validator->get_errors() );
-		$validator->reset_errors();
+		
 		$cpt = new Basic_CPT;
 
 		// singular empty string
 		$cpt->singular = '';
-		$result        = $validator->validate( $cpt );
-		$this->assertFalse( $result );
-		$this->assertContains( 'singular is not set on PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT Post Type Model', $validator->get_errors() );
-		$validator->reset_errors();
-		$cpt = new Basic_CPT;
-
-		// singular none string.
-		$cpt->singular = array( null );
 		$result        = $validator->validate( $cpt );
 		$this->assertFalse( $result );
 		$this->assertContains( 'singular is not set on PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT Post Type Model', $validator->get_errors() );
@@ -77,15 +62,6 @@ class Test_Post_Type_Validator extends TestCase {
 		$this->assertFalse( $result );
 		$this->assertContains( 'plural is not set on PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT Post Type Model', $validator->get_errors() );
 		$validator->reset_errors();
-		$cpt = new Basic_CPT;
-
-		// plural none string.
-		$cpt->plural = (object) array( 'r' => null );
-		$result      = $validator->validate( $cpt );
-		$this->assertFalse( $result );
-		$this->assertContains( 'plural is not set on PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT Post Type Model', $validator->get_errors() );
-		$validator->reset_errors();
-		$cpt = new Basic_CPT;
 
 	}
 }

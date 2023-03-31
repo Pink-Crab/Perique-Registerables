@@ -72,7 +72,7 @@ class Basic_CPT extends Post_Type {
 
   public $key      = 'basic_cpt';
   public $singular = 'Basic';
-  public $plural   = 'Basics';
+  public string $plural   = 'Basics';
 }
 ```
  
@@ -86,10 +86,10 @@ Creates a flat taxonomy for the **Post** Post Type.
 use PinkCrab\Registerables\Taxonomy;
 
 class Basic_Tag_Taxonomy extends Taxonomy {
-  public $slug         = 'basic_tag_tax';
+  public string $slug         = 'basic_tag_tax';
   public $singular     = 'Basic Tag Taxonomy';
-  public $plural       = 'Basic Tag Taxonomies';
-  public $description  = 'The Basic Tag Taxonomy.';
+  public string $plural       = 'Basic Tag Taxonomies';
+  public ?string $description  = 'The Basic Tag Taxonomy.';
   public $hierarchical = false;
   public $object_type = array( 'post' );
 }
@@ -104,7 +104,7 @@ Create a simple meta box as part of a post type definition.
 class My_CPT extends Post_Type {
   public $key      = 'my_cpt';
   public $singular = 'CPT Post';
-  public $plural   = 'CPT Posts';
+  public string $plural   = 'CPT Posts';
 
   public function meta_boxes( array $meta_boxes ): array {
     $meta_boxes = MetaBox::side('my_meta_box')
@@ -141,7 +141,7 @@ class Meta_Box_Service {
 class My_CPT extends Post_Type {
   public $key      = 'my_cpt';
   public $singular = 'CPT Post';
-  public $plural   = 'CPT Posts';
+  public string $plural   = 'CPT Posts';
 
   // Pass the service in as a dependency.
   private Meta_Box_Service $meta_box_service;

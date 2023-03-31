@@ -282,7 +282,7 @@ class Public_Post_Type extends Post_Type {
     
     public $key = 'public_post_type';
     public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
+    public string $plural   = 'Public Posts';
     
     // Register meta boxes
     public function meta_boxes(array $meta_boxes): array {
@@ -344,7 +344,7 @@ class Public_Post_Type extends Post_Type {
     
     public $key = 'public_post_type';
     public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
+    public string $plural   = 'Public Posts';
     
     // Register meta_data
     public function meta_data(array $meta_data): void {
@@ -368,7 +368,7 @@ filter_labels() can be used to either alter the predefined value or adding in ne
 class Orders_CPT extends Post_Type {
     ...
     public $singular = 'Order';
-    public $plural   = 'Orders';
+    public string $plural   = 'Orders';
     ...
     
     // Show different labels based on settings.
@@ -429,7 +429,7 @@ use PinkCrab\Perique\Application\App_Config;
 class Public_Post_Type extends Post_Type {
     
     public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
+    public string $plural   = 'Public Posts';
     
     public function __construct(App_Config $config){
         $this->key = $config->post_types('public_post', 'slug');

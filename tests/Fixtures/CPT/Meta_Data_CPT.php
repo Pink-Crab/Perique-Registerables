@@ -38,9 +38,9 @@ class Meta_Data_CPT extends Post_Type {
 	);
 
 
-	public $key      = 'metadata_cpt';
-	public $singular = 'singular';
-	public $plural   = 'plural';
+	public string $key      = 'metadata_cpt';
+	public string $singular = 'singular';
+	public string $plural   = 'plural';
 
 	/**
 	 * Define some fake meta.
