@@ -207,7 +207,7 @@ filter_labels() can be used to either alter the predefined value or adding in ne
 ```php
 class Order_Type extends Taxonomy {
     ...
-    public $singular = 'Order';
+    public string $singular = 'Order';
     public string $plural   = 'Orders';
     ...
     
@@ -236,7 +236,7 @@ filter_args() can be used to alter the taxonomy properties at run time, based on
 class Secret_Tax extends Taxonomy {
     ...
     // Assume its usually hidden.
-    public $public = false;
+    public bool $public = false;
     ...
     
 
@@ -268,7 +268,7 @@ use PinkCrab\Perique\Application\App_Config;
 
 class Secret_Tax extends Taxonomy {
     
-    public $singular = 'Public Post';
+    public string $singular = 'Public Post';
     public string $plural   = 'Public Posts';
     
     public function __construct(App_Config $config){

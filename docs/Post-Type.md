@@ -280,8 +280,8 @@ use PinkCrab\Registerables\Meta_Box;
 
 class Public_Post_Type extends Post_Type {
     
-    public $key = 'public_post_type';
-    public $singular = 'Public Post';
+    public string $key = 'public_post_type';
+    public string $singular = 'Public Post';
     public string $plural   = 'Public Posts';
     
     // Register meta boxes
@@ -342,8 +342,8 @@ use PinkCrab\Registerables\Meta_Data;
 
 class Public_Post_Type extends Post_Type {
     
-    public $key = 'public_post_type';
-    public $singular = 'Public Post';
+    public string $key = 'public_post_type';
+    public string $singular = 'Public Post';
     public string $plural   = 'Public Posts';
     
     // Register meta_data
@@ -367,7 +367,7 @@ filter_labels() can be used to either alter the predefined value or adding in ne
 ```php
 class Orders_CPT extends Post_Type {
     ...
-    public $singular = 'Order';
+    public string $singular = 'Order';
     public string $plural   = 'Orders';
     ...
     
@@ -396,7 +396,7 @@ filter_args() can be used to alter the post types properties at run time, based 
 class Secret_CPT extends Post_Type {
     ...
     // Assume its usually hidden.
-    public $public = false;
+    public ?bool $public = false;
     ...
     
 
@@ -428,7 +428,7 @@ use PinkCrab\Perique\Application\App_Config;
 
 class Public_Post_Type extends Post_Type {
     
-    public $singular = 'Public Post';
+    public string $singular = 'Public Post';
     public string $plural   = 'Public Posts';
     
     public function __construct(App_Config $config){
