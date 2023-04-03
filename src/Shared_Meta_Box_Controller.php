@@ -27,7 +27,7 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables;
 
 use PinkCrab\Registerables\Meta_Box;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 abstract class Shared_Meta_Box_Controller implements Registerable {
 

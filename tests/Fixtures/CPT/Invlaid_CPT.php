@@ -16,8 +16,8 @@ use PinkCrab\Registerables\Post_Type;
 
 class Invlaid_CPT extends Post_Type {
 
-	public $key      = null;
-	public $singular = null;
-	public $plural   = null;
+	public string $key      = null;
+	public string $singular = null;
+	public string $plural   = null;
 
 }

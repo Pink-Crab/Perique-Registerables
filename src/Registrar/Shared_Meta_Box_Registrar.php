@@ -30,23 +30,12 @@ use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Shared_Meta_Box_Controller;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Shared_Meta_Box_Registrar implements Registrar {
 
-	/**
-	 * The Meta Box Registrar
-	 *
-	 * @var Meta_Box_Registrar
-	 */
-	protected $meta_box_registrar;
-
-	/**
-	 * The Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Meta_Box_Registrar $meta_box_registrar;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Meta_Box_Registrar $meta_box_registrar,
@@ -59,7 +48,7 @@ class Shared_Meta_Box_Registrar implements Registrar {
 	/**
 	 * Used to register a registerable
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {

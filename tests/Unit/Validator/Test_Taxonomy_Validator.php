@@ -15,7 +15,7 @@ namespace PinkCrab\Registerables\Tests\Unit\Validator;
 
 use PHPUnit\Framework\TestCase;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
 
 class Test_Taxonomy_Validator extends TestCase {
@@ -47,24 +47,8 @@ class Test_Taxonomy_Validator extends TestCase {
 		$validator->reset_errors();
 		$tax = new Basic_Tag_Taxonomy;
 
-		// Key none string.
-		$tax->slug = null;
-		$result   = $validator->validate( $tax );
-		$this->assertFalse( $result );
-		$this->assertContains( 'slug is not set on PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy Taxonomy Model', $validator->get_errors() );
-		$validator->reset_errors();
-		$tax = new Basic_Tag_Taxonomy;
-
 		// singular empty string
 		$tax->singular = '';
-		$result        = $validator->validate( $tax );
-		$this->assertFalse( $result );
-		$this->assertContains( 'singular is not set on PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy Taxonomy Model', $validator->get_errors() );
-		$validator->reset_errors();
-		$tax = new Basic_Tag_Taxonomy;
-
-		// singular none string.
-		$tax->singular = array( null );
 		$result        = $validator->validate( $tax );
 		$this->assertFalse( $result );
 		$this->assertContains( 'singular is not set on PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy Taxonomy Model', $validator->get_errors() );
@@ -78,14 +62,5 @@ class Test_Taxonomy_Validator extends TestCase {
 		$this->assertContains( 'plural is not set on PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy Taxonomy Model', $validator->get_errors() );
 		$validator->reset_errors();
 		$tax = new Basic_Tag_Taxonomy;
-
-		// plural none string.
-		$tax->plural = (object) array( 'r' => null );
-		$result      = $validator->validate( $tax );
-		$this->assertFalse( $result );
-		$this->assertContains( 'plural is not set on PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy Taxonomy Model', $validator->get_errors() );
-		$validator->reset_errors();
-		$tax = new Basic_Tag_Taxonomy;
-
 	}
 }

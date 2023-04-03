@@ -24,7 +24,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 abstract class Taxonomy implements Registerable {
 
@@ -34,15 +34,15 @@ abstract class Taxonomy implements Registerable {
 	 * @var string|null
 	 * @required
 	 */
-	public $singular;
+	public ?string $singular = null;
 
 	/**
 	 * Plural label
 	 *
-	 * @var string|null
+	 * @var string
 	 * @required
 	 */
-	public $plural;
+	public string $plural = '';
 
 	/**
 	 * Taxonomy slug
@@ -50,7 +50,7 @@ abstract class Taxonomy implements Registerable {
 	 * @var string
 	 * @required
 	 */
-	public $slug;
+	public string $slug = '';
 
 	/**
 	 * The taxonomies label.
@@ -58,63 +58,63 @@ abstract class Taxonomy implements Registerable {
 	 *
 	 * @var string|null
 	 */
-	public $label;
+	public ?string $label = null;
 
 	/**
 	 * The taxonomy description.
 	 *
 	 * @var string
 	 */
-	public $description = '';
+	public ?string $description = null;
 
 	/**
 	 * Which post types should this taxonomy be applied to.
 	 *
 	 * @var string[]
 	 */
-	public $object_type = array( 'post' );
+	public array $object_type = array( 'post' );
 
 	/**
 	 * Should this taxonomy have a hierarchy
 	 *
 	 * @var bool
 	 */
-	public $hierarchical = false;
+	public bool $hierarchical = false;
 
 	/**
 	 * Render WP_Admin UI
 	 *
 	 * @var bool
 	 */
-	public $show_ui = true;
+	public bool $show_ui = true;
 
 	/**
 	 * Show in WP_Admin menu list.
 	 *
 	 * @var bool
 	 */
-	public $show_in_menu = true;
+	public bool $show_in_menu = true;
 
 	/**
-	 * Undocumented variable
+	 * Show in post type list.
 	 *
 	 * @var bool
 	 */
-	public $show_admin_column = true;
+	public bool $show_admin_column = true;
 
 	/**
 	 * Include in the tag cloud.
 	 *
 	 * @var bool
 	 */
-	public $show_tagcloud = false;
+	public bool $show_tagcloud = false;
 
 	/**
 	 * Inlcude in quick edit.
 	 *
 	 * @var bool
 	 */
-	public $show_in_quick_edit = true;
+	public bool $show_in_quick_edit = true;
 
 	/**
 	 * Should terms remain in the order added
@@ -122,7 +122,7 @@ abstract class Taxonomy implements Registerable {
 	 *
 	 * @var bool
 	 */
-	public $sort = true;
+	public bool $sort = true;
 
 	/**
 	 * Render wp meta box.
@@ -136,7 +136,7 @@ abstract class Taxonomy implements Registerable {
 	 *
 	 * @var bool
 	 */
-	public $show_in_rest = false;
+	public bool $show_in_rest = false;
 
 	/**
 	 * Base rest path.
@@ -144,7 +144,7 @@ abstract class Taxonomy implements Registerable {
 	 *
 	 * @var string|null
 	 */
-	public $rest_base;
+	public ?string $rest_base = null;
 
 	/**
 	 * Rest base controller.
@@ -158,14 +158,14 @@ abstract class Taxonomy implements Registerable {
 	 *
 	 * @var bool
 	 */
-	public $public = true;
+	public bool $public = true;
 
 	/**
 	 * Whether the taxonomy is publicly queryable.
 	 *
 	 * @var bool
 	 */
-	public $publicly_queryable = true;
+	public bool $publicly_queryable = true;
 
 	/**
 	 * Define a custom query var, if false with use $this->slug
@@ -189,21 +189,21 @@ abstract class Taxonomy implements Registerable {
 	 *
 	 * @var string|null
 	 */
-	public $update_count_callback;
+	public ?string $update_count_callback = null;
 
 	/**
 	 * Array of capabilities for the taxonomy
 	 *
 	 * @var array<string, mixed>|null
 	 */
-	public $capabilities;
+	public ?array $capabilities = null;
 
 	/**
 	 * Sets the default term for the taxonomy
 	 *
 	 * @var array<string, mixed>|null
 	 */
-	public $default_term;
+	public ?array $default_term = null;
 
 	/**
 	 * Filters the labels through child class.

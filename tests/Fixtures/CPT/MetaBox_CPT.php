@@ -17,9 +17,9 @@ use PinkCrab\Registerables\Post_Type;
 
 class MetaBox_CPT extends Post_Type {
 
-	public $key      = 'metabox_cpt';
-	public $singular = 'singular';
-	public $plural   = 'plural';
+	public string $key      = 'metabox_cpt';
+	public string $singular = 'singular';
+	public string $plural   = 'plural';
 
 	public function meta_boxes( array $collection ): array {
 

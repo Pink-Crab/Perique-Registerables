@@ -16,7 +16,7 @@ namespace PinkCrab\Registerables\Tests\Unit\Validator;
 use PHPUnit\Framework\TestCase;
 use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Validator\Meta_Box_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
 
 class Test_Meta_Box_Validator extends TestCase {
@@ -67,8 +67,8 @@ class Test_Meta_Box_Validator extends TestCase {
 		$this->assertContains( Meta_Box::class . ' doesn\'t have a valid view defined.', $validator->get_errors() );
 		$validator->reset_errors();
 
-		// Fails if not a callable and the template path isnt a string.
-		$meta_box->view_template = array( 'not a string' );
+		// Fails if not a callable and the template path is an empty string
+		$meta_box->view_template = '';
 		$result                  = $validator->verify_meta_box( $meta_box );
 		$this->assertFalse( $result );
 		$this->assertTrue( $validator->has_errors() );

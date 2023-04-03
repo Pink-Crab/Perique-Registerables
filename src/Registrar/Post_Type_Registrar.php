@@ -30,23 +30,12 @@ use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Post_Type_Registrar implements Registrar {
 
-	/**
-	 * Post Type Validator
-	 *
-	 * @var Post_Type_Validator
-	 */
-	protected $validator;
-
-	/**
-	 * Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Post_Type_Validator $validator;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Post_Type_Validator $validator,
@@ -59,7 +48,7 @@ class Post_Type_Registrar implements Registrar {
 	/**
 	 * Register a post type
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {

@@ -15,15 +15,9 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Tests;
 
 use PinkCrab\Perique\Application\App;
-use PinkCrab\Perique\Services\View\View;
-use PinkCrab\Registerables\Registration_Middleware\Registerable_Middleware;
-use PinkCrab\Loader\Hook_Loader;
-use Dice\Dice;
-use PinkCrab\Perique\Services\Dice\PinkCrab_Dice;
-use PinkCrab\Perique\Services\Registration\Registration_Service;
 use Gin0115\WPUnit_Helpers\Objects;
-use PinkCrab\Perique\Interfaces\Renderable;
-use PinkCrab\Perique\Services\View\PHP_Engine;
+use PinkCrab\Perique\Application\App_Factory;
+use PinkCrab\Registerables\Module\Registerable as Registerable_Module;
 
 trait App_Helper_Trait {
 
@@ -33,42 +27,30 @@ trait App_Helper_Trait {
 	 * @return void
 	 */
 	protected static function unset_app_instance(): void {
-		$app = new App();
+		$app = new App( \FIXTURES );
 		Objects::set_property( $app, 'app_config', null );
 		Objects::set_property( $app, 'container', null );
-		Objects::set_property( $app, 'registration', null );
+		Objects::set_property( $app, 'module_manager', null );
 		Objects::set_property( $app, 'loader', null );
 		Objects::set_property( $app, 'booted', false );
 		$app = null;
 	}
 
-	protected static function create_with_registerables( string ...$class ): App {
-		// Build and populate the app.
-		$app          = new App();
-		$registration = new Registration_Service();
-		$container    = new PinkCrab_Dice( new Dice() );
-		$loader       = new Hook_Loader();
+	/**
+	 * Pre populated App Factory instance, all loaded and ready to boot.
+	 *
+	 * @param string ...$class
+	 * @return App_Factory
+	 */
+	protected static function create_with_registerables( string ...$class ): App_Factory {
 
-		$app->set_container( $container );
-		$app->set_registration_services( $registration );
-		$app->set_loader( $loader );
-		$app->construct_registration_middleware( Registerable_Middleware::class );
-		if ( ! empty( $class ) ) {
-			$app->registration_classes( $class );
-		}
-		$app->set_app_config( array() );
+		$factory = new App_Factory( \FIXTURES );
+		$factory->set_base_view_path( \FIXTURES . '/Views' );
+		$factory->default_setup();
+		$factory->module( Registerable_Module::class );
+		$factory->registration_classes( $class );
 
-		$container->addRules(
-			array(
-				'*' => array(
-					'substitutions' => array(
-						Renderable::class => new PHP_Engine( \FIXTURES . '/Views' ),
-					),
-				),
-			)
-		);
-
-		return $app;
+		return $factory;
 	}
 
 }

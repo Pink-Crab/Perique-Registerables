@@ -18,12 +18,10 @@ use PHPUnit\Framework\TestCase;
 use Gin0115\WPUnit_Helpers\Objects;
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Meta_Data;
-use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
-use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
 
 class Test_Taxonomy_Registrar extends TestCase {
@@ -56,9 +54,9 @@ class Test_Taxonomy_Registrar extends TestCase {
 
 		$post_type = new class() extends Taxonomy {
 			// Name is capped between 1 and 20
-			public $slug     = '0123456789012345678901234567890123456789';
-			public $singular = '0123456789012345678901234567890123456789';
-			public $plural   = '0123456789012345678901234567890123456789';
+			public string $slug     = '0123456789012345678901234567890123456789';
+			public ?string $singular = '0123456789012345678901234567890123456789';
+			public string $plural   = '0123456789012345678901234567890123456789';
 		};
 
 		$this->expectException( \Exception::class );

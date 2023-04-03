@@ -24,7 +24,7 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Validator;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 abstract class Abstract_Validator {
 
@@ -33,7 +33,7 @@ abstract class Abstract_Validator {
 	 *
 	 * @var string[]
 	 */
-	protected $errors = array();
+	protected array $errors = array();
 
 	/**
 	 * Checks if errors set.
@@ -77,7 +77,7 @@ abstract class Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
 	 * @return bool
 	 */
 	abstract public function validate( Registerable $object ): bool;
