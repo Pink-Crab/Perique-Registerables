@@ -33,20 +33,9 @@ use PinkCrab\Registerables\Validator\Meta_Box_Validator;
 
 class Meta_Box_Registrar {
 
-	/**
-	 * @var Meta_Box_Validator
-	 */
-	protected $validator;
-
-	/**
-	 * @var DI_Container
-	 */
-	protected $container;
-
-	/**
-	 * @var Hook_Loader
-	 */
-	protected $loader;
+	protected Meta_Box_Validator $validator;
+	protected DI_Container $container;
+	protected Hook_Loader $loader;
 
 	public function __construct(
 		Meta_Box_Validator $validator,

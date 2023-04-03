@@ -68,9 +68,9 @@ class Meta_Data_Rest_CPT extends Post_Type {
 
 	public static $call_log = array();
 
-	public $key      = 'metadata_rest_cpt';
-	public $singular = 'singular';
-	public $plural   = 'plural';
+	public string $key      = 'metadata_rest_cpt';
+	public string $singular = 'singular';
+	public string $plural   = 'plural';
 
 	/**
 	 * Define some fake meta.

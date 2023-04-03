@@ -17,7 +17,7 @@ use WP_UnitTestCase;
 use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Additional_Meta_Data_Controller;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Registrar\Additional_Meta_Data_Registrar;
 
 class Test_Additional_Meta_Data_Registrar extends WP_UnitTestCase {

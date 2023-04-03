@@ -32,7 +32,7 @@ class Meta_Box {
 	 * @var string
 	 * @required
 	 */
-	public $key;
+	public string $key = '';
 
 	/**
 	 * The meta box label/title
@@ -40,7 +40,7 @@ class Meta_Box {
 	 * @var string
 	 * @required
 	 */
-	public $label;
+	public string $label = '';
 
 	/**
 	 * The view callback
@@ -54,7 +54,7 @@ class Meta_Box {
 	 *
 	 * @var array<string, mixed>
 	 */
-	public $view_vars = array();
+	public array $view_vars = array();
 
 	/**
 	 * The path relative to the defined base path
@@ -62,7 +62,7 @@ class Meta_Box {
 	 *
 	 * @var string|null
 	 */
-	public $view_template;
+	public ?string $view_template = null;
 
 	/**
 	 * Screens to display meta box.
@@ -70,7 +70,7 @@ class Meta_Box {
 	 * @var array<int, string>
 	 * @required
 	 */
-	public $screen = array();
+	public array $screen = array();
 
 	/**
 	 * Meta box context/position
@@ -78,21 +78,21 @@ class Meta_Box {
 	 * @var 'advanced'|'normal'|'side'
 	 * @required
 	 */
-	public $context = 'normal';
+	public string $context = 'normal';
 
 	/**
 	 * What is the loading priority
 	 *
 	 * @var 'core'|'default'|'high'|'low'
 	 */
-	public $priority = 'default';
+	public string $priority = 'default';
 
 	/**
 	 * Define any hooks that should fire with the meta box.
 	 *
 	 * @var array<string, array{callback:callable,priority:int,params:int}>
 	 */
-	public $actions = array();
+	public array $actions = array();
 
 	/**
 	 * Filter for pushing post specific data into the views

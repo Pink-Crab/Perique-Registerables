@@ -183,8 +183,8 @@ use PinkCrab\Registerables\Meta_Data;
 class Order_Type extends Taxonomy {
     
     public $singular = 'Order';
-    public $plural   = 'Orders';
-    public $slug     = 'acme_order';
+    public string $plural   = 'Orders';
+    public string $slug     = 'acme_order';
     
     // Register meta_data
     public function meta_data(array $meta_data): void {
@@ -207,8 +207,8 @@ filter_labels() can be used to either alter the predefined value or adding in ne
 ```php
 class Order_Type extends Taxonomy {
     ...
-    public $singular = 'Order';
-    public $plural   = 'Orders';
+    public string $singular = 'Order';
+    public string $plural   = 'Orders';
     ...
     
     // Show different labels based on settings.
@@ -236,7 +236,7 @@ filter_args() can be used to alter the taxonomy properties at run time, based on
 class Secret_Tax extends Taxonomy {
     ...
     // Assume its usually hidden.
-    public $public = false;
+    public bool $public = false;
     ...
     
 
@@ -268,8 +268,8 @@ use PinkCrab\Perique\Application\App_Config;
 
 class Secret_Tax extends Taxonomy {
     
-    public $singular = 'Public Post';
-    public $plural   = 'Public Posts';
+    public string $singular = 'Public Post';
+    public string $plural   = 'Public Posts';
     
     public function __construct(App_Config $config){
         $this->slug = $config->additional('secret_tax_slug');

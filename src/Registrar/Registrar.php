@@ -25,14 +25,14 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables\Registrar;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 interface Registrar {
 
 	/**
 	 * Used to register a registerable
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void;

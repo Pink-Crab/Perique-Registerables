@@ -19,7 +19,7 @@ use PinkCrab\Registerables\Registrar\Registrar_Factory;
 use PinkCrab\Registerables\Registrar\Taxonomy_Registrar;
 use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
 
 class Test_Registrar_Factory extends TestCase {

@@ -23,56 +23,34 @@ declare(strict_types=1);
  * @package PinkCrab\Registerables
  */
 
-namespace PinkCrab\Registerables\Registration_Middleware;
+namespace PinkCrab\Registerables\Module\Middleware;
 
-use PinkCrab\Loader\Hook_Loader;
 use PinkCrab\Registerables\Taxonomy;
 use PinkCrab\Registerables\Post_Type;
-use PinkCrab\Perique\Interfaces\DI_Container;
+use PinkCrab\Perique\Interfaces\Inject_Hook_Loader;
+use PinkCrab\Perique\Interfaces\Inject_DI_Container;
 use PinkCrab\Registerables\Shared_Meta_Box_Controller;
 use PinkCrab\Registerables\Registrar\Registrar_Factory;
 use PinkCrab\Perique\Interfaces\Registration_Middleware;
 use PinkCrab\Registerables\Registrar\Meta_Box_Registrar;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Additional_Meta_Data_Controller;
 use PinkCrab\Registerables\Registrar\Shared_Meta_Box_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
 use PinkCrab\Registerables\Registrar\Additional_Meta_Data_Registrar;
+use PinkCrab\Perique\Services\Container_Aware_Traits\Inject_Hook_Loader_Aware;
+use PinkCrab\Perique\Services\Container_Aware_Traits\Inject_DI_Container_Aware;
 
-class Registerable_Middleware implements Registration_Middleware {
+class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Loader, Inject_DI_Container {
 
-	/** @var Hook_Loader */
-	protected $loader;
-
-	/** @var DI_Container */
-	protected $container;
-
-	/**
-	 * Sets the global hook loader
-	 *
-	 * @param \PinkCrab\Loader\Hook_Loader $loader
-	 * @return void
-	 */
-	public function set_hook_loader( Hook_Loader $loader ) {
-		$this->loader = $loader;
-	}
-
-	/**
-	 * Sets the global DI containers
-	 *
-	 * @param \PinkCrab\Perique\Interfaces\DI_Container $container
-	 * @return void
-	 */
-	public function set_di_container( DI_Container $container ): void {
-		$this->container = $container;
-	}
+	use Inject_Hook_Loader_Aware, Inject_DI_Container_Aware;
 
 	/**
 	 * Register all valid registerables.
 	 *
-	 * @param object|Registerable $class
+	 * @param Registerable $class
 	 * @return object
 	 */
-	public function process( $class ) {
+	public function process( object $class ): object {
 		if ( ! is_a( $class, Registerable::class ) ) {
 			return $class;
 		}
@@ -204,7 +182,7 @@ class Registerable_Middleware implements Registration_Middleware {
 	 * @since 0.7.0
 	 */
 	public function get_meta_box_registrar(): Meta_Box_Registrar {
-		return Registrar_Factory::new()->meta_box_registrar( $this->container, $this->loader );
+		return Registrar_Factory::new()->meta_box_registrar( $this->di_container, $this->loader );
 	}
 
 	public function setup(): void {

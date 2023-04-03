@@ -1,3 +1,5 @@
+![logo](docs/Plugin-Registerables.jpg "Pink Crab")
+
 # Registerables
 
 
@@ -7,9 +9,12 @@
 [![PHP Version Require](http://poser.pugx.org/pinkcrab/registerables/require/php)](https://packagist.org/packages/pinkcrab/registerables)
 ![GitHub contributors](https://img.shields.io/github/contributors/Pink-Crab/Perique-Registerables?label=Contributors)
 ![GitHub issues](https://img.shields.io/github/issues-raw/Pink-Crab/Perique-Registerables)
-[![WordPress 5.9 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml)
-[![WordPress 6.0 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml)
-[![WordPress 6.1 Test Suite [PHP7.2-8.1]](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml)
+
+[![WP5.9 [PHP7.4-8.1] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml)
+[![WP6.0 [PHP7.4-8.1] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml)
+[![WP6.1 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml)
+[![WP6.2 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_2.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_2.yaml)
+
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/19fd3d66720b0c94424d/maintainability)](https://codeclimate.com/github/Pink-Crab/Perique-Registerables/maintainability)
@@ -32,7 +37,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
   - [Previous Versions](#previous-versions)
   - [Change Log](#change-log)
 
-> ## For Perique V1.4.*
+> ## For Perique V2.0.*
 
 
 ## Why? ##
@@ -46,11 +51,11 @@ $ composer require pinkcrab/registerables
 
 ``` 
 
-You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the construct_registration_middleware() from the App_Factory instance.
+You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
 ```php
 $app = ( new PinkCrab\Perique\Application\App_Factory() )
   // Normal Perique bootstrapping.   
-  ->construct_registration_middleware( Registerable_Middleware::class );
+  ->module( Registerable::class );
   ->boot();
 ```
 
@@ -65,9 +70,9 @@ use PinkCrab\Registerables\Post_Type;
 
 class Basic_CPT extends Post_Type {
 
-  public $key      = 'basic_cpt';
-  public $singular = 'Basic';
-  public $plural   = 'Basics';
+  public string $key      = 'basic_cpt';
+  public string $singular = 'Basic';
+  public string $plural   = 'Basics';
 }
 ```
  
@@ -81,12 +86,12 @@ Creates a flat taxonomy for the **Post** Post Type.
 use PinkCrab\Registerables\Taxonomy;
 
 class Basic_Tag_Taxonomy extends Taxonomy {
-  public $slug         = 'basic_tag_tax';
-  public $singular     = 'Basic Tag Taxonomy';
-  public $plural       = 'Basic Tag Taxonomies';
-  public $description  = 'The Basic Tag Taxonomy.';
-  public $hierarchical = false;
-  public $object_type = array( 'post' );
+  public string $slug         = 'basic_tag_tax';
+  public string $singular     = 'Basic Tag Taxonomy';
+  public string $plural       = 'Basic Tag Taxonomies';
+  public ?string $description  = 'The Basic Tag Taxonomy.';
+  public string $hierarchical = false;
+  public array $object_type = array( 'post' );
 }
 ```
 
@@ -97,9 +102,9 @@ class Basic_Tag_Taxonomy extends Taxonomy {
 Create a simple meta box as part of a post type definition.
 ```php
 class My_CPT extends Post_Type {
-  public $key      = 'my_cpt';
-  public $singular = 'CPT Post';
-  public $plural   = 'CPT Posts';
+  public string $key      = 'my_cpt';
+  public string $singular = 'CPT Post';
+  public string $plural   = 'CPT Posts';
 
   public function meta_boxes( array $meta_boxes ): array {
     $meta_boxes = MetaBox::side('my_meta_box')
@@ -134,9 +139,9 @@ class Meta_Box_Service {
 
 /** Injected into post type */
 class My_CPT extends Post_Type {
-  public $key      = 'my_cpt';
-  public $singular = 'CPT Post';
-  public $plural   = 'CPT Posts';
+  public string $key      = 'my_cpt';
+  public string $singular = 'CPT Post';
+  public string $plural   = 'CPT Posts';
 
   // Pass the service in as a dependency.
   private Meta_Box_Service $meta_box_service;
@@ -257,10 +262,12 @@ Setup the dev environment
 http://www.opensource.org/licenses/mit-license.html  
 
 ## Previous Versions ##
+* For Perique 1.4.* please use version Registerables 1.0.*
 * For Perique 1.3.* please use version Registerables 0.9.*  
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.0.0 - Bumped support for Perique 2.0.0, added `Regiserable` module, but no other changes needed.
 * 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
 * 0.9.0 - Move to compatible with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
 * 0.8.2 - Fixed bug with Taxonomy Capabilities to not use fallbacks if not defined.
