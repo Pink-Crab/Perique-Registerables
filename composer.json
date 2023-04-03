@@ -35,7 +35,7 @@
         "symfony/var-dumper": "<=6.2.7",
         "gin0115/wpunit-helpers": "1.1.*",
         "vlucas/phpdotenv": "<=5.5.0",
-        "pinkcrab/wp-rest-schema": "dev-master"
+        "pinkcrab/wp-rest-schema": "0.0.*"
     },
     "require": {
         "php": ">=7.4.0",
