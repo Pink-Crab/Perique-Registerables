@@ -30,6 +30,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
     - [Shared Meta Boxes](#shared-meta-boxes)
   - [MetaData](#metadata)
     - [Additional\_Meta\_Data\_Controller](#additional_meta_data_controller)
+  - [Example](#example)
   - [Contributions](#contributions)
     - [To run test suite](#to-run-test-suite)
   - [License](#license)
@@ -48,10 +49,9 @@ WordPress has a number of Registerable functions for Post Types, Post Meta and T
 
 ```bash 
 $ composer require pinkcrab/registerables
-
 ``` 
 
-You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
+You need to include the module and the Registerable_Middleware will be included automatically. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
 ```php
 $app = ( new PinkCrab\Perique\Application\App_Factory() )
   // Normal Perique bootstrapping.   
@@ -236,6 +236,10 @@ You can also define MetaData for [Post Types](docs/Post-Type.md#registering-meta
 To register standalone Meta_Data, you can use the `Additional_Meta_Data_Controller` which has a single method `meta_data(array $meta_data): array`. Like in the [example above](#meta-data), you add your Meta_Data instances to the array and return.
 
 The class has an empty constructor, so you can easily inject dependencies in and make use of the `App_Config` meta options.
+
+## Example
+
+You can see an example project which included a CPT, Taxonomy, Meta Box and Meta Data [here](https://github.com/gin0115/Perique-Registerables-Example)
 
 ## Contributions
 
