@@ -271,6 +271,7 @@ http://www.opensource.org/licenses/mit-license.html
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.0.1 - Bumped dependencies for WP PHPStan, PHPUnit and updated the docs with links to example project.
 * 2.0.0 - Bumped support for Perique 2.0.0, added `Regiserable` module, but no other changes needed.
 * 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
 * 0.9.0 - Move to compatible with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
