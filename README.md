@@ -30,6 +30,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
     - [Shared Meta Boxes](#shared-meta-boxes)
   - [MetaData](#metadata)
     - [Additional\_Meta\_Data\_Controller](#additional_meta_data_controller)
+  - [Example](#example)
   - [Contributions](#contributions)
     - [To run test suite](#to-run-test-suite)
   - [License](#license)
@@ -48,10 +49,9 @@ WordPress has a number of Registerable functions for Post Types, Post Meta and T
 
 ```bash 
 $ composer require pinkcrab/registerables
-
 ``` 
 
-You need to include the module and the Registerable_Middleware. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
+You need to include the module and the Registerable_Middleware will be included automatically. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
 ```php
 $app = ( new PinkCrab\Perique\Application\App_Factory() )
   // Normal Perique bootstrapping.   
@@ -237,6 +237,10 @@ To register standalone Meta_Data, you can use the `Additional_Meta_Data_Controll
 
 The class has an empty constructor, so you can easily inject dependencies in and make use of the `App_Config` meta options.
 
+## Example
+
+You can see an example project which included a CPT, Taxonomy, Meta Box and Meta Data [here](https://github.com/gin0115/Perique-Registerables-Example)
+
 ## Contributions
 
 If you would like to contribute to this project, please feel free to fork and submit a PR. If any issue doesn't exist for the problem, please create one.
@@ -267,6 +271,7 @@ http://www.opensource.org/licenses/mit-license.html
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.0.1 - Bumped dependencies for WP PHPStan, PHPUnit and updated the docs with links to example project.
 * 2.0.0 - Bumped support for Perique 2.0.0, added `Regiserable` module, but no other changes needed.
 * 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
 * 0.9.0 - Move to compatible with Perique 1.3.*, Fixed bug where post types that use Gutenberg do not set meta_cap to true by default.
