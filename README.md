@@ -49,7 +49,6 @@ WordPress has a number of Registerable functions for Post Types, Post Meta and T
 
 ```bash 
 $ composer require pinkcrab/registerables
-
 ``` 
 
 You need to include the module and the Registerable_Middleware will be included automatically. They come with their own dependencies which will need to be added using the `module()` method from the App_Factory instance.
