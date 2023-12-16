@@ -65,7 +65,7 @@ class Test_Basic_Tag_Taxonomy extends Base_Taxonomy_Runner {
 	/** Additional Tests */
 
 	public function test_permalinks() {
-		$this->assertRegexp( '/basic_tag_tax/', get_term_link( $this->terms[0] ) );
+		$this->assertMatchesRegularExpression( '/basic_tag_tax/', get_term_link( $this->terms[0] ) );
 	}
 
 	/** @testdox It should be possible to add custom capabilities and have these xored with the defaults */
