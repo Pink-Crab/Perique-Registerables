@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Test Runner for CPT Application Tests.
- * 
+ *
  * All test cases are extended from here, with just arrays of expected values
  *
  * @since 0.1.0
@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 
 namespace PinkCrab\Registerables\Tests\Application\Post_Type;
-
 
 use WP_UnitTestCase;
 use PinkCrab\Registerables\Post_Type;
@@ -38,7 +37,9 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	 */
 	protected $posts = array();
 
-	/** THE TEST CASES */
+	/**
+ * THE TEST CASES
+*/
 	// String of CPT class name
 	protected $cpt_type;
 	// Array of features expected.
@@ -58,7 +59,9 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	//Allows gutenberg
 	protected $allow_gutenberg;
 
-	/** THE SETUP */
+	/**
+ * THE SETUP
+*/
 
 	/**
 	 * Reset the app data after each test.
@@ -73,7 +76,7 @@ class Base_CPT_Case extends WP_UnitTestCase {
 		parent::setup();
 
 		if ( ! $this->cpt ) {
-			$this->cpt = new $this->cpt_type;
+			$this->cpt = new $this->cpt_type();
 
 			self::create_with_registerables( $this->cpt_type )->boot();
 			do_action( 'init' );
@@ -98,7 +101,7 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	 */
 	protected function create_mock_posts(): void {
 		$this->posts = array_map(
-			function( $e ) {
+			function ( $e ) {
 				return get_post( $e );
 			},
 			array(
@@ -130,7 +133,7 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	public function test_permalink_uses_key_for_slug(): void {
 		if ( $this->has_single ) {
 			foreach ( $this->posts as $post ) {
-				$this->assertRegexp( '/' . $this->cpt->key . '/', get_the_permalink( $post ) );
+				$this->assertMatchesRegularExpression( '/' . $this->cpt->key . '/', get_the_permalink( $post ) );
 			}
 		} else {
 			$this->assertTrue( true ); // Well it nots giving me a warning ;)
@@ -209,7 +212,6 @@ class Base_CPT_Case extends WP_UnitTestCase {
 	 */
 	public function test_user_role_access_view_posts(): void {
 		foreach ( $this->user_access_view as $role => $expected ) {
-
 			wp_set_current_user(
 				$this->factory->user->create( array( 'role' => $role ) )
 			);
