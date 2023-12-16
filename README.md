@@ -14,6 +14,8 @@
 [![WP6.0 [PHP7.4-8.1] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml)
 [![WP6.1 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml)
 [![WP6.2 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_2.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_2.yaml)
+[![WP6.3 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_3.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_3.yaml)
+[![WP6.4 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_4.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_4.yaml)
 
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
@@ -271,6 +273,7 @@ http://www.opensource.org/licenses/mit-license.html
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.0.2 - Bumped dependencies and extended tests to cover WP 6.3 & 6.4
 * 2.0.1 - Bumped dependencies for WP PHPStan, PHPUnit and updated the docs with links to example project.
 * 2.0.0 - Bumped support for Perique 2.0.0, added `Regiserable` module, but no other changes needed.
 * 1.0.0 - Bumped support for Perique 1.4.0 and finally released as 1.0.0
