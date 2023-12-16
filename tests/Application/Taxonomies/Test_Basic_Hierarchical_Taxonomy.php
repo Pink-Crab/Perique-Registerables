@@ -63,6 +63,6 @@ class Test_Basic_Hierarchical_Taxonomy extends Base_Taxonomy_Runner {
 	/** Additional Tests */
 
 	public function test_permalinks() {
-		$this->assertRegexp( '/basic_hier_tax/', get_term_link( $this->terms[0] ) );
+		$this->assertMatchesRegularExpression( '/basic_hier_tax/', get_term_link( $this->terms[0] ) );
 	}
 }
