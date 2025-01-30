@@ -22,7 +22,9 @@ use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 
 class Test_Meta_Data_Registrar extends WP_UnitTestCase {
 
-	/** @testdox Any meta data which has no subtype applied for a post object, should bail early. */
+	/**
+ * @testdox Any meta data which has no subtype applied for a post object, should bail early.
+*/
 	public function test_skip_if_no_subtype_defined(): void {
 
 		// Clear all existing filters.
@@ -49,7 +51,7 @@ class Test_Meta_Data_Registrar extends WP_UnitTestCase {
 		// Turn off doing_it_wrong, to trigger the silent failure.
 		add_filter( 'doing_it_wrong_trigger_error', '__return_false' );
 
-		$this->expectErrorMessage( 'Failed to register meta_key (meta) for page of post type' );
+		$this->expectExceptionMessage( 'Failed to register meta_key (meta) for page of post type' );
 		$this->expectException( Exception::class );
 
 		// Create meta that il fail to register as an array with schema, but no item definition.
@@ -61,10 +63,10 @@ class Test_Meta_Data_Registrar extends WP_UnitTestCase {
 					'type' => 'array',
 				)
 			);
-		
+
 		$registrar = new Meta_Data_Registrar();
 		$registrar->register_for_post_type( $meta, 'page' );
-		
+
 		add_filter( 'doing_it_wrong_trigger_error', '__return_true' );
 	}
 
