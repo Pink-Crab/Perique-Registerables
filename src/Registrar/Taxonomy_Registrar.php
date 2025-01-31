@@ -52,14 +52,16 @@ class Taxonomy_Registrar implements Registrar {
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {
-		/** @var Taxonomy $registerable, Validation call below catches no Post_Type Registerables */
+		/**
+ * @var Taxonomy $registerable, Validation call below catches no Post_Type Registerables
+*/
 
 		if ( ! $this->validator->validate( $registerable ) ) {
 			throw new Exception(
 				sprintf(
 					'Failed validating taxonomy model(%s) with errors: %s',
-					get_class( $registerable ),
-					join( ', ', $this->validator->get_errors() )
+					esc_html( get_class( $registerable ) ),
+					esc_html( join( ', ', $this->validator->get_errors() ) )
 				)
 			);
 		}
@@ -77,12 +79,11 @@ class Taxonomy_Registrar implements Registrar {
 				throw new Exception( join( $result->get_error_messages() ) );
 			}
 		} catch ( \Throwable $th ) {
-			throw new Exception( "Failed to register {$registerable->slug} taxonomy ({$th->getMessage()})" );
+			throw new Exception( esc_html( "Failed to register {$registerable->slug} taxonomy ({$th->getMessage()})" ) );
 		}
 
 		// Register any associated meta data.
 		$this->register_meta_data( $registerable );
-
 	}
 
 	/**
@@ -102,7 +103,7 @@ class Taxonomy_Registrar implements Registrar {
 				$this->meta_data_registrar->register_for_term( $meta_field, $taxonomy->slug );
 			}
 		} catch ( \Throwable $th ) {
-			throw new Exception( $th->getMessage() );
+			throw new Exception( esc_html( $th->getMessage() ) );
 		}
 	}
 
@@ -220,10 +221,11 @@ class Taxonomy_Registrar implements Registrar {
 
 		/**
 		 * Allow 3rd party plugins to filter this also.
+		 *
 		 * @filter_handle PinkCrab/Registerable/taxonomy_args
-		 * @param array<string, string|bool|int|null|array<string, string> $args
+		 * @param array<string, string|bool|int|null|array<string, string>> $args
 		 * @param Taxonomy $taxonomy
-		 * @return array<string, string|bool|int|null|array<string, string>
+		 * @return array<string, string|bool|int|null|array<string, string>>
 		 */
 		/* @phpstan-ignore-next-line, this is due to apply_filters type hints being wrong. */
 		return apply_filters( Registerable_Hooks::TAXONOMY_ARGS, $taxonomy->filter_args( $args ), $taxonomy );

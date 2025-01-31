@@ -37,10 +37,10 @@ class Meta_Box_Validator extends Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object_instance
 	 * @return bool
 	 */
-	public function validate( Registerable $object ): bool { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
+	public function validate( Registerable $object_instance ): bool { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
 		return false; //no op
 	}
 

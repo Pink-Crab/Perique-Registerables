@@ -36,20 +36,20 @@ class Taxonomy_Validator extends Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object_instance
 	 * @return bool
 	 */
-	public function validate( Registerable $object ): bool {
+	public function validate( Registerable $object_instance ): bool {
 		// If this is not a valid taxonomy, just bail here.
-		if ( ! is_a( $object, Taxonomy::class ) ) {
-			$this->add_error( sprintf( '%s is not a valid Taxonomy Model', get_class( $object ) ) );
+		if ( ! is_a( $object_instance, Taxonomy::class ) ) {
+			$this->add_error( sprintf( '%s is not a valid Taxonomy Model', get_class( $object_instance ) ) );
 			return false;
 		}
 
-		/* @var Taxonomy $object, already confirmed as a Taxonomy */
+		/* @var Taxonomy $object_instance, already confirmed as a Taxonomy */
 
 		// Ensure all required fields are set.
-		$this->has_required_fields( $object );
+		$this->has_required_fields( $object_instance );
 
 		// Check if the passed object has any errors.
 		return ! $this->has_errors();

@@ -48,5 +48,4 @@ abstract class Shared_Meta_Box_Controller implements Registerable {
 	public function meta_data( array $meta_data ): array {
 		return $meta_data;
 	}
-
 }
