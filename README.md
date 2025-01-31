@@ -41,8 +41,7 @@ A collection of Abstract Classes for creating common WordPress fixtures which ne
   - [Previous Versions](#previous-versions)
   - [Change Log](#change-log)
 
-> ## For Perique V2.0.*
-
+> ## For Perique V2.1.*
 
 ## Why? ##
 
