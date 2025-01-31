@@ -72,7 +72,6 @@ class Shared_Meta_Box_Registrar implements Registrar {
 				$this->meta_data_registrar->register_for_post_type( $meta_field, $post_type );
 			}
 		}
-
 	}
 
 	/**
@@ -84,7 +83,7 @@ class Shared_Meta_Box_Registrar implements Registrar {
 	protected function filter_meta_data( array $meta_data ): array {
 		return array_filter(
 			$meta_data,
-			function( $e ) {
+			function ( $e ) {
 				return is_a( $e, Meta_Data::class );
 			}
 		);

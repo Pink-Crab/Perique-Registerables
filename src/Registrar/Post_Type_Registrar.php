@@ -52,14 +52,16 @@ class Post_Type_Registrar implements Registrar {
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {
-		/** @var Post_Type $registerable, Validation call below catches no Post_Type Registerables */
+		/**
+ * @var Post_Type $registerable, Validation call below catches no Post_Type Registerables
+*/
 
 		if ( ! $this->validator->validate( $registerable ) ) {
 			throw new Exception(
 				sprintf(
 					'Failed validating post type model(%s) with errors: %s',
-					get_class( $registerable ),
-					join( ', ', $this->validator->get_errors() )
+					esc_html( get_class( $registerable ) ),
+					esc_html( join( ', ', $this->validator->get_errors() ) )
 				)
 			);
 		}
@@ -72,7 +74,7 @@ class Post_Type_Registrar implements Registrar {
 				throw new Exception( join( $result->get_error_messages() ) );
 			}
 		} catch ( \Throwable $th ) {
-			throw new Exception( "Failed to register {$registerable->key} post type ({$th->getMessage()})" );
+			throw new Exception( esc_html( "Failed to register {$registerable->key} post type ({$th->getMessage()})" ) );
 		}
 
 		// Register all meta data for post type.
@@ -96,7 +98,7 @@ class Post_Type_Registrar implements Registrar {
 					->register_for_post_type( $meta_field, $post_type->key );
 			}
 		} catch ( \Throwable $th ) {
-			throw new Exception( $th->getMessage() );
+			throw new Exception( esc_html( $th->getMessage() ) );
 		}
 	}
 
@@ -229,11 +231,12 @@ class Post_Type_Registrar implements Registrar {
 
 		/**
 		 * Allow 3rd party plugins to filter this also.
+		 *
 		 * @filter_handle PinkCrab/Registerable/post_type_args
 		 * @parm string $hook_name Hook Handle
-		 * @param array<string, string|bool|int|null|array<string, string> $args
+		 * @param array<string, string|bool|int|null|array<string, string>> $args
 		 * @param Post_Type $post_type
-		 * @return array<string, string|bool|int|null|array<string, string>
+		 * @return array<string, string|bool|int|null|array<string, string>>
 		 */
 		/* @phpstan-ignore-next-line, this is due to apply_filters type hints being wrong. */
 		return apply_filters( Registerable_Hooks::POST_TYPE_ARGS, $post_type->filter_args( $args ), $post_type );

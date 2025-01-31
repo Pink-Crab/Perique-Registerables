@@ -184,11 +184,11 @@ class Meta_Box {
 	 * Sets the view method.
 	 * Can be a callable or a function or class|method array.
 	 *
-	 * @param callable $callable
+	 * @param callable $view_callback
 	 * @return self
 	 */
-	public function view( $callable ): self {
-		$this->view = $callable;
+	public function view( $view_callback ): self {
+		$this->view = $view_callback;
 		return $this;
 	}
 
@@ -196,15 +196,15 @@ class Meta_Box {
 	 * Adds a acton to be defined as a hook key and callable|function
 	 *
 	 * @param string   $hook
-	 * @param callable $callable
+	 * @param callable $callback
 	 * @param int $priority
 	 * @param int $params
 	 * @return self
 	 */
-	public function add_action( string $hook, callable $callable, int $priority = 10, int $params = 1 ): self {
+	public function add_action( string $hook, callable $callback, int $priority = 10, int $params = 1 ): self {
 		$this->actions[ $hook ] =
 			array(
-				'callback' => $callable,
+				'callback' => $callback,
 				'priority' => $priority,
 				'params'   => $params,
 			);

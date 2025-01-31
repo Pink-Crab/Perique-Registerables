@@ -108,7 +108,7 @@ class Meta_Data {
 	/**
 	 * Set object type meta applies to
 	 *
-	 * @param string $meta_type  Object type meta applies to
+	 * @param string $meta_type Object type meta applies to
 	 * @return self
 	 */
 	public function meta_type( string $meta_type ): self {
@@ -119,7 +119,7 @@ class Meta_Data {
 	/**
 	 * Set holds a secondary object type, used for post type and taxonomy.
 	 *
-	 * @param string|null $object_subtype  Holds a secondary object type, used for post type and taxonomy.
+	 * @param string|null $object_subtype Holds a secondary object type, used for post type and taxonomy.
 	 * @return self
 	 */
 	public function object_subtype( ?string $object_subtype ): self {
@@ -166,7 +166,7 @@ class Meta_Data {
 	/**
 	 * Set meta description
 	 *
-	 * @param string $description  Meta description
+	 * @param string $description Meta description
 	 *
 	 * @return self
 	 */
@@ -178,7 +178,7 @@ class Meta_Data {
 	/**
 	 * Set meta value is single value or array
 	 *
-	 * @param bool $single  Meta value is single value or array
+	 * @param boolean $single Meta value is single value or array
 	 * @return self
 	 */
 	public function single( bool $single = true ): self {
@@ -189,11 +189,11 @@ class Meta_Data {
 	/**
 	 * Set should match same type as $type defined above.
 	 *
-	 * @param mixed $default
+	 * @param mixed $default_value
 	 * @return self
 	 */
-	public function default( $default ): self {
-		$this->default = $default;
+	public function default( $default_value ): self {
+		$this->default = $default_value;
 		return $this;
 	}
 
@@ -222,7 +222,7 @@ class Meta_Data {
 	/**
 	 * Set rest schema definitions
 	 *
-	 * @param bool|array<mixed> $rest_schema|PinkCrab\WP_Rest_Schema\Argument\Argument  Rest schema definitions
+	 * @param boolean|array<mixed> $rest_schema|PinkCrab\WP_Rest_Schema\Argument\Argument Rest schema definitions
 	 * @return self
 	 */
 	public function rest_schema( $rest_schema ): self {
@@ -296,7 +296,7 @@ class Meta_Data {
 	/**
 	 * Gets the rest schema definition.
 	 *
-	 * @return bool|array<mixed>|\PinkCrab\WP_Rest_Schema\Argument\Argument
+	 * @return boolean|array<string, mixed>|\PinkCrab\WP_Rest_Schema\Argument\Argument
 	 */
 	public function get_rest_schema() {
 		return $this->rest_schema;
@@ -337,5 +337,4 @@ class Meta_Data {
 	public function get_value_type(): string {
 		return $this->type;
 	}
-
 }

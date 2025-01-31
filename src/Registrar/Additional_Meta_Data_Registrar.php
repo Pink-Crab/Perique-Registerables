@@ -55,7 +55,9 @@ class Additional_Meta_Data_Registrar implements Registrar {
 			throw new Exception( 'Registerable must be an instance of Additional_Meta_Data_Controller' );
 		}
 
-		/** @var Additional_Meta_Data $registerable, Validation call below catches no Additional_Meta_Data Registerables */
+		/**
+ * @var Additional_Meta_Data $registerable, Validation call below catches no Additional_Meta_Data Registerables
+*/
 		$meta_data = $this->filter_meta_data( $registerable->meta_data( array() ) );
 
 		// Iterate through all meta data and register them.
@@ -67,7 +69,7 @@ class Additional_Meta_Data_Registrar implements Registrar {
 						throw new Exception(
 							sprintf(
 								'A post type must be defined when attempting to register post meta with meta key : %s',
-								$meta_data_item->get_meta_key()
+								esc_attr( $meta_data_item->get_meta_key() )
 							)
 						);
 					}
@@ -84,7 +86,7 @@ class Additional_Meta_Data_Registrar implements Registrar {
 						throw new Exception(
 							sprintf(
 								'A taxonomy must be defined when attempting to register tern meta with meta key : %s',
-								$meta_data_item->get_meta_key()
+								esc_attr( $meta_data_item->get_meta_key() )
 							)
 						);
 					}
@@ -122,7 +124,7 @@ class Additional_Meta_Data_Registrar implements Registrar {
 	protected function filter_meta_data( array $meta_data ): array {
 		return array_filter(
 			$meta_data,
-			function( $e ) {
+			function ( $e ) {
 				return is_a( $e, Meta_Data::class );
 			}
 		);

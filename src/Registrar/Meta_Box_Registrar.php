@@ -59,8 +59,8 @@ class Meta_Box_Registrar {
 			throw new Exception(
 				sprintf(
 					'Failed validating meta box model(%s) with errors: %s',
-					get_class( $meta_box ),
-					join( ', ', $this->validator->get_errors() )
+					esc_html( get_class( $meta_box ) ),
+					esc_html( join( ', ', $this->validator->get_errors() ) )
 				)
 			);
 		}
@@ -76,11 +76,14 @@ class Meta_Box_Registrar {
 		// Add meta_box to loader.
 		$this->loader->action(
 			'add_meta_boxes',
-			function() use ( $meta_box ) : void {
+			function () use ( $meta_box ): void {
 				\add_meta_box(
 					$meta_box->key,
 					$meta_box->label,
-					$meta_box->view, /** @phpstan-ignore-line, is validated above*/
+					$meta_box->view ?? fn( $e ) => '', // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+					/***
+					* @phpstan-ignore-line, is validated above
+					*/
 					$meta_box->screen,
 					$meta_box->context,
 					$meta_box->priority,
@@ -92,7 +95,7 @@ class Meta_Box_Registrar {
 		// Deffer adding meta box hooks until we can asses the current screen.
 		$this->loader->action(
 			'current_screen',
-			function() use ( $meta_box ) {
+			function () use ( $meta_box ) {
 				// If we have any hook calls, add them to the loader.
 				if ( $this->is_active( $meta_box ) && ! empty( $meta_box->actions ) ) {
 					foreach ( $meta_box->actions as $handle => $hook ) {
@@ -101,7 +104,6 @@ class Meta_Box_Registrar {
 				}
 			}
 		);
-
 	}
 
 	/**
@@ -178,7 +180,7 @@ class Meta_Box_Registrar {
 	 * callback definition in model class.
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Box $meta_box
-	 * @param array<string, mixed> $view_args
+	 * @param array<string, mixed>             $view_args
 	 * @return array<string, mixed>
 	 */
 	public function filter_view_args( Meta_Box $meta_box, \WP_Post $post, array $view_args ): array {
