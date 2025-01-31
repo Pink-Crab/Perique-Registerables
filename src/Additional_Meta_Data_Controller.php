@@ -39,5 +39,4 @@ abstract class Additional_Meta_Data_Controller implements Registerable {
 	 * @codeCoverageIgnore
 	 */
 	abstract public function meta_data( array $meta_data ): array;
-
 }

@@ -42,35 +42,36 @@ use PinkCrab\Perique\Services\Container_Aware_Traits\Inject_DI_Container_Aware;
 
 class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Loader, Inject_DI_Container {
 
-	use Inject_Hook_Loader_Aware, Inject_DI_Container_Aware;
+	use Inject_Hook_Loader_Aware;
+	use Inject_DI_Container_Aware;
 
 	/**
 	 * Register all valid registerables.
 	 *
-	 * @param Registerable $class
+	 * @param Registerable $class_instance
 	 * @return object
 	 */
-	public function process( object $class ): object {
-		if ( ! is_a( $class, Registerable::class ) ) {
-			return $class;
+	public function process( object $class_instance ): object {
+		if ( ! is_a( $class_instance, Registerable::class ) ) {
+			return $class_instance;
 		}
 
 		// Based on the registerable type.
 		switch ( true ) {
-			case is_a( $class, Post_Type::class ):
-				$this->process_post_type( $class );
+			case is_a( $class_instance, Post_Type::class ):
+				$this->process_post_type( $class_instance );
 				break;
 
-			case is_a( $class, Taxonomy::class ):
-				$this->process_taxonomy( $class );
+			case is_a( $class_instance, Taxonomy::class ):
+				$this->process_taxonomy( $class_instance );
 				break;
 
-			case is_a( $class, Shared_Meta_Box_Controller::class ):
-				$this->process_shared_meta_box( $class );
+			case is_a( $class_instance, Shared_Meta_Box_Controller::class ):
+				$this->process_shared_meta_box( $class_instance );
 				break;
 
-			case is_a( $class, Additional_Meta_Data_Controller::class ):
-				$this->process_additional_meta_data( $class );
+			case is_a( $class_instance, Additional_Meta_Data_Controller::class ):
+				$this->process_additional_meta_data( $class_instance );
 				break;
 
 			default:
@@ -78,7 +79,7 @@ class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Lo
 				break;
 		}
 
-		return $class;
+		return $class_instance;
 	}
 
 	/**
@@ -91,7 +92,7 @@ class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Lo
 	protected function process_taxonomy( Taxonomy $taxonomy ): void {
 		$this->loader->action(
 			'init',
-			static function() use ( $taxonomy ) {
+			static function () use ( $taxonomy ) {
 				Registrar_Factory::new()
 					->create_from_registerable( $taxonomy )
 					->register( $taxonomy );
@@ -110,7 +111,7 @@ class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Lo
 		// Register registerable.
 		$this->loader->action(
 			'init',
-			static function() use ( $post_type_registerable ) {
+			static function () use ( $post_type_registerable ) {
 				Registrar_Factory::new()
 					->create_from_registerable( $post_type_registerable )
 					->register( $post_type_registerable );
@@ -120,7 +121,7 @@ class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Lo
 		// Define use of gutenberg
 		$this->loader->filter(
 			'use_block_editor_for_post_type',
-			static function( bool $state, string $post_type ) use ( $post_type_registerable ): bool {
+			static function ( bool $state, string $post_type ) use ( $post_type_registerable ): bool {
 					return $post_type === $post_type_registerable->key
 						? (bool) $post_type_registerable->gutenberg
 						: $state;

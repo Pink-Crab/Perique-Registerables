@@ -77,8 +77,8 @@ abstract class Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object_instance
 	 * @return bool
 	 */
-	abstract public function validate( Registerable $object ): bool;
+	abstract public function validate( Registerable $object_instance ): bool;
 }

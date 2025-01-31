@@ -3,19 +3,20 @@
 # Registerables
 
 
-[![Latest Stable Version](http://poser.pugx.org/pinkcrab/registerables/v)](https://packagist.org/packages/pinkcrab/registerables)
-[![Total Downloads](http://poser.pugx.org/pinkcrab/registerables/downloads)](https://packagist.org/packages/pinkcrab/registerables)
-[![License](http://poser.pugx.org/pinkcrab/registerables/license)](https://packagist.org/packages/pinkcrab/registerables)
-[![PHP Version Require](http://poser.pugx.org/pinkcrab/registerables/require/php)](https://packagist.org/packages/pinkcrab/registerables)
+[![Latest Stable Version](https://poser.pugx.org/pinkcrab/registerables/v)](https://packagist.org/packages/pinkcrab/registerables)
+[![Total Downloads](https://poser.pugx.org/pinkcrab/registerables/downloads)](https://packagist.org/packages/pinkcrab/registerables)
+[![License](https://poser.pugx.org/pinkcrab/registerables/license)](https://packagist.org/packages/pinkcrab/registerables)
+[![PHP Version Require](https://poser.pugx.org/pinkcrab/registerables/require/php)](https://packagist.org/packages/pinkcrab/registerables)
 ![GitHub contributors](https://img.shields.io/github/contributors/Pink-Crab/Perique-Registerables?label=Contributors)
 ![GitHub issues](https://img.shields.io/github/issues-raw/Pink-Crab/Perique-Registerables)
 
-[![WP5.9 [PHP7.4-8.1] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_5_9.yaml)
-[![WP6.0 [PHP7.4-8.1] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_0.yaml)
-[![WP6.1 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_1.yaml)
 [![WP6.2 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_2.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_2.yaml)
 [![WP6.3 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_3.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_3.yaml)
-[![WP6.4 [PHP7.4-8.2] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_4.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_4.yaml)
+[![WP6.4 [PHP7.4-8.3] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_4.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_4.yaml)
+[![WP6.5 [PHP7.4-8.3] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_5.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_5.yaml)
+[![WP6.6 [PHP7.4-8.4] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_6.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_6.yaml)
+[![WP6.7 [PHP7.4-8.4] Tests](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_7.yaml/badge.svg)](https://github.com/Pink-Crab/Perique-Registerables/actions/workflows/WP_6_7.yaml)
+
 
 [![codecov](https://codecov.io/gh/Pink-Crab/Perique-Registerables/branch/master/graph/badge.svg?token=R3SB4WDL8Z)](https://codecov.io/gh/Pink-Crab/Perique-Registerables)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pink-Crab/Perique-Registerables/?branch=master)
@@ -273,6 +274,7 @@ http://www.opensource.org/licenses/mit-license.html
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.1.0 - Added support for Perique 2.1.x, updated dev deps to WP6.7 and added in missing test suites.
 * 2.0.2 - Bumped dependencies and extended tests to cover WP 6.3 & 6.4
 * 2.0.1 - Bumped dependencies for WP PHPStan, PHPUnit and updated the docs with links to example project.
 * 2.0.0 - Bumped support for Perique 2.0.0, added `Regiserable` module, but no other changes needed.

@@ -64,7 +64,7 @@ class Registrar_Factory {
 
 			default:
 				$type = get_class( $registerable );
-				throw new Exception( 'Invalid registerable (' . $type . ')type (no dispatcher exists)' );
+				throw new Exception( esc_html( 'Invalid registerable (' . $type . ')type (no dispatcher exists)' ) );
 		}
 	}
 
@@ -72,7 +72,7 @@ class Registrar_Factory {
 	 * Returns an instance of the meta box registrar.
 	 *
 	 * @param \PinkCrab\Perique\Interfaces\DI_Container $container
-	 * @param \PinkCrab\Loader\Hook_Loader $loader
+	 * @param \PinkCrab\Loader\Hook_Loader              $loader
 	 * @return Meta_Box_Registrar
 	 */
 	public function meta_box_registrar( DI_Container $container, Hook_Loader $loader ): Meta_Box_Registrar {
@@ -87,5 +87,4 @@ class Registrar_Factory {
 	public function meta_data_registrar(): Meta_Data_Registrar {
 		return new Meta_Data_Registrar();
 	}
-
 }

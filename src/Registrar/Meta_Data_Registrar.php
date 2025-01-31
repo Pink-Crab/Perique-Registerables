@@ -33,11 +33,11 @@ class Meta_Data_Registrar {
 	 * Registers meta data for post types.
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Data $meta
-	 * @param string $post_type
-	 * @return bool
+	 * @param string                            $post_type
+	 * @return boolean
 	 * @throws \Exception if fails to register meta data.
 	 */
-	public function register_for_post_type( Meta_Data $meta, string $post_type ):bool {
+	public function register_for_post_type( Meta_Data $meta, string $post_type ): bool {
 		return $this->register_meta( $meta, 'post', $post_type );
 	}
 
@@ -45,11 +45,11 @@ class Meta_Data_Registrar {
 	 * Registers meta data for terms.
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Data $meta
-	 * @param string $taxonomy
-	 * @return bool
+	 * @param string                            $taxonomy
+	 * @return boolean
 	 * @throws \Exception if fails to register meta data.
 	 */
-	public function register_for_term( Meta_Data $meta, string $taxonomy ):bool {
+	public function register_for_term( Meta_Data $meta, string $taxonomy ): bool {
 		return $this->register_meta( $meta, 'term', $taxonomy );
 	}
 
@@ -57,7 +57,7 @@ class Meta_Data_Registrar {
 	 * Registers meta data for users.
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Data $meta
-	 * @return bool
+	 * @return boolean
 	 * @throws \Exception if fails to register meta data.
 	 */
 	public function register_for_user( Meta_Data $meta ): bool {
@@ -68,7 +68,7 @@ class Meta_Data_Registrar {
 	 * Registers meta data for comments.
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Data $meta
-	 * @return bool
+	 * @return boolean
 	 * @throws \Exception if fails to register meta data.
 	 */
 	public function register_for_comment( Meta_Data $meta ): bool {
@@ -81,9 +81,9 @@ class Meta_Data_Registrar {
 	 * Will cast WP Rest Schema model to array
 	 *
 	 * @param \PinkCrab\Registerables\Meta_Data $meta
-	 * @param  string $meta_type The object type ('post', 'user', 'comment', 'term')
-	 * @param  string $sub_type The object sub-type ('post_type', 'taxonomy')
-	 * @return bool
+	 * @param  string                            $meta_type The object type ('post', 'user', 'comment', 'term')
+	 * @param  string                            $sub_type  The object sub-type ('post_type', 'taxonomy')
+	 * @return boolean
 	 * @throws \Exception if fails to register meta data.
 	 */
 	protected function register_meta( Meta_Data $meta, string $meta_type, string $sub_type ): bool {
@@ -98,7 +98,7 @@ class Meta_Data_Registrar {
 		$result = register_meta( $meta->get_meta_type(), $meta->get_meta_key(), $meta->parse_args() );
 		if ( ! $result ) {
 			throw new \Exception(
-				"Failed to register {$meta->get_meta_key()} (meta) for {$sub_type} of {$meta_type} type"
+				esc_html( "Failed to register {$meta->get_meta_key()} (meta) for {$sub_type} of {$meta_type} type" )
 			);
 		}
 
@@ -163,7 +163,7 @@ class Meta_Data_Registrar {
 	 * @return callable(array<mixed>):void
 	 */
 	protected function create_rest_get_method( Meta_Data $meta ): callable {
-		return function( $model ) use ( $meta ) {
+		return function ( $model ) use ( $meta ) {
 			switch ( $meta->get_meta_type() ) {
 				case 'post':
 					$value = get_post_meta( $model['id'], $meta->get_meta_key(), true );
@@ -199,28 +199,36 @@ class Meta_Data_Registrar {
 	protected function create_rest_update_method( Meta_Data $meta ): \Closure {
 		/**
 		 * @param mixed $value
-		 * @param \WP_Post|\WP_Term|\WP_User|\WP_Comment $object
+		 * @param \WP_Post|\WP_Term|\WP_User|\WP_Comment $object_instance
 		 */
-		return function( $value, $object ) use ( $meta ) {
+		return function ( $value, $object_instance ) use ( $meta ) {
 			switch ( $meta->get_meta_type() ) {
 				case 'post':
-					/** @var \WP_Post $object */
-					update_post_meta( $object->ID, $meta->get_meta_key(), $value );
+					/**
+ * @var \WP_Post $object_instance
+*/
+					update_post_meta( $object_instance->ID, $meta->get_meta_key(), $value );
 					break;
 
 				case 'term':
-					/** @var \WP_Term $object */
-					update_term_meta( $object->term_id, $meta->get_meta_key(), $value );
+					/**
+ * @var \WP_Term $object_instance
+*/
+					update_term_meta( $object_instance->term_id, $meta->get_meta_key(), $value );
 					break;
 
 				case 'user':
-					/** @var \WP_User $object */
-					update_user_meta( $object->ID, $meta->get_meta_key(), $value );
+					/**
+ * @var \WP_User $object_instance
+*/
+					update_user_meta( $object_instance->ID, $meta->get_meta_key(), $value );
 					break;
 
 				case 'comment':
-					/** @var \WP_Comment $object */
-					update_comment_meta( (int) $object->comment_ID, $meta->get_meta_key(), $value );
+					/**
+ * @var \WP_Comment $object_instance
+*/
+					update_comment_meta( (int) $object_instance->comment_ID, $meta->get_meta_key(), $value );
 					break;
 
 				default:

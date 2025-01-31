@@ -52,6 +52,13 @@ class Test_Post_Page_Meta_Box extends WP_UnitTestCase {
 	protected $meta_box_inspector;
 
 	/**
+	 * Holds the instance of the meta box controller.
+	 *
+	 * @var Post_Page_Meta_Box
+	 */
+	protected $cpt;
+
+	/**
 	 * Reset the app data after each test.
 	 *
 	 * @return void
@@ -80,18 +87,20 @@ class Test_Post_Page_Meta_Box extends WP_UnitTestCase {
 		$this->meta_box_inspector = Meta_Box_Inspector::initialise();
 	}
 
-	/** @testdox When registering a shared meta box controller, whatever screens are defined, should see the meta box registered for. */
+	/**
+ * @testdox When registering a shared meta box controller, whatever screens are defined, should see the meta box registered for.
+*/
 	public function test_meta_boxes_registered() {
 		$post_meta_box = array_values(
 			$this->meta_box_inspector->filter(
-				function( $meta_box ) {
+				function ( $meta_box ) {
 					return $meta_box->post_type === 'post' && $meta_box->id === 'post_page_mb';
 				}
 			)
 		)[0];
 		$page_meta_box = array_values(
 			$this->meta_box_inspector->filter(
-				function( $meta_box ) {
+				function ( $meta_box ) {
 					return $meta_box->post_type === 'page' && $meta_box->id === 'post_page_mb';
 				}
 			)
@@ -106,7 +115,9 @@ class Test_Post_Page_Meta_Box extends WP_UnitTestCase {
 		$this->assertSame( $post_meta_box->args, $page_meta_box->args );
 	}
 
-	/** @testdox When the shared meta box controller is registered, the meta data assigned should also be registered to the same post types. */
+	/**
+ * @testdox When the shared meta box controller is registered, the meta data assigned should also be registered to the same post types.
+*/
 	public function test_meta_data_is_registered(): void {
 		$post_meta_1 = $this->meta_data_inspector->find_post_meta( 'post', 'pnp_string' );
 		$page_meta_1 = $this->meta_data_inspector->find_post_meta( 'page', 'pnp_string' );

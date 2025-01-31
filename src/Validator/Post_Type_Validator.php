@@ -36,22 +36,22 @@ class Post_Type_Validator extends Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object_instance
 	 * @return bool
 	 */
-	public function validate( Registerable $object ): bool {
+	public function validate( Registerable $object_instance ): bool {
 		// If this is not a valid post type, just bail here.
-		if ( ! is_a( $object, Post_Type::class ) ) {
-			$this->add_error( sprintf( '%s is not a valid Post Type Model', get_class( $object ) ) );
+		if ( ! is_a( $object_instance, Post_Type::class ) ) {
+			$this->add_error( sprintf( '%s is not a valid Post Type Model', get_class( $object_instance ) ) );
 			return false;
 		}
 
-		/* @var Post_Type $object, already confirmed as a post type */
+		/* @var Post_Type $object_instance, already confirmed as a post type */
 
 		// Ensure all required fields are set.
-		$this->has_required_fields( $object );
+		$this->has_required_fields( $object_instance );
 
-		// Check if the passed object has any errors.
+		// Check if the passed object_instance has any errors.
 		return ! $this->has_errors();
 	}
 
