@@ -209,8 +209,9 @@ class Taxonomy_Registrar implements Registrar {
 			'query_var'             => $taxonomy->query_var,
 			'hierarchical'          => $taxonomy->hierarchical,
 			'update_count_callback' => $taxonomy->update_count_callback ?? '_update_post_term_count',
-			'meta_box_cb'           => $taxonomy->meta_box_cb ??
-				$taxonomy->hierarchical ? 'post_categories_meta_box' : 'post_tags_meta_box',
+			'meta_box_cb'           => ( $taxonomy->meta_box_cb !== null )
+				? $taxonomy->meta_box_cb
+				: ( $taxonomy->hierarchical ? 'post_categories_meta_box' : 'post_tags_meta_box' ),
 			'default_term'          => $taxonomy->default_term,
 		);
 

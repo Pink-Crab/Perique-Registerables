@@ -214,6 +214,7 @@ class Post_Type_Registrar implements Registrar {
 			'publicly_queryable'    => is_bool( $post_type->publicly_queryable ) ? $post_type->publicly_queryable : true,
 			'exclude_from_search'   => is_bool( $post_type->exclude_from_search ) ? $post_type->exclude_from_search : true,
 			'has_archive'           => ( is_bool( $post_type->has_archive ) || is_string( $post_type->has_archive ) ) ? $post_type->has_archive : true,
+			/** @phpstan-ignore-next-line */
 			'query_var'             => ( is_bool( $post_type->query_var ) || is_string( $post_type->query_var ) ) ? $post_type->query_var : false,
 			'can_export'            => is_bool( $post_type->can_export ) ? $post_type->can_export : true,
 			'rewrite'               => ( is_bool( $post_type->rewrite ) || is_array( $post_type->rewrite ) ) ? $post_type->rewrite : false,

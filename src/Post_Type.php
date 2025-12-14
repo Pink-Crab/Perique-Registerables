@@ -168,15 +168,11 @@ abstract class Post_Type implements Registerable {
 
 	/**
 	 * Triggers the handling of rewrites for this post type.
-	 * If false to prevent any rewrites.
-	 * Setting to true will use the defined key as the slug.
-	 * Passing null will set this as.
-	 * array(
-	 *  'slug'       => $this->key,
-	 *  'with_front' => true,
-	 *  'feeds'      => $this->has_archive,
-	 *  'pages'      => true,
-	 * );
+	 * Can be:
+	 * - false: Prevents any rewrites (no permalinks)
+	 * - true: Enables rewrite with default settings (converted to array with slug, with_front, feeds, pages)
+	 * - array: Custom rewrite rules with keys: slug, with_front, feeds, pages, ep_mask
+	 * - null: Defaults to false (no rewrite rules)
 	 *
 	 * @var bool|array<string, mixed>|null
 	 */
