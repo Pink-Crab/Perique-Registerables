@@ -27,7 +27,7 @@ class Hidden_CPT extends Post_Type {
 	public ?bool $show_ui           = false;
 	public ?bool $show_in_nav_menus = false;
 	public ?bool $show_in_admin_bar = false;
-	public ?bool $has_archive       = false;
+	public $has_archive             = false;
 
 	// Only allow admins to do anything.
 	public array $capabilities = array(

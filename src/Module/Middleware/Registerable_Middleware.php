@@ -52,6 +52,7 @@ class Registerable_Middleware implements Registration_Middleware, Inject_Hook_Lo
 	 * @return object
 	 */
 	public function process( object $class_instance ): object {
+		/** @phpstan-ignore-next-line */
 		if ( ! is_a( $class_instance, Registerable::class ) ) {
 			return $class_instance;
 		}

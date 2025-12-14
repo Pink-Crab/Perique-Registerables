@@ -74,7 +74,7 @@ class Tag_With_Meta_Taxonomy extends Taxonomy {
 	public array $object_type         = array( 'basic_cpt' );
 
 	// Default term
-	public ?array $default_term = array(
+	public $default_term = array(
 		'name'        => 'Default Term for Taxonomy With Meta',
 		'slug'        => self::DEFAULT_TERM_SLUG,
 		'description' => 'Like the name',

@@ -126,8 +126,12 @@ abstract class Taxonomy implements Registerable {
 
 	/**
 	 * Render wp meta box.
+	 * Can be:
+	 * - false: Disables the meta box
+	 * - callable: Custom callback function for the meta box display
+	 * - null: Uses default (post_categories_meta_box for hierarchical, post_tags_meta_box for non-hierarchical)
 	 *
-	 * @var callable|null
+	 * @var bool|callable|null
 	 */
 	public $meta_box_cb;
 
@@ -175,10 +179,14 @@ abstract class Taxonomy implements Registerable {
 	public $query_var = false;
 
 	/**
-	 * Rewrite the peramlinks structure.
-	 * If set to true will use the default of the slug.
+	 * Rewrite the permalinks structure.
+	 * Can be:
+	 * - true: Uses the taxonomy slug as the default (WordPress default behavior)
+	 * - false: Disables rewrite rules (no permalinks)
+	 * - array: Custom rewrite rules with keys: slug, with_front, hierarchical, ep_mask
+	 * - null or invalid: Defaults to true (uses taxonomy slug)
 	 *
-	 * @var array<string, mixed>|bool
+	 * @var array<string, mixed>|bool|null
 	 */
 	public $rewrite = true;
 
@@ -199,11 +207,15 @@ abstract class Taxonomy implements Registerable {
 	public ?array $capabilities = null;
 
 	/**
-	 * Sets the default term for the taxonomy
+	 * Sets the default term for the taxonomy.
+	 * Can be:
+	 * - string: The name of the default term
+	 * - array: Array with keys: name (string), slug (string), description (string)
+	 * - null: No default term
 	 *
-	 * @var array<string, mixed>|null
+	 * @var string|array<string, mixed>|null
 	 */
-	public ?array $default_term = null;
+	public $default_term = null;
 
 	/**
 	 * Filters the labels through child class.

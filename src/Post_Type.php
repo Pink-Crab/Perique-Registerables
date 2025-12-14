@@ -99,9 +99,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * INclude post type in wp-admin list.
 	 *
-	 * @var bool|null
+	 * @var bool|string|null
 	 */
-	public ?bool $show_in_menu = true;
+	public $show_in_menu = true;
 
 	/**
 	 * Should this be included in the admin bar.
@@ -120,9 +120,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Generate archives on front end.
 	 *
-	 * @var bool|null
+	 * @var bool|string|null
 	 */
-	public ?bool $has_archive = true;
+	public $has_archive = true;
 
 	/**
 	 * Is post type hierarchical
@@ -168,15 +168,11 @@ abstract class Post_Type implements Registerable {
 
 	/**
 	 * Triggers the handling of rewrites for this post type.
-	 * If false to prevent any rewrites.
-	 * Setting to true will use the defined key as the slug.
-	 * Passing null will set this as.
-	 * array(
-	 *  'slug'       => $this->key,
-	 *  'with_front' => true,
-	 *  'feeds'      => $this->has_archive,
-	 *  'pages'      => true,
-	 * );
+	 * Can be:
+	 * - false: Prevents any rewrites (no permalinks)
+	 * - true: Enables rewrite with default settings (converted to array with slug, with_front, feeds, pages)
+	 * - array: Custom rewrite rules with keys: slug, with_front, feeds, pages, ep_mask
+	 * - null: Defaults to false (no rewrite rules)
 	 *
 	 * @var bool|array<string, mixed>|null
 	 */
