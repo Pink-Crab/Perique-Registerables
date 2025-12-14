@@ -273,6 +273,7 @@ http://www.opensource.org/licenses/mit-license.html
 * For Perique 1.0.* - 1.2.* please use Registerables version 0.8.*  
 
 ## Change Log ##
+* 2.1.1 - Fixed incorrect rewrite conversion in Post_Type definition to accept bool or array.
 * 2.1.0 - Added support for Perique 2.1.x, updated dev deps to WP6.7 and added in missing test suites.
 * 2.0.2 - Bumped dependencies and extended tests to cover WP 6.3 & 6.4
 * 2.0.1 - Bumped dependencies for WP PHPStan, PHPUnit and updated the docs with links to example project.
