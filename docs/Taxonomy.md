@@ -130,10 +130,16 @@ Whether the taxonomy is publicly queryable.
 Define a custom query var, if false with use $this->slug
 
 ### $rewrite
-> @var array<string, mixed>|bool
+> @var array<string, mixed>|bool|null
 > @default true
 
-Rewrite the permalinks structure. If set to true will use the default of the slug.
+Rewrite the permalinks structure. Can be:
+- `true` - Uses the taxonomy slug as the default (WordPress default behavior)
+- `false` - Disables rewrite rules (no permalinks)
+- `array` - Custom rewrite rules with keys: `slug`, `with_front`, `hierarchical`, `ep_mask`
+- `null` or invalid value - Defaults to `true` (uses taxonomy slug)
+
+If set to `true` (the default), WordPress will use the taxonomy slug. To prevent rewrite, set to `false`. For custom rewrite rules, pass an array.
 
 ### $update_count_callback
 > @var string|bool

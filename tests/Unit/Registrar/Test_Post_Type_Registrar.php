@@ -213,4 +213,93 @@ class Test_Post_Type_Registrar extends TestCase {
 		Objects::invoke_method( $registrar, 'register_meta_data', array( $cpt ) );
 	}
 
+	/** @testdox When rewrite is set as an array, it should be passed through correctly */
+	public function test_can_set_rewrite_as_array(): void {
+		$rewrite_array = array(
+			'slug'       => 'custom-slug',
+			'with_front' => false,
+			'feeds'      => true,
+			'pages'      => true,
+		);
+
+		$cpt = new class() extends Basic_CPT {
+			public $rewrite;
+		};
+		$cpt->rewrite = $rewrite_array;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertIsArray( $args['rewrite'] );
+		$this->assertEquals( $rewrite_array, $args['rewrite'] );
+	}
+
+	/** @testdox When has_archive is set as a string, it should be passed through correctly */
+	public function test_can_set_has_archive_as_string(): void {
+		$archive_slug = 'custom-archive-slug';
+
+		$cpt = new class() extends Basic_CPT {
+			public $has_archive;
+		};
+		$cpt->has_archive = $archive_slug;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertIsString( $args['has_archive'] );
+		$this->assertEquals( $archive_slug, $args['has_archive'] );
+	}
+
+	/** @testdox When show_in_menu is set as a string, it should be passed through correctly */
+	public function test_can_set_show_in_menu_as_string(): void {
+		$menu_slug = 'tools.php';
+
+		$cpt = new class() extends Basic_CPT {
+			public $show_in_menu;
+		};
+		$cpt->show_in_menu = $menu_slug;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertIsString( $args['show_in_menu'] );
+		$this->assertEquals( $menu_slug, $args['show_in_menu'] );
+	}
+
+	/** @testdox When query_var is set as a string, it should be passed through correctly */
+	public function test_can_set_query_var_as_string(): void {
+		$query_var_name = 'custom_query_var';
+
+		$cpt = new class() extends Basic_CPT {
+			public $query_var;
+		};
+		$cpt->query_var = $query_var_name;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertIsString( $args['query_var'] );
+		$this->assertEquals( $query_var_name, $args['query_var'] );
+	}
+
 }

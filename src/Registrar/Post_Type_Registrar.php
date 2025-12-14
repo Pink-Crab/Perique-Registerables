@@ -180,8 +180,8 @@ class Post_Type_Registrar implements Registrar {
 		 */
 		$labels = apply_filters( Registerable_Hooks::POST_TYPE_LABELS, $post_type->filter_labels( $labels ), $post_type );
 
-		// Set the rewrite rules if not defined.
-		if ( is_null( $post_type->rewrite ) ) {
+		// Set the rewrite rules if explicitly set to true.
+		if ( $post_type->rewrite === true ) {
 			$post_type->rewrite = array(
 				'slug'       => $post_type->key,
 				'with_front' => true,
@@ -206,17 +206,17 @@ class Post_Type_Registrar implements Registrar {
 			'supports'              => $post_type->supports,
 			'public'                => is_bool( $post_type->public ) ? $post_type->public : true,
 			'show_ui'               => is_bool( $post_type->show_ui ) ? $post_type->show_ui : true,
-			'show_in_menu'          => is_bool( $post_type->show_in_menu ) ? $post_type->show_in_menu : true,
+			'show_in_menu'          => ( is_bool( $post_type->show_in_menu ) || is_string( $post_type->show_in_menu ) ) ? $post_type->show_in_menu : true,
 			'show_in_admin_bar'     => is_bool( $post_type->show_in_admin_bar ) ? $post_type->show_in_admin_bar : true,
 			'menu_position'         => $post_type->menu_position,
 			'menu_icon'             => $post_type->dashicon,
 			'show_in_nav_menus'     => is_bool( $post_type->show_in_nav_menus ) ? $post_type->show_in_nav_menus : true,
 			'publicly_queryable'    => is_bool( $post_type->publicly_queryable ) ? $post_type->publicly_queryable : true,
 			'exclude_from_search'   => is_bool( $post_type->exclude_from_search ) ? $post_type->exclude_from_search : true,
-			'has_archive'           => is_bool( $post_type->has_archive ) ? $post_type->has_archive : true,
-			'query_var'             => is_bool( $post_type->query_var ) ? $post_type->query_var : false,
+			'has_archive'           => ( is_bool( $post_type->has_archive ) || is_string( $post_type->has_archive ) ) ? $post_type->has_archive : true,
+			'query_var'             => ( is_bool( $post_type->query_var ) || is_string( $post_type->query_var ) ) ? $post_type->query_var : false,
 			'can_export'            => is_bool( $post_type->can_export ) ? $post_type->can_export : true,
-			'rewrite'               => is_bool( $post_type->rewrite ) ? $post_type->rewrite : false,
+			'rewrite'               => ( is_bool( $post_type->rewrite ) || is_array( $post_type->rewrite ) ) ? $post_type->rewrite : false,
 			'capability_type'       => $post_type->capability_type,
 			'capabilities'          => $post_type->capabilities,
 			'taxonomies'            => $post_type->taxonomies,

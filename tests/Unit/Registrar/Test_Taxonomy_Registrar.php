@@ -189,4 +189,87 @@ class Test_Taxonomy_Registrar extends TestCase {
 		Objects::invoke_method( $registrar, 'register_meta_data', array( $tax ) );
 	}
 
+	/** @testdox When rewrite is set as an array, it should be passed through correctly */
+	public function test_can_set_rewrite_as_array(): void {
+		$rewrite_array = array(
+			'slug'        => 'custom-taxonomy-slug',
+			'with_front'  => false,
+			'hierarchical' => true,
+			'ep_mask'     => 1,
+		);
+
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $rewrite;
+		};
+		$taxonomy->rewrite = $rewrite_array;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertIsArray( $args['rewrite'] );
+		$this->assertEquals( $rewrite_array, $args['rewrite'] );
+	}
+
+	/** @testdox When query_var is set as a string, it should be passed through correctly */
+	public function test_can_set_query_var_as_string(): void {
+		$query_var_name = 'custom_query_var';
+
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $query_var;
+		};
+		$taxonomy->query_var = $query_var_name;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertIsString( $args['query_var'] );
+		$this->assertEquals( $query_var_name, $args['query_var'] );
+	}
+
+	/** @testdox When rewrite is null, it should default to true */
+	public function test_rewrite_defaults_to_true_when_null(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $rewrite;
+		};
+		$taxonomy->rewrite = null;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertTrue( $args['rewrite'] );
+	}
+
+	/** @testdox When rewrite is an invalid type, it should default to true */
+	public function test_rewrite_defaults_to_true_when_invalid(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $rewrite;
+		};
+		$taxonomy->rewrite = 'invalid_string_value';
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertTrue( $args['rewrite'] );
+	}
+
 }

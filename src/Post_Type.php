@@ -99,9 +99,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * INclude post type in wp-admin list.
 	 *
-	 * @var bool|null
+	 * @var bool|string|null
 	 */
-	public ?bool $show_in_menu = true;
+	public $show_in_menu = true;
 
 	/**
 	 * Should this be included in the admin bar.
@@ -120,9 +120,9 @@ abstract class Post_Type implements Registerable {
 	/**
 	 * Generate archives on front end.
 	 *
-	 * @var bool|null
+	 * @var bool|string|null
 	 */
-	public ?bool $has_archive = true;
+	public $has_archive = true;
 
 	/**
 	 * Is post type hierarchical
