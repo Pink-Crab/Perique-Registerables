@@ -70,10 +70,10 @@ Should post type be included in the menu selections.
 
 ### $show_in_menu
 
-> @var bool\|null  
+> @var bool\|string\|null  
 > @default TRUE
 
-Should post type be included in the main wp-admin menu
+Should post type be included in the main wp-admin menu. Can be a boolean (true/false) or a string specifying a parent menu slug (e.g., 'tools.php') to show as a submenu item.
 
 ### $show_in_admin_bar
 
@@ -91,10 +91,10 @@ Should post type have the post list, create/edit/delete UI in wp-admin.
 
 ### $has_archive
 
-> @var bool\|null  
+> @var bool\|string\|null  
 > @default TRUE
 
-Should post type have an archive created on the frontend.
+Should post type have an archive created on the frontend. Can be a boolean (true/false) or a string to specify a custom archive slug.
 
 ### $hierarchical
 
@@ -134,11 +134,15 @@ This can be used to assign this post type to any public query vars. [See the cod
 ### $rewrite
 
 > @var bool\|array\|null  
-> @default \['slug' =&gt; $key/$slug, 'with_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\]
+> @default null
 
-This can be used to set the rewrite rules for the post type. If $rewrite is left as NULL, it will be resolved to the default of  \['slug' =&gt; $key/$slug, 'with_front' =&gt; true, 'feeds'=&gt;false, 'pages'=&gt;false\].  
-If you wish to have no permalinks, you can pass FALSE here, else define with your own array.  
-_Please note that we use the constructor to set default if left as null._
+This can be used to set the rewrite rules for the post type. Can be:
+- `false` - Disables rewrite rules (no permalinks)
+- `true` - Enables rewrite with default settings (converted to array with slug, with_front, feeds, pages)
+- `array` - Custom rewrite rules with keys: `slug`, `with_front`, `feeds`, `pages`, `ep_mask`
+- `null` - Defaults to `false` (no rewrite rules)
+
+If you wish to have no permalinks, you can pass `false` or leave as `null`. To use default rewrite rules, pass `true`. For custom rewrite rules, pass an array.
 
 ### $capability_type
 

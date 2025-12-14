@@ -183,6 +183,12 @@ class Taxonomy_Registrar implements Registrar {
 		 */
 		$labels = apply_filters( Registerable_Hooks::TAXONOMY_LABELS, $taxonomy->filter_labels( $labels ), $taxonomy );
 
+		// Handle rewrite - if null or not bool|array, default to true (WordPress default uses slug).
+		$rewrite = $taxonomy->rewrite;
+		if ( ! is_bool( $rewrite ) && ! is_array( $rewrite ) ) {
+			$rewrite = true;
+		}
+
 		// Compose args.
 		$args = array(
 			'labels'                => $labels,
@@ -198,13 +204,14 @@ class Taxonomy_Registrar implements Registrar {
 			'show_admin_column'     => $taxonomy->show_admin_column,
 			'sort'                  => $taxonomy->sort,
 			'description'           => $taxonomy->description,
-			'rewrite'               => $taxonomy->slug,
+			'rewrite'               => $rewrite,
 			'label'                 => $taxonomy->label ?? $taxonomy->plural,
 			'query_var'             => $taxonomy->query_var,
 			'hierarchical'          => $taxonomy->hierarchical,
 			'update_count_callback' => $taxonomy->update_count_callback ?? '_update_post_term_count',
-			'meta_box_cb'           => $taxonomy->meta_box_cb ??
-				$taxonomy->hierarchical ? 'post_categories_meta_box' : 'post_tags_meta_box',
+			'meta_box_cb'           => ( $taxonomy->meta_box_cb !== null )
+				? $taxonomy->meta_box_cb
+				: ( $taxonomy->hierarchical ? 'post_categories_meta_box' : 'post_tags_meta_box' ),
 			'default_term'          => $taxonomy->default_term,
 		);
 

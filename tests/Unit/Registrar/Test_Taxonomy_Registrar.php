@@ -23,6 +23,7 @@ use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
+use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
 
 class Test_Taxonomy_Registrar extends TestCase {
 
@@ -187,6 +188,167 @@ class Test_Taxonomy_Registrar extends TestCase {
 		$this->expectException( \Exception::class );
 
 		Objects::invoke_method( $registrar, 'register_meta_data', array( $tax ) );
+	}
+
+	/** @testdox When rewrite is set as an array, it should be passed through correctly */
+	public function test_can_set_rewrite_as_array(): void {
+		$rewrite_array = array(
+			'slug'        => 'custom-taxonomy-slug',
+			'with_front'  => false,
+			'hierarchical' => true,
+			'ep_mask'     => 1,
+		);
+
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $rewrite;
+		};
+		$taxonomy->rewrite = $rewrite_array;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertIsArray( $args['rewrite'] );
+		$this->assertEquals( $rewrite_array, $args['rewrite'] );
+	}
+
+	/** @testdox When query_var is set as a string, it should be passed through correctly */
+	public function test_can_set_query_var_as_string(): void {
+		$query_var_name = 'custom_query_var';
+
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $query_var;
+		};
+		$taxonomy->query_var = $query_var_name;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertIsString( $args['query_var'] );
+		$this->assertEquals( $query_var_name, $args['query_var'] );
+	}
+
+	/** @testdox When rewrite is null, it should default to true */
+	public function test_rewrite_defaults_to_true_when_null(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $rewrite;
+		};
+		$taxonomy->rewrite = null;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertTrue( $args['rewrite'] );
+	}
+
+	/** @testdox When rewrite is an invalid type, it should default to true */
+	public function test_rewrite_defaults_to_true_when_invalid(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $rewrite;
+		};
+		$taxonomy->rewrite = 'invalid_string_value';
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertTrue( $args['rewrite'] );
+	}
+
+	/** @testdox When meta_box_cb is set to false, it should pass through as false */
+	public function test_meta_box_cb_passes_through_false(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = false;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertFalse( $args['meta_box_cb'] );
+	}
+
+	/** @testdox When meta_box_cb is set to a callable, it should pass through the callable */
+	public function test_meta_box_cb_passes_through_callable(): void {
+		$callable = function() {
+			return 'custom_meta_box';
+		};
+
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = $callable;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertSame( $callable, $args['meta_box_cb'] );
+	}
+
+	/** @testdox When meta_box_cb is null and hierarchical is true, it should default to post_categories_meta_box */
+	public function test_meta_box_cb_defaults_to_categories_when_null_and_hierarchical(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = null;
+		$taxonomy->hierarchical = true;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertEquals( 'post_categories_meta_box', $args['meta_box_cb'] );
+	}
+
+	/** @testdox When meta_box_cb is null and hierarchical is false, it should default to post_tags_meta_box */
+	public function test_meta_box_cb_defaults_to_tags_when_null_and_not_hierarchical(): void {
+		$taxonomy = new class() extends Basic_Tag_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = null;
+		$taxonomy->hierarchical = false;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertEquals( 'post_tags_meta_box', $args['meta_box_cb'] );
 	}
 
 }
