@@ -180,16 +180,6 @@ class Post_Type_Registrar implements Registrar {
 		 */
 		$labels = apply_filters( Registerable_Hooks::POST_TYPE_LABELS, $post_type->filter_labels( $labels ), $post_type );
 
-		// Set the rewrite rules if explicitly set to true.
-		if ( $post_type->rewrite === true ) {
-			$post_type->rewrite = array(
-				'slug'       => $post_type->key,
-				'with_front' => true,
-				'feeds'      => false,
-				'pages'      => false,
-			);
-		}
-
 		// Set the meta cap based on its definition and if uses gutenberg.
 		// See https://github.com/Pink-Crab/Perique-Registerables/issues/66
 		if ( null === $post_type->map_meta_cap ) {

@@ -23,6 +23,7 @@ use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Module\Middleware\Registerable;
 use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Hierarchical_Taxonomy;
+use PinkCrab\Registerables\Tests\Fixtures\Taxonomies\Basic_Tag_Taxonomy;
 
 class Test_Taxonomy_Registrar extends TestCase {
 
@@ -270,6 +271,84 @@ class Test_Taxonomy_Registrar extends TestCase {
 		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
 
 		$this->assertTrue( $args['rewrite'] );
+	}
+
+	/** @testdox When meta_box_cb is set to false, it should pass through as false */
+	public function test_meta_box_cb_passes_through_false(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = false;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertFalse( $args['meta_box_cb'] );
+	}
+
+	/** @testdox When meta_box_cb is set to a callable, it should pass through the callable */
+	public function test_meta_box_cb_passes_through_callable(): void {
+		$callable = function() {
+			return 'custom_meta_box';
+		};
+
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = $callable;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertSame( $callable, $args['meta_box_cb'] );
+	}
+
+	/** @testdox When meta_box_cb is null and hierarchical is true, it should default to post_categories_meta_box */
+	public function test_meta_box_cb_defaults_to_categories_when_null_and_hierarchical(): void {
+		$taxonomy = new class() extends Basic_Hierarchical_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = null;
+		$taxonomy->hierarchical = true;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertEquals( 'post_categories_meta_box', $args['meta_box_cb'] );
+	}
+
+	/** @testdox When meta_box_cb is null and hierarchical is false, it should default to post_tags_meta_box */
+	public function test_meta_box_cb_defaults_to_tags_when_null_and_not_hierarchical(): void {
+		$taxonomy = new class() extends Basic_Tag_Taxonomy {
+			public $meta_box_cb;
+		};
+		$taxonomy->meta_box_cb = null;
+		$taxonomy->hierarchical = false;
+
+		$validator = $this->createMock( Taxonomy_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Taxonomy_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $taxonomy ) );
+
+		$this->assertEquals( 'post_tags_meta_box', $args['meta_box_cb'] );
 	}
 
 }

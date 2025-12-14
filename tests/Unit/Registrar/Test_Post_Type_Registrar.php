@@ -302,4 +302,220 @@ class Test_Post_Type_Registrar extends TestCase {
 		$this->assertEquals( $query_var_name, $args['query_var'] );
 	}
 
+	/** @testdox When rewrite is set to true, it should pass through as true */
+	public function test_rewrite_passes_through_true(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $rewrite;
+		};
+		$cpt->rewrite = true;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertTrue( $args['rewrite'] );
+	}
+
+	/** @testdox When rewrite is set to false, it should pass through as false */
+	public function test_rewrite_passes_through_false(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $rewrite;
+		};
+		$cpt->rewrite = false;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertFalse( $args['rewrite'] );
+	}
+
+	/** @testdox When rewrite is null, it should default to false */
+	public function test_rewrite_defaults_to_false_when_null(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $rewrite;
+		};
+		$cpt->rewrite = null;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertFalse( $args['rewrite'] );
+	}
+
+	/** @testdox When has_archive is set to true, it should pass through as true */
+	public function test_has_archive_passes_through_true(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $has_archive;
+		};
+		$cpt->has_archive = true;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertTrue( $args['has_archive'] );
+	}
+
+	/** @testdox When has_archive is set to false, it should pass through as false */
+	public function test_has_archive_passes_through_false(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $has_archive;
+		};
+		$cpt->has_archive = false;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertFalse( $args['has_archive'] );
+	}
+
+	/** @testdox When has_archive is null, it should default to true */
+	public function test_has_archive_defaults_to_true_when_null(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $has_archive;
+		};
+		$cpt->has_archive = null;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertTrue( $args['has_archive'] );
+	}
+
+	/** @testdox When query_var is set to true, it should pass through as true */
+	public function test_query_var_passes_through_true(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $query_var;
+		};
+		$cpt->query_var = true;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertTrue( $args['query_var'] );
+	}
+
+	/** @testdox When query_var is set to false, it should pass through as false */
+	public function test_query_var_passes_through_false(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $query_var;
+		};
+		$cpt->query_var = false;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertFalse( $args['query_var'] );
+	}
+
+	/** @testdox When query_var is null, it should default to false */
+	public function test_query_var_defaults_to_false_when_null(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $query_var;
+		};
+		$cpt->query_var = null;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertFalse( $args['query_var'] );
+	}
+
+	/** @testdox When show_in_menu is set to true, it should pass through as true */
+	public function test_show_in_menu_passes_through_true(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $show_in_menu;
+		};
+		$cpt->show_in_menu = true;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertTrue( $args['show_in_menu'] );
+	}
+
+	/** @testdox When show_in_menu is set to false, it should pass through as false */
+	public function test_show_in_menu_passes_through_false(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $show_in_menu;
+		};
+		$cpt->show_in_menu = false;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertFalse( $args['show_in_menu'] );
+	}
+
+	/** @testdox When show_in_menu is null, it should default to true */
+	public function test_show_in_menu_defaults_to_true_when_null(): void {
+		$cpt = new class() extends Basic_CPT {
+			public $show_in_menu;
+		};
+		$cpt->show_in_menu = null;
+
+		$validator = $this->createMock( Post_Type_Validator::class );
+		$validator->method( 'validate' )->willReturn( true );
+		$md_registrar = $this->createMock( Meta_Data_Registrar::class );
+
+		$registrar = new Post_Type_Registrar( $validator, $md_registrar );
+
+		$args = Objects::invoke_method( $registrar, 'compile_args', array( $cpt ) );
+
+		$this->assertTrue( $args['show_in_menu'] );
+	}
+
 }
