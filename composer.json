@@ -27,7 +27,7 @@
         "phpstan/phpstan": "1.*",
         "szepeviktor/phpstan-wordpress": "<=1.3.2",
         "php-stubs/wordpress-stubs": "6.7.*",
-        "roots/wordpress": "6.7.*",
+        "roots/wordpress": "6.7.* || 6.9.*",
         "wp-phpunit/wp-phpunit": "6.7.*",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "roave/security-advisories": "dev-latest",
